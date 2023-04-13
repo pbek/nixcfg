@@ -4,7 +4,12 @@
 
 { config, pkgs, inputs, ... }:
 
-{
+let
+  unstable = import
+    (builtins.fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz)
+    # reuse the current configuration
+    { config = config.nixpkgs.config; };
+in {
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
     ../../modules/mixins/openssh.nix
@@ -116,26 +121,6 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-#   let
-#     unstableTarball =
-#       fetchTarball
-#         https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
-#   in
-#   {
-#     imports =
-#       [ # Include the results of the hardware scan.
-#         /etc/nixos/hardware-configuration.nix
-#       ];
-#
-#     nixpkgs.config = {
-#       packageOverrides = pkgs: {
-#         unstable = import unstableTarball {
-#           config = config.nixpkgs.config;
-#         };
-#       };
-#     };
-#   };
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -157,15 +142,8 @@
     chromium
     topgrade
     jetbrains.phpstorm
+    unstable.qownnotes
   ];
-
-#  let
-#    unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-#  in {
-#    environment.systemPackages = with pkgs; [
-#      qownnotes
-#    ];
-#  }
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -193,28 +171,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
-
 }
-
-# let
-#   unstableTarball =
-#     fetchTarball
-#       https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
-# in
-# {
-#   imports =
-#     [ # Include the results of the hardware scan.
-#       ./hardware-configuration.nix
-#     ];
-#   nixpkgs.config = {
-#     packageOverrides = pkgs: with pkgs; {
-#       unstable = import unstableTarball {
-#         config = config.nixpkgs.config;
-#       };
-#     };
-#   };
-#   environment.systemPackages = with pkgs; [
-#     unstable.neovim
-#     emacs
-#   ];
-# }
