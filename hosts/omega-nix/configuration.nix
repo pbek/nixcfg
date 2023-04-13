@@ -8,7 +8,7 @@
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
     ../../modules/mixins/openssh.nix
-    ../../modules/editor/nvim.nix
+#    ../../modules/editor/nvim.nix
     # this brought me an infinite recursion
 #    mixins-openssh
   ];
@@ -139,7 +139,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    neovim
     wget
     firefox
     kate
