@@ -8,6 +8,7 @@
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
     ../../modules/mixins/openssh.nix
+    ../../modules/editor/nvim.nix
     # this brought me an infinite recursion
 #    mixins-openssh
   ];
