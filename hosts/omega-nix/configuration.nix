@@ -5,10 +5,10 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = with inputs.self.nixosModules; [
+    ./hardware-configuration.nix
+    mixins-openssh
+  ];
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -176,13 +176,6 @@
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
-
-  services.openssh = {
-    enable = true;
-    passwordAuthentication = true;
-    openFirewall = lib.mkForce true;
-    permitRootLogin = lib.mkForce "no";
-  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
