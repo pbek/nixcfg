@@ -7,7 +7,9 @@
 {
   imports = with inputs.self.nixosModules; [
     ./hardware-configuration.nix
-    mixins-openssh
+    ../../modules/mixins/openssh.nix
+    # this brought me an infinite recursion
+#    mixins-openssh
   ];
 
   # Bootloader.
