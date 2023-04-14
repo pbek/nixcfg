@@ -98,6 +98,7 @@ in {
     topgrade
     jetbrains.phpstorm
     unstable.qownnotes
+    (pkgs.callPackage ../../apps/qc/default.nix { })
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
