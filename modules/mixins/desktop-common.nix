@@ -98,6 +98,7 @@ in {
     topgrade
     jetbrains.phpstorm
     unstable.qownnotes
+    filelight
     (pkgs.callPackage ../../apps/qc/default.nix { })
   ];
 
