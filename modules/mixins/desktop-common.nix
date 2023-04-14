@@ -97,8 +97,9 @@ in {
     chromium
     topgrade
     jetbrains.phpstorm
-    unstable.qownnotes
     filelight
+#    unstable.qownnotes
+    (pkgs.callPackage ../../apps/qownnotes/default.nix { })
     (pkgs.callPackage ../../apps/qc/default.nix { })
   ];
 
