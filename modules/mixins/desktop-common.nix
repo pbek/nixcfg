@@ -84,7 +84,7 @@ in {
     firefox
     kate
     kmail
-    # smartgithg
+    unstable.smartgithg
     fish
     magic-wormhole
     libsForQt5.yakuake
