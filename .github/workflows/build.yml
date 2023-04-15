@@ -1,0 +1,27 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Nix
+        uses: cachix/install-nix-action@v20
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+#      - name: Install Nix
+#        run: |
+#          curl -L https://nixos.org/nix/install | sh
+#          . $HOME/.nix-profile/etc/profile.d/nix.sh
+#      - name: Set up Nix build environment
+#        run: nix-shell '<nixpkgs>' -A haskellPackages.ghc
+#      - name: Update Nix channels
+#        run: nix-channel --update
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build qc package
+        run: cd apps/qc && nix-build -E '((import <nixpkgs> {}).callPackage (import ./default.nix) { })'
