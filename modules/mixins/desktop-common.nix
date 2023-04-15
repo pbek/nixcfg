@@ -112,6 +112,13 @@ in {
     enableSSHSupport = true;
   };
 
+  # Do garbage collection
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
   # List services that you want to enable:
 
   # Open ports in the firewall.
