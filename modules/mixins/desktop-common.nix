@@ -119,7 +119,7 @@ in {
     keepassxc
     inetutils
     nmap
-    make
+    gnumake
     ping
     chromium
     google-chrome
