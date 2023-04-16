@@ -101,9 +101,6 @@ in {
     fzf
     chromium
     topgrade
-    jetbrains.phpstorm
-    jetbrains.clion
-    jetbrains.goland
     filelight
     qt5Full
     qtcreator
