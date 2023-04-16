@@ -131,6 +131,11 @@ in {
     bluez
     exfatprogs
     f2fs-tools
+    restic
+    nextcloud-client
+    ferdium
+    topgrade
+    ksnip
 
     libsForQt5.kwalletmanager
     libsForQt5.plasma-systemmonitor
