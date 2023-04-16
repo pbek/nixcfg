@@ -4,9 +4,9 @@
     enable = true;
     openFirewall = lib.mkForce true;
 
-    PasswordAuthentication = false;
-    X11Forwarding = true;
-    PermitRootLogin = lib.mkForce "no";
+    settings.PasswordAuthentication = false;
+    settings.X11Forwarding = true;
+    settings.PermitRootLogin = lib.mkForce "no";
 
     # Deprecated in unstable
 #    passwordAuthentication = false;
