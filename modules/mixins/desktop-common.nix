@@ -117,7 +117,7 @@ in {
     atop
     git
     keepassxc
-    telnet
+    inetutils
     nmap
     make
     ping
