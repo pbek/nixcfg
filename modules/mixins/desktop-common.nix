@@ -127,7 +127,7 @@ in {
     fwupd
     yubikey-manager
     pam_u2f
-    libpam-yubico
+    yubico-pam
 #    scdaemon
 #    pcscd
     bluez
