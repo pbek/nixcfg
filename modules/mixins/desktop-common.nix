@@ -128,8 +128,8 @@ in {
     yubikey-manager
     pam_u2f
     libpam-yubico
-    # scdaemon
-    # pcscd
+#    scdaemon
+#    pcscd
     bluez
     exfatprogs
     f2fs-tools
