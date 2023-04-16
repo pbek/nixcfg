@@ -76,6 +76,11 @@ in {
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Allow some insecure packages to be installed
+  nixpkgs.config.permittedInsecurePackages = [
+    "qtwebkit-5.212.0-alpha4"
+  ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
