@@ -2,9 +2,15 @@
 {
   services.openssh = {
     enable = true;
-    passwordAuthentication = false;
-    forwardX11 = true;
     openFirewall = lib.mkForce true;
-    permitRootLogin = lib.mkForce "no";
+
+    PasswordAuthentication = false;
+    X11Forwarding = true;
+    PermitRootLogin = lib.mkForce "no";
+
+    # Deprecated in unstable
+#    passwordAuthentication = false;
+#    forwardX11 = true;
+#    permitRootLogin = lib.mkForce "no";
   };
 }
