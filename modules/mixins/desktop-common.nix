@@ -134,16 +134,15 @@ in {
     exfatprogs
     f2fs-tools
 
-    libsForQt5.arkkwalletmanager
-    libsForQt5.arkplasma-systemmonitor
+    libsForQt5.kwalletmanager
+    libsForQt5.plasma-systemmonitor
     libsForQt5.kfind
     libsForQt5.kontact
     libsForQt5.kleopatra
     libsForQt5.kmail
     libsForQt5.korganizer
     libsForQt5.yakuake
-    libsForQt5.kde-spectacle
-    libsForQt5.kdiff3
+    libsForQt5.spectacle
     libsForQt5.ark
     libsForQt5.bluedevil
     libsForQt5.dolphin
@@ -155,11 +154,11 @@ in {
     libsForQt5.okular
     libsForQt5.plasma-browser-integration
     libsForQt5.plasma-disks
-    libsForQt5.plasma-firewall
     libsForQt5.plasma-nm
     libsForQt5.plasma-pa
     libsForQt5.plasma-vault
-    partitionmanager
+    kdiff3
+    partition-manager
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
