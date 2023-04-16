@@ -97,12 +97,65 @@ in {
     chromium
     topgrade
     jetbrains.phpstorm
+    jetbrains.clion
+    jetbrains.goland
     filelight
     qt5Full
     qtcreator
     unstable.qownnotes
 #    (pkgs.callPackage ../../apps/qownnotes/default.nix { })
     (pkgs.callPackage ../../apps/qc/default.nix { })
+
+    less
+    mc
+    htop
+    atop
+    git
+    keepassxc
+    telnet
+    nmap
+    make
+    ping
+    chromium
+    google-chrome
+    wget
+    vscode
+    fwupd
+    yubikey-manager
+    pam_u2f
+    libpam-yubico
+    # scdaemon
+    # pcscd
+    bluez
+    exfatprogs
+    f2fs-tools
+
+    libsForQt5.arkkwalletmanager
+    libsForQt5.arkplasma-systemmonitor
+    libsForQt5.kfind
+    libsForQt5.kontact
+    libsForQt5.kleopatra
+    libsForQt5.kmail
+    libsForQt5.korganizer
+    libsForQt5.yakuake
+    libsForQt5.kde-spectacle
+    libsForQt5.kdiff3
+    libsForQt5.ark
+    libsForQt5.bluedevil
+    libsForQt5.dolphin
+    libsForQt5.dolphin-plugins
+    libsForQt5.gwenview
+    libsForQt5.kaccounts-integration
+    libsForQt5.kaccounts-providers
+    libsForQt5.ksshaskpass
+    libsForQt5.okular
+    libsForQt5.plasma-browser-integration
+    libsForQt5.plasma-disks
+    libsForQt5.plasma-firewall
+    libsForQt5.plasma-nm
+    libsForQt5.plasma-pa
+    libsForQt5.plasma-vault
+    partitionmanager
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
