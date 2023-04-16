@@ -120,7 +120,6 @@ in {
     inetutils
     nmap
     gnumake
-    ping
     chromium
     google-chrome
     wget
