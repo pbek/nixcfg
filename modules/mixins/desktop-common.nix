@@ -102,8 +102,9 @@ in {
     chromium
     topgrade
     filelight
-    qt5Full
-    qtcreator
+    # Builds qtwebkit from source!
+#    qt5Full
+#    qtcreator
     unstable.qownnotes
 #    (pkgs.callPackage ../../apps/qownnotes/default.nix { })
     (pkgs.callPackage ../../apps/qc/default.nix { })
