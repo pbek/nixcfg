@@ -98,7 +98,8 @@ in {
     topgrade
     jetbrains.phpstorm
     filelight
-    libsForQt5.qmake
+    qt5Full
+    qtcreator
     unstable.qownnotes
 #    (pkgs.callPackage ../../apps/qownnotes/default.nix { })
     (pkgs.callPackage ../../apps/qc/default.nix { })
