@@ -77,7 +77,7 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   # Allow flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+#  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Allow some insecure packages to be installed
   nixpkgs.config.permittedInsecurePackages = [

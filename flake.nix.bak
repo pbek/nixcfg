@@ -6,6 +6,9 @@
   #inputs.sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs = { self, nixpkgs, sops-nix }: {
+#     config = nixpkgs.config.systems.${builtins.currentSystem}.config;
+#     hostname = config.networking.hostName;
+
     # change `yourhostname` to your actual hostname
     nixosConfigurations.yourhostname = nixpkgs.lib.nixosSystem {
       # customize to your system
