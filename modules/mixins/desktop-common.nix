@@ -186,6 +186,10 @@ in {
     pinentryFlavor = "curses";
   };
 
+  services.pcscd.enable = true;
+  services.udev.packages = [ pkgs.yubikey-personalization ];
+  programs.ssh.startAgent = false;
+
   # Do garbage collection
   nix.gc = {
     automatic = true;
