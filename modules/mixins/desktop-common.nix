@@ -149,6 +149,8 @@ in {
     ferdium
     topgrade
     ksnip
+    sops
+    ncdu
 
     libsForQt5.kwalletmanager
     libsForQt5.plasma-systemmonitor
