@@ -108,6 +108,7 @@ in {
     # Builds qtwebkit from source!
 #    qt5.full
     qtcreator
+    libsForQt5.qt5.qmake
     libsForQt5.qt5.qttools
     libsForQt5.qt5.qtbase
     libsForQt5.qt5.qtdeclarative
@@ -131,6 +132,9 @@ in {
     inetutils
     nmap
     gnumake
+    gcc
+    gdb
+    cmake
     chromium
     google-chrome
     wget
