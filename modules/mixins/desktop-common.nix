@@ -108,6 +108,33 @@ in {
     # Builds qtwebkit from source!
 #    qt5.full
     qtcreator
+
+    qt5.qmake
+    libsForQt5.qt5.qt3d
+    libsForQt5.qt5.qtsensors
+    libsForQt5.qt5.qtserialport
+    libsForQt5.qt5.qtvirtualkeyboard
+    libsForQt5.qt5.qtwebchannel
+    libsForQt5.qt5.qtlottie
+    libsForQt5.qt5.qtvirtualkeyboard
+
+    libsForQt5.qt5.qtcharts
+    libsForQt5.qt5.qtconnectivity
+    libsForQt5.qt5.qtdeclarative
+    libsForQt5.qt5.qtdoc
+    libsForQt5.qt5.qtgraphicaleffects
+    libsForQt5.qt5.qtimageformats
+    libsForQt5.qt5.qtlocation
+    libsForQt5.qt5.qtmultimedia
+    libsForQt5.qt5.qtwebkit
+
+    libsForQt5.qt5.qtquickcontrols
+    libsForQt5.qt5.qtquickcontrols2
+    libsForQt5.qt5.qtscript
+    libsForQt5.qt5.qttranslations
+    libsForQt5.qt5.qtwebengine
+    libsForQt5.qt5.qtwebview
+
     libsForQt5.qt5.qmake
     libsForQt5.qt5.qttools
     libsForQt5.qt5.qtbase
