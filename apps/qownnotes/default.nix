@@ -9,7 +9,6 @@
 , qtwayland
 , qtwebsockets
 , qtx11extras
-, qtxmlpatterns
 , makeWrapper
 , wrapQtAppsHook
 }:
@@ -39,7 +38,6 @@ stdenv.mkDerivation {
     qtsvg
     qtwebsockets
     qtx11extras
-    qtxmlpatterns
   ] ++ lib.optionals stdenv.isLinux [ qtwayland ];
 
   postInstall =
