@@ -14,7 +14,7 @@ buildGoModule rec {
   vendorSha256 = "sha256-7t5rQliLm6pMUHhtev/kNrQ7AOvmA/rR93SwNQhov6o=";
 
   ldflags = [
-    "-s -w -X github.com/qownnotes/qc/cmd.version=${version}"
+    "-s" "-w" "-X=github.com/qownnotes/qc/cmd.version=${version}"
   ];
 
   doCheck = false;
@@ -34,7 +34,7 @@ buildGoModule rec {
     description = "QOwnNotes command-line snippet manager";
     homepage = "https://github.com/qownnotes/qc";
     license = licenses.mit;
-    maintainers = with maintainers; [ pbek ];
+    maintainers = with maintainers; [ pbek totoroot ];
     platforms = platforms.linux ++ platforms.darwin;
   };
 }
