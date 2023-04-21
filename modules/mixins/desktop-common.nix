@@ -208,6 +208,8 @@ in {
     libsForQt5.plasma-vault
     kdiff3
     partition-manager
+
+    pinentry-curses
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -221,7 +223,7 @@ in {
 
   services.pcscd.enable = true;
   services.udev.packages = [ pkgs.yubikey-personalization ];
-  programs.ssh.startAgent = false;
+#  programs.ssh.startAgent = false;
 
   # Do garbage collection
   nix.gc = {
