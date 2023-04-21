@@ -210,6 +210,7 @@ in {
     partition-manager
 
     pinentry-curses
+    killall
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
