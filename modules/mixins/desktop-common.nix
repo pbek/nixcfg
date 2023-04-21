@@ -212,6 +212,7 @@ in {
     pinentry-curses
     killall
     cryfs
+    onlyoffice-bin
 
     # TU Graz
     vpnc
