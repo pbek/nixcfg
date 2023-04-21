@@ -233,6 +233,10 @@ in {
     options = "--delete-older-than 30d";
   };
 
+  # Docker
+  # https://nixos.wiki/wiki/Docker
+  virtualisation.docker.enable = true;
+
   # List services that you want to enable:
 
   # Open ports in the firewall.
