@@ -211,6 +211,13 @@ in {
 
     pinentry-curses
     killall
+    cryfs
+
+    # TU Graz
+    vpnc
+    networkmanager-vpnc
+    openconnect
+    networkmanager-openconnect
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
