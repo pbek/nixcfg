@@ -247,12 +247,9 @@ in {
 
   # Add Restic Security Wrapper
   # https://nixos.wiki/wiki/Restic
-  users.users.restic = {
-    isNormalUser = true;
-  };
   security.wrappers.restic = {
     source = "${pkgs.restic.out}/bin/restic";
-    owner = "restic";
+    owner = "omega";
     group = "users";
     permissions = "u=rwx,g=,o=";
     capabilities = "cap_dac_read_search=+ep";
