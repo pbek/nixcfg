@@ -48,4 +48,10 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
 
+
+  # https://nixos.wiki/wiki/nvidia
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.opengl.enable = true;
+  # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
+#  hardware.nvidia.modesetting.enable = true;
 }
