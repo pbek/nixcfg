@@ -213,6 +213,7 @@ in {
     killall
     cryfs
     onlyoffice-bin
+    gh
 
     # TU Graz
     vpnc
