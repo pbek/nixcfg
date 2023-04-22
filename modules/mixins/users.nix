@@ -7,7 +7,7 @@
   users.users.omega = {
     isNormalUser = true;
     description = "omega";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "dialout" ];
     shell = pkgs.fish;
     packages = with pkgs; [
     ];
