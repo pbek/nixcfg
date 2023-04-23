@@ -14,6 +14,7 @@
     ../../modules/mixins/desktop-common.nix
     ../../modules/mixins/jetbrains.nix
     ../../modules/mixins/openssh.nix
+    ../../modules/mixins/virt-manager.nix
 #    ../../modules/editor/nvim.nix
     # this brought me an infinite recursion
 #    mixins-openssh
@@ -42,11 +43,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
-
-
-  # https://nixos.wiki/wiki/Virt-manager
-  virtualisation.libvirtd.enable = true;
-  programs.dconf.enable = true;
-  environment.systemPackages = with pkgs; [ virt-manager ];
-  virtualisation.spiceUSBRedirection.enable = true;
 }

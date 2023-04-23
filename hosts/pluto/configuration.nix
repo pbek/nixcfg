@@ -14,6 +14,7 @@
     ../../modules/mixins/desktop-common.nix
     ../../modules/mixins/jetbrains.nix
     ../../modules/mixins/openssh.nix
+    ../../modules/mixins/virt-manager.nix
 #    ../../modules/editor/nvim.nix
     # this brought me an infinite recursion
 #    mixins-openssh
@@ -52,12 +53,6 @@
   # virtualisation.virtualbox.host.enable = true;
   # users.extraGroups.vboxusers.members = [ "omega" ];
   # virtualisation.virtualbox.host.enableExtensionPack = true;
-
-  # https://nixos.wiki/wiki/Virt-manager
-  virtualisation.libvirtd.enable = true;
-  programs.dconf.enable = true;
-  environment.systemPackages = with pkgs; [ virt-manager ];
-  virtualisation.spiceUSBRedirection.enable = true;
 
   # https://nixos.wiki/wiki/steam
   programs.steam = {
