@@ -62,6 +62,10 @@
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.opengl.enable = true;
+
+  # The NVIDIA GeForce GTX 760 GPU needs the NVIDIA 470.xx Legacy drivers
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
+
   # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
-  hardware.nvidia.modesetting.enable = true;
+  # hardware.nvidia.modesetting.enable = true;
 }
