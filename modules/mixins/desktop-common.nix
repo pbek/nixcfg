@@ -226,6 +226,7 @@ in {
     partition-manager
 
     pinentry-curses
+    pinentry-qt
     killall
     cryfs
     onlyoffice-bin
@@ -244,7 +245,7 @@ in {
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
-    pinentryFlavor = "curses";
+    pinentryFlavor = "qt";
   };
 
   services.pcscd.enable = true;
