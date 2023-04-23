@@ -1,11 +1,5 @@
 { config, pkgs, inputs, ... }:
-
-let
-  unstable = import
-    (builtins.fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz)
-    # reuse the current configuration
-    { config = config.nixpkgs.config; };
-in {
+{
   boot.kernel.sysctl = {
     # Note that inotify watches consume 1kB on 64-bit machines.
     "fs.inotify.max_user_watches" = 1048576; # default: 8192
@@ -108,7 +102,7 @@ in {
     firefox
     kate
     kmail
-    unstable.smartgithg
+    smartgithg
     fish
     magic-wormhole
     libsForQt5.yakuake
@@ -162,7 +156,7 @@ in {
     libsForQt5.qt5.qtxmlpatterns
     libsForQt5.qt5.wrapQtAppsHook
 
-#    unstable.qownnotes
+#    qownnotes
     (pkgs.libsForQt5.callPackage ../../apps/qownnotes/default.nix { })
     (pkgs.callPackage ../../apps/qc/default.nix { })
 
