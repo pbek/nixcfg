@@ -24,6 +24,9 @@ ln -s hosts/${HOSTNAME}/hardware-configuration.nix
 # edit configuration.nix
 kate . &
 
+# check for Nvidia card
+nix-shell -p pciutils --run 'lspci | grep VGA'
+
 # switch to unstable channel and upgrade
 sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos && sudo nixos-rebuild switch --upgrade
 
@@ -33,7 +36,7 @@ nix-shell -p git --run 'git remote set-url origin git@github.com:pbek/nixcfg.git
 # look at network load?
 nix-shell -p nload --run 'nload enp0s25'
 
-# login at ther computer and start the restic mount and restore
+# login at another computer and start the restic mount and restore
 
 # take over tmux session at local system to watch restore
 tmux new-session -A -s main
