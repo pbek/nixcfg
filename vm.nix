@@ -1,4 +1,6 @@
-# vm.nix
+# NixOS Test VM
+#
+# nixos-rebuild -I nixos-config=./vm.nix build-vm
 { lib, config, ... }:
 {
     imports =
