@@ -13,5 +13,6 @@
 
   services.tor.enable = true;
   users.users.root.initialPassword = "root";
+  users.users.omega.initialPassword = "omega";
 }
 
