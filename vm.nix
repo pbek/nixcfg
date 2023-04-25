@@ -10,7 +10,7 @@
 #
 # build pr in vm
 # > nixos-rebuild -I nixos-config=./vm.nix -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/pull/223593/head.tar.gz build-vm
-# > ./result/bin/run-*-vm
+# > QEMU_OPTS="-m 4096 -smp 4 -enable-kvm" ./result/bin/run-*-vm
 #
 { lib, config, ... }:
 {
