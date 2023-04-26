@@ -6,3 +6,6 @@ upgrade:
 
 rekey:
 	cd ./secrets && agenix -i ~/.ssh/agenix --rekey
+
+keyscan:
+	ssh-keyscan localhost
