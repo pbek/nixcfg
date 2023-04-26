@@ -34,5 +34,4 @@ in
 {
   # agenix -i ~/.ssh/agenix -e secret1.age
   "secret1.age".publicKeys = systems;
-  "secret2.age".publicKeys = systems;
 }
