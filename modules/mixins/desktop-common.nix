@@ -5,7 +5,7 @@ in
 {  imports = [
     "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/main.tar.gz"}/modules/age.nix"
     (import "${home-manager}/nixos")
-    "./git.nix"
+    ./git.nix
   ];
 
   boot.kernel.sysctl = {
