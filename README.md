@@ -49,6 +49,21 @@ sudo reboot
 
 In the end commit changes to https://github.com/pbek/nixcfg.
 
+## Secrets
+
+### Rekey after adding new host
+
+This needs to be done if hosts were added.
+
+- run `ssh-key-scan localhost` on new host
+- add those keys to `./secrets/secret.nix`
+- run `cd ./secrets && agenix -i ~/.ssh/agenix --rekey` to rekey all keys
+
+### Add secret
+
+```bash
+cd ./secrets && agenix -i ~/.ssh/agenix -e secret-file.age
+```
 
 ## Commands
 
