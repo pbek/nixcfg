@@ -5,6 +5,7 @@ in
 {  imports = [
     "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/main.tar.gz"}/modules/age.nix"
     (import "${home-manager}/nixos")
+    "./git.nix"
   ];
 
   boot.kernel.sysctl = {
@@ -172,7 +173,6 @@ in
     mc
     htop
     atop
-    git
     keepassxc
     inetutils
     nmap
@@ -279,20 +279,8 @@ in
   home-manager.users.omega = {
     /* The home.stateVersion option does not have a default and must be set */
     home.stateVersion = "22.11";
-    /* Here goes the rest of your home-manager config, e.g. home.packages = [ pkgs.foo ]; */
-
-    programs.git = {
-      enable = true;
-      userName  = "Patrizio Bekerle";
-      userEmail = "patrizio@bekerle.com";
-      difftastic.enable = true;
-      ignores = [ ".idea" ];
-      signing = {
-        signByDefault = true;
-        key = "E00548D5D6AC812CAAD2AFFA9C42B05E591360DC";
-      };
-    };
   };
+
   # List services that you want to enable:
 
   # Open ports in the firewall.
