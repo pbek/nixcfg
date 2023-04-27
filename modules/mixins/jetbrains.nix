@@ -1,17 +1,22 @@
 { config, pkgs, inputs, ... }:
 
 let
-  pr = import
-    (builtins.fetchTarball https://github.com/NixOS/nixpkgs/archive/pull/223593/head.tar.gz)
-    # reuse the current configuration
-    { config = config.nixpkgs.config; };
+  prForJBPlugins = import
+    (builtins.fetchTarball {
+      url = https://github.com/NixOS/nixpkgs/archive/pull/223593/head.tar.gz;
+      sha256 = "sha256:1wc70sq3nzk58kp9bbzlw2f57df02d7jclf5dhqc2sr0jk3psiaf";
+    })
+    {
+      config = config.nixpkgs.config;
+      localSystem = { system = "x86_64-linux"; };
+    };
 in {
   environment.systemPackages = with pkgs; [
     # jetbrains.phpstorm
-    (pr.jetbrains.plugins.addPlugins pr.jetbrains.phpstorm [ "github-copilot" ])
+    (prForJBPlugins.jetbrains.plugins.addPlugins prForJBPlugins.jetbrains.phpstorm [ "github-copilot" ])
     # jetbrains.clion
-    (pr.jetbrains.plugins.addPlugins pr.jetbrains.clion [ "github-copilot" ])
-    jetbrains.goland
-    # (pr.jetbrains.plugins.addPlugins pr.jetbrains.goland [ "github-copilot" ])
+    (prForJBPlugins.jetbrains.plugins.addPlugins prForJBPlugins.jetbrains.clion [ "github-copilot" ])
+    prForJBPlugins.jetbrains.goland
+    # (prForJBPlugins.jetbrains.plugins.addPlugins prForJBPlugins.jetbrains.goland [ "github-copilot" ])
   ];
 }
