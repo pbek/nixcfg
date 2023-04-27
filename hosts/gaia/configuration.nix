@@ -1,4 +1,4 @@
-# Office Work PC
+# Gaia Office Work PC
 
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
@@ -44,13 +44,14 @@
 
   environment.systemPackages = with pkgs; [
     gparted
+    calibre
   ];
 
   # Extract
 
   # https://nixos.wiki/wiki/VirtualBox
-  # virtualisation.virtualbox.host.enable = true;
-  # users.extraGroups.vboxusers.members = [ "omega" ];
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "omega" ];
   # virtualisation.virtualbox.host.enableExtensionPack = true;
 
   # https://nixos.wiki/wiki/steam
