@@ -3,24 +3,24 @@
   pkgs.mkShell {
     # nativeBuildInputs is usually what you want -- tools you need to run
     nativeBuildInputs = [
-      pkgs.php82
-      pkgs.php82Extensions.ldap
-      pkgs.php82Extensions.gd
-      pkgs.php82Extensions.mysqli
-      pkgs.php82Extensions.soap
-      pkgs.php82Extensions.ldap
-      pkgs.php82Extensions.mbstring
-      pkgs.php82Extensions.xml
-      pkgs.php82Extensions.intl
-      pkgs.php82Extensions.apcu
-      pkgs.php82Extensions.curl
-      pkgs.php82Extensions.readline
-      pkgs.php82Extensions.zip
-      pkgs.php82Extensions.redis
-      pkgs.php82Extensions.gmp
-      pkgs.php82Extensions.sqlite3
-      pkgs.php82Extensions.xdebug
-      pkgs.php82Packages.composer
+      pkgs.php81
+      pkgs.php81Extensions.ldap
+      pkgs.php81Extensions.gd
+      pkgs.php81Extensions.mysqli
+      pkgs.php81Extensions.soap
+      pkgs.php81Extensions.ldap
+      pkgs.php81Extensions.mbstring
+      pkgs.php81Extensions.xml
+      pkgs.php81Extensions.intl
+      pkgs.php81Extensions.apcu
+      pkgs.php81Extensions.curl
+      pkgs.php81Extensions.readline
+      pkgs.php81Extensions.zip
+      pkgs.php81Extensions.redis
+      pkgs.php81Extensions.gmp
+      pkgs.php81Extensions.sqlite3
+      pkgs.php81Extensions.xdebug
+      pkgs.php81Packages.composer
       # pkgs.nur.repos.izorkin.php74
       # pkgs.nur.repos.izorkin.php74Packages.composer2
     ];
