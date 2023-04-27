@@ -45,6 +45,7 @@
   environment.systemPackages = with pkgs; [
     gparted
     calibre
+    arduino
   ];
 
   # Extract
