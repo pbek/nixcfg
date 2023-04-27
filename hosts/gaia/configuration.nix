@@ -50,6 +50,18 @@
 
   # Extract
 
+  # https://github.com/NixOS/nixpkgs/issues/215450
+  # users.users.omega = {
+  #   packages = with pkgs; [
+  #     playwright
+  #     (runCommand "wrapped-playwright" { buildInputs = [ makeWrapper ]; } ''
+  #     mkdir -p "$out/bin"
+  #     makeWrapper "${playwright}/bin/playwright" "$out/bin/playwright" \
+  #       --set PLAYWRIGHT_BROWSERS_PATH "${playwright.browsers}"
+  #     '')
+  #   ];
+  # };
+
   # https://nixos.wiki/wiki/VirtualBox
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "omega" ];
