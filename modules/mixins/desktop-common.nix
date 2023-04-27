@@ -290,6 +290,6 @@ in
   # networking.firewall.enable = false;
 
   nix.extraOptions = ''
-    experimental-features = nix-command
+    experimental-features = nix-command flakes
     '';
 }
