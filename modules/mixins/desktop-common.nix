@@ -288,4 +288,8 @@ in
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+
+  nix.extraOptions = ''
+    experimental-features = nix-command
+    '';
 }
