@@ -46,6 +46,7 @@
     gparted
     calibre
     arduino
+    libsForQt5.kdialog
   ];
 
   # Extract
