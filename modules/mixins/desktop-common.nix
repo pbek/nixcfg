@@ -208,6 +208,7 @@ in
     libsForQt5.kleopatra
     libsForQt5.kmail
     libsForQt5.korganizer
+    libsForQt5.kaddressbook
     libsForQt5.yakuake
     libsForQt5.spectacle
     libsForQt5.ark
