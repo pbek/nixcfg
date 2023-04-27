@@ -6,7 +6,7 @@
   # Define a user account. Don't forget to set a password with ?passwd?.
   users.users.omega = {
     isNormalUser = true;
-    description = "omega";
+    description = "Patrizio Bekerle";
     extraGroups = [ "networkmanager" "wheel" "docker" "dialout" ];
     shell = pkgs.fish;
     packages = with pkgs; [
