@@ -3,5 +3,6 @@
     # nativeBuildInputs is usually what you want -- tools you need to run
     nativeBuildInputs = [
       pkgs.nodejs-18_x
+      # pkgs.playwright
     ];
 }
