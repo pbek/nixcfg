@@ -282,6 +282,15 @@ in
     home.stateVersion = "22.11";
   };
 
+
+  # Disable wakeup from USB devices
+  powerManagement.powerDownCommands = ''
+    for f in /sys/bus/usb/devices/*/power/wakeup
+    do
+      echo "disabled" > $f
+    done
+  '';
+
   # List services that you want to enable:
 
   # Open ports in the firewall.
