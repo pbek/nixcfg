@@ -9,6 +9,7 @@
       p8 = "nix-shell /etc/nixos/shells/php8.nix --run fish";
       qtc = "nix-shell /etc/nixos/shells/qt5.nix --run qtcreator";
       cl = "nix-shell /etc/nixos/shells/qt5.nix --run clion";
+      nsf = "nix-shell --run fish";
     };
   };
 
