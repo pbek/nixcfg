@@ -46,22 +46,32 @@
     gparted
     calibre
     arduino
+    g810-led
     libsForQt5.kdialog
   ];
+
+  # Handle keyboard leds
+  powerManagement.powerUpCommands = ''
+    ${pkgs.g810-led}/bin/g213-led -r 1 ff0000     # Set color of zone 1 to red
+    ${pkgs.g810-led}/bin/g213-led -r 2 ff0000     # Set color of zone 2 to red
+    ${pkgs.g810-led}/bin/g213-led -r 3 ff0000     # Set color of zone 3 to red
+    ${pkgs.g810-led}/bin/g213-led -r 4 7fff00     # Set color of zone 4 to green
+    ${pkgs.g810-led}/bin/g213-led -r 5 7fff00     # Set color of zone 5 to green
+  '';
 
   # Extract
 
   # https://github.com/NixOS/nixpkgs/issues/215450
-  # users.users.omega = {
-  #   packages = with pkgs; [
-  #     playwright
-  #     (runCommand "wrapped-playwright" { buildInputs = [ makeWrapper ]; } ''
-  #     mkdir -p "$out/bin"
-  #     makeWrapper "${playwright}/bin/playwright" "$out/bin/playwright" \
-  #       --set PLAYWRIGHT_BROWSERS_PATH "${playwright.browsers}"
-  #     '')
-  #   ];
-  # };
+  users.users.omega = {
+    packages = with pkgs; [
+      playwright
+      (runCommand "wrapped-playwright" { buildInputs = [ makeWrapper ]; } ''
+      mkdir -p "$out/bin"
+      makeWrapper "${playwright}/bin/playwright" "$out/bin/playwright" \
+        --set PLAYWRIGHT_BROWSERS_PATH "${playwright-driver.browsers}"
+      '')
+    ];
+  };
 
   # https://nixos.wiki/wiki/VirtualBox
   virtualisation.virtualbox.host.enable = true;
