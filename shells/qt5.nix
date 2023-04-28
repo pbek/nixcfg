@@ -2,6 +2,7 @@
   pkgs.mkShell {
     # nativeBuildInputs is usually what you want -- tools you need to run
     nativeBuildInputs = [
+      pkgs.crowdin-cli
       pkgs.cmakeWithGui
       pkgs.buildPackages.cmakeWithGui
       pkgs.buildPackages.qt5.qtbase
