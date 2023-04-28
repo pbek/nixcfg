@@ -1,7 +1,16 @@
 { config, pkgs, inputs, ... }:
 
 {
-  programs.fish.enable = true;
+  # Set some fish config
+  programs.fish = {
+    enable = true;
+    shellAliases = {
+      n18 = "nix-shell /etc/nixos/shells/node18.nix --run fish";
+      p8 = "nix-shell /etc/nixos/shells/php8.nix --run fish";
+      qtc = "nix-shell /etc/nixos/shells/qt5.nix --run qtcreator";
+      cl = "nix-shell /etc/nixos/shells/qt5.nix --run clion";
+    };
+  };
 
   # Define a user account. Don't forget to set a password with ?passwd?.
   users.users.omega = {
