@@ -291,6 +291,9 @@ in
     done
   '';
 
+  # https://github.com/NixOS/nixpkgs/pull/66480/files
+  programs.fuse.userAllowOther = true;
+
   # List services that you want to enable:
 
   # Open ports in the firewall.
