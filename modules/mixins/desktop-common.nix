@@ -154,16 +154,16 @@ in
 #    libsForQt5.qt5.qtwebengine
 #    libsForQt5.qt5.qtwebview
 
-    libsForQt5.qt5.qmake
-    libsForQt5.qt5.qttools
-    libsForQt5.qt5.qtbase
-    libsForQt5.qt5.qtdeclarative
-    libsForQt5.qt5.qtsvg
-    libsForQt5.qt5.qtwayland
-    libsForQt5.qt5.qtwebsockets
-    libsForQt5.qt5.qtx11extras
-    libsForQt5.qt5.qtxmlpatterns
-    libsForQt5.qt5.wrapQtAppsHook
+    # libsForQt5.qt5.qmake
+    # libsForQt5.qt5.qttools
+    # libsForQt5.qt5.qtbase
+    # libsForQt5.qt5.qtdeclarative
+    # libsForQt5.qt5.qtsvg
+    # libsForQt5.qt5.qtwayland
+    # libsForQt5.qt5.qtwebsockets
+    # libsForQt5.qt5.qtx11extras
+    # libsForQt5.qt5.qtxmlpatterns
+    # libsForQt5.qt5.wrapQtAppsHook
 
 #    qownnotes
     (pkgs.libsForQt5.callPackage ../../apps/qownnotes/default.nix { })
