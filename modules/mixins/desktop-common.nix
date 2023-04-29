@@ -227,6 +227,7 @@ in
     libsForQt5.plasma-vault
     kdiff3
     partition-manager
+    gparted
 
     pinentry-curses
     pinentry-qt

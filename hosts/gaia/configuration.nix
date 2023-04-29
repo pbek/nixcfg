@@ -43,7 +43,6 @@
 
 
   environment.systemPackages = with pkgs; [
-    gparted
     calibre
     arduino
     g810-led
