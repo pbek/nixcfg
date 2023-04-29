@@ -20,11 +20,21 @@
 #    mixins-openssh
     ];
 
-  # Bootloader.
+  # Bootloader
+  # Getting the bootloader to detect Windows didn't work, use F12 at boot for a boot manager
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  boot.loader.grub.useOSProber = true;
+
+  # boot.loader.grub.enable = true;
+  # boot.loader.grub.version = 2;
+  # boot.loader.grub.device = "nodev";
+  # boot.loader.grub.useOSProber = true;
+  # boot.loader.grub.extraEntries = ''
+  #   menuentry "Windows 10" {
+  #     chainloader (hd0,gpt2)+1
+  #   }
+  # '';
 
   # Setup keyfile
   boot.initrd.secrets = {
