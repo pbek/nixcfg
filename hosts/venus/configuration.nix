@@ -49,4 +49,11 @@
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.opengl.enable = true;
+
+  # Enable suspend to RAM
+  # Sleep is hindered by a compontent on the motherboard
+  # Problem with "00:01.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge"
+  powerManagement.powerDownCommands = ''
+    echo GPP0 > /proc/acpi/wakeup
+  '';
 }
