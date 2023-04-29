@@ -55,7 +55,7 @@ In the end commit changes to https://github.com/pbek/nixcfg.
 
 This needs to be done if hosts were added.
 
-- run `ssh-key-scan localhost` on new host
+- run `ssh-keyscan localhost` on new host
 - add those keys to `./secrets/secret.nix`
 - run `cd ./secrets && agenix -i ~/.ssh/agenix --rekey` to rekey all keys
 
