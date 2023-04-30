@@ -28,5 +28,7 @@
   services.tor.enable = true;
   users.users.root.initialPassword = "root";
   users.users.omega.initialPassword = "omega";
+
+  system.stateVersion = "23.05"; # Did you read the comment?
 }
 
