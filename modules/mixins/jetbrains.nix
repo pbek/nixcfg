@@ -3,8 +3,8 @@
 let
   prForJBPlugins = import
     (builtins.fetchTarball {
-      url = https://github.com/NixOS/nixpkgs/archive/62ba85c05e275112a365083ebde5317f0042be6d.tar.gz;
-      sha256 = "sha256:0gbxwm1zabnwjmsiql1ywmh32ls44wfkd2f770p9vldwjgfnja7v";
+      url = https://github.com/NixOS/nixpkgs/archive/b263fdc5941d621308a9953d5ca1c163dce5209f.tar.gz;
+      sha256 = "sha256:10jhf5y261rgj8kc7sb9fmg68h2j4nnylb4ci0dxykkry4zd6r62";
     })
     {
       config = config.nixpkgs.config;
