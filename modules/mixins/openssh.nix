@@ -20,6 +20,7 @@ in
 #    permitRootLogin = lib.mkForce "no";
   };
 
+  # Add Yubikey public ssh key
   # https://rycee.gitlab.io/home-manager/options.html
   home-manager.users.omega = {
     home.file.".ssh/id_ecdsa_sk.pub".text = ''
@@ -27,6 +28,7 @@ in
     '';
   };
 
+  # Add Yubikey private ssh key
   age.secrets = {
     id_ecdsa_sk = {
       file = ../../secrets/id_ecdsa_sk.age;
