@@ -175,6 +175,7 @@ in
     atop
     keepassxc
     inetutils
+    dig
     nmap
     gnumake
     gcc
