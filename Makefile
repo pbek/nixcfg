@@ -4,10 +4,10 @@ rebuild:
 upgrade:
 	sudo nixos-rebuild switch --upgrade
 
-rekey-age:
+rekey-fallback:
 	cd ./secrets && agenix -i ~/.ssh/agenix --rekey
 
-rekey-all:
+rekey:
 	cd ./secrets && agenix --rekey
 
 keyscan:
