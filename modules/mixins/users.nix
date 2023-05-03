@@ -11,6 +11,9 @@
       cl = "nix-shell /etc/nixos/shells/qt5.nix --run clion";
       nsf = "nix-shell --run fish";
     };
+    shellAbbrs = {
+      vim = "nvim";
+    };
   };
 
   # Define a user account. Don't forget to set a password with ?passwd?.
