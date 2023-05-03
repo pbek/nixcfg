@@ -7,7 +7,8 @@ in
   home-manager.users.omega = {
     programs.git = {
       enable = true;
-      difftastic.enable = true;
+      # don't enable that, it destroys my workflow of creating patch files with "git diff"
+      difftastic.enable = false;
       userName  = "Patrizio Bekerle";
       userEmail = "patrizio@bekerle.com";
       ignores = [ ".idea" ".direnv" ];
