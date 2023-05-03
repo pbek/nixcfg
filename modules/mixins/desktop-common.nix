@@ -309,6 +309,11 @@ in
         categories = [ "Development" ];
       };
     };
+
+    # enable https://direnv.net/
+    programs.direnv.enable = true;
+    programs.direnv.enableFishIntegration = true;
+    programs.direnv.nix-direnv.enable = true;
   };
 
   # List services that you want to enable:
