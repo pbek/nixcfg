@@ -64,7 +64,7 @@
   # Enable suspend to RAM
   # Sleep is hindered by a compontent on the motherboard
   # Problem with "00:01.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge"
-  powerManagement.powerDownCommands = ''
+  powerManagement.powerUpCommands = ''
     echo GPP0 > /proc/acpi/wakeup
   '';
 }
