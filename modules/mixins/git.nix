@@ -10,12 +10,18 @@ in
       difftastic.enable = true;
       userName  = "Patrizio Bekerle";
       userEmail = "patrizio@bekerle.com";
-      ignores = [ ".idea" ];
+      ignores = [ ".idea" ".direnv" ];
       signing = {
         signByDefault = true;
         key = "E00548D5D6AC812CAAD2AFFA9C42B05E591360DC";
       };
     };
+
+    # we had that file by default in the past
+    home.file.".gitignore".text = ''
+      .idea
+      .direnv
+    '';
 
     # we had that file by default in the past
     home.file.".gitconfig".text = ''
