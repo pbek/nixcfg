@@ -55,6 +55,8 @@ in
         initializenew = true
       [push]
         recurseSubmodules = check
+      [init]
+        defaultBranch = main
     '';
   };
 }
