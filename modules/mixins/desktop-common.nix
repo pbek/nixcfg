@@ -284,6 +284,11 @@ in
   home-manager.users.omega = {
     /* The home.stateVersion option does not have a default and must be set */
     home.stateVersion = "22.11";
+
+    # allow unfree packages in nix-shell
+    home.file.".config/nixpkgs/config.nix".text = ''
+      { allowUnfree = true; }
+    '';
   };
 
 
