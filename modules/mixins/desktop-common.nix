@@ -26,8 +26,8 @@ in
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_AT.UTF-8";
-    LC_ALL = "de_AT.UTF-8";
-    LC_CTYPE = "de_AT.UTF-8";
+    LC_ALL = "en_US.UTF-8";
+    LC_CTYPE = "en_US.UTF-8";
     LC_IDENTIFICATION = "de_AT.UTF-8";
     LC_MEASUREMENT = "de_AT.UTF-8";
     LC_MONETARY = "de_AT.UTF-8";
@@ -312,9 +312,18 @@ in
     };
 
     # enable https://direnv.net/
-    programs.direnv.enable = true;
-    programs.direnv.enableFishIntegration = true;
-    programs.direnv.nix-direnv.enable = true;
+    programs.direnv = {
+      enable = true;
+      enableFishIntegration = true;
+      nix-direnv.enable = true;
+    };
+
+    # enable https://starship.rs
+    programs.starship = {
+      enable = true;
+      enableFishIntegration = true;
+      enableBashIntegration = true;
+    };
   };
 
   # List services that you want to enable:
