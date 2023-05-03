@@ -175,6 +175,7 @@ in
     mc
     htop
     atop
+    btop
     keepassxc
     inetutils
     dig
