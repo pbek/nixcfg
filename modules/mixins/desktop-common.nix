@@ -168,7 +168,7 @@ in
     # libsForQt5.qt5.wrapQtAppsHook
 
 #    qownnotes
-    (pkgs.libsForQt5.callPackage ../../apps/qownnotes/default.nix { })
+    (pkgs.qt6Packages.callPackage ../../apps/qownnotes/default.nix { })
     (pkgs.callPackage ../../apps/qc/default.nix { })
 
     less

@@ -8,7 +8,7 @@
 , qtsvg
 , qtwayland
 , qtwebsockets
-, qtx11extras
+, qt5compat
 , makeWrapper
 , wrapQtAppsHook
 }:
@@ -23,7 +23,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://download.tuxfamily.org/${pname}/src/${pname}-${version}.tar.xz";
-    sha256 = "sha256-q+qBR5xec7gV7vUZ0iKXGPp+btbGrArK5KBM+C0LvZ4=";
+    hash = "sha256-q+qBR5xec7gV7vUZ0iKXGPp+btbGrArK5KBM+C0LvZ4=";
   };
 
   nativeBuildInputs = [
@@ -37,7 +37,7 @@ stdenv.mkDerivation {
     qtdeclarative
     qtsvg
     qtwebsockets
-    qtx11extras
+    qt5compat
   ] ++ lib.optionals stdenv.isLinux [ qtwayland ];
 
   postInstall =
@@ -58,7 +58,7 @@ stdenv.mkDerivation {
     changelog = "https://www.qownnotes.org/changelog.html";
     downloadPage = "https://github.com/pbek/QOwnNotes/releases/tag/v${version}";
     license = licenses.gpl2Only;
-    maintainers = with maintainers; [ pbek ];
+    maintainers = with maintainers; [ pbek totoroot ];
     platforms = platforms.unix;
   };
 }
