@@ -209,6 +209,7 @@ in
     libsForQt5.plasma-systemmonitor
     libsForQt5.kfind
     libsForQt5.kontact
+    libsForQt5.akonadiconsole
     libsForQt5.kleopatra
     libsForQt5.kmail
     libsForQt5.korganizer
