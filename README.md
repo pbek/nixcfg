@@ -33,8 +33,8 @@ sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos && sudo n
 # switch git remote to ssh
 nix-shell -p git --run 'git remote set-url origin git@github.com:pbek/nixcfg.git'
 
-# look at network load?
-nix-shell -p nload --run 'nload enp0s25'
+# look at network load and other stats?
+nix-shell -p btop --run btop
 
 # login at another computer and start the restic mount and restore
 
