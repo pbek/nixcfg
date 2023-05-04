@@ -25,6 +25,10 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
+  # blacklist BCM43a0 Broadcom wifi
+  # Wifi seems to still work and it seems much more stable
+  boot.blacklistedKernelModules = [ "brcm80211" ];
+
   # Setup keyfile
   boot.initrd.secrets = {
     "/crypto_keyfile.bin" = null;
@@ -43,4 +47,9 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
+
+  environment.systemPackages = with pkgs; [
+    wireguard-tools
+    powertop
+  ];
 }
