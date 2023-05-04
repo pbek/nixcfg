@@ -26,4 +26,4 @@ jobs:
       - name: Build qc package
         run: cd apps/qc && nix-build -E '((import <nixpkgs> {}).callPackage (import ./default.nix) { })'
       - name: Build qownnotes package
-        run: cd apps/qownnotes && nix-build -E '((import <nixpkgs> {}).libsForQt5.callPackage (import ./default.nix) { })'
+        run: cd apps/qownnotes && nix-build -E '((import <nixpkgs> {}).qt6Packages.callPackage (import ./default.nix) { })'
