@@ -169,7 +169,8 @@ in
 
 #    qownnotes
     (pkgs.qt6Packages.callPackage ../../apps/qownnotes/default.nix { })
-    (pkgs.callPackage ../../apps/qc/default.nix { })
+    # (pkgs.callPackage ../../apps/qc/default.nix { })
+    qc
 
     less
     mc
