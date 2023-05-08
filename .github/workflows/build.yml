@@ -34,8 +34,8 @@ jobs:
         run: |
           cd apps/qc && \
           nix-build -E '((import <nixpkgs> {}).callPackage (import ./default.nix) { })' && \
-          ls -hal && \
-          nix-shell https://github.com/zhaofengli/attic/tarball/main -A demo --run "attic push qownnotes ./results/*"
+          ls -hal
+          # nix-shell https://github.com/zhaofengli/attic/tarball/main -A demo --run "attic push qownnotes ./results/*"
       - name: Build qownnotes package
         run: |
           cd apps/qownnotes && \
