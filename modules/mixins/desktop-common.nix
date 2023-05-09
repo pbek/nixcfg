@@ -250,7 +250,7 @@ in
     libsForQt5.plasma-pa
     libsForQt5.plasma-vault
     kdiff3
-    partition-manager
+    # partition-manager
     gparted
 
     pinentry-curses
