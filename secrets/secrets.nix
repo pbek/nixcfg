@@ -34,12 +34,15 @@ let
   astra = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICj5px3xD0TvpCotMUsX/0iBEKfr7mBmHz6/EDZEFjEX"
   ];
+  caliban = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHDMq7r/kuJACN5FbjvsR7SEq8IStrvYnCn8muj7WzcC"
+  ];
   general = [
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCXfDasTCd/8qBgVWvhjzbE4XwwTASITR4ucuGlUiKeEQMFh/mfzuobKJlZ9cwppl1C9J9W3HmMrYBmYkEcD2kFqd3KhPZXwwFRg5JXWb46AviNGPul0NrF4IQcmdf6TwTLF3COsMEsL2B5pUjI/axEiQr9JlW6NhGVpi/WEymUgj1FOA4lg3gZ+IcCXCzR7u2b5EqM+ITFn/u1fyYK0lzJcLzaIZbUzicsZnUrFZkDL23GEfMfK6yBLrL0mFa0TzgB5Viu5wUy69RqGOjJqIJXODQ3/v2ciDCkng6LCf2Bw58tdxX6gXMU8/qQ8HJV2zJq0Hccr8wVchbnsSe316DF03RaoT9dIvu1VcguaIpmQGWEKJSM6oo+3AuBVczH1bBpYMxjd4VAah2twTrvrFcDZfQ/THHRT8mYgS7itX2PCQJ0fLW30s+dPLMRzzTgIe6lQBHrRwUbAZIDxrmE8z7lgHz75AlownyyMq5KFtMqB2KrmiKU1Nur5giDwLvXjAMkYiYXyZMhXkPxbHo7vpqQ8AMxL+4qGSWB36hyMShjTnDVe+rFh1KcjTEtZAFjacqDclsa9QRYAoIh4TJTjpJ06OgwfRFeN6VU4Mx0Kaw8Lv2BsUDHdSUoXtNjYHQIRu769bzKOi8hbyxULe9kmv7HIah9cjEAvDD3mPXGu1pgtw=="
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3ySO2ND+Za5z67zWrqMONDXLKBDgOKGuGRXJ2fNKfeN84lPkok/YTNifzvKAFWLB8tvzdQITUV2AaTWt7F33iJpfmJBG1OO2tgsr9SLUpwgthWMrA4FwsFI5/jhw4gQAa5i6R7nkKxOjaXe7BoS82OyIpIhXXpm5TDzMwWelJUBPhYxcDvoZD2BU0SVW3/uFBYIlHsQ5nNyoNtkDf6iJGRF6MlreAI2gyJMcnOm/DxhJ8l1D7BFZ1rPncDCOCn8YnFykp/R58VJBX2dosFaZQr7/17+exDivB4kPlpmWQS74Xej16QsHaqxocS/s0Vj5uQdI8Hk4fLum4yFf5Rxk7"
   ];
 
-  systems = agenix ++ eris ++ neptun ++ pluto ++ jupiter ++ general ++ gaia ++ venus ++ astra;
+  systems = agenix ++ eris ++ neptun ++ pluto ++ jupiter ++ general ++ gaia ++ venus ++ astra ++ caliban;
 in
 {
   # agenix -e secret1.age
