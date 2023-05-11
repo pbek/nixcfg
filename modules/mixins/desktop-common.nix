@@ -47,6 +47,12 @@ in
   services.xserver.desktopManager.plasma5.enable = true;
   programs.kdeconnect.enable = true;
 
+  environment.plasma5.excludePackages = with pkgs; [
+    # Did not work
+    partition-manager
+  ];
+
+
   # Enable bluetooth
   hardware.bluetooth.enable = true;
 
@@ -143,6 +149,7 @@ in
     # fishPlugins.grc
     # grc
     # nerdfonts
+    fira-code-symbols
 
     magic-wormhole
     libsForQt5.yakuake
@@ -319,12 +326,24 @@ in
 
     # allow unfree packages in nix-shell
     home.file.".config/nixpkgs/config.nix".text = ''
-      { allowUnfree = true; }
+      {
+        allowUnfree = true;
+      }
     '';
 
     # enable starship prompt in fish shell, enableFishIntegration in the starship config did not work
     home.file.".config/fish/conf.d/starship.fish".text = ''
       starship init fish | source
+    '';
+
+    # Enable starship for bash (did not work)
+    # programs.bash.bashrcExtra = ''
+    #   eval "$(starship init bash)"
+    # '';
+
+    # Enable starship for bash
+    home.file.".bash_aliases".text = ''
+      eval "$(starship init bash)"
     '';
 };
 
