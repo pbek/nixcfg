@@ -10,6 +10,11 @@
       qtc = "nix-shell /etc/nixos/shells/qt5.nix --run qtcreator";
       cl = "nix-shell /etc/nixos/shells/qt5.nix --run clion";
       nsf = "nix-shell --run fish";
+      gitc = "git commit";
+      gitp = "git push";
+      gita = "git add -A";
+      gits = "git status";
+      gitd = "git diff";
     };
     shellAbbrs = {
       vim = "nvim";
