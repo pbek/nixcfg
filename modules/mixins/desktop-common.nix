@@ -47,6 +47,9 @@ in
   services.xserver.desktopManager.plasma5.enable = true;
   programs.kdeconnect.enable = true;
 
+  # Enable bluetooth
+  hardware.bluetooth.enable = true;
+
   # Firewall
   # https://nixos.wiki/wiki/Firewall
   networking.firewall = {
