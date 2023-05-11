@@ -380,8 +380,17 @@ in
         git_branch = {
           style = "bold pink";
         };
+        username = {
+          disabled = false;
+          show_always = true;
+        };
+        character = {
+          success_symbol = "[➜](bold green)";
+          error_symbol = "[✗](bold red)";
+        };
 
-        # format = "$all"; # Remove this line to disable the default prompt format
+        # Move the directory to the second line
+        format = "$all$directory$character";
 
         # https://github.com/catppuccin/starship
         # https://github.com/catppuccin/starship/blob/main/palettes/mocha.toml
