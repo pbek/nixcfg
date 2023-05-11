@@ -361,7 +361,10 @@ in
     };
 
     # enable https://starship.rs
-    programs.starship = {
+    programs.starship =
+    let
+      flavour = "mocha"; # One of `latte`, `frappe`, `macchiato`, or `mocha`
+    in {
       enable = true;
       enableFishIntegration = true;
       enableBashIntegration = true;
@@ -369,9 +372,28 @@ in
       # https://starship.rs/config
       settings = {
         # add_newline = false;
-        directory.fish_style_pwd_dir_length = 3; # The number of characters to use when applying fish shell pwd path logic.
-        directory.truncation_length = 1; # The number of parent folders that the current directory should be truncated to.
-      };
+        directory = {
+          fish_style_pwd_dir_length = 3; # The number of characters to use when applying fish shell pwd path logic.
+          truncation_length = 1; # The number of parent folders that the current directory should be truncated to.
+          style = "bold sky";
+        };
+        git_branch = {
+          style = "bold pink";
+        };
+
+        # format = "$all"; # Remove this line to disable the default prompt format
+
+        # https://github.com/catppuccin/starship
+        # https://github.com/catppuccin/starship/blob/main/palettes/mocha.toml
+        palette = "catppuccin_${flavour}";
+      } // builtins.fromTOML (builtins.readFile
+        (pkgs.fetchFromGitHub
+          {
+            owner = "catppuccin";
+            repo = "starship";
+            rev = "3e3e54410c3189053f4da7a7043261361a1ed1bc";
+            sha256 = "sha256-soEBVlq3ULeiZFAdQYMRFuswIIhI9bclIU8WXjxd7oY=";
+          } + /palettes/${flavour}.toml));
     };
   };
 
