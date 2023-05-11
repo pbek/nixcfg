@@ -136,6 +136,14 @@ in
     kmail
     smartgithg
     fish
+    # fishPlugins.done
+    fishPlugins.fzf-fish
+    # fishPlugins.forgit
+    # fishPlugins.hydro
+    # fishPlugins.grc
+    # grc
+    # nerdfonts
+
     magic-wormhole
     libsForQt5.yakuake
     xclip
@@ -313,7 +321,12 @@ in
     home.file.".config/nixpkgs/config.nix".text = ''
       { allowUnfree = true; }
     '';
-  };
+
+    # enable starship prompt in fish shell, enableFishIntegration in the starship config did not work
+    home.file.".config/fish/conf.d/starship.fish".text = ''
+      starship init fish | source
+    '';
+};
 
 
   # Disable wakeup from USB devices
@@ -352,6 +365,13 @@ in
       enable = true;
       enableFishIntegration = true;
       enableBashIntegration = true;
+
+      # https://starship.rs/config
+      settings = {
+        # add_newline = false;
+        directory.fish_style_pwd_dir_length = 3; # The number of characters to use when applying fish shell pwd path logic.
+        directory.truncation_length = 1; # The number of parent folders that the current directory should be truncated to.
+      };
     };
   };
 
