@@ -149,6 +149,7 @@ in
     # fishPlugins.grc
     # grc
     # nerdfonts
+    fira-code
     fira-code-symbols
 
     magic-wormhole
