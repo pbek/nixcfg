@@ -278,6 +278,9 @@ in
     onlyoffice-bin
     gh
 
+    smartmontools
+    fwupd
+
     # TU Graz
     vpnc
     networkmanager-vpnc
