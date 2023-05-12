@@ -45,9 +45,6 @@ let
   systems = agenix ++ eris ++ neptun ++ pluto ++ jupiter ++ general ++ gaia ++ venus ++ astra ++ caliban;
 in
 {
-  # agenix -e secret1.age
-  "secret1.age".publicKeys = systems;
-
   # agenix -e id_ecdsa_sk.age
   "id_ecdsa_sk.age".publicKeys = systems;
 }
