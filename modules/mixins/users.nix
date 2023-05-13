@@ -15,6 +15,7 @@
       gita = "git add -A";
       gits = "git status";
       gitd = "git diff";
+      gitl = "git log";
     };
     shellAbbrs = {
       vim = "nvim";
