@@ -10,10 +10,11 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-    ../../modules/mixins/users.nix
-    ../../modules/mixins/desktop-common.nix
-    ../../modules/mixins/jetbrains.nix
-    ../../modules/mixins/openssh.nix
+      ../../modules/mixins/users.nix
+      ../../modules/mixins/audio.nix
+      ../../modules/mixins/desktop-common.nix
+      ../../modules/mixins/jetbrains.nix
+      ../../modules/mixins/openssh.nix
 #    ../../modules/editor/nvim.nix
     # this brought me an infinite recursion
 #    mixins-openssh
@@ -35,6 +36,9 @@
 
   networking.hostName = "jupiter"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Enable networking
+  networking.networkmanager.enable = true;
 
   environment.systemPackages = with pkgs; [
     wireguard-tools

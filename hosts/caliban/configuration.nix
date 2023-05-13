@@ -10,11 +10,12 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-    ../../modules/mixins/users.nix
-    ../../modules/mixins/desktop-common.nix
-    ../../modules/mixins/jetbrains.nix
-    ../../modules/mixins/openssh.nix
-    ../../modules/mixins/virt-manager.nix
+      ../../modules/mixins/users.nix
+      ../../modules/mixins/desktop-common.nix
+      ../../modules/mixins/audio.nix
+      ../../modules/mixins/jetbrains.nix
+      ../../modules/mixins/openssh.nix
+      ../../modules/mixins/virt-manager.nix
 #    ../../modules/editor/nvim.nix
     # this brought me an infinite recursion
 #    mixins-openssh
@@ -32,6 +33,9 @@
 
   networking.hostName = "caliban"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Enable networking
+  networking.networkmanager.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

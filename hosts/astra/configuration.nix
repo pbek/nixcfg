@@ -12,6 +12,7 @@
       ./hardware-configuration.nix
       ../../modules/mixins/users.nix
       ../../modules/mixins/desktop-common.nix
+      ../../modules/mixins/audio.nix
       ../../modules/mixins/jetbrains.nix
       ../../modules/mixins/openssh.nix
       ../../modules/mixins/virt-manager.nix
@@ -36,6 +37,9 @@
   boot.initrd.luks.devices."luks-c98e1bec-9e77-4107-bbcc-2be56cceb9d4".keyFile = "/crypto_keyfile.bin";
   networking.hostName = "astra"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Enable networking
+  networking.networkmanager.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
