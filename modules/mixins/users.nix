@@ -16,9 +16,9 @@
       gits = "git status";
       gitd = "git diff";
       gitl = "git log";
+      vim = "nvim";
     };
     shellAbbrs = {
-      vim = "nvim";
     };
   };
 
