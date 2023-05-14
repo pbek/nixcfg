@@ -402,6 +402,12 @@ in
           # setting afterwards any more
           format = "[$ssh_symbol$hostname]($style) ";
         };
+        # https://starship.rs/config/#shell
+        shell = {
+          disabled = false;
+          format = "\\[[$indicator]($style)\\] ";
+          style = "gray";
+        };
 
         # Move the directory to the second line
         # https://starship.rs/config/#default-prompt-format
