@@ -378,6 +378,7 @@ in
       enableBashIntegration = true;
 
       # https://starship.rs/config
+      # Lookup icons: https://www.nerdfonts.com/cheat-sheet
       settings = {
         # add_newline = false;
         directory = {
@@ -405,8 +406,10 @@ in
         # https://starship.rs/config/#shell
         shell = {
           disabled = false;
-          format = "\\[[$indicator]($style)\\] ";
+          # format = "\\[[$indicator]($style)\\] ";
           style = "gray";
+          fish_indicator = "󰈺";
+          # bash_indicator = "b";
         };
 
         # Move the directory to the second line
