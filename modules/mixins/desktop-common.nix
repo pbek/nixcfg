@@ -210,7 +210,6 @@ in
     google-chrome
     wget
     vscode
-    fwupd
     yubikey-manager
     pam_u2f
     yubico-pam
@@ -262,9 +261,7 @@ in
     cryfs
     onlyoffice-bin
     gh
-
     smartmontools
-    fwupd
 
     # TU Graz
     vpnc
@@ -285,6 +282,9 @@ in
   services.pcscd.enable = true;
   services.udev.packages = [ pkgs.yubikey-personalization ];
 #  programs.ssh.startAgent = false;
+
+  # Enable Fwupd
+  services.fwupd.enable = true;
 
   # Do garbage collection
   nix.gc = {
