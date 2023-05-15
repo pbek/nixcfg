@@ -17,6 +17,8 @@
       gitd = "git diff";
       gitl = "git log";
       vim = "nvim";
+      qce = "qc exec";
+      qcs = "qc search";
     };
     shellAbbrs = {
     };
