@@ -19,6 +19,7 @@
       vim = "nvim";
       qce = "qc exec";
       qcs = "qc search";
+      ll = "ls -hal";
     };
     shellAbbrs = {
       killall = "pkill";
