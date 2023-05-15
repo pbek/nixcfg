@@ -2,8 +2,9 @@ version: '3.7'
 services:
   vscode:
     build: ./vscode
-    restart: always
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
     environment:
-      - DISPLAY=
+      - DISPLAY=${DISPLAY}
+    network_mode: host
+    command: xeyes
