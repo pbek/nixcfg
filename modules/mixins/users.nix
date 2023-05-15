@@ -21,6 +21,7 @@
       qcs = "qc search";
     };
     shellAbbrs = {
+      killall = "pkill";
     };
   };
 

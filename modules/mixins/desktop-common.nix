@@ -257,7 +257,6 @@ in
 
     pinentry-curses
     pinentry-qt
-    killall
     cryfs
     onlyoffice-bin
     gh
