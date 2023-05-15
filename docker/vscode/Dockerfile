@@ -5,6 +5,7 @@ RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor 
 RUN sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list' && rm -f packages.microsoft.gpg
 RUN apt update
 RUN DEBIAN_FRONTEND=noninteractive apt -y install code
+RUN apt -y install x11-apps
 RUN rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
 RUN useradd -m user
 USER 1000
