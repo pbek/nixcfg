@@ -410,6 +410,7 @@ in
           fish_indicator = "󰈺";
           # bash_indicator = "b";
         };
+        status.disabled = false;
 
         # Move the directory to the second line
         # https://starship.rs/config/#default-prompt-format
