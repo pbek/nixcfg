@@ -8,6 +8,7 @@ upgrade-push: upgrade push
 
 push:
 	attic push main `which attic` && \
+	attic push qownnotes `which attic` && \
 	attic push qownnotes `which qownnotes` && \
 	attic push qownnotes `which qc`
 
