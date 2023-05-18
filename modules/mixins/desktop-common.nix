@@ -227,6 +227,7 @@ in
     sops
     ncdu
     sniffnet
+    wireguard-tools
 
     libsForQt5.kwalletmanager
     libsForQt5.plasma-systemmonitor
