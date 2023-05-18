@@ -41,7 +41,7 @@ stdenv.mkDerivation {
     description = "Tool that helps you to analyze your log files by reducing the content with patterns you define";
     homepage = "https://bekerle.com/posts/loganalyzer";
     changelog = "https://github.com/pbek/loganalyzer/blob/develop/CHANGELOG.md";
-    downloadPage = "https://github.com/pbek/loganalyzer/releases/tag/${version}";
+    downloadPage = "https://github.com/pbek/loganalyzer/releases/tag/v${version}";
     license = licenses.gpl2Only;
     maintainers = with maintainers; [ pbek ];
     platforms = platforms.unix;
