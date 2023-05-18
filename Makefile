@@ -4,6 +4,13 @@ rebuild:
 upgrade:
 	sudo nixos-rebuild switch --upgrade
 
+upgrade-push: upgrade push
+
+push:
+	attic push main `which attic` && \
+	attic push qownnotes `which qownnotes` && \
+	attic push qownnotes `which qc`
+
 rekey-fallback:
 	cd ./secrets && agenix -i ~/.ssh/agenix --rekey
 
