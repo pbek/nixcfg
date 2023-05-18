@@ -226,6 +226,7 @@ in
     ksnip
     sops
     ncdu
+    sniffnet
 
     libsForQt5.kwalletmanager
     libsForQt5.plasma-systemmonitor
