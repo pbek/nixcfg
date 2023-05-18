@@ -192,6 +192,7 @@ in
     (pkgs.qt6Packages.callPackage ../../apps/qownnotes/default.nix { })
     # (pkgs.callPackage ../../apps/qc/default.nix { })
     qc
+    (pkgs.libsForQt5.callPackage ../../apps/loganalyzer/default.nix { })
 
     less
     mc

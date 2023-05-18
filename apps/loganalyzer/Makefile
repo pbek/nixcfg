@@ -1,0 +1,2 @@
+build:
+	nix-build -E '((import <nixpkgs> {}).libsForQt5.callPackage (import ./default.nix) { })'

@@ -4,4 +4,4 @@
 /configuration.nix
 /hardware-configuration.nix
 /nixos.qcow2
-/result
+result
