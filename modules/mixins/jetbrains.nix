@@ -1,5 +1,6 @@
 { config, pkgs, inputs, xdg, ... }:
 
+# https://github.com/NixOS/nixpkgs/pull/223593
 let
   prForJBPlugins = import
     (builtins.fetchTarball {
