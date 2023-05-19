@@ -228,6 +228,7 @@ in
     ncdu
     sniffnet
     wireguard-tools
+    nixpkgs-review
 
     libsForQt5.kwalletmanager
     libsForQt5.plasma-systemmonitor
