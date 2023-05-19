@@ -5,3 +5,4 @@
 /hardware-configuration.nix
 /nixos.qcow2
 result
+/scripts/.pia.env
