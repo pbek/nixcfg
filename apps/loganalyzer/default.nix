@@ -1,6 +1,6 @@
 { lib
 , stdenv
-, fetchurl
+, fetchFromGitHub
 , qtbase
 , qtsvg
 , wrapQtAppsHook
@@ -9,14 +9,17 @@
 let
   pname = "loganalyzer";
   appname = "LogAnalyzer";
-  version = "23.5.0";
+  version = "23.5.1";
 in
 stdenv.mkDerivation {
   inherit pname appname version;
 
-  src = fetchurl {
-    url = "https://github.com/pbek/${pname}/releases/download/v${version}/source.tar.gz";
-    hash = "sha256-vmtUNU3w/iNoGCUyZgxup5kXqwb+o+0foQa/bd6IhAE=";
+  src = fetchFromGitHub {
+    owner = "pbek";
+    repo = "${pname}";
+    rev = "v${version}";
+    fetchSubmodules = true;
+    sha256 = "sha256-k9hOGI/TmiftwhSHQEh3ZVV8kkMSs1yKejqHelFSQJ4=";
   };
 
   buildInputs = [
@@ -28,13 +31,36 @@ stdenv.mkDerivation {
     wrapQtAppsHook
   ];
 
+  sourceRoot = "source/src";
+
+  # qmakeFlags = [
+  #   "${appname}.pro"
+  #   "CONFIG+=release"
+  # ];
   buildPhase = ''
-    qmake ${appname}.pro CONFIG+=release
+    runHook preBuild
+
+    qmake ${appname}.pro CONFIG+=release PREFIX=/
     make
+
+    runHook postBuild
   '';
 
-  installPhase = ''
-    install -vD ${appname} $out/bin/${pname}
+  # installPhase = ''
+  #   runHook preInstall
+    
+  #   make install PREFIX=$(out) INSTALL_ROOT=$(out)
+  #   install -vD ${appname} $out/bin/${pname}
+    
+  #   runHook postInstall
+  # '';
+
+  installFlags = [ "INSTALL_ROOT=$(out)" ];
+
+  postInstall =
+  # Create a lowercase symlink for Linux
+  lib.optionalString stdenv.isLinux ''
+    ln -s $out/bin/${appname} $out/bin/${pname}
   '';
 
   meta = with lib; {
