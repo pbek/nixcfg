@@ -47,4 +47,7 @@ in
 {
   # agenix -e id_ecdsa_sk.age
   "id_ecdsa_sk.age".publicKeys = systems;
+
+  # agenix -e nixpkgs-review.age
+  "nixpkgs-review.age".publicKeys = systems;
 }
