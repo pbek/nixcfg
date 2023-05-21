@@ -11,7 +11,8 @@
       cl = "nix-shell /etc/nixos/shells/qt5.nix --run clion";
       nsf = "nix-shell --run fish";
       gitc = "git commit";
-      gitp = "git push";
+      gitps = "git push";
+      gitpl = "git pull --rec";
       gita = "git add -A";
       gits = "git status";
       gitd = "git diff";
