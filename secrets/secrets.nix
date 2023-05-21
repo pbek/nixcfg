@@ -50,4 +50,7 @@ in
 
   # agenix -e nixpkgs-review.age
   "nixpkgs-review.age".publicKeys = systems;
+
+  # agenix -e pia.age
+  "pia.age".publicKeys = systems;
 }

@@ -21,6 +21,7 @@
       qce = "qc exec";
       qcs = "qc search";
       ll = "ls -hal";
+      pia = "~/.secrets/pia.sh";
     };
     shellAbbrs = {
       killall = "pkill";
@@ -49,6 +50,14 @@
       owner = "omega";
       group = "users";
       mode = "600";
+    };
+
+    pia = {
+      file = ../../secrets/pia.age;
+      path = "/home/omega/.secrets/pia.sh";
+      owner = "omega";
+      group = "users";
+      mode = "700";
     };
   };
 }
