@@ -230,6 +230,7 @@ in
     sniffnet
     wireguard-tools
     nixpkgs-review
+    ranger
 
     libsForQt5.kwalletmanager
     libsForQt5.plasma-systemmonitor
