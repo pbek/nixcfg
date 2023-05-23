@@ -1,6 +1,8 @@
 rebuild:
 	sudo nixos-rebuild switch
 
+rebuild-push: rebuild push
+
 upgrade:
 	sudo nixos-rebuild switch --upgrade
 
@@ -8,6 +10,7 @@ upgrade-push: upgrade push
 
 push:
 	attic push main `which attic` && \
+	attic push main `which noseyparker` && \
 	attic push qownnotes `which attic` && \
 	attic push qownnotes `which qownnotes` && \
 	attic push qownnotes `which loganalyzer` && \

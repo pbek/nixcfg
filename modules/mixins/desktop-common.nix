@@ -194,6 +194,7 @@ in
     # (pkgs.callPackage ../../apps/qc/default.nix { })
     qc
     (pkgs.libsForQt5.callPackage ../../apps/loganalyzer/default.nix { })
+    (pkgs.callPackage ../../apps/noseyparker/default.nix { })
 
     less
     mc
