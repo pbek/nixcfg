@@ -17,14 +17,15 @@ if [ ! -d ~/Code ]; then
     mkdir ~/Code
 fi
 
-echo ""
-echo "Cloning nixcfg and copying initial config..."
 cd ~/Code
 
 if [ -d ${NIXOS_DIR_NAME} ]; then
-    echo "Directory ${NIXOS_DIR_NAME} already exists!"
+    echo "Directory ~/Code/${NIXOS_DIR_NAME} already exists!"
     exit 1
 fi
+
+echo ""
+echo "Cloning nixcfg and copying initial config..."
 
 nix-shell -p git --run 'git clone --recurse-submodules https://github.com/pbek/nixcfg.git ${NIXOS_DIR_NAME}'
 cd ${NIXOS_DIR_NAME}
