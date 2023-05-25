@@ -86,9 +86,6 @@ in
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Allow flakes
-#  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
   # Allow some insecure packages to be installed
   nixpkgs.config.permittedInsecurePackages = [
     "qtwebkit-5.212.0-alpha4"
@@ -108,6 +105,9 @@ in
         "main:WYsIaF+ItMNE9Xt976bIGKSKp9jaaVeTzYlfqQqpP28="
         "qownnotes:7hN006Z7xgK5v97WKFo9u3qcVbZIXHtFmPPM3NPERpM="
       ];
+
+      # Allow flakes
+      experimental-features = [ "nix-command" "flakes" ];
     };
   };
 
@@ -326,6 +326,11 @@ in
       }
     '';
 
+    # thefuck for fish shell
+    home.file.".config/fish/conf.d/thefuck.fish".text = ''
+      thefuck --alias | source
+    '';
+
     # enable starship prompt in fish shell, enableFishIntegration in the starship config did not work
     home.file.".config/fish/conf.d/starship.fish".text = ''
       starship init fish | source
@@ -353,6 +358,8 @@ in
 
   # https://github.com/NixOS/nixpkgs/pull/66480/files
   programs.fuse.userAllowOther = true;
+
+  programs.thefuck.enable = true;
 
   home-manager.users.omega = {
     xdg.desktopEntries = {
@@ -446,8 +453,4 @@ in
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-    '';
 }
