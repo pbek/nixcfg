@@ -1,10 +1,5 @@
 { config, pkgs, inputs, ... }:
-let
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-in
-{  imports = [
-    "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/main.tar.gz"}/modules/age.nix"
-    (import "${home-manager}/nixos")
+{ imports = [
     ./git.nix
   ];
 
@@ -121,8 +116,12 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    (pkgs.callPackage "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/main.tar.gz"}/pkgs/agenix.nix" {})
-    (pkgs.callPackage "${builtins.fetchTarball "https://github.com/zhaofengli/attic/tarball/main"}/package.nix" {})
+#    (pkgs.callPackage "${builtins.fetchTarball {
+#      url = "https://github.com/zhaofengli/attic/tarball/main";
+#      sha256 = "sha256:0p9n5m0qc34ji6hljlw4ns8sqyn6861k18crwxcw6v9pwmjqxgzl";
+#    }}/package.nix" {})
+    inputs.attic.packages.x86_64-linux.default
+    inputs.agenix.packages.x86_64-linux.default
     neovim
     wget
     firefox

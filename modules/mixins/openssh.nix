@@ -1,7 +1,4 @@
 { lib, ... }:
-let
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-in
 {
   # https://mynixos.com/options/services.openssh
   services.openssh = {

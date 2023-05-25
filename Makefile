@@ -1,10 +1,8 @@
-rebuild:
-	sudo nixos-rebuild switch
+rebuild: flake-rebuild-current
 
 rebuild-push: rebuild push
 
-upgrade:
-	sudo nixos-rebuild switch --upgrade
+upgrade: flake-update
 
 upgrade-push: upgrade push
 
@@ -31,3 +29,15 @@ build-iso:
 boot-iso:
 	# -enable-kvm
 	nix-shell -p qemu --run "qemu-system-x86_64 -m 256 -cdrom result/iso/nixos-*.iso"
+
+flake-rebuild-current:
+	sudo nixos-rebuild switch --flake .#$(shell hostname)
+
+flake-update:
+	nix flake update
+
+#upgrade:
+#	sudo nixos-rebuild switch --upgrade
+#
+#rebuild:
+#	sudo nixos-rebuild switch

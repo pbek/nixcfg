@@ -1,7 +1,4 @@
 { config, pkgs, inputs, ... }:
-let
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-in
 {
   # https://rycee.gitlab.io/home-manager/options.html
   home-manager.users.omega = {
