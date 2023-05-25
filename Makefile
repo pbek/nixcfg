@@ -1,8 +1,20 @@
-rebuild: flake-rebuild-current
+HOSTNAME = $(shell hostname)
 
-rebuild-push: rebuild push
+test:
+	sudo nixos-rebuild test --flake .#${HOSTNAME} -L
 
-upgrade: flake-update
+switch:
+	sudo nixos-rebuild switch --flake .#${HOSTNAME} -L
+
+switch-push: switch push
+
+update:
+	nix flake update
+
+update-push: update push
+
+upgrade:
+	make update && make switch
 
 upgrade-push: upgrade push
 
