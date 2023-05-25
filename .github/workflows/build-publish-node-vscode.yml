@@ -11,6 +11,7 @@ on:
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-including-paths
     paths:
       - '.github/workflows/build-publish-node-vscode.yml'
+      - 'docker/vscode/**'
   
 env:
   REGISTRY: ghcr.io
@@ -37,6 +38,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: .github/workflows
+          context: docker/vscode
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
