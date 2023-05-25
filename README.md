@@ -6,32 +6,23 @@ NixOS config
 
 ## Setup
 
-```bash
-# set hostname
-export HOSTNAME=pluto
+Set your hostname and run the [install script](./install.sh):
 
-# setup nixos configuration
-cd /etc
-sudo mv nixos nixos.bak
-sudo nix-shell -p git --run 'git clone https://github.com/pbek/nixcfg.git nixos'
-sudo chown omega:users nixos -R
-cd nixos
-mkdir hosts/${HOSTNAME}
-cp ../nixos.bak/* hosts/${HOSTNAME}
-ln -s hosts/${HOSTNAME}/configuration.nix
-ln -s hosts/${HOSTNAME}/hardware-configuration.nix
+```bash
+HOSTNAME=yourhostname bash <(curl -s https://raw.githubusercontent.com/pbek/nixcfg/main/install.sh)
+```
+
+Afterwards here are some useful commands:
+
+```bash
+# Build and switch to new configuration
+make switch
 
 # edit configuration.nix
 kate . &
 
 # check for Nvidia card
 nix-shell -p pciutils --run 'lspci | grep VGA'
-
-# switch to unstable channel and upgrade
-sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos && sudo nixos-rebuild switch --upgrade
-
-# switch git remote to ssh
-nix-shell -p git --run 'git remote set-url origin git@github.com:pbek/nixcfg.git'
 
 # look at network load and other stats?
 nix-shell -p btop --run btop
