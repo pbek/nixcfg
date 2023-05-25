@@ -11,8 +11,6 @@ switch-push: switch push
 update:
 	nix flake update
 
-update-push: update push
-
 upgrade:
 	make update && make switch
 
