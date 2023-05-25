@@ -1,21 +1,22 @@
-image_name := node-vscode
+local_image_name := node-vscode
+remote_image_name := ghcr.io/pbek/nixcfg-node-vscode:latest
 code_dir := $(shell dirname $(CURDIR))
 
 build:
-	docker build vscode -t ${image_name}
+	docker build vscode -t ${local_image_name}
 
 build-no-cache:
-	docker build vscode -t ${image_name} --no-cache
+	docker build vscode -t ${local_image_name} --no-cache
+
+pull:
+	docker pull ${remote_image_name}
 
 # https://github.com/mviereck/x11docker
-# x11docker --xephyr --composite --desktop --wm nix-vscode /usr/bin/xeyes
-# x11docker --xephyr --desktop --size 1200x1000 nix-vscode /usr/bin/code --no-sandbox -w -i
-# x11docker --network --clipboard --gpu --share ~/Code nix-vscode
 run-desktop:
-	x11docker --xephyr --desktop --network --clipboard --gpu --share "${code_dir}" ${image_name}
+	x11docker --xephyr --desktop --network --clipboard --gpu --share "${code_dir}" ${remote_image_name}
 
 run-vscode:
-	x11docker --network --clipboard --gpu --share "${code_dir}" ${image_name} -- sh -c "\
+	x11docker --network --clipboard --gpu --share "${code_dir}" ${remote_image_name} -- sh -c "\
 		cd "${code_dir}" && \
 		npm run playwright:install && \
 		code --install-extension ms-playwright.playwright && \
