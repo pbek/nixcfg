@@ -11,6 +11,7 @@
 , qt5compat
 , makeWrapper
 , wrapQtAppsHook
+# , botan2
 }:
 
 let
@@ -38,7 +39,13 @@ stdenv.mkDerivation {
     qtsvg
     qtwebsockets
     qt5compat
+#    botan2
   ] ++ lib.optionals stdenv.isLinux [ qtwayland ];
+
+#  qmakeFlags = [
+#    "QOwnNotes.pro"
+#    "USE_SYSTEM_BOTAN=1"
+#  ];
 
   postInstall =
   # Create a lowercase symlink for Linux
