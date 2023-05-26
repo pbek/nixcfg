@@ -150,6 +150,7 @@
     # Builds qtwebkit from source!
 #    qt5.full
     qtcreator-qt6
+    tree
 
 #    qt5.qmake
 #    libsForQt5.qt5.qt3d
