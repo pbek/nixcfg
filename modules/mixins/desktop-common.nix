@@ -149,7 +149,7 @@
     filelight
     # Builds qtwebkit from source!
 #    qt5.full
-    qtcreator
+    qtcreator-qt6
 
 #    qt5.qmake
 #    libsForQt5.qt5.qt3d
