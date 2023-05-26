@@ -19,6 +19,7 @@
     home.file.".gitignore".text = ''
       .idea
       .direnv
+      result
     '';
 
     # we had that file by default in the past
