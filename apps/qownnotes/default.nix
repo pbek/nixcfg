@@ -11,7 +11,7 @@
 , qt5compat
 , makeWrapper
 , wrapQtAppsHook
-# , botan2
+, botan2
 }:
 
 let
@@ -39,13 +39,19 @@ stdenv.mkDerivation {
     qtsvg
     qtwebsockets
     qt5compat
-#    botan2
+    botan2
   ] ++ lib.optionals stdenv.isLinux [ qtwayland ];
 
-#  qmakeFlags = [
-#    "QOwnNotes.pro"
-#    "USE_SYSTEM_BOTAN=1"
-#  ];
+  postPatch = ''
+    substituteInPlace ./libraries/botan/botan.pri \
+      --replace "PKGCONFIG += botan-2" ""
+  '';
+
+  qmakeFlags = [
+    "USE_SYSTEM_BOTAN=1"
+    "INCLUDEPATH+=${botan2}/include/botan-2"
+    "LIBS+=${botan2}/lib/libbotan-2${stdenv.hostPlatform.extensions.sharedLibrary}"
+  ];
 
   postInstall =
   # Create a lowercase symlink for Linux
