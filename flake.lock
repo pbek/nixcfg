@@ -276,12 +276,29 @@
         "type": "github"
       }
     },
+    "pia": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1675683934,
+        "narHash": "sha256-otDaC45eeDbu0HCoseVOU1oxRlj6A9ChTWTSEUNtuaI=",
+        "owner": "pia-foss",
+        "repo": "manual-connections",
+        "rev": "e956c57849a38f912e654e0357f5ae456dfd1742",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pia-foss",
+        "repo": "manual-connections",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "agenix": "agenix",
         "attic": "attic",
         "home-manager": "home-manager_2",
         "nixpkgs": "nixpkgs_4",
+        "pia": "pia",
         "sops-nix": "sops-nix"
       }
     },

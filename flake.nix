@@ -9,6 +9,8 @@
     sops-nix.url = "github:Mic92/sops-nix";
     attic.url = "github:zhaofengli/attic";
 #    robotnix.url = "github:danielfullmer/robotnix";
+    pia.url = "github:pia-foss/manual-connections";
+    pia.flake = false;
   };
 
 outputs =
@@ -19,12 +21,17 @@ outputs =
   , agenix
   , sops-nix
   , attic
+  , pia
 #      , robotnix
   , ...
   } @ inputs: {
 #     config = nixpkgs.config.systems.${builtins.currentSystem}.config;
 #     hostname = config.networking.hostName;
     nixosModules = import ./modules { lib = nixpkgs.lib; };
+
+    shellHook = ''
+      echo "echo pia: ${pia}"
+    '';
 
     nixosConfigurations = {
       # Office Work PC
