@@ -40,6 +40,15 @@ boot-iso:
 	# -enable-kvm
 	nix-shell -p qemu --run "qemu-system-x86_64 -m 256 -cdrom result/iso/nixos-*.iso"
 
+build-vm:
+	nixos-rebuild --flake /etc/nixos#vm build-vm
+
+boot-vm:
+	QEMU_OPTS="-m 4096 -smp 4 -enable-kvm" ./result/bin/run-*-vm
+
+boot-vm-no-kvm:
+	QEMU_OPTS="-m 4096 -smp 4" ./result/bin/run-*-vm
+
 flake-rebuild-current:
 	sudo nixos-rebuild switch --flake .#$(shell hostname)
 

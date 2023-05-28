@@ -6,7 +6,7 @@
 # https://www.mankier.com/8/nixos-rebuild
 #
 # build in vm
-# > nixos-rebuild -I nixos-config=./vm.nix build-vm
+# > nixos-rebuild --flake /etc/nixos#vm build-vm
 #
 # build pr in vm
 # > nixos-rebuild -I nixos-config=./vm.nix -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/pull/223593/head.tar.gz build-vm

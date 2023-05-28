@@ -132,6 +132,18 @@ outputs =
         ];
         specialArgs = { inherit inputs; };
       };
+      # VM
+      vm = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/vm/vm.nix
+          home-manager.nixosModules.home-manager
+          agenix.nixosModules.age
+          sops-nix.nixosModules.sops
+          attic.nixosModules.atticd
+        ];
+        specialArgs = { inherit inputs; };
+      };
     };
   };
 }
