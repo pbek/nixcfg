@@ -12,7 +12,7 @@ Set your hostname and run the [install script](./install.sh):
 HOSTNAME=yourhostname bash <(curl -s https://raw.githubusercontent.com/pbek/nixcfg/main/install.sh)
 ```
 
-Afterwards here are some useful commands:
+Afterward here are some useful commands:
 
 ```bash
 # Build and switch to new configuration
