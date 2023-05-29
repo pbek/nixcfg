@@ -348,6 +348,15 @@
     home.file.".bash_aliases".text = ''
       eval "$(starship init bash)"
     '';
+
+    home.file."Scripts/pia.sh".text = ''
+      #!/usr/bin/env bash
+
+      set -e
+
+      cd @pia-path@
+      sudo VPN_PROTOCOL=wireguard DISABLE_IPV6=yes DIP_TOKEN=no AUTOCONNECT=true PIA_PF=false PIA_DNS=false PIA_USER=@pia-user@ PIA_PASS=@pia-pass@ ./run_setup.sh
+    '';
 };
 
 
