@@ -103,6 +103,9 @@
 
       # Allow flakes
       experimental-features = [ "nix-command" "flakes" ];
+
+      # To do a "nix-build --repair" without sudo
+      trusted-users = [ "root" "@wheel" ];
     };
   };
 
