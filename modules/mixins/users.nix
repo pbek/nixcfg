@@ -52,12 +52,29 @@
       mode = "600";
     };
 
-    pia = {
-      file = ../../secrets/pia.age;
-      path = "/home/omega/.secrets/pia.sh";
+    pia-user = {
+      file = ../../secrets/pia-user.age;
+      path = "/home/omega/.secrets/pia-user";
       owner = "omega";
       group = "users";
-      mode = "700";
+      mode = "600";
+    };
+
+    pia-pass = {
+      file = ../../secrets/pia-pass.age;
+      path = "/home/omega/.secrets/pia-pass";
+      owner = "omega";
+      group = "users";
+      mode = "600";
     };
   };
+
+#  system.activationScripts."pia-secret" = ''
+#    user=$(cat "${config.age.secrets.pia-user.path}")
+#    password=$(cat "${config.age.secrets.pia-pass.path}")
+#    scriptFile=/home/omega/Scripts/pia.sh
+#    ${pkgs.gnused}/bin/sed -i "s#@pia-path@#$pia#" "$scriptFile"
+#    ${pkgs.gnused}/bin/sed -i "s#@pia-user@#$user#" "$scriptFile"
+#    ${pkgs.gnused}/bin/sed -i "s#@pia-pass@#$password#" "$scriptFile"
+#  '';
 }
