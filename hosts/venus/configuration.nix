@@ -70,4 +70,7 @@
   powerManagement.powerUpCommands = ''
     echo GPP0 > /proc/acpi/wakeup
   '';
+  powerManagement.powerDownCommands = ''
+    echo GPP0 > /proc/acpi/wakeup
+  '';
 }
