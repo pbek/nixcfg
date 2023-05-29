@@ -60,3 +60,6 @@ flake-update:
 #
 #rebuild:
 #	sudo nixos-rebuild switch
+
+cleanup:
+	nix-collect-garbage -d
