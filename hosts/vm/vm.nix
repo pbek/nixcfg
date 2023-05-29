@@ -16,11 +16,11 @@
 {
     imports =
     [ # Include the results of the hardware scan.
-    ./modules/mixins/users.nix
-    ./modules/mixins/desktop-common.nix
-    ./modules/mixins/jetbrains.nix
-    ./modules/mixins/openssh.nix
-#    ./modules/editor/nvim.nix
+    ../../modules/mixins/users.nix
+    ../../modules/mixins/desktop-common.nix
+    ../../modules/mixins/jetbrains.nix
+    ../../modules/mixins/openssh.nix
+#    ../../modules/editor/nvim.nix
     # this brought me an infinite recursion
 #    mixins-openssh
     ];
