@@ -62,4 +62,9 @@ flake-update:
 #	sudo nixos-rebuild switch
 
 cleanup:
-	nix-collect-garbage -d
+	df -h; \
+    sudo journalctl --vacuum-time=3d; \
+    docker system prune -f; \
+    rm -rf .local/share/Trash/*; \
+	nix-collect-garbage -d; \
+	df -h
