@@ -66,5 +66,6 @@ cleanup:
     sudo journalctl --vacuum-time=3d; \
     docker system prune -f; \
     rm -rf .local/share/Trash/*; \
+	sudo nix-collect-garbage -d; \
 	nix-collect-garbage -d; \
 	df -h
