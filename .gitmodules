@@ -1,3 +1,0 @@
-[submodule "vendor/pia"]
-	path = vendor/pia
-	url = https://github.com/pia-foss/manual-connections.git

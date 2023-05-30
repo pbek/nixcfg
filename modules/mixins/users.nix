@@ -21,7 +21,7 @@
       qce = "qc exec";
       qcs = "qc search";
       ll = "ls -hal";
-      pia = "~/.secrets/pia.sh";
+      pia = "~/Scripts/pia.sh";
     };
     shellAbbrs = {
       killall = "pkill";
@@ -68,13 +68,4 @@
       mode = "600";
     };
   };
-
-#  system.activationScripts."pia-secret" = ''
-#    user=$(cat "${config.age.secrets.pia-user.path}")
-#    password=$(cat "${config.age.secrets.pia-pass.path}")
-#    scriptFile=/home/omega/Scripts/pia.sh
-#    ${pkgs.gnused}/bin/sed -i "s#@pia-path@#$pia#" "$scriptFile"
-#    ${pkgs.gnused}/bin/sed -i "s#@pia-user@#$user#" "$scriptFile"
-#    ${pkgs.gnused}/bin/sed -i "s#@pia-pass@#$password#" "$scriptFile"
-#  '';
 }

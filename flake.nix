@@ -29,10 +29,6 @@ outputs =
 #     hostname = config.networking.hostName;
     nixosModules = import ./modules { lib = nixpkgs.lib; };
 
-    shellHook = ''
-      echo "echo pia: ${pia}"
-    '';
-
     nixosConfigurations = {
       # Office Work PC
       gaia = nixpkgs.lib.nixosSystem {
