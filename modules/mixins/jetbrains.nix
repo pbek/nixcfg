@@ -12,13 +12,12 @@ let
       localSystem = { system = "x86_64-linux"; };
     };
 in {
-  environment.systemPackages = with pkgs; [
-    # jetbrains.phpstorm
-    (prForJBPlugins.jetbrains.plugins.addPlugins prForJBPlugins.jetbrains.phpstorm [ "github-copilot" ])
+  environment.systemPackages = with prForJBPlugins; [
+    (jetbrains.plugins.addPlugins jetbrains.phpstorm [ "github-copilot" ])
     # jetbrains.clion
-    (prForJBPlugins.jetbrains.plugins.addPlugins prForJBPlugins.jetbrains.clion [ "github-copilot" ])
-    # prForJBPlugins.jetbrains.goland
-    (prForJBPlugins.jetbrains.plugins.addPlugins prForJBPlugins.jetbrains.goland [ "github-copilot" ])
+    (jetbrains.plugins.addPlugins jetbrains.clion [ "github-copilot" ])
+    # jetbrains.goland
+    (jetbrains.plugins.addPlugins jetbrains.goland [ "github-copilot" ])
   ];
 
   home-manager.users.omega = {
