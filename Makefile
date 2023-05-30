@@ -69,3 +69,6 @@ cleanup:
 	sudo nix-collect-garbage -d; \
 	nix-collect-garbage -d; \
 	df -h
+
+repair-store:
+	nix-store --verify --check-contents --repair
