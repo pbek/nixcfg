@@ -24,6 +24,7 @@
   # Bootloader
   # Getting the bootloader to detect Windows didn't work, use F12 at boot for a boot manager
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.memtest86.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
