@@ -8,7 +8,9 @@
       n18 = "nix-shell /etc/nixos/shells/node18.nix --run fish";
       p8 = "nix-shell /etc/nixos/shells/php8.nix --run fish";
       qtc = "nix-shell /etc/nixos/shells/qt5.nix --run qtcreator";
+      qtc6 = "nix-shell /etc/nixos/shells/qt5.nix --run qtcreator";
       cl = "nix-shell /etc/nixos/shells/qt5.nix --run clion";
+      cl6 = "nix-shell /etc/nixos/shells/qt6.nix --run clion";
       nsf = "nix-shell --run fish";
       gitc = "git commit";
       gitps = "git push";
