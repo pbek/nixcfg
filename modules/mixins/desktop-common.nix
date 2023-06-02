@@ -192,11 +192,12 @@
     # libsForQt5.qt5.qtxmlpatterns
     # libsForQt5.qt5.wrapQtAppsHook
 
-#    qownnotes
-    (pkgs.qt6Packages.callPackage ../../apps/qownnotes/default.nix { })
-    # (pkgs.callPackage ../../apps/qc/default.nix { })
+    qownnotes
+#    (pkgs.qt6Packages.callPackage ../../apps/qownnotes/default.nix { })
     qc
-    (pkgs.libsForQt5.callPackage ../../apps/loganalyzer/default.nix { })
+#    (pkgs.callPackage ../../apps/qc/default.nix { })
+    loganalyzer
+#    (pkgs.libsForQt5.callPackage ../../apps/loganalyzer/default.nix { })
     (pkgs.callPackage ../../apps/noseyparker/default.nix { })
 
     less
