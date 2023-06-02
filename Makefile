@@ -6,7 +6,8 @@ test:
 switch:
 	sudo nixos-rebuild switch --flake .#${HOSTNAME} -L
 
-switch-push: switch push
+switch-push:
+	make switch; make push
 
 update:
 	nix flake update
@@ -14,12 +15,12 @@ update:
 upgrade:
 	make update && make switch
 
-upgrade-push: upgrade push
+upgrade-push:
+	make upgrade; make push
 
 push:
 	attic push main `which attic` && \
 	attic push main `which noseyparker` && \
-	attic push qownnotes `which attic` && \
 	attic push qownnotes `which qownnotes` && \
 	attic push qownnotes `which loganalyzer` && \
 	attic push qownnotes `which qc`
