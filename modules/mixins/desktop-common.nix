@@ -325,7 +325,7 @@
   # https://rycee.gitlab.io/home-manager/options.html
   home-manager.users.omega = {
     /* The home.stateVersion option does not have a default and must be set */
-    home.stateVersion = "22.11";
+    home.stateVersion = "23.05";
 
     # allow unfree packages in nix-shell
     home.file.".config/nixpkgs/config.nix".text = ''
