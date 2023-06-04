@@ -3,5 +3,5 @@
 #
 FROM nixos/nix:latest
 WORKDIR /root/nixcfg
-COPY ../.. .
+COPY ../.. /root/nixcfg
 RUN nix --extra-experimental-features "nix-command flakes" flake prefetch .#neptun
