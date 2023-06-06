@@ -122,12 +122,25 @@ outputs =
         ];
         specialArgs = { inherit inputs; };
       };
-      # TU HP EliteBook Laptop
+      # TU HP EliteBook Laptop 820 G4
       eris = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./hosts/eris/configuration.nix
           ./hosts/eris/hardware-configuration.nix
+          home-manager.nixosModules.home-manager
+          agenix.nixosModules.age
+          sops-nix.nixosModules.sops
+          attic.nixosModules.atticd
+        ];
+        specialArgs = { inherit inputs; };
+      };
+      # TU HP EliteBook Laptop 840 G5
+      sinope= nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/sinope/configuration.nix
+          ./hosts/sinope/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
           sops-nix.nixosModules.sops

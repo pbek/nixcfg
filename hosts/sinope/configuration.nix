@@ -1,4 +1,4 @@
-# TU HP EliteBook Laptop 820 G4
+# TU HP EliteBook Laptop 840 G5
 
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
@@ -24,14 +24,13 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   # Setup keyfile
   boot.initrd.secrets = {
     "/crypto_keyfile.bin" = null;
   };
 
-  networking.hostName = "eris"; # Define your hostname.
+  networking.hostName = "sinope"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
