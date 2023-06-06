@@ -51,6 +51,7 @@
     openldap
   ];
 
+  services.netbird.enable = true;
 
   # Extract
 
