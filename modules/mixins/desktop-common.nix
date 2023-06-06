@@ -156,6 +156,7 @@
 #    qtcreator-qt6
     qtcreator
     tree
+    hub
 
 #    qt5.qmake
 #    libsForQt5.qt5.qt3d
@@ -312,6 +313,9 @@
   # Docker
   # https://nixos.wiki/wiki/Docker
   virtualisation.docker.enable = true;
+
+  # Enable Netbird service
+  services.netbird.enable = true;
 
   # Add Restic Security Wrapper
   # https://nixos.wiki/wiki/Restic

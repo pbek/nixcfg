@@ -51,9 +51,6 @@
     openldap
   ];
 
-  # Enable Netbird service
-  services.netbird.enable = true;
-
   # Extract
 
   # https://nixos.wiki/wiki/VirtualBox
