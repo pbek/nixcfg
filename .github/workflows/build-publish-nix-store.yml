@@ -1,4 +1,4 @@
-name: 📦 Create and publish nix-store Docker image
+name: 📦 Create and publish nix-store Docker image (wip)
 
 on:
   workflow_dispatch:
