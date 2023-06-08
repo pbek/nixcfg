@@ -18,14 +18,14 @@
 let
   pname = "qownnotes";
   appname = "QOwnNotes";
-  version = "23.6.0";
+  version = "23.6.1";
 in
 stdenv.mkDerivation {
   inherit pname appname version;
 
   src = fetchurl {
     url = "https://download.tuxfamily.org/${pname}/src/${pname}-${version}.tar.xz";
-    hash = "sha256-g8sWnc0b+DciEu6ZtQsPTUUfcudWKCNSQc6K67tLsYg=";
+    hash = "sha256-2ex3oGoO66ry8HYobbyGfb/PE7Xz9zaKCW5SEM+hJ0I=";
   };
 
   nativeBuildInputs = [
