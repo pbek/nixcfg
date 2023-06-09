@@ -38,5 +38,5 @@ while read -r path; do
   [[ -d "$path" ]] || continue
 
   echo "Pushing $path to attic..."
-  attic push cicinas2:nix-store "$path"
+  attic push --ignore-upstream-cache-filter cicinas2:nix-store "$path"
 done <<< "$pathList"
