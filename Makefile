@@ -1,3 +1,5 @@
+.PHONY: test switch switch-push update upgrade upgrade-push push push-all rekey-fallback rekey keyscan build-iso boot-iso build-vm boot-vm boot-vm-no-kvm flake-rebuild-current flake-update upgrade rebuild cleanup repair-store
+
 HOSTNAME = $(shell hostname)
 
 test:
@@ -24,6 +26,9 @@ push:
 	attic push qownnotes `which qownnotes` && \
 	attic push qownnotes `which loganalyzer` && \
 	attic push qownnotes `which qc`
+
+push-all:
+	./scripts/push-all-to-attic.sh
 
 rekey-fallback:
 	cd ./secrets && agenix -i ~/.ssh/agenix --rekey
