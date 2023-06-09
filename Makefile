@@ -11,6 +11,9 @@ switch:
 switch-push:
 	make switch; make push
 
+switch-push-all:
+	make switch; make push; make push-all
+
 update:
 	nix flake update
 
@@ -19,6 +22,9 @@ upgrade:
 
 upgrade-push:
 	make upgrade; make push
+
+upgrade-push-all:
+	make upgrade; make push; make push-all
 
 push:
 	attic push main `which attic` && \
