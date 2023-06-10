@@ -15,6 +15,7 @@
       ../../modules/mixins/desktop-common.nix
       ../../modules/mixins/jetbrains.nix
       ../../modules/mixins/openssh.nix
+      ../../modules/mixins/local-store-cache.nix
 #    ../../modules/editor/nvim.nix
     # this brought me an infinite recursion
 #    mixins-openssh
