@@ -6,4 +6,4 @@ services:
     ports:
       - "8282:80"
     volumes:
-      - /tmp/public-nix-cache:/var/public-nix-cache
+      - /tmp/nix:/var/nix
