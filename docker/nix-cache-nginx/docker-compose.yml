@@ -1,0 +1,9 @@
+version: '3'
+services:
+  web:
+    build: .
+    restart: no
+    ports:
+      - "8282:80"
+    volumes:
+      - /tmp/public-nix-cache:/var/public-nix-cache

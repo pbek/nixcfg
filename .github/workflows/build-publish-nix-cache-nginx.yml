@@ -1,0 +1,41 @@
+name: 📦 Create and publish nix-cache-nginx Docker image
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-including-paths
+    paths:
+      - '.github/workflows/build-publish-nix-cache-nginx.yml'
+      - 'docker/nix-store-nginx/**'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}-nix-cache-nginx
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: docker/nix-cache-nginx
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
