@@ -8,7 +8,7 @@ on:
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-including-paths
     paths:
       - '.github/workflows/build-publish-nix-cache-nginx.yml'
-      - 'docker/nix-store-nginx/**'
+      - 'docker/nix-cache-nginx/**'
 
 env:
   REGISTRY: ghcr.io
