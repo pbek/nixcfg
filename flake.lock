@@ -298,8 +298,7 @@
         "attic": "attic",
         "home-manager": "home-manager_2",
         "nixpkgs": "nixpkgs_4",
-        "pia": "pia",
-        "sops-nix": "sops-nix"
+        "pia": "pia"
       }
     },
     "rust-overlay": {
@@ -326,25 +325,6 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "type": "github"
-      }
-    },
-    "sops-nix": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_5",
-        "nixpkgs-stable": "nixpkgs-stable_2"
-      },
-      "locked": {
-        "lastModified": 1686453485,
-        "narHash": "sha256-75iPAcS6xuw4SNfqLmFCi9wWG1JmDNKaC8l3WJUkmDk=",
-        "owner": "Mic92",
-        "repo": "sops-nix",
-        "rev": "cb85e297937af1bd1434cf5f85a3f86a21dc8207",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Mic92",
-        "repo": "sops-nix",
         "type": "github"
       }
     }

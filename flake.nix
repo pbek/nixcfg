@@ -6,7 +6,6 @@
 #    nixinate.url = "github:matthewcroughan/nixinate";
     home-manager.url = "github:nix-community/home-manager";
     agenix.url = "github:ryantm/agenix";
-    sops-nix.url = "github:Mic92/sops-nix";
     attic.url = "github:zhaofengli/attic";
 #    robotnix.url = "github:danielfullmer/robotnix";
     pia.url = "github:pia-foss/manual-connections";
@@ -19,7 +18,6 @@ outputs =
   , home-manager
   , nixpkgs
   , agenix
-  , sops-nix
   , attic
   , pia
 #      , robotnix
@@ -38,7 +36,6 @@ outputs =
           ./hosts/gaia/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          sops-nix.nixosModules.sops
           attic.nixosModules.atticd
         ];
         specialArgs = { inherit inputs; };
@@ -51,7 +48,6 @@ outputs =
           ./hosts/pluto/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          sops-nix.nixosModules.sops
           attic.nixosModules.atticd
         ];
         specialArgs = { inherit inputs; };
@@ -64,7 +60,6 @@ outputs =
           ./hosts/jupiter/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          sops-nix.nixosModules.sops
           attic.nixosModules.atticd
         ];
         specialArgs = { inherit inputs; };
@@ -77,7 +72,6 @@ outputs =
           ./hosts/neptun/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          sops-nix.nixosModules.sops
           attic.nixosModules.atticd
         ];
         specialArgs = { inherit inputs; };
@@ -90,7 +84,6 @@ outputs =
           ./hosts/venus/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          sops-nix.nixosModules.sops
           attic.nixosModules.atticd
         ];
         specialArgs = { inherit inputs; };
@@ -104,7 +97,6 @@ outputs =
           ./hosts/astra/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          sops-nix.nixosModules.sops
           attic.nixosModules.atticd
         ];
         specialArgs = { inherit inputs; };
@@ -117,7 +109,6 @@ outputs =
           ./hosts/caliban/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          sops-nix.nixosModules.sops
           attic.nixosModules.atticd
         ];
         specialArgs = { inherit inputs; };
@@ -130,7 +121,6 @@ outputs =
           ./hosts/eris/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          sops-nix.nixosModules.sops
           attic.nixosModules.atticd
         ];
         specialArgs = { inherit inputs; };
@@ -143,7 +133,6 @@ outputs =
           ./hosts/sinope/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          sops-nix.nixosModules.sops
           attic.nixosModules.atticd
         ];
         specialArgs = { inherit inputs; };
@@ -155,7 +144,6 @@ outputs =
           ./hosts/vm/vm.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          sops-nix.nixosModules.sops
           attic.nixosModules.atticd
         ];
         specialArgs = { inherit inputs; };
