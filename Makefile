@@ -59,10 +59,10 @@ boot-vm-no-kvm:
 	QEMU_OPTS="-m 4096 -smp 4" ./result/bin/run-*-vm
 
 build-vm-desktop:
-	nixos-rebuild --flake /etc/nixos#vm-desktop build-vm
+	nixos-rebuild --flake .#vm-desktop build-vm
 
 build-vm-server:
-	nixos-rebuild --flake /etc/nixos#vm-server build-vm
+	nixos-rebuild --flake .#vm-server build-vm
 
 flake-rebuild-current:
 	sudo nixos-rebuild switch --flake .#$(shell hostname)
