@@ -50,8 +50,8 @@
           show_always = true;
         };
         character = {
-          success_symbol = "[?](bold green)";
-          error_symbol = "[?](bold red)";
+          success_symbol = "[➜](bold green)";
+          error_symbol = "[✗](bold red)";
         };
         hostname = {
           ssh_only = false;
@@ -64,7 +64,7 @@
           disabled = false;
           # format = "\\[[$indicator]($style)\\] ";
           style = "gray";
-          fish_indicator = "?";
+          fish_indicator = "󰈺";
           # bash_indicator = "b";
         };
         status.disabled = false;
