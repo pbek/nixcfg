@@ -16,15 +16,7 @@
   programs.fish = {
     enable = true;
     shellAliases = {
-      gitc = "git commit";
-      gitps = "git push";
-      gitpl = "git pull --rec";
-      gita = "git add -A";
-      gits = "git status";
-      gitd = "git diff";
-      gitl = "git log";
       vim = "nvim";
-      qce = "qc exec";
       ll = "ls -hal";
     };
   };
@@ -96,13 +88,7 @@
     neovim
     wget
     fish
-    # fishPlugins.done
     fishPlugins.fzf-fish
-    # fishPlugins.forgit
-    # fishPlugins.hydro
-    # fishPlugins.grc
-    # grc
-
     tmux
     git
     jq
@@ -117,6 +103,8 @@
     gnumake
     ncdu
     ranger
+    fail2ban
+    rsync
   ];
 
   # Do garbage collection
