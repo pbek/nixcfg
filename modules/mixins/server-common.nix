@@ -1,8 +1,17 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib, ... }:
 {
   imports = [
     ./starship.nix
   ];
+
+  # https://mynixos.com/options/services.openssh
+  services.openssh = {
+    enable = true;
+    openFirewall = lib.mkForce true;
+
+    settings.PasswordAuthentication = false;
+    settings.PermitRootLogin = lib.mkForce "no";
+  };
 
   # Set some fish config
   programs.fish = {

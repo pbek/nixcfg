@@ -137,11 +137,22 @@ outputs =
         ];
         specialArgs = { inherit inputs; };
       };
-      # VM
-      vm = nixpkgs.lib.nixosSystem {
+      # VM Desktop
+      vm-desktop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./hosts/vm/vm.nix
+          ./hosts/vm-desktop/vm.nix
+          home-manager.nixosModules.home-manager
+          agenix.nixosModules.age
+          attic.nixosModules.atticd
+        ];
+        specialArgs = { inherit inputs; };
+      };
+      # VM Server
+      vm-server = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/vm-server/vm.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
           attic.nixosModules.atticd

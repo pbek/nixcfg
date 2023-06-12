@@ -15,21 +15,12 @@
 { lib, config, ... }:
 {
     imports =
-    [ # Include the results of the hardware scan.
-    ../../modules/mixins/users.nix
-    ../../modules/mixins/desktop-common.nix
-    ../../modules/mixins/jetbrains.nix
-    ../../modules/mixins/openssh.nix
-    ../../modules/mixins/local-store-cache.nix
-#    ../../modules/editor/nvim.nix
-    # this brought me an infinite recursion
-#    mixins-openssh
+    [
+      ../../modules/mixins/server-common.nix
     ];
 
-  services.tor.enable = true;
   users.users.root.initialPassword = "root";
   users.users.omega.initialPassword = "omega";
 
   system.stateVersion = "23.05"; # Did you read the comment?
 }
-
