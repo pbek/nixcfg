@@ -38,8 +38,9 @@
       settings = {
         # add_newline = false;
         directory = {
-          fish_style_pwd_dir_length = 3; # The number of characters to use when applying fish shell pwd path logic.
-          truncation_length = 1; # The number of parent folders that the current directory should be truncated to.
+#          fish_style_pwd_dir_length = 3; # The number of characters to use when applying fish shell pwd path logic.
+          truncation_length = 5; # The number of parent folders that the current directory should be truncated to.
+          truncate_to_repo = false; # Whether or not to truncate to the root of the git repo that you're currently in.
           style = "bold sky";
         };
         git_branch = {
