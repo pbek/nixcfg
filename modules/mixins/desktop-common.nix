@@ -303,7 +303,7 @@
   # https://nixos.wiki/wiki/Docker
   virtualisation.docker.enable = true;
 
-  # Enable Netbird service
+  # Enable Netbird Wireguard VPN service
   services.netbird.enable = true;
 
   # Add Restic Security Wrapper
