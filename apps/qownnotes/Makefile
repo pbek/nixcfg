@@ -6,3 +6,6 @@ ui-tests:
 
 ui-tests-logs:
 	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs; nix-store --read-log result
+
+edit-ui-tests:
+	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs; kate ./nixos/tests/qownnotes.nix
