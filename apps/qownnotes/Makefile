@@ -9,3 +9,6 @@ ui-tests-logs:
 
 edit-ui-tests:
 	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs; kate ./nixos/tests/qownnotes.nix
+
+edit-app:
+	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs; kate ./pkgs/applications/office/qownnotes/default.nix
