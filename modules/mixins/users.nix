@@ -22,6 +22,7 @@
       vim = "nvim";
       qce = "qc exec";
       qcs = "qc search";
+      qcsw = "qc switch";
       ll = "ls -hal";
       pia = "~/Scripts/pia.sh";
     };
