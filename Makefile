@@ -15,7 +15,7 @@ switch-push-all:
 	make switch && make push-all; make push
 
 update:
-	nix flake update
+	NIX_CONFIG="access-tokens = github.com=`cat ~/.secrets/github-token`" nix flake update
 
 upgrade:
 	make update && make switch

@@ -70,5 +70,13 @@
       group = "users";
       mode = "600";
     };
+
+    github-token = {
+      file = ../../secrets/github-token.age;
+      path = "/home/omega/.secrets/github-token";
+      owner = "omega";
+      group = "users";
+      mode = "600";
+    };
   };
 }

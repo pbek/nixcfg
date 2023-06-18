@@ -59,4 +59,7 @@ in
 
   # agenix -e pia-pass.age
   "pia-pass.age".publicKeys = systems;
+
+  # agenix -e github-token.age
+  "github-token.age".publicKeys = systems;
 }
