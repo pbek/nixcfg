@@ -61,4 +61,7 @@ cd ./secrets && agenix -i ~/.ssh/agenix -e secret-file.age
 ```bash
 # switch to unstable channel
 sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos && sudo nixos-rebuild switch --upgrade
+
+# update just one flake
+nix flake lock --update-input catppuccin
 ```

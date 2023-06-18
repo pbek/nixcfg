@@ -10,6 +10,8 @@
 #    robotnix.url = "github:danielfullmer/robotnix";
     pia.url = "github:pia-foss/manual-connections";
     pia.flake = false;
+    catppuccin.url = "github:catppuccin/starship";
+    catppuccin.flake = false;
   };
 
 outputs =
@@ -20,6 +22,7 @@ outputs =
   , agenix
   , attic
   , pia
+  , catppuccin
 #      , robotnix
   , ...
   } @ inputs: {
