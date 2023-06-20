@@ -21,6 +21,7 @@
       gitl = "git log";
       vim = "nvim";
       qce = "qc exec --command";
+      qcel = "qc exec --command --last";
       qcs = "qc search";
       qcsw = "qc switch";
       ll = "ls -hal";
