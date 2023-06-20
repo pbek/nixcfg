@@ -20,7 +20,7 @@
       gitd = "git diff";
       gitl = "git log";
       vim = "nvim";
-      qce = "qc exec";
+      qce = "qc exec --command";
       qcs = "qc search";
       qcsw = "qc switch";
       ll = "ls -hal";
