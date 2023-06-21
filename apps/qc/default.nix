@@ -27,7 +27,9 @@ buildGoModule rec {
 
   postInstall = ''
     installShellCompletion --cmd qc \
-      --zsh ./misc/completions/zsh/_qc
+         --bash <($out/bin/qc completion bash) \
+         --fish <($out/bin/qc completion fish) \
+         --zsh <($out/bin/qc completion zsh)
   '';
 
   meta = with lib; {
