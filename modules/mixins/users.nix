@@ -26,6 +26,7 @@
       qcsw = "qc switch";
       ll = "ls -hal";
       pia = "~/Scripts/pia.sh";
+      pwdc = "pwd | xclip -sel clip";
     };
     shellAbbrs = {
       killall = "pkill";
