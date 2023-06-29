@@ -1,11 +1,11 @@
 { config, pkgs, inputs, xdg, ... }:
 
-# https://github.com/NixOS/nixpkgs/pull/223593
+# https://github.com/NixOS/nixpkgs/pull/240521
 let
   prForJBPlugins = import
     (builtins.fetchTarball {
-      url = https://github.com/NixOS/nixpkgs/archive/c3c3a9ba26fff3dd0b406d34ada95d505b047bf4.tar.gz;
-      sha256 = "sha256:0993gsjisgb3y7zxpk33fbkqivzl2hg2z4vzxx330bfbcx8f2a7x";
+      url = https://github.com/NixOS/nixpkgs/archive/424cc823107a1d9c5a924b3cf9556629b03748a7.tar.gz;
+      sha256 = "sha256:0a3p2dd6jggnbisqcrxrbifx7cm3kwly49mg5cqsz7qs7a7icw63";
     })
     {
       config = config.nixpkgs.config;
