@@ -189,8 +189,8 @@
 
 #    qownnotes
     (pkgs.qt6Packages.callPackage ../../apps/qownnotes/default.nix { })
-#    qc
-    (pkgs.callPackage ../../apps/qc/default.nix { })
+    qc
+#    (pkgs.callPackage ../../apps/qc/default.nix { })
     loganalyzer
 #    (pkgs.libsForQt5.callPackage ../../apps/loganalyzer/default.nix { })
     noseyparker
