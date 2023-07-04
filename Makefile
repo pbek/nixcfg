@@ -59,8 +59,12 @@ boot-vm-no-kvm:
 	QEMU_OPTS="-m 4096 -smp 4" QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
 
 # Quit with Ctrl-A X
+# If there is an issue with the VM, try to do a "reset-vm" first.
 boot-vm-console:
 	QEMU_OPTS="-nographic -serial mon:stdio" QEMU_KERNEL_PARAMS=console=ttyS0 QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
+
+reset-vm:
+	rm nixos.qcow2
 
 ssh-vm:
 	ssh -p 2222 omega@localhost -t "tmux new-session -A -s pbek"
