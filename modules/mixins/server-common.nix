@@ -107,6 +107,7 @@
     ncdu
     ranger
     rsync
+    restic
   ];
 
   # Do garbage collection
@@ -114,6 +115,16 @@
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 20d";
+  };
+
+  # Add Restic Security Wrapper
+  # https://nixos.wiki/wiki/Restic
+  security.wrappers.restic = {
+    source = "${pkgs.restic.out}/bin/restic";
+    owner = "omega";
+    group = "users";
+    permissions = "u=rwx,g=,o=";
+    capabilities = "cap_dac_read_search=+ep";
   };
 
   # Docker
