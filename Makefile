@@ -53,10 +53,17 @@ boot-iso:
 	nix-shell -p qemu --run "qemu-system-x86_64 -m 256 -cdrom result/iso/nixos-*.iso"
 
 boot-vm:
-	QEMU_OPTS="-m 4096 -smp 4 -enable-kvm" ./result/bin/run-*-vm
+	QEMU_OPTS="-m 4096 -smp 4 -enable-kvm" QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
 
 boot-vm-no-kvm:
-	QEMU_OPTS="-m 4096 -smp 4" ./result/bin/run-*-vm
+	QEMU_OPTS="-m 4096 -smp 4" QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
+
+# Quit with Ctrl-A X
+boot-vm-console:
+	QEMU_OPTS="-nographic -serial mon:stdio" QEMU_KERNEL_PARAMS=console=ttyS0 QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
+
+ssh-vm:
+	ssh -p 2222 omega@localhost -t "tmux new-session -A -s pbek"
 
 build-vm-desktop:
 	nixos-rebuild --flake .#vm-desktop build-vm
