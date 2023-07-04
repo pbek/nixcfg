@@ -12,6 +12,9 @@
     settings.PermitRootLogin = lib.mkForce "no";
   };
 
+  # https://nixos.wiki/wiki/Fail2ban
+  services.fail2ban.enable = true;
+
   # Set some fish config
   programs.fish = {
     enable = true;
@@ -103,7 +106,6 @@
     gnumake
     ncdu
     ranger
-    fail2ban
     rsync
   ];
 
