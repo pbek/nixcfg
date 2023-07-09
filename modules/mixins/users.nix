@@ -25,7 +25,8 @@
       qcs = "qc search";
       qcsw = "qc switch";
       ll = "ls -hal";
-      pia = "~/Scripts/pia.sh";
+      pia-up = "~/Scripts/pia.sh";
+      pia-down = "wg-quick down pia";
       pwdc = "pwd | xclip -sel clip";
     };
     shellAbbrs = {
