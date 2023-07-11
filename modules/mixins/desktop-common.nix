@@ -317,6 +317,7 @@
   };
 
   # https://rycee.gitlab.io/home-manager/options.html
+  # https://nix-community.github.io/home-manager/options.html#opt-home.file
   home-manager.users.omega = {
     /* The home.stateVersion option does not have a default and must be set */
     home.stateVersion = "23.05";
@@ -344,8 +345,12 @@
       '';
       executable = true;
     };
-  };
 
+    # Set up "shells" directory (e.g. for JetBrains IDEs and QtCreator)
+    home.file.".shells" = {
+      source = ../../shells;
+    };
+  };
 
   # Disable wakeup from USB devices
   powerManagement.powerDownCommands = ''
@@ -368,7 +373,7 @@
         comment = "";
 #        icon = "${pkgs.qtcreator-qt6}/share/icons/hicolor/128x128/apps/QtProject-qtcreator.png";
         icon = "${pkgs.qtcreator}/share/icons/hicolor/128x128/apps/QtProject-qtcreator.png";
-        exec = "nix-shell /etc/nixos/shells/qt5.nix --run qtcreator";
+        exec = "nix-shell /home/omega/.shells/qt5.nix --run qtcreator";
         terminal = false;
         categories = [ "Development" ];
       };

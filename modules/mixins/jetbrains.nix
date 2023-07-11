@@ -27,7 +27,7 @@ in {
         genericName = "C/C++ IDE. New. Intelligent. Cross-platform";
         comment = "Test Enhancing productivity for every C and C++ developer on Linux, macOS and Windows.";
         icon = "${prForJBPlugins.jetbrains.clion}/share/pixmaps/clion.svg";
-        exec = "nix-shell /etc/nixos/shells/qt5.nix --run clion";
+        exec = "nix-shell /home/omega/.shells/qt5.nix --run clion";
         terminal = false;
         categories = [ "Development" ];
       };
@@ -37,7 +37,7 @@ in {
         genericName = "Professional IDE for Web and PHP developers";
         comment = "PhpStorm provides an editor for PHP, HTML and JavaScript with on-the-fly code analysis, error prevention and automated refactorings for PHP and JavaScript code.";
         icon = "${prForJBPlugins.jetbrains.phpstorm}/share/pixmaps/phpstorm.svg";
-        exec = "nix-shell /etc/nixos/shells/webdev.nix --run phpstorm";
+        exec = "nix-shell /home/omega/.shells/webdev.nix --run phpstorm";
         terminal = false;
         categories = [ "Development" ];
       };
