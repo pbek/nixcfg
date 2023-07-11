@@ -69,10 +69,13 @@
           # bash_indicator = "b";
         };
         status.disabled = false;
+        # https://starship.rs/config/#custom-commands
         custom = {
           time = {
             command = "date +\"%d.%m.%Y %H:%M\"";
             when = "true";
+            # the command often timed out
+            ignore_timeout = true;
           };
         };
 
