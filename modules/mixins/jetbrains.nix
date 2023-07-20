@@ -1,12 +1,12 @@
 #{ config, pkgs, inputs, xdg, ... }:
 { config, inputs, xdg, ... }:
 
-# https://github.com/NixOS/nixpkgs/pull/242493
+# https://github.com/NixOS/nixpkgs/pull/244500
 let
   pkgs = import
     (builtins.fetchTarball {
-      url = https://github.com/NixOS/nixpkgs/archive/4f625771075e6fbe96ca68451b761d74937ab3fd.tar.gz;
-      sha256 = "sha256:0an98z06myhijqrvsrb8azgpxnb6w1jr1fbcjlip6zcsmwcmchc8";
+      url = https://github.com/NixOS/nixpkgs/archive/151c175a8528864be449ba30df62ef4c2c93a25d.tar.gz;
+      sha256 = "sha256:06iyc7dqy863dkmy7nlnzfy2wd2gsb27szghp45rx2yfjr5b9mrf";
     })
     {
       config = config.nixpkgs.config;
