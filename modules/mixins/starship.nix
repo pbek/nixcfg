@@ -1,7 +1,7 @@
 { config, pkgs, inputs, ... }:
 {
   # https://nixos.wiki/wiki/Fonts
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     fira-code
     fira-code-symbols
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
