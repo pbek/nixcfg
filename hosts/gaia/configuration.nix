@@ -52,6 +52,9 @@
     arduino
     g810-led
     libsForQt5.kdialog
+    bitscope.meter
+    bitscope.dso
+    bitscope.logic
   ];
 
   # Handle keyboard leds
