@@ -104,8 +104,9 @@
     inetutils
     dig
     gnumake
-    ncdu
-    duf
+    ncdu # disk usage
+    duf # disk free
+    dua # disk usage
     ranger
     rsync
     restic

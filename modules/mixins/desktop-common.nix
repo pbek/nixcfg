@@ -226,6 +226,7 @@
     ksnip
     ncdu
     duf
+    dua
     sniffnet
     wireguard-tools
     nixpkgs-review
