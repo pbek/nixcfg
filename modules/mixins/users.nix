@@ -28,6 +28,7 @@
       pia-up = "~/Scripts/pia.sh";
       pia-down = "wg-quick down pia";
       pwdc = "pwd | xclip -sel clip";
+      fwup = "fwupdmgr get-updates";
     };
     shellAbbrs = {
       killall = "pkill";
