@@ -105,6 +105,7 @@
     dig
     gnumake
     ncdu
+    duf
     ranger
     rsync
     restic

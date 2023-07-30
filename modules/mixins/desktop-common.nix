@@ -225,6 +225,7 @@
     topgrade
     ksnip
     ncdu
+    duf
     sniffnet
     wireguard-tools
     nixpkgs-review
