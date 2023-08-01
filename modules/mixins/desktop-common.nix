@@ -356,6 +356,10 @@
     home.file.".shells" = {
       source = ../../files/shells;
     };
+
+    home.file.".local/share/kservices5" = {
+      source = ../../files/kservices5;
+    };
   };
 
   # Disable wakeup from USB devices

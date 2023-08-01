@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+MimeType=image/heif;
+Actions=convertHeicToJpg
+
+[Desktop Action convertHeicToJpg]
+Name=Convert HEIC to JPG
+Icon=editimage
+#Exec=file="%u"; heif-convert $file ${file/%.heic/.jpg}
+#Exec=/bin/sh -c ";file=\"%u\" heif-convert $file ${file/%.heic/.jpg}"
+#Exec=file="%u" heif-convert $file ${file/%.heic/.jpg}
+#Exec=setenv file "%u";heif-convert $file ${file/%.heic/.jpg}
+Exec=heif-convert "%u" "%u.jpg"

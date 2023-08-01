@@ -1,0 +1,36 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+MimeType=image/*;
+Actions=stripImageMeta;resizeImage1024;convertWebp;convertWebpLossless;convertWebp50;convertWebp70;
+
+[Desktop Action stripImageMeta]
+Name=Strip Image Meta Information
+Icon=editimage
+Exec=mogrify -strip "%u"
+
+[Desktop Action resizeImage1024]
+Name=Resize image to 1024x1024
+Icon=editimage
+#Exec=convert "%u" -define jpeg:extent=512kb "%u"
+Exec=convert "%u" -resize 1024x1024 "%u"
+
+[Desktop Action convertWebp]
+Name=Convert image to WebP
+Icon=editimage
+Exec=convert "%u" "%u.webp"
+
+[Desktop Action convertWebpLossless]
+Name=Convert image to WebP lossless
+Icon=editimage
+Exec=convert "%u" -define webp:lossless=true "%u.webp"
+
+[Desktop Action convertWebp50]
+Name=Convert image to WebP 50%
+Icon=editimage
+Exec=convert "%u" -quality 50 "%u.webp"
+
+[Desktop Action convertWebp70]
+Name=Convert image to WebP 70%
+Icon=editimage
+Exec=convert "%u" -quality 70 "%u.webp"
