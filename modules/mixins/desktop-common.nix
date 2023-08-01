@@ -354,7 +354,7 @@
 
     # Set up "shells" directory (e.g. for JetBrains IDEs and QtCreator)
     home.file.".shells" = {
-      source = ../../shells;
+      source = ../../files/shells;
     };
   };
 
