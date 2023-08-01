@@ -269,6 +269,7 @@
     onlyoffice-bin
     gh
     smartmontools
+    imagemagick # resizing images
 
     # TU Graz
     vpnc
