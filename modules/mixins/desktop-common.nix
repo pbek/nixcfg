@@ -309,6 +309,9 @@
   # Enable Netbird Wireguard VPN service
   services.netbird.enable = true;
 
+  # Enable resoved to let wireguard set a DNS
+  services.resolved.enable = true;
+
   # Add Restic Security Wrapper
   # https://nixos.wiki/wiki/Restic
   security.wrappers.restic = {
