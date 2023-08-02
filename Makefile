@@ -101,3 +101,9 @@ repair-store:
 
 list-generations:
 	nix profile history --profile /nix/var/nix/profiles/system
+
+optimize-store:
+	nix store optimise
+
+fwup:
+	fwupdmgr refresh && fwupdmgr update
