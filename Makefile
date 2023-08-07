@@ -103,7 +103,9 @@ list-generations:
 	nix profile history --profile /nix/var/nix/profiles/system
 
 optimize-store:
-	nix store optimise
+	duf; \
+	nix store optimise; \
+	duf
 
 fwup:
 	fwupdmgr refresh && fwupdmgr update
