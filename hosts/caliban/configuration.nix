@@ -62,4 +62,7 @@
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.opengl.enable = true;
+
+  # For testing https://gitlab.tugraz.at/vpu-private/ansible/
+  virtualisation.multipass.enable = true;
 }
