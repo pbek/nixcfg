@@ -51,6 +51,11 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  networking.hosts = {
+    "192.168.1.110" = [ "cicinas" "cicinas.lan" ];
+    "192.168.1.111" = [ "cicinas2" "cicinas2.lan" ];
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
