@@ -46,6 +46,10 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
+  services.avahi.enable = true;
+  services.avahi.nssmdns = true;
+  # Samsung printer driver for ML-1710
+  services.printing.drivers = [ pkgs.splix ];
 
   environment.systemPackages = with pkgs; [
     calibre
