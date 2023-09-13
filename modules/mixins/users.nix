@@ -8,7 +8,7 @@
       n18 = "nix-shell /home/omega/.shells/node18.nix --run fish";
       p8 = "nix-shell /home/omega/.shells/php8.nix --run fish";
       qtc = "nix-shell /home/omega/.shells/qt5.nix --run qtcreator";
-      qtc6 = "nix-shell /home/omega/.shells/qt5.nix --run qtcreator";
+      qtc6 = "nix-shell /home/omega/.shells/qt6.nix --run qtcreator";
       cl = "nix-shell /home/omega/.shells/qt5.nix --run clion";
       cl6 = "nix-shell /home/omega/.shells/qt6.nix --run clion";
       nsf = "nix-shell --run fish";
