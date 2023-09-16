@@ -61,6 +61,7 @@
 
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
+  nixpkgs.config.nvidia.acceptLicense = true;
   hardware.opengl.enable = true;
 
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/

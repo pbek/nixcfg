@@ -70,6 +70,7 @@
 
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
+  nixpkgs.config.nvidia.acceptLicense = true;
   hardware.opengl.enable = true;
 
   # Enable suspend to RAM
