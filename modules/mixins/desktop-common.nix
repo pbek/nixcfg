@@ -323,14 +323,23 @@
   };
 
   system = {
+    extraSystemBuilderCmds = ''
+      ln -sv ${pkgs.path} $out/nixpkgs
+    '';
+
     stateVersion = "23.05";
   };
+
+  nix.nixPath = [ "nixpkgs=/run/current-system/nixpkgs" ];
 
   # https://rycee.gitlab.io/home-manager/options.html
   # https://nix-community.github.io/home-manager/options.html#opt-home.file
   home-manager.users.omega = {
     /* The home.stateVersion option does not have a default and must be set */
     home.stateVersion = "23.05";
+
+    # Does not seem to set the NIX_PATH
+#    home.sessionVariables.NIX_PATH = "nixpkgs=/run/current-system/nixpkgs";
 
     # allow unfree packages in nix-shell
     home.file.".config/nixpkgs/config.nix".text = ''
