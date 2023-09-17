@@ -323,6 +323,7 @@
   };
 
   system = {
+    # Create a symlink to the latest nixpkgs of the flake
     extraSystemBuilderCmds = ''
       ln -sv ${pkgs.path} $out/nixpkgs
     '';
@@ -330,6 +331,7 @@
     stateVersion = "23.05";
   };
 
+  # Use symlink to the latest nixpkgs of the flake as nixpkgs, e.g. for nix-shell
   nix.nixPath = [ "nixpkgs=/run/current-system/nixpkgs" ];
 
   # https://rycee.gitlab.io/home-manager/options.html
@@ -337,9 +339,6 @@
   home-manager.users.omega = {
     /* The home.stateVersion option does not have a default and must be set */
     home.stateVersion = "23.05";
-
-    # Does not seem to set the NIX_PATH
-#    home.sessionVariables.NIX_PATH = "nixpkgs=/run/current-system/nixpkgs";
 
     # allow unfree packages in nix-shell
     home.file.".config/nixpkgs/config.nix".text = ''
