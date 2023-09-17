@@ -11,6 +11,8 @@
       qtc6 = "nix-shell /home/omega/.shells/qt6.nix --run qtcreator";
       cl = "nix-shell /home/omega/.shells/qt5.nix --run clion";
       cl6 = "nix-shell /home/omega/.shells/qt6.nix --run clion";
+      qmake5-path = "nix-shell /home/omega/.shells/qt5.nix --run \"whereis qmake\"";
+      qmake6-path = "nix-shell /home/omega/.shells/qt6.nix --run \"whereis qmake\"";
       nsf = "nix-shell --run fish";
       gitc = "git commit";
       gitps = "git push";
