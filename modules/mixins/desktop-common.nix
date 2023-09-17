@@ -322,6 +322,10 @@
     capabilities = "cap_dac_read_search=+ep";
   };
 
+  system = {
+    stateVersion = "23.05";
+  };
+
   # https://rycee.gitlab.io/home-manager/options.html
   # https://nix-community.github.io/home-manager/options.html#opt-home.file
   home-manager.users.omega = {
