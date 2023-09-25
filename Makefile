@@ -28,7 +28,6 @@ upgrade-push-all:
 
 push:
 	attic push main `which attic` && \
-	attic push main `which noseyparker` && \
 	attic push qownnotes `which qownnotes` && \
 	attic push qownnotes `which loganalyzer` && \
 	attic push qownnotes `which qc`
