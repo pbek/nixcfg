@@ -7,30 +7,30 @@ Actions=stripImageMeta;resizeImage1024;convertWebp;convertWebpLossless;convertWe
 [Desktop Action stripImageMeta]
 Name=Strip Image Meta Information
 Icon=editimage
-Exec=mogrify -strip "%u"
+Exec=nix-shell -p imagemagick --run 'mogrify -strip "%u"'
 
 [Desktop Action resizeImage1024]
 Name=Resize image to 1024x1024
 Icon=editimage
 #Exec=convert "%u" -define jpeg:extent=512kb "%u"
-Exec=convert "%u" -resize 1024x1024 "%u"
+Exec=nix-shell -p imagemagick --run 'convert "%u" -resize 1024x1024 "%u"'
 
 [Desktop Action convertWebp]
 Name=Convert image to WebP
 Icon=editimage
-Exec=convert "%u" "%u.webp"
+Exec=nix-shell -p imagemagick --run 'convert "%u" "%u.webp"'
 
 [Desktop Action convertWebpLossless]
 Name=Convert image to WebP lossless
 Icon=editimage
-Exec=convert "%u" -define webp:lossless=true "%u.webp"
+Exec=nix-shell -p imagemagick --run 'convert "%u" -define webp:lossless=true "%u.webp"'
 
 [Desktop Action convertWebp50]
 Name=Convert image to WebP 50%
 Icon=editimage
-Exec=convert "%u" -quality 50 "%u.webp"
+Exec=nix-shell -p imagemagick --run 'convert "%u" -quality 50 "%u.webp"'
 
 [Desktop Action convertWebp70]
 Name=Convert image to WebP 70%
 Icon=editimage
-Exec=convert "%u" -quality 70 "%u.webp"
+Exec=nix-shell -p imagemagick --run 'convert "%u" -quality 70 "%u.webp"'

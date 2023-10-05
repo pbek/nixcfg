@@ -11,4 +11,5 @@ Icon=editimage
 #Exec=/bin/sh -c ";file=\"%u\" heif-convert $file ${file/%.heic/.jpg}"
 #Exec=file="%u" heif-convert $file ${file/%.heic/.jpg}
 #Exec=setenv file "%u";heif-convert $file ${file/%.heic/.jpg}
-Exec=heif-convert "%u" "%u.jpg"
+#Exec=heif-convert "%u" "%u.jpg"
+Exec=nix-shell -p libheif --run 'heif-convert "%u" "%u.jpg"'
