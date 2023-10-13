@@ -6,6 +6,8 @@ NixOS config
 
 ## Setup
 
+Pick your hostname, you might find some inspiration [here](https://spaceplace.nasa.gov/review/switch-a-roo/planet_sizes.en.jpg).
+
 Set your hostname and run the [install script](./install.sh):
 
 ```bash
