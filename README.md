@@ -9,7 +9,11 @@ NixOS config
 Set your hostname and run the [install script](./install.sh):
 
 ```bash
+# Start with a fresh NixOS installation in ~/Code/nixcfg
 HOSTNAME=yourhostname bash <(curl -s https://raw.githubusercontent.com/pbek/nixcfg/main/install.sh)
+
+# Initially build and switch to new configuration for host "yourhostname" after you adapted flake.nix and your configuration.nix
+nix-shell -p git --run "sudo nixos-rebuild switch --flake .#yourhostname -L"
 ```
 
 Afterward here are some useful commands:
@@ -59,9 +63,6 @@ cd ./secrets && agenix -i ~/.ssh/agenix -e secret-file.age
 ## Commands
 
 ```bash
-# switch to unstable channel
-sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos && sudo nixos-rebuild switch --upgrade
-
 # update just one flake (we need to set the github token so the API limit is not reached)
 NIX_CONFIG="access-tokens = github.com=`cat ~/.secrets/github-token`" nix flake lock --update-input catppuccin
 ```
