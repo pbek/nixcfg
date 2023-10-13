@@ -91,6 +91,18 @@ outputs =
         ];
         specialArgs = { inherit inputs; };
       };
+      # Asus Vivobook
+      rhea = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/rhea/configuration.nix
+          ./hosts/rhea/hardware-configuration.nix
+          home-manager.nixosModules.home-manager
+          agenix.nixosModules.age
+          attic.nixosModules.atticd
+        ];
+        specialArgs = { inherit inputs; };
+      };
 
       # TUG VM
       astra = nixpkgs.lib.nixosSystem {
