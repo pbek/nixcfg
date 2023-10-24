@@ -210,7 +210,20 @@
     cmake
     chromium
     google-chrome
-    vscode
+#    vscode
+    (vscode-with-extensions.override {
+      vscodeExtensions = with vscode-extensions; [
+      ]
+      ++ vscode-utils.extensionsFromVscodeMarketplace [
+        {
+          name = "playwright";
+          publisher = "ms-playwright";
+          # https://github.com/microsoft/playwright-vscode/releases/tag/v1.0.16
+          version = "1.0.16";
+          sha256 = "sha256-l3wmiS1vgSuZXWVb7uMNjDY2qgtcxB+fUjtpCSSyQ98=";
+        }
+      ];
+    })
     yubikey-manager
     pam_u2f
     yubico-pam
