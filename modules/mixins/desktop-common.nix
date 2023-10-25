@@ -407,6 +407,20 @@
       enableFishIntegration = true;
       nix-direnv.enable = true;
     };
+
+    # Fix for https://github.com/NixOS/nixpkgs/issues/261777 until
+    # https://nixpk.gs/pr-tracker.html?pr=261778 is ready
+    programs.fzf = {
+      enable = true;
+      package = pkgs.fzf.overrideAttrs (final: prev: {
+        postInstall = (prev.postInstall or "") + ''
+          cat << EOF > $out/share/fish/vendor_conf.d/load-fzf-key-bindings.fish
+            status is-interactive; or exit 0
+            fzf_key_bindings
+          EOF
+        '';
+      });
+    };
   };
 
   # List services that you want to enable:
