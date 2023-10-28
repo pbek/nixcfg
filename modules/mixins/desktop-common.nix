@@ -149,6 +149,7 @@
     qtcreator
     tree
     hub
+    usbutils  # lsusb
 
 #    qt5.qmake
 #    libsForQt5.qt5.qt3d
