@@ -10,7 +10,7 @@
       userEmail = "patrizio@bekerle.com";
       ignores = [ ".idea" ".direnv" ];
       signing = {
-        signByDefault = true;
+        signByDefault = false;
         key = "E00548D5D6AC812CAAD2AFFA9C42B05E591360DC";
       };
     };
@@ -41,7 +41,7 @@
       [core]
         excludesfile = /home/omega/.gitignore
       [commit]
-        gpgsign = true
+        gpgsign = false
       [gpg]
         program = gpg
       [pull]
