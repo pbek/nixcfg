@@ -56,5 +56,6 @@
   hardware.opengl.enable = true;
 
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/
-  virtualisation.multipass.enable = true;
+  # Turn off for now, because build is broken
+#  virtualisation.multipass.enable = true;
 }
