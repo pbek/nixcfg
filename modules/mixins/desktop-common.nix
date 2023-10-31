@@ -188,8 +188,8 @@
     # libsForQt5.qt5.qtxmlpatterns
     # libsForQt5.qt5.wrapQtAppsHook
 
-    qownnotes
-#    (pkgs.qt6Packages.callPackage ../../apps/qownnotes/default.nix { })
+#    qownnotes
+    (pkgs.qt6Packages.callPackage ../../apps/qownnotes/default.nix { })
     qc
 #    (pkgs.callPackage ../../apps/qc/default.nix { })
     loganalyzer
