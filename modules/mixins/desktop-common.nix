@@ -42,12 +42,6 @@
   services.xserver.desktopManager.plasma5.enable = true;
   programs.kdeconnect.enable = true;
 
-  environment.plasma5.excludePackages = with pkgs; [
-    # Did not work
-    partition-manager
-  ];
-
-
   # Enable bluetooth
   hardware.bluetooth.enable = true;
 
@@ -261,8 +255,6 @@
     libsForQt5.plasma-pa
     libsForQt5.plasma-vault
     kdiff3
-    # partition-manager
-    gparted
 
     pinentry-curses
     pinentry-qt
@@ -387,6 +379,9 @@
   programs.fuse.userAllowOther = true;
 
   programs.thefuck.enable = true;
+
+  # KDE partition-manager doesn't work when installed directly
+  programs.partition-manager.enable = true;
 
   home-manager.users.omega = {
     xdg.desktopEntries = {
