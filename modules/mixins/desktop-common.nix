@@ -118,6 +118,7 @@
     kate
     kmail
     smartgithg
+    gittyup
     fish
     # fishPlugins.done
     fishPlugins.fzf-fish
