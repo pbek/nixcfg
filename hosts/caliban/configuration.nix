@@ -43,6 +43,10 @@
     openldap
   ];
 
+  networking.firewall = {
+    allowedTCPPorts = [ 9003 ]; # xdebug
+  };
+
   # Extract
 
   # https://nixos.wiki/wiki/VirtualBox
