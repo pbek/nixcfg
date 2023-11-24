@@ -44,7 +44,7 @@
   ];
 
   networking.firewall = {
-    allowedTCPPorts = [ 9003 ]; # xdebug
+    allowedTCPPorts = [ 9000 9003 ]; # xdebug
   };
 
   # Extract
