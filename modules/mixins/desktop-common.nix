@@ -229,6 +229,7 @@
     ranger  # midnight commander replacement
     nix-tree
     ripgrep # grep replacement
+    eza # ls replacement
 
     libsForQt5.kwalletmanager
     libsForQt5.plasma-systemmonitor
