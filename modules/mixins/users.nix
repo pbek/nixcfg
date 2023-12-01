@@ -26,7 +26,7 @@
       qcel = "qc exec --command --last";
       qcs = "qc search";
       qcsw = "qc switch";
-      ll = "ls -hal";
+      ll = "eza -l";
       pia-up = "~/Scripts/pia.sh";
       pia-down = "wg-quick down pia";
       pwdc = "pwd | xclip -sel clip";
