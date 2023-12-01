@@ -220,15 +220,15 @@
     ferdium
     topgrade
     ksnip
-    ncdu
-    duf
-    dua
+    ncdu  # disk usage (du) replacement
+    duf # disk free (df) replacement
+    dua # disk usage (du) replacement
     sniffnet
     wireguard-tools
     nixpkgs-review
-    ranger
+    ranger  # midnight commander replacement
     nix-tree
-    ripgrep
+    ripgrep # grep replacement
 
     libsForQt5.kwalletmanager
     libsForQt5.plasma-systemmonitor
