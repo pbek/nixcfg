@@ -12,7 +12,7 @@
       php83Extensions.mbstring
       php83Extensions.xml
       php83Extensions.intl
-      php83Extensions.apcu
+#      php83Extensions.apcu
       php83Extensions.curl
       php83Extensions.readline
       php83Extensions.zip
