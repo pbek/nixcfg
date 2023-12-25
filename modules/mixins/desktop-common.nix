@@ -3,6 +3,7 @@
   imports = [
     ./git.nix
     ./starship.nix
+    ./espanso.nix
   ];
 
   boot.kernel.sysctl = {
@@ -367,6 +368,10 @@
     home.file.".local/share/kservices5" = {
       source = ../../files/kservices5;
     };
+#
+#    home.file.".config/espanso" = {
+#      source = ../../files/espanso;
+#    };
   };
 
   # Disable wakeup from USB devices
@@ -384,6 +389,9 @@
 
   # KDE partition-manager doesn't work when installed directly
   programs.partition-manager.enable = true;
+
+  # https://espanso.org/docs/
+  services.espanso.enable = true;
 
   home-manager.users.omega = {
     xdg.desktopEntries = {
