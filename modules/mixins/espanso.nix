@@ -4,12 +4,6 @@
   home-manager.users.omega = {
     services.espanso = {
       enable = true;
-#      matches = [
-#        {
-#          trigger = ":sg";
-#          replace = "Sehr geehrter ";
-#        }
-#      ];
       matches = {
         base = {
           matches = [
