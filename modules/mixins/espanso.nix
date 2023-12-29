@@ -46,6 +46,17 @@
               replace = "Great, thank you for testing!\n";
             }
             {
+              triggers = [ ":ghexp" ];
+              replace = "Can you please explain in more detail and step by step what you did, what happened and what you expected.\n";
+            }
+            {
+              triggers = [ ":ghnotetree" ":ghwip" ":gh790" ];
+              replace = ''
+                Looks like you are talking about the work in progress feature #790, right?
+                If yes, then best deposit your request there... 😉
+              '';
+            }
+            {
               trigger = ":ghscr";
               replace = ''
                 Can you please mention the authors of the script, like advised in the issue template?
@@ -57,9 +68,10 @@
               triggers = [ ":ghrep" ":ghlog" ];
               replace = ''
                 Thank you for reporting.
-                Can you please post the output from the *Debug settings* in the settings dialog (see issue template)?
+                Can you please post the output from the *Debug settings* in the settings dialog? You just need to paste it here.
                 And is there any useful log output if you enable the log panel (see Window / Panels)?
                 Please make sure you also enable debug logging in the log panel by right-clicking on the panel and selecting `Debug` in `Options`.
+                The issue dialog in the help menu can help you with all of that.
               '';
             }
           ];
