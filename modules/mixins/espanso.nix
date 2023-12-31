@@ -25,6 +25,14 @@
               replace = "Mit freundlichen Grüßen\nPatrizio Bekerle\n";
             }
             {
+              trigger = ":kr";
+              replace = "Kind regards\nPatrizio Bekerle\n";
+            }
+            {
+              trigger = ":cp";
+              replace = "Cheers Patrizio";
+            }
+            {
               trigger = ":date";
               replace = "{{mydate}}";
               vars = [
