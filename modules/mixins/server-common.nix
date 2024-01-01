@@ -26,7 +26,6 @@
 
   programs.bash.shellAliases = config.programs.fish.shellAliases;
 
-  # Define a user account. Don't forget to set a password with ?passwd?.
   users.users.omega = {
     isNormalUser = true;
     description = "Patrizio Bekerle";
