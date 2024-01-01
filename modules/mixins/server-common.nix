@@ -133,12 +133,12 @@
   # https://nixos.wiki/wiki/Docker
   virtualisation.docker.enable = true;
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.11";
 
   # https://rycee.gitlab.io/home-manager/options.html
   home-manager.users.omega = {
     /* The home.stateVersion option does not have a default and must be set */
-    home.stateVersion = "23.05";
+    home.stateVersion = "23.11";
 
     # https://rycee.gitlab.io/home-manager/options.html
     # enable starship prompt in fish shell, enableFishIntegration in the starship config did not work
