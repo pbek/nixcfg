@@ -1,12 +1,5 @@
 { config, pkgs, inputs, ... }:
 {
-  # https://nixos.wiki/wiki/Fonts
-  fonts.packages = with pkgs; [
-    fira-code
-    fira-code-symbols
-    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
-  ];
-
   # https://rycee.gitlab.io/home-manager/options.html
   home-manager.users.omega = {
     # enable starship prompt in fish shell, enableFishIntegration in the starship config did not work

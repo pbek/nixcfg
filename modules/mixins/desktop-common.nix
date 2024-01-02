@@ -72,6 +72,14 @@
     };
   };
 
+  # https://nixos.wiki/wiki/Fonts
+  # fonts for starship
+  fonts.packages = with pkgs; [
+    fira-code
+    fira-code-symbols
+    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+  ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
