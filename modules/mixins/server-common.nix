@@ -20,7 +20,7 @@
     enable = true;
     shellAliases = {
       vim = "nvim";
-      ll = "ls -hal";
+      ll = "eza -al";
     };
   };
 
@@ -111,6 +111,8 @@
     ranger
     rsync
     restic
+    ripgrep # grep replacement
+    eza # ls replacement
   ];
 
   # Do garbage collection
