@@ -7,7 +7,7 @@
   services.openssh = {
     enable = true;
     openFirewall = lib.mkForce true;
-
+    listenAddresses = [ { addr = "0.0.0.0"; port = 2222; } ];
     settings.PasswordAuthentication = false;
     settings.PermitRootLogin = lib.mkForce "no";
   };
@@ -32,6 +32,7 @@
     description = "Patrizio Bekerle";
     extraGroups = [ "networkmanager" "wheel" "docker" "dialout" ];
     shell = pkgs.fish;
+    initialHashedPassword = "changeme";
     # Yubikey public key
     openssh.authorizedKeys.keys = ["sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBFDWxqigrXdCx7mX/yvBpHJf2JIab9HIrjof+sCbn0cOr/NySAirjE7tWxkZJPBrUs/8wSgn/rFO742O+NkOXTYAAAAEc3NoOg== omega@i7work"];
   };
@@ -61,7 +62,7 @@
   # https://nixos.wiki/wiki/Firewall
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 22 ]; # SSH
+    allowedTCPPorts = [ 2222 ]; # SSH
   };
 
   # Configure console keymap
