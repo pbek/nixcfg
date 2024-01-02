@@ -34,6 +34,18 @@
     };
   };
 
+  # https://rycee.gitlab.io/home-manager/options.html
+  home-manager.users.omega = {
+    programs.git = {
+      enable = true;
+      # use "git diff --no-ext-diff" for creating patches!
+      difftastic.enable = true;
+      userName  = "Patrizio Bekerle";
+      userEmail = "patrizio@bekerle.com";
+      ignores = [ ".idea" ".direnv" ];
+    };
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
