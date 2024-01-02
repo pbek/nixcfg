@@ -93,3 +93,26 @@ nixos-install --flake .#pluto
 # reboot machine, "Linux Bootloader" should now be available in the UEFI boot menu
 reboot
 ```
+
+## Server setup with nixos-anywhere
+
+```bash
+# Test configuration in vm
+nix run github:nix-community/nixos-anywhere -- --flake .#netcup02 --vm-test
+
+# Deploy configuration to server "server-host"
+nix run github:nix-community/nixos-anywhere -- --flake .#netcup02 root@server-host
+```
+
+### Todo after server setup
+
+```bash
+# Set password
+passwd
+
+# Clone nixcfg repository
+cd /home/omega && git clone https://github.com/pbek/nixcfg.git && cd nixcfg
+
+# Update channels, so command-not-found will work
+sudo nix-channel --update
+```
