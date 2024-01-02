@@ -39,7 +39,6 @@
           compression = "zstd";
           "com.sun:auto-snapshot" = "false";
         };
-#        mountpoint = "/";
         postCreateHook = "zfs snapshot zroot@blank";
 
         datasets = {
@@ -71,20 +70,6 @@
               mountpoint = "legacy";
             };
           };
-#          zfs_fs = {
-#            type = "zfs_fs";
-#            mountpoint = "/zfs_fs";
-#            options."com.sun:auto-snapshot" = "true";
-#          };
-#          zfs_testvolume = {
-#            type = "zfs_volume";
-#            size = "10M";
-#            content = {
-#              type = "filesystem";
-#              format = "ext4";
-#              mountpoint = "/ext4onzfs";
-#            };
-#          };
         };
       };
     };
