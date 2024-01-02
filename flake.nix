@@ -12,6 +12,8 @@
     pia.flake = false;
     catppuccin.url = "github:catppuccin/starship";
     catppuccin.flake = false;
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
   };
 
 outputs =
@@ -23,6 +25,7 @@ outputs =
   , attic
   , pia
   , catppuccin
+  , disko
 #      , robotnix
   , ...
   } @ inputs: {
@@ -171,6 +174,15 @@ outputs =
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
           attic.nixosModules.atticd
+        ];
+        specialArgs = { inherit inputs; };
+      };
+      netcup02 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
+          ./hosts/netcup02/configuration.nix
         ];
         specialArgs = { inherit inputs; };
       };
