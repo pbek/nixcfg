@@ -50,7 +50,7 @@
               replace = "There now is a new release, could you please test it and report if it works for you?\n";
             }
             {
-              triggers = [ ":ghtest" ":ghtst" ];
+              triggers = [ ":ghtest" ":ghtst" ":ghgr" ];
               replace = "Great, thank you for testing!\n";
             }
             {
