@@ -102,6 +102,26 @@
         "type": "github"
       }
     },
+    "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1704072400,
+        "narHash": "sha256-Es4zcFoCJ+Pa9TN46VoqgNlYznuhc6s50LRcDqQEATs=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "59f915b45a38cb0ec0e97a713237877a06b43386",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -273,6 +293,7 @@
         "agenix": "agenix",
         "attic": "attic",
         "catppuccin": "catppuccin",
+        "disko": "disko",
         "home-manager": "home-manager_2",
         "nixpkgs": "nixpkgs_4",
         "pia": "pia"
