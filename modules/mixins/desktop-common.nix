@@ -1,8 +1,7 @@
 { config, pkgs, inputs, ... }:
 {
   imports = [
-    ./git.nix
-    ./starship.nix
+    ./common.nix
     ./espanso.nix
   ];
 
@@ -11,27 +10,6 @@
     "fs.inotify.max_user_watches" = 1048576; # default: 8192
     "fs.inotify.max_user_instances" = 1024; # default: 128
     "fs.inotify.max_queued_events" = 32768; # default: 16384
-  };
-
-  # Set your time zone.
-  time.timeZone = "Europe/Vienna";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    # LC_ALL = "de_AT.UTF-8";
-    LC_ADDRESS = "de_AT.UTF-8";
-    LC_COLLATE = "de_AT.UTF-8";
-    LC_CTYPE = "en_US.UTF-8";
-    LC_IDENTIFICATION = "de_AT.UTF-8";
-    LC_MEASUREMENT = "de_AT.UTF-8";
-    LC_MONETARY = "de_AT.UTF-8";
-    LC_NAME = "de_AT.UTF-8";
-    LC_NUMERIC = "de_AT.UTF-8";
-    LC_PAPER = "de_AT.UTF-8";
-    LC_TELEPHONE = "de_AT.UTF-8";
-    LC_TIME = "de_AT.UTF-8";
   };
 
   # Enable the X11 windowing system.
@@ -59,15 +37,11 @@
     ];
   };
 
-
   # Configure keymap in X11
   services.xserver = {
     layout = "de";
     xkbVariant = "nodeadkeys";
   };
-
-  # Configure console keymap
-  console.keyMap = "de-latin1-nodeadkeys";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -95,12 +69,6 @@
         "main:WYsIaF+ItMNE9Xt976bIGKSKp9jaaVeTzYlfqQqpP28="
         "qownnotes:7hN006Z7xgK5v97WKFo9u3qcVbZIXHtFmPPM3NPERpM="
       ];
-
-      # Allow flakes
-      experimental-features = [ "nix-command" "flakes" ];
-
-      # To do a "nix-build --repair" without sudo
-      trusted-users = [ "root" "@wheel" ];
     };
   };
 
@@ -113,28 +81,16 @@
 #    }}/package.nix" {})
     inputs.attic.packages.x86_64-linux.default
     inputs.agenix.packages.x86_64-linux.default
-    neovim
-    wget
     firefox
     kate
     kmail
     smartgithg
     gittyup
-    fish
-    # fishPlugins.done
-    fishPlugins.fzf-fish
-    # fishPlugins.forgit
-    # fishPlugins.hydro
-    # fishPlugins.grc
-    # grc
 
     magic-wormhole
     libsForQt5.yakuake
     xclip
-    tmux
     nmap
-    git
-    jq
     fzf
     chromium
     filelight
@@ -193,15 +149,7 @@
 #    noseyparker
 #    (pkgs.callPackage ../../apps/noseyparker/default.nix { })
 
-    less
-    mc
-    htop
-    atop
-    btop
     keepassxc
-    inetutils
-    dig
-    gnumake
     gcc
     gdb
     cmake
@@ -216,21 +164,14 @@
     bluez
     exfatprogs
     f2fs-tools
-    restic
     nextcloud-client
     ferdium
     topgrade
     ksnip
-    ncdu  # disk usage (du) replacement
-    duf # disk free (df) replacement
-    dua # disk usage (du) replacement
     sniffnet
     wireguard-tools
     nixpkgs-review
-    ranger  # midnight commander replacement
     nix-tree
-    ripgrep # grep replacement
-    eza # ls replacement
 
     libsForQt5.kwalletmanager
     libsForQt5.plasma-systemmonitor
@@ -290,52 +231,15 @@
   # https://nixos.wiki/wiki/Fwupd
   services.fwupd.enable = true;
 
-  # Do garbage collection
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 20d";
-  };
-
-  # Docker
-  # https://nixos.wiki/wiki/Docker
-  virtualisation.docker.enable = true;
-
   # Enable Netbird Wireguard VPN service
   services.netbird.enable = true;
 
   # Enable resoved to let wireguard set a DNS
   services.resolved.enable = true;
 
-  # Add Restic Security Wrapper
-  # https://nixos.wiki/wiki/Restic
-  security.wrappers.restic = {
-    source = "${pkgs.restic.out}/bin/restic";
-    owner = "omega";
-    group = "users";
-    permissions = "u=rwx,g=,o=";
-    capabilities = "cap_dac_read_search=+ep";
-  };
-
-  system = {
-    # Create a symlink to the latest nixpkgs of the flake
-    # See: https://discourse.nixos.org/t/do-flakes-also-set-the-system-channel/19798/18
-    extraSystemBuilderCmds = ''
-      ln -sv ${pkgs.path} $out/nixpkgs
-    '';
-
-    stateVersion = "23.11";
-  };
-
-  # Use symlink to the latest nixpkgs of the flake as nixpkgs, e.g. for nix-shell
-  nix.nixPath = [ "nixpkgs=/run/current-system/nixpkgs" ];
-
   # https://rycee.gitlab.io/home-manager/options.html
   # https://nix-community.github.io/home-manager/options.html#opt-home.file
   home-manager.users.omega = {
-    /* The home.stateVersion option does not have a default and must be set */
-    home.stateVersion = "23.11";
-
     # allow unfree packages in nix-shell
     home.file.".config/nixpkgs/config.nix".text = ''
       {
