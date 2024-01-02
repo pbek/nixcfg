@@ -97,8 +97,13 @@ reboot
 ## Server setup with nixos-anywhere
 
 ```bash
-# Test configuration in vm
+# Test configuration build process in vm
 nix run github:nix-community/nixos-anywhere -- --flake .#netcup02 --vm-test
+
+# Build and test configuration in vm with ssh
+make build-vm-netcup02
+make boot-vm-server-console
+make ssh-vm-server
 
 # Deploy configuration to server "server-host"
 nix run github:nix-community/nixos-anywhere -- --flake .#netcup02 root@server-host

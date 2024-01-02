@@ -57,13 +57,25 @@ boot-vm:
 boot-vm-no-kvm:
 	QEMU_OPTS="-m 4096 -smp 4" QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
 
+# Runs a built VM with a console
 # Quit with Ctrl-A X
 # If there is an issue with the VM, try to do a "reset-vm" first.
 boot-vm-console:
 	QEMU_OPTS="-nographic -serial mon:stdio" QEMU_KERNEL_PARAMS=console=ttyS0 QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
 
+# Runs a built server VM with a console
+# Quit with Ctrl-A X
+# If there is an issue with the VM, try to do a "reset-vm" first.
+# Connect to the server with: ssh -p 2222 omega@localhost -t "tmux new-session -A -s pbek"
+boot-vm-server-console:
+	QEMU_OPTS="-nographic -serial mon:stdio" QEMU_KERNEL_PARAMS=console=ttyS0 QEMU_NET_OPTS="hostfwd=tcp::2222-:2222" ./result/bin/run-*-vm
+
+# Connect to a running server VM with ssh
+ssh-vm-server:
+	ssh -p 2222 omega@localhost -t "tmux new-session -A -s pbek"
+
 reset-vm:
-	rm nixos.qcow2
+	rm *.qcow2
 
 ssh-vm:
 	ssh -p 2222 omega@localhost -t "tmux new-session -A -s pbek"
@@ -73,6 +85,10 @@ build-vm-desktop:
 
 build-vm-server:
 	nixos-rebuild --flake .#vm-server build-vm
+
+# Build a VM for the server netcup02
+build-vm-netcup02:
+	nixos-rebuild --flake .#vm-netcup02 build-vm
 
 flake-rebuild-current:
 	sudo nixos-rebuild switch --flake .#$(shell hostname)

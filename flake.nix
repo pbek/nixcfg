@@ -186,6 +186,15 @@ outputs =
         ];
         specialArgs = { inherit inputs; };
       };
+      vm-netcup02 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
+          ./hosts/netcup02/vm.nix
+        ];
+        specialArgs = { inherit inputs; };
+      };
     };
   };
 }
