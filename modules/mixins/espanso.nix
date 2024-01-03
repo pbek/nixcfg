@@ -65,6 +65,10 @@
               '';
             }
             {
+              triggers = [ ":ghcl" ];
+              replace = "I will close this issue until there is more information.";
+            }
+            {
               trigger = ":ghscr";
               replace = ''
                 Can you please mention the authors of the script, like advised in the issue template?
