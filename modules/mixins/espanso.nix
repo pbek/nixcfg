@@ -2,8 +2,14 @@
 
 {
   home-manager.users.omega = {
+    # https://mynixos.com/home-manager/options/services.espanso
     services.espanso = {
       enable = true;
+      configs = {
+        default = {
+          search_shortcut = "ALT+SHIFT+SPACE";
+        };
+      };
       matches = {
         base = {
           # https://espanso.org/docs/matches/basics/
