@@ -75,4 +75,8 @@
   # powerManagement.powerDownCommands = ''
   #   echo GPP0 > /proc/acpi/wakeup
   # '';
+
+  # https://nixos.wiki/wiki/VirtualBox
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "omega" ];
 }
