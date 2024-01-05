@@ -8,6 +8,15 @@ test:
 switch:
 	sudo nixos-rebuild switch --flake .#${HOSTNAME} -L
 
+switch-swap:
+	sudo fallocate -l 1G /swapfile && \
+	sudo chmod 600 /swapfile && \
+	sudo mkswap /swapfile && \
+	sudo swapon /swapfile && \
+	make switch; \
+	sudo swapoff /swapfile && \
+	sudo rm /swapfile
+
 switch-push:
 	make switch; make push
 
