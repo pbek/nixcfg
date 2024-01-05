@@ -70,6 +70,17 @@
               mountpoint = "legacy";
             };
           };
+          swap = {
+            type = "zfs_volume";
+            size = "2G";
+            blocksize = "16K";
+            options = {
+              logbias=throughput;
+              "com.sun:auto-snapshot" = "false";
+              sync=always;
+              primarycache=metadata;
+            };
+          };
         };
       };
     };
