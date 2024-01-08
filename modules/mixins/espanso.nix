@@ -61,7 +61,7 @@
             }
             {
               triggers = [ ":ghexp" ];
-              replace = "Can you please explain in more detail and step by step what you did, what happened and what you expected.\n";
+              replace = "Can you please explain in more detail and step by step what you did, what happened and what you expected?\n";
             }
             {
               triggers = [ ":ghnotetree" ":ghwip" ":gh790" ];
