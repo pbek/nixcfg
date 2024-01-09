@@ -92,6 +92,18 @@
                 The issue dialog in the help menu can help you with all of that.
               '';
             }
+            {
+              triggers = [ ":mdons" ];
+              replace = "QOwnNotes donation";
+            }
+            {
+              triggers = [ ":mdonb" ];
+              replace = ''
+                Thanks a lot for your generous donation!
+
+                Cheers Patrizio
+              '';
+            }
           ];
         };
       };
