@@ -11,7 +11,7 @@
   # https://nixos.wiki/wiki/Swap
   swapDevices = [ {
     device = "/dev/zvol/zroot/swap";
-    size = 2*1024;
+    size = 3*1024;
   } ];
 
   boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "sr_mod" "virtio_blk" ];

@@ -72,7 +72,7 @@
           };
           swap = {
             type = "zfs_volume";
-            size = "2G";
+            size = "3G";
             options = {
               logbias = "throughput";
               "com.sun:auto-snapshot" = "false";
