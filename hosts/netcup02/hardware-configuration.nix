@@ -8,12 +8,6 @@
     [ (modulesPath + "/profiles/qemu-guest.nix")
     ];
 
-  # https://nixos.wiki/wiki/Swap
-  swapDevices = [ {
-    device = "/dev/zvol/zroot/swap";
-    size = 3*1024;
-  } ];
-
   boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "sr_mod" "virtio_blk" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];

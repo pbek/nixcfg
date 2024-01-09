@@ -22,6 +22,13 @@
               mountpoint = "/boot";
             };
           };
+          encryptedSwap = {
+            size = "2G";
+            content = {
+              type = "swap";
+              randomEncryption = true;
+            };
+          };
           zfs = {
             size = "100%";
             content = {
@@ -68,16 +75,6 @@
             mountpoint = "/var/lib/docker/volumes";
             options = {
               mountpoint = "legacy";
-            };
-          };
-          swap = {
-            type = "zfs_volume";
-            size = "3G";
-            options = {
-              logbias = "throughput";
-              "com.sun:auto-snapshot" = "false";
-              sync = "always";
-              primarycache = "metadata";
             };
           };
         };
