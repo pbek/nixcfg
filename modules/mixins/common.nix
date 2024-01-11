@@ -99,6 +99,11 @@
     ranger  # midnight commander replacement
     ripgrep # grep replacement
     eza # ls replacement
+    bat # cat replacement with syntax highlighting
+    bat-extras.batgrep  # ripgrep with bat
+    bat-extras.batman # man with bat
+    tldr  # man replacement
+    fd  # find replacement
   ];
 
   # Do garbage collection
