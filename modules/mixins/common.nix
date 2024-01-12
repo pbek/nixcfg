@@ -20,6 +20,12 @@
     };
     shellAbbrs = {
       killall = "pkill";
+      less = "bat";
+#      cat = "bat";
+#      man = "tldr";
+      man = "batman";
+      du = "dua";
+      df = "duf";
     };
   };
 
