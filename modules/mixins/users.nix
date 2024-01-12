@@ -3,7 +3,6 @@
 {
   # Set some fish config
   programs.fish = {
-    enable = true;
     shellAliases = {
       n18 = "nix-shell /home/omega/.shells/node18.nix --run fish";
       p8 = "nix-shell /home/omega/.shells/php8.nix --run fish";
@@ -13,7 +12,6 @@
       cl6 = "nix-shell /home/omega/.shells/qt6.nix --run clion";
       qmake5-path = "nix-shell /home/omega/.shells/qt5.nix --run \"whereis qmake\"";
       qmake6-path = "nix-shell /home/omega/.shells/qt6.nix --run \"whereis qmake\"";
-      nsf = "nix-shell --run fish";
       qce = "qc exec --command";
       qcel = "qc exec --command --last";
       qcs = "qc search";
