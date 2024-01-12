@@ -101,6 +101,7 @@
     xclip
     nmap
     fzf
+    fishPlugins.fzf-fish
     chromium
     filelight
     # Builds qtwebkit from source!

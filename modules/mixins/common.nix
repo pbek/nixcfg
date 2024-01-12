@@ -80,7 +80,6 @@
     neovim
     wget
     fish
-    fishPlugins.fzf-fish
     tmux
     git
     jq
