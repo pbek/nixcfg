@@ -17,6 +17,7 @@
       gitl = "git log";
       vim = "nvim";
       ll = "eza -al";
+      fish-reload = "exec fish";
     };
     shellAbbrs = {
       killall = "pkill";
