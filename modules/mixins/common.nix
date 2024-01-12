@@ -95,7 +95,7 @@
     ncdu  # disk usage (du) replacement
     duf # disk free (df) replacement
     dua # disk usage (du) replacement
-    ranger  # midnight commander replacement
+    ranger  # midnight commander replacement (not really)
     ripgrep # grep replacement
     eza # ls replacement
     bat # cat replacement with syntax highlighting
