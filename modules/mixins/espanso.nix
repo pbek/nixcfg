@@ -28,11 +28,11 @@
             }
             {
               trigger = ":mfg";
-              replace = "Mit freundlichen Grüßen\nPatrizio Bekerle\n";
+              replace = "Mit freundlichen Grüßen\nPatrizio Bekerle";
             }
             {
               trigger = ":kr";
-              replace = "Kind regards\nPatrizio Bekerle\n";
+              replace = "Kind regards\nPatrizio Bekerle";
             }
             {
               trigger = ":cp";
@@ -53,7 +53,7 @@
             }
             {
               trigger = ":ghrel";
-              replace = "There now is a new release, could you please test it and report if it works for you?\n";
+              replace = "There now is a new release, could you please test it and report if it works for you?";
             }
             {
               triggers = [ ":ghtest" ":ghtst" ":ghgr" ];
@@ -61,7 +61,7 @@
             }
             {
               triggers = [ ":ghexp" ];
-              replace = "Can you please explain in more detail and step by step what you did, what happened and what you expected?\n";
+              replace = "Can you please explain in more detail and step by step what you did, what happened and what you expected?";
             }
             {
               triggers = [ ":ghnotetree" ":ghwip" ":gh790" ];
