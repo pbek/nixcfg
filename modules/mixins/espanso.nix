@@ -20,11 +20,11 @@
             }
             {
               trigger = ":lg";
-              replace = "Liebe Grüße Patrizio";
+              replace = "Liebe Grüße\nPatrizio";
             }
             {
               trigger = ":glg";
-              replace = "Ganz liebe Grüße Patrizio";
+              replace = "Ganz liebe Grüße\nPatrizio";
             }
             {
               trigger = ":mfg";
@@ -36,7 +36,7 @@
             }
             {
               trigger = ":cp";
-              replace = "Cheers Patrizio";
+              replace = "Cheers\nPatrizio";
             }
             {
               trigger = ":date";
