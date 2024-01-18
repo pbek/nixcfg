@@ -10,9 +10,26 @@
           search_shortcut = "ALT+SHIFT+SPACE";
         };
       };
+      # https://espanso.org/docs/matches/basics/
       matches = {
         base = {
-          # https://espanso.org/docs/matches/basics/
+          matches = [
+            {
+              trigger = ":date";
+              replace = "{{mydate}}";
+              vars = [
+                {
+                  name = "mydate";
+                  type = "date";
+                  params = {
+                    format = "%d.%m.%Y";
+                  };
+                }
+              ];
+            }
+          ];
+        };
+        greethings = {
           matches = [
             {
               trigger = ":sg";
@@ -38,19 +55,10 @@
               trigger = ":cp";
               replace = "Cheers\nPatrizio";
             }
-            {
-              trigger = ":date";
-              replace = "{{mydate}}";
-              vars = [
-                {
-                  name = "mydate";
-                  type = "date";
-                  params = {
-                    format = "%d.%m.%Y";
-                  };
-                }
-              ];
-            }
+          ];
+        };
+        github = {
+          matches = [
             {
               trigger = ":ghrel";
               replace = "There now is a new release, could you please test it and report if it works for you?";
@@ -92,6 +100,10 @@
                 The issue dialog in the help menu can help you with all of that.
               '';
             }
+          ];
+        };
+        mail = {
+          matches = [
             {
               triggers = [ ":mdons" ];
               replace = "QOwnNotes donation";
@@ -103,6 +115,102 @@
 
                 Cheers Patrizio
               '';
+            }
+          ];
+        };
+        emotes = {
+          matches = [
+            {
+              triggers = [ ":+1" ":up" ":ok" ];
+              replace = "👍️";
+            }
+            {
+              triggers = [ ":)" ":grin" ":smile" ];
+              replace = "😄";
+            }
+            {
+              triggers = [ ":|" ":grim" ];
+              replace = "😬";
+            }
+            {
+              triggers = [ ":(" ":sad" ":frown" ];
+              replace = "☹️";
+            }
+            {
+              triggers = [ ":roll" ];
+              replace = "🙄";
+            }
+            {
+              triggers = [ ":think" ];
+              replace = "🙄";
+            }
+            {
+              triggers = [ ":fear" ];
+              replace = "😱";
+            }
+            {
+              triggers = [ ":kiss" ];
+              replace = "😘";
+            }
+            {
+              triggers = [ ":laugh" ];
+              replace = "😆";
+            }
+            {
+              triggers = [ ":sw" ];
+              replace = "😅";
+            }
+            {
+              triggers = [ ":see" ];
+              replace = "🙈";
+            }
+            {
+              triggers = [ ":hug" ];
+              replace = "🤗";
+            }
+            {
+              triggers = [ ";)" ":wink" ];
+              replace = "😉";
+            }
+            {
+              triggers = [ ":clap" ];
+              replace = "👏";
+            }
+            {
+              triggers = [ ":pray" ":nam:" ":bow" ];
+              replace = "🙏";
+            }
+            {
+              triggers = [ ":sun" ];
+              replace = "☀️";
+            }
+            {
+              triggers = [ ":wow" ":ast" ];
+              replace = "😲";
+            }
+            {
+              triggers = [ ":heart" ];
+              replace = "😍❤️🥰";
+            }
+            {
+              triggers = [ ":halo" ":inn" ":angel" ];
+              replace = "😇";
+            }
+            {
+              triggers = [ ":crazy" ];
+              replace = "🤪🙃";
+            }
+            {
+              triggers = [ ":lol" ];
+              replace = "😂🤣";
+            }
+            {
+              triggers = [ ":roc" ];
+              replace = "🚀";
+            }
+            {
+              trigger = ":party";
+              replace = "🥳🎉";
             }
           ];
         };
