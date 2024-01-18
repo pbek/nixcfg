@@ -41,6 +41,8 @@
   environment.systemPackages = with pkgs; [
     soapui
     openldap
+    gimp
+    inkscape
   ];
 
   networking.firewall = {
