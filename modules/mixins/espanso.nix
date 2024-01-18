@@ -141,15 +141,15 @@
               replace = "🙄";
             }
             {
-              triggers = [ ":think" ];
-              replace = "🙄";
+              triggers = [ ":thi" ];
+              replace = "🤔";
             }
             {
               triggers = [ ":fear" ];
               replace = "😱";
             }
             {
-              triggers = [ ":kiss" ];
+              triggers = [ ":ki" ];
               replace = "😘";
             }
             {
@@ -174,10 +174,10 @@
             }
             {
               triggers = [ ":clap" ];
-              replace = "👏";
+              replace = "👏👏";
             }
             {
-              triggers = [ ":pray" ":nam:" ":bow" ];
+              triggers = [ ":pray" ":nam" ":bow" ":thank" ];
               replace = "🙏";
             }
             {
@@ -189,7 +189,7 @@
               replace = "😲";
             }
             {
-              triggers = [ ":heart" ];
+              triggers = [ ":heart" ":lov" ];
               replace = "😍❤️🥰";
             }
             {
@@ -209,8 +209,24 @@
               replace = "🚀";
             }
             {
+              triggers = [ ":cross" ":fing" ];
+              replace = "🤞🏻🤞🏻";
+            }
+            {
               trigger = ":party";
               replace = "🥳🎉";
+            }
+            {
+              trigger = ":birth";
+              replace = "🥳🎉🎁";
+            }
+            {
+              triggers = [ ":xmas" ":christ" ];
+              replace = "🎄🎅🏻";
+            }
+            {
+              triggers = [ ":flex" ];
+              replace = "💪🏻🚀";
             }
           ];
         };
