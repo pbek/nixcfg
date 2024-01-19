@@ -109,7 +109,6 @@
     # always says "Too many open files" while building
 #    qtcreator-qt6
     qtcreator
-    tree
     hub
     usbutils  # lsusb
 
@@ -181,7 +180,6 @@
     sniffnet
     wireguard-tools
     nixpkgs-review
-    nix-tree
 
     libsForQt5.kwalletmanager
     libsForQt5.plasma-systemmonitor

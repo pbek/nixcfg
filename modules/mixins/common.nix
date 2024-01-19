@@ -27,6 +27,7 @@
       man = "batman";
       du = "dua";
       df = "duf";
+      tree = "erd";
     };
   };
 
@@ -99,6 +100,8 @@
     dig
     gnumake
     restic
+    nix-tree  # look into the nix store
+    erdtree # tree replacement
     ncdu  # disk usage (du) replacement
     duf # disk free (df) replacement
     dua # disk usage (du) replacement
