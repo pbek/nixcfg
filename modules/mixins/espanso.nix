@@ -240,6 +240,10 @@
               triggers = [ ":fist" ];
               replace = "🤜🏻🤛🏻";
             }
+            {
+              triggers = [ ":lambda" ];
+              replace = "λ";
+            }
           ];
         };
       };
