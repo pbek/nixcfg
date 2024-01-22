@@ -228,6 +228,10 @@
               triggers = [ ":flex" ];
               replace = "💪🏻🚀";
             }
+            {
+              triggers = [ ":face" ];
+              replace = "🤦🏻";
+            }
           ];
         };
       };
