@@ -125,15 +125,15 @@
               replace = "👍️";
             }
             {
-              triggers = [ ":)" ":grin" ":smile" ];
+              triggers = [ ":)" ":-)" ":grin" ":smile" ];
               replace = "😄";
             }
             {
-              triggers = [ ":|" ":grim" ];
+              triggers = [ ":|" ":-|" ":grim" ];
               replace = "😬";
             }
             {
-              triggers = [ ":(" ":sad" ":frown" ];
+              triggers = [ ":(" ":-(" ":sad" ":frown" ];
               replace = "☹️";
             }
             {
@@ -153,7 +153,7 @@
               replace = "😘";
             }
             {
-              triggers = [ ":laugh" ];
+              triggers = [ ":laugh" ":D" ":-D" ];
               replace = "😆";
             }
             {
@@ -193,11 +193,11 @@
               replace = "😍❤️🥰";
             }
             {
-              triggers = [ ":halo" ":inn" ":angel" ];
+              triggers = [ ":halo" ":inn" ":angel" "O:)" "O:-)" ];
               replace = "😇";
             }
             {
-              triggers = [ ":crazy" ];
+              triggers = [ ":crazy" "%)" "%-)" ];
               replace = "🤪🙃";
             }
             {
