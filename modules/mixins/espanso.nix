@@ -232,6 +232,14 @@
               triggers = [ ":face" ];
               replace = "🤦🏻";
             }
+            {
+              triggers = [ ":cry" ];
+              replace = "🥹😢😭";
+            }
+            {
+              triggers = [ ":fist" ];
+              replace = "🤜🏻🤛🏻";
+            }
           ];
         };
       };
