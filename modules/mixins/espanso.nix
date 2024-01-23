@@ -241,8 +241,8 @@
               replace = "🤜🏻🤛🏻";
             }
             {
-              triggers = [ ":lambda" ];
-              replace = "λ";
+              triggers = [ ":lambda" ":nix" ];
+              replace = "λ❄️λ";
             }
           ];
         };
