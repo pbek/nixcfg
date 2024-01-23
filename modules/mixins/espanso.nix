@@ -133,7 +133,7 @@
             }
             {
               triggers = [ ":)" ":-)" ":grin" ":smile" ];
-              replace = "😄";
+              replace = "😊";
             }
             {
               triggers = [ ":|" ":-|" ":grim" ];
