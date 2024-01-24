@@ -62,6 +62,10 @@
               trigger = ":cp";
               replace = "Cheers\nPatrizio";
             }
+            {
+              triggers = [ ":omor" ":gmo" ];
+              replace = "Good morning from the office! 🌄";
+            }
           ];
         };
         github = {
