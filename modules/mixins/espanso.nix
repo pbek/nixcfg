@@ -66,6 +66,10 @@
               triggers = [ ":omor" ":gmo" ];
               replace = "Good morning from the office! 🌄";
             }
+            {
+              triggers = [ ":vd" ];
+              replace = "Vielen Dank!";
+            }
           ];
         };
         github = {
