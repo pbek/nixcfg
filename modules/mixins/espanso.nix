@@ -248,8 +248,12 @@
               replace = "🤦🏻";
             }
             {
-              triggers = [ ":cry" ];
+              triggers = [ ":cry" ":'(" ];
               replace = "🥹😢😭";
+            }
+            {
+              triggers = [ ":/" ":-/" ":conf" ];
+              replace = "😕🫤";
             }
             {
               triggers = [ ":fist" ];
