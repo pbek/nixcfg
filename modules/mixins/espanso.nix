@@ -133,6 +133,14 @@
             }
           ];
         };
+        characters = {
+          matches = [
+            {
+              triggers = [ ":ellip" ":..." ];
+              replace = "…";
+            }
+          ];
+        };
         emotes = {
           matches = [
             {
