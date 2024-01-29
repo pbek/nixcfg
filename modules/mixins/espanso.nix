@@ -264,7 +264,8 @@
               replace = "🥹😢😭";
             }
             {
-              triggers = [ ":/" ":-/" ":conf" ];
+              # Don't use ":/" trigger because of "http://" and "https://"!
+              triggers = [ ":-/" ":conf" ];
               replace = "😕🫤";
             }
             {
