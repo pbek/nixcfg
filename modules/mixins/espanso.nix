@@ -70,6 +70,10 @@
               triggers = [ ":vd" ];
               replace = "Vielen Dank!";
             }
+            {
+              triggers = [ ":ty" ];
+              replace = "Thank you! 👍️";
+            }
           ];
         };
         github = {
