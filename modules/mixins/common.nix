@@ -28,6 +28,7 @@
       du = "dua";
       df = "duf";
       tree = "erd";
+      tmux = "zellij";
     };
   };
 
@@ -113,6 +114,7 @@
     bat-extras.batman # man with bat
     tldr  # man replacement
     fd  # find replacement
+    zellij  # terminal multiplexer (like tmux)
   ];
 
   # Do garbage collection
