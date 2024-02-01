@@ -281,6 +281,11 @@
       source = ../../files/kservices5;
     };
 
+    # Add config for zellij
+    home.file.".config/zellij" = {
+      source = ../../files/zellij;
+    };
+
     xdg.desktopEntries = {
       qtcreator-nix-shell = {
         name = "Qt Creator with nix-shell";
