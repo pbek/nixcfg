@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, xdg, ... }:
+{ config, pkgs, inputs, xdg, username, ... }:
 #{ config, inputs, xdg, ... }:
 
 ## https://github.com/NixOS/nixpkgs/pull/244500
@@ -22,14 +22,14 @@
     (jetbrains.plugins.addPlugins jetbrains.goland [ "github-copilot" ])
   ];
 
-  home-manager.users.omega = {
+  home-manager.users.${username} = {
     xdg.desktopEntries = {
       clion-nix-shell = {
         name = "CLion with nix-shell";
         genericName = "C/C++ IDE. New. Intelligent. Cross-platform";
         comment = "Test Enhancing productivity for every C and C++ developer on Linux, macOS and Windows.";
         icon = "${pkgs.jetbrains.clion}/share/pixmaps/clion.svg";
-        exec = "nix-shell /home/omega/.shells/qt5.nix --run clion";
+        exec = "nix-shell /home/${username}/.shells/qt5.nix --run clion";
         terminal = false;
         categories = [ "Development" ];
       };
@@ -39,7 +39,7 @@
         genericName = "Professional IDE for Web and PHP developers";
         comment = "PhpStorm provides an editor for PHP, HTML and JavaScript with on-the-fly code analysis, error prevention and automated refactorings for PHP and JavaScript code.";
         icon = "${pkgs.jetbrains.phpstorm}/share/pixmaps/phpstorm.svg";
-        exec = "nix-shell /home/omega/.shells/webdev.nix --run phpstorm";
+        exec = "nix-shell /home/${username}/.shells/webdev.nix --run phpstorm";
         terminal = false;
         categories = [ "Development" ];
       };

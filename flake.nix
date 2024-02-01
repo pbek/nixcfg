@@ -32,6 +32,7 @@ outputs =
 #     config = nixpkgs.config.systems.${builtins.currentSystem}.config;
 #     hostname = config.networking.hostName;
     nixosModules = import ./modules { lib = nixpkgs.lib; };
+    commonArgs = { username = "omega"; };
 
     nixosConfigurations = {
       # Office Work PC
@@ -44,7 +45,7 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = { inherit inputs; };
+        specialArgs = self.commonArgs // { inherit inputs; };
       };
       # PC Garage
       pluto = nixpkgs.lib.nixosSystem {
@@ -56,7 +57,7 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = { inherit inputs; };
+        specialArgs = self.commonArgs // { inherit inputs; };
       };
       # Asus Laptop
       jupiter = nixpkgs.lib.nixosSystem {
@@ -68,7 +69,7 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = { inherit inputs; };
+        specialArgs = self.commonArgs // { inherit inputs; };
       };
       # macBook
       neptun = nixpkgs.lib.nixosSystem {
@@ -80,7 +81,7 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = { inherit inputs; };
+        specialArgs = self.commonArgs // { inherit inputs; };
       };
       # Livingroom PC
       venus = nixpkgs.lib.nixosSystem {
@@ -92,7 +93,7 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = { inherit inputs; };
+        specialArgs = self.commonArgs // { inherit inputs; };
       };
       # Asus Vivobook
       rhea = nixpkgs.lib.nixosSystem {
@@ -104,7 +105,7 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = { inherit inputs; };
+        specialArgs = self.commonArgs // { inherit inputs; };
       };
 
       # TUG VM
@@ -117,7 +118,7 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = { inherit inputs; };
+        specialArgs = self.commonArgs // { inherit inputs; };
       };
       # TU Work PC
       caliban = nixpkgs.lib.nixosSystem {
@@ -129,7 +130,7 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = { inherit inputs; };
+        specialArgs = self.commonArgs // { inherit inputs; };
       };
       # TU HP EliteBook Laptop 820 G4
       eris = nixpkgs.lib.nixosSystem {
@@ -141,7 +142,7 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = { inherit inputs; };
+        specialArgs = self.commonArgs // { inherit inputs; };
       };
       # TU HP EliteBook Laptop 840 G5
       sinope= nixpkgs.lib.nixosSystem {
@@ -153,7 +154,7 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = { inherit inputs; };
+        specialArgs = self.commonArgs // { inherit inputs; };
       };
       # VM Desktop
       vm-desktop = nixpkgs.lib.nixosSystem {
@@ -164,7 +165,7 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = { inherit inputs; };
+        specialArgs = self.commonArgs // { inherit inputs; };
       };
       # VM Server
       vm-server = nixpkgs.lib.nixosSystem {
@@ -175,7 +176,7 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = { inherit inputs; };
+        specialArgs = self.commonArgs // { inherit inputs; };
       };
       netcup02 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -184,7 +185,7 @@ outputs =
           disko.nixosModules.disko
           ./hosts/netcup02/configuration.nix
         ];
-        specialArgs = { inherit inputs; };
+        specialArgs = self.commonArgs // { inherit inputs; };
       };
       vm-netcup02 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -193,7 +194,7 @@ outputs =
           disko.nixosModules.disko
           ./hosts/netcup02/vm.nix
         ];
-        specialArgs = { inherit inputs; };
+        specialArgs = self.commonArgs // { inherit inputs; };
       };
     };
   };

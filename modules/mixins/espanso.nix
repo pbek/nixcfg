@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 
 {
-  home-manager.users.omega = {
+  home-manager.users.${username} = {
     # https://mynixos.com/home-manager/options/services.espanso
     services.espanso = {
       enable = true;

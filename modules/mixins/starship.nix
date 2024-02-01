@@ -1,7 +1,7 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, username, ... }:
 {
   # https://rycee.gitlab.io/home-manager/options.html
-  home-manager.users.omega = {
+  home-manager.users.${username} = {
     # enable starship prompt in fish shell, enableFishIntegration in the starship config did not work
     home.file.".config/fish/conf.d/starship.fish".text = ''
       starship init fish | source

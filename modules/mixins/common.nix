@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, username, ... }:
 {
   imports = [
     ./starship.nix
@@ -34,7 +34,7 @@
   programs.bash.shellAliases = config.programs.fish.shellAliases;
 
   # Define a user account. Don't forget to set a password with ?passwd?.
-  users.users.omega = {
+  users.users.${username} = {
     isNormalUser = true;
     description = "Patrizio Bekerle";
     extraGroups = [ "networkmanager" "wheel" "docker" "dialout" ];
@@ -130,7 +130,7 @@
   # https://nixos.wiki/wiki/Restic
   security.wrappers.restic = {
     source = "${pkgs.restic.out}/bin/restic";
-    owner = "omega";
+    owner = username;
     group = "users";
     permissions = "u=rwx,g=,o=";
     capabilities = "cap_dac_read_search=+ep";
@@ -151,7 +151,7 @@
 
   # https://rycee.gitlab.io/home-manager/options.html
   # https://nix-community.github.io/home-manager/options.html#opt-home.file
-  home-manager.users.omega = {
+  home-manager.users.${username} = {
     /* The home.stateVersion option does not have a default and must be set */
     home.stateVersion = "23.11";
   };

@@ -1,7 +1,7 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, username, ... }:
 {
   # https://rycee.gitlab.io/home-manager/options.html
-  home-manager.users.omega = {
+  home-manager.users.${username} = {
     programs.git = {
       enable = true;
       # use "git diff --no-ext-diff" for creating patches!
@@ -39,7 +39,7 @@
       [url "ssh://git@gitlab.tugraz.at/"]
         insteadOf = https://gitlab.tugraz.at/
       [core]
-        excludesfile = /home/omega/.gitignore
+        excludesfile = /home/${username}/.gitignore
       [commit]
         gpgsign = false
       [gpg]

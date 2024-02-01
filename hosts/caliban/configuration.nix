@@ -4,7 +4,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 
 {
   imports =
@@ -53,7 +53,7 @@
 
   # https://nixos.wiki/wiki/VirtualBox
   virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = [ "omega" ];
+  users.extraGroups.vboxusers.members = [ username ];
   # virtualisation.virtualbox.host.enableExtensionPack = true;
 
   # https://nixos.wiki/wiki/nvidia

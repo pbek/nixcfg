@@ -20,5 +20,5 @@
     ];
 
   users.users.root.initialPassword = "root";
-  users.users.omega.initialPassword = "omega";
+  users.users.${username}.initialPassword = username;
 }

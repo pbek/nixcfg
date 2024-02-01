@@ -35,7 +35,7 @@
   };
 
   # https://rycee.gitlab.io/home-manager/options.html
-  home-manager.users.omega = {
+  home-manager.users.${username} = {
     programs.git = {
       enable = true;
       # use "git diff --no-ext-diff" for creating patches!
@@ -47,7 +47,7 @@
   };
 
   # Set empty password initially. Don't forget to set a password with "passwd".
-  users.users.omega = {
+  users.users.${username} = {
     initialHashedPassword = "";
   };
 

@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, username, ... }:
 {
   imports = [
     ./common.nix
@@ -247,7 +247,7 @@
 
   # https://rycee.gitlab.io/home-manager/options.html
   # https://nix-community.github.io/home-manager/options.html#opt-home.file
-  home-manager.users.omega = {
+  home-manager.users.${username} = {
     # allow unfree packages in nix-shell
     home.file.".config/nixpkgs/config.nix".text = ''
       {
@@ -280,7 +280,27 @@
     home.file.".local/share/kservices5" = {
       source = ../../files/kservices5;
     };
-  };
+
+    xdg.desktopEntries = {
+      qtcreator-nix-shell = {
+        name = "Qt Creator with nix-shell";
+        genericName = "C++ IDE for developing Qt applications";
+        comment = "";
+#        icon = "${pkgs.qtcreator-qt6}/share/icons/hicolor/128x128/apps/QtProject-qtcreator.png";
+        icon = "${pkgs.qtcreator}/share/icons/hicolor/128x128/apps/QtProject-qtcreator.png";
+        exec = "nix-shell /home/${username}/.shells/qt5.nix --run qtcreator";
+        terminal = false;
+        categories = [ "Development" ];
+      };
+    };
+
+    # enable https://direnv.net/
+    programs.direnv = {
+      enable = true;
+      enableFishIntegration = true;
+      nix-direnv.enable = true;
+    };
+};
 
   # Disable wakeup from USB devices
   powerManagement.powerDownCommands = ''
@@ -297,28 +317,6 @@
 
   # KDE partition-manager doesn't work when installed directly
   programs.partition-manager.enable = true;
-
-  home-manager.users.omega = {
-    xdg.desktopEntries = {
-      qtcreator-nix-shell = {
-        name = "Qt Creator with nix-shell";
-        genericName = "C++ IDE for developing Qt applications";
-        comment = "";
-#        icon = "${pkgs.qtcreator-qt6}/share/icons/hicolor/128x128/apps/QtProject-qtcreator.png";
-        icon = "${pkgs.qtcreator}/share/icons/hicolor/128x128/apps/QtProject-qtcreator.png";
-        exec = "nix-shell /home/omega/.shells/qt5.nix --run qtcreator";
-        terminal = false;
-        categories = [ "Development" ];
-      };
-    };
-
-    # enable https://direnv.net/
-    programs.direnv = {
-      enable = true;
-      enableFishIntegration = true;
-      nix-direnv.enable = true;
-    };
-  };
 
   # List services that you want to enable:
 

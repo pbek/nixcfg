@@ -1,17 +1,17 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, username, ... }:
 
 {
   # Set some fish config
   programs.fish = {
     shellAliases = {
-      n18 = "nix-shell /home/omega/.shells/node18.nix --run fish";
-      p8 = "nix-shell /home/omega/.shells/php8.nix --run fish";
-      qtc = "nix-shell /home/omega/.shells/qt5.nix --run qtcreator";
-      qtc6 = "nix-shell /home/omega/.shells/qt6.nix --run qtcreator";
-      cl = "nix-shell /home/omega/.shells/qt5.nix --run clion";
-      cl6 = "nix-shell /home/omega/.shells/qt6.nix --run clion";
-      qmake5-path = "nix-shell /home/omega/.shells/qt5.nix --run \"whereis qmake\"";
-      qmake6-path = "nix-shell /home/omega/.shells/qt6.nix --run \"whereis qmake\"";
+      n18 = "nix-shell /home/${username}/.shells/node18.nix --run fish";
+      p8 = "nix-shell /home/${username}/.shells/php8.nix --run fish";
+      qtc = "nix-shell /home/${username}/.shells/qt5.nix --run qtcreator";
+      qtc6 = "nix-shell /home/${username}/.shells/qt6.nix --run qtcreator";
+      cl = "nix-shell /home/${username}/.shells/qt5.nix --run clion";
+      cl6 = "nix-shell /home/${username}/.shells/qt6.nix --run clion";
+      qmake5-path = "nix-shell /home/${username}/.shells/qt5.nix --run \"whereis qmake\"";
+      qmake6-path = "nix-shell /home/${username}/.shells/qt6.nix --run \"whereis qmake\"";
       qce = "qc exec --command";
       qcel = "qc exec --command --last";
       qcs = "qc search";
@@ -27,32 +27,32 @@
   age.secrets = {
     nixpkgs-review = {
       file = ../../secrets/nixpkgs-review.age;
-      path = "/home/omega/.secrets/nixpkgs-review.env";
-      owner = "omega";
+      path = "/home/${username}/.secrets/nixpkgs-review.env";
+      owner = username;
       group = "users";
       mode = "600";
     };
 
     pia-user = {
       file = ../../secrets/pia-user.age;
-      path = "/home/omega/.secrets/pia-user";
-      owner = "omega";
+      path = "/home/${username}/.secrets/pia-user";
+      owner = username;
       group = "users";
       mode = "600";
     };
 
     pia-pass = {
       file = ../../secrets/pia-pass.age;
-      path = "/home/omega/.secrets/pia-pass";
-      owner = "omega";
+      path = "/home/${username}/.secrets/pia-pass";
+      owner = username;
       group = "users";
       mode = "600";
     };
 
     github-token = {
       file = ../../secrets/github-token.age;
-      path = "/home/omega/.secrets/github-token";
-      owner = "omega";
+      path = "/home/${username}/.secrets/github-token";
+      owner = username;
       group = "users";
       mode = "600";
     };
