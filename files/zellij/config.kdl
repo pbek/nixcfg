@@ -5,4 +5,4 @@ copy_clipboard "primary"
 copy_command "xclip -selection clipboard"
 
 // wayland
-copy_command "wl-copy"
+//copy_command "wl-copy"
