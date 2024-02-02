@@ -14,6 +14,7 @@
       gita = "git add -A";
       gits = "git status";
       gitd = "git diff";
+      gitds = "git diff --staged";
       gitl = "git log";
       vim = "nvim";
       ll = "eza -al";
