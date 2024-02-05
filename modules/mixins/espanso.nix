@@ -260,6 +260,10 @@
               replace = "🤦🏻";
             }
             {
+              triggers = [ ":shr" ];
+              replace = "️🤷🏻";
+            }
+            {
               triggers = [ ":cry" ":'(" ];
               replace = "🥹😢😭";
             }
