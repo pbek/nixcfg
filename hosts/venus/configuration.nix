@@ -65,6 +65,17 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.opengl.enable = true;
+  hardware.nvidia.modesetting.enable = true;
+
+  # Wayland
+#  services.xserver.displayManager.defaultSession = "plasmawayland";
+#  # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
+#  home-manager.users.${username} = {
+#    # https://mynixos.com/home-manager/options/services.espanso
+#    services.espanso = {
+#      package = pkgs.espanso-wayland;
+#    };
+#  };
 
   # Enable suspend to RAM
   # Sleep is hindered by a compontent on the motherboard
