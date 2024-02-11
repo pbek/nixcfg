@@ -60,6 +60,7 @@
     calibre
     zoom-us
     blender
+    cura
   ];
 
   # https://nixos.wiki/wiki/nvidia
