@@ -59,6 +59,7 @@
   environment.systemPackages = with pkgs; [
     calibre
     zoom-us
+    blender
   ];
 
   # https://nixos.wiki/wiki/nvidia
