@@ -111,6 +111,7 @@
     qtcreator
     hub
     usbutils  # lsusb
+    netcat-gnu
 
 #    qt5.qmake
 #    libsForQt5.qt5.qt3d
