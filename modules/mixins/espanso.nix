@@ -64,7 +64,11 @@
             }
             {
               triggers = [ ":omor" ":gmo" ];
-              replace = "Good morning from the office! 🌄";
+              replace = "Good morning from the office! 🌄🏢";
+            }
+            {
+              triggers = [ ":gmho" ];
+              replace = "Good morning from home office! 🌄🏡";
             }
             {
               triggers = [ ":vd" ];
