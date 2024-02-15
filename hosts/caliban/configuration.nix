@@ -43,6 +43,7 @@
     openldap
     gimp
     inkscape
+    krename
   ];
 
   networking.firewall = {
