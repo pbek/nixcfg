@@ -72,7 +72,7 @@
             }
             {
               triggers = [ ":gna" ":gnsg" ];
-              replace = "Gute Nacht und schlaf gut! 🌙🤗🌃";
+              replace = "Gute Nacht und schlaf gut! 🎑🌜🤗🌛🌃";
             }
             {
               triggers = [ ":vd" ];
