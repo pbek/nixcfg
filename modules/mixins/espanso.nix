@@ -71,6 +71,10 @@
               replace = "Good morning from home office! 🌄🏡";
             }
             {
+              triggers = [ ":gna" ":gnsg" ];
+              replace = "Gute Nacht und schlaf gut! 🌙🤗🌃";
+            }
+            {
               triggers = [ ":vd" ];
               replace = "Vielen Dank!";
             }
