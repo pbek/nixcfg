@@ -178,6 +178,15 @@ outputs =
         ];
         specialArgs = self.commonArgs // { inherit inputs; };
       };
+      netcup01 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
+          ./hosts/netcup01/configuration.nix
+        ];
+        specialArgs = self.commonArgs // { inherit inputs; };
+      };
       netcup02 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
