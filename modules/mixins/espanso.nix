@@ -160,7 +160,7 @@
               replace = "👍️";
             }
             {
-              triggers = [ ":)" ":-)" ":grin" ":smile" ];
+              triggers = [ ":)" ":-)" ":smile" ];
               replace = "😊";
             }
             {
@@ -188,7 +188,7 @@
               replace = "😘";
             }
             {
-              triggers = [ ":laugh" ":D" ":-D" ];
+              triggers = [ ":laugh" ":D" ":-D" ":grin" ];
               replace = "😆";
             }
             {
