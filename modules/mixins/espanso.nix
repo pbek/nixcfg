@@ -188,7 +188,11 @@
               replace = "😘";
             }
             {
-              triggers = [ ":laugh" ":D" ":-D" ":grin" ];
+              triggers = [ ":D" ":-D" ":grin" ];
+              replace = "😁";
+            }
+            {
+              triggers = [ ":lau" ":laugh" ];
               replace = "😆";
             }
             {
