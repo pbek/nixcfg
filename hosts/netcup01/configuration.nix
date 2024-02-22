@@ -49,6 +49,9 @@
         4190  # ManageSieve
         8883  # MQTT
       ];
+      allowedUDPPorts = [
+        443   # HTTPS
+      ];
     };
   };
 
