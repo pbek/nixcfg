@@ -153,6 +153,18 @@
             }
           ];
         };
+        abbreviations = {
+          matches = [
+            {
+              triggers = [ ":afair" ];
+              replace = "As far as I remember";
+            }
+            {
+              triggers = [ ":lgtm" ];
+              replace = "Looks good to me";
+            }
+          ];
+        };
         emotes = {
           matches = [
             {
