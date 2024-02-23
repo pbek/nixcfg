@@ -33,8 +33,8 @@
   };
 
   networking = {
-    hostId = "dafdad01";  # needed for ZFS
-    hostName = "netcup01";
+    hostId = "daafda01";  # needed for ZFS
+    hostName = "home01";
     networkmanager.enable = true;
 
     # SSH is already enabled by the server-common mixin
