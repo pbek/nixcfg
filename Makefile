@@ -124,3 +124,9 @@ optimize-store:
 
 fwup:
 	fwupdmgr refresh && fwupdmgr update
+
+term:
+	zellij --layout term.kdl attach nixcfg -c
+
+term-kill:
+	zellij delete-session nixcfg -f
