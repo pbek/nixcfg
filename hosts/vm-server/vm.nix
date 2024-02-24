@@ -16,7 +16,7 @@
 {
     imports =
     [
-      ../../modules/mixins/server-common.nix
+      ../../modules/mixins/server-remote.nix
     ];
 
   users.users.root.initialPassword = "root";

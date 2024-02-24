@@ -5,7 +5,7 @@
   imports =
     [
       ./hardware-configuration.nix
-      ../../modules/mixins/server-common.nix
+      ../../modules/mixins/server-remote.nix
       ./disk-config.zfs.nix
     ];
 

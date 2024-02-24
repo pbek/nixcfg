@@ -8,7 +8,6 @@
   services.openssh = {
     enable = true;
     openFirewall = lib.mkForce true;
-    listenAddresses = [ { addr = "0.0.0.0"; port = 2222; } ];
     settings.PasswordAuthentication = false;
     settings.PermitRootLogin = lib.mkForce "no";
   };
@@ -20,7 +19,6 @@
   # https://nixos.wiki/wiki/Firewall
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 2222 ]; # SSH
   };
 
   nix = {
