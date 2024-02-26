@@ -1,8 +1,8 @@
 default_shell "fish"
-copy_clipboard "primary"
+//copy_clipboard "primary"
 
 // x11
-copy_command "xclip -selection clipboard"
+//copy_command "xclip -selection clipboard"
 
 // wayland
 //copy_command "wl-copy"

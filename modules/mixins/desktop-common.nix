@@ -314,6 +314,9 @@
       enableFishIntegration = true;
       nix-direnv.enable = true;
     };
+
+    # Enable https://wezfurlong.org/wezterm/ for terminal with OSC 52 support for zellij clipboard via SSH
+    programs.wezterm.enable = true;
 };
 
   # Disable wakeup from USB devices
