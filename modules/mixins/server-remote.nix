@@ -1,4 +1,4 @@
-{ config, inputs, ... }:
+{ config, inputs, username, ... }:
 {
   imports = [
     ./server-common.nix
