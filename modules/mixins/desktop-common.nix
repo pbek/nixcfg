@@ -327,6 +327,13 @@
           ),
           font_size = 16.0,
           color_scheme = 'Breeze (Gogh)',
+          use_fancy_tab_bar = false,
+          tab_max_width = 28,
+          hide_tab_bar_if_only_one_tab = false,
+          keys = {
+            { key = 'LeftArrow', mods = 'ALT', action = wezterm.action.ActivateTabRelative(-1) },
+            { key = 'RightArrow', mods = 'ALT', action = wezterm.action.ActivateTabRelative(1) },
+          },
         }
       '';
     };
