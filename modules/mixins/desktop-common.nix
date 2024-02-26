@@ -331,8 +331,8 @@
           tab_max_width = 28,
           hide_tab_bar_if_only_one_tab = false,
           keys = {
-            { key = 'LeftArrow', mods = 'ALT', action = wezterm.action.ActivateTabRelative(-1) },
-            { key = 'RightArrow', mods = 'ALT', action = wezterm.action.ActivateTabRelative(1) },
+            { key = 'LeftArrow', mods = 'SHIFT', action = wezterm.action.ActivateTabRelative(-1) },
+            { key = 'RightArrow', mods = 'SHIFT', action = wezterm.action.ActivateTabRelative(1) },
           },
         }
       '';
