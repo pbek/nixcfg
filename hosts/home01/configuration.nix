@@ -6,6 +6,7 @@
     [
       ./hardware-configuration.nix
       ../../modules/mixins/server-local.nix
+      ../../modules/mixins/local-store-cache.nix
       ./disk-config.zfs.nix
     ];
 
