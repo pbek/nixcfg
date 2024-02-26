@@ -316,7 +316,20 @@
     };
 
     # Enable https://wezfurlong.org/wezterm/ for terminal with OSC 52 support for zellij clipboard via SSH
-    programs.wezterm.enable = true;
+    programs.wezterm = {
+      enable = true;
+      # https://wezfurlong.org/wezterm/config/lua/wezterm/font.html?h=font
+      extraConfig = ''
+        return {
+          font = wezterm.font(
+            'FiraCode Nerd Font',
+            { weight = 'Medium' }
+          ),
+          font_size = 16.0,
+          color_scheme = 'Breeze (Gogh)',
+        }
+      '';
+    };
 };
 
   # Disable wakeup from USB devices
