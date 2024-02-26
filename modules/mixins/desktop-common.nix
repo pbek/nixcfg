@@ -308,7 +308,7 @@
       };
     };
 
-    # enable https://direnv.net/
+    # Enable https://direnv.net/
     programs.direnv = {
       enable = true;
       enableFishIntegration = true;
