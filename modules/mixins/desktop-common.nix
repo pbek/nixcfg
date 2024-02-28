@@ -328,7 +328,7 @@
           font_size = 16.0,
           color_scheme = 'Breeze (Gogh)',
           use_fancy_tab_bar = false,
-          tab_max_width = 28,
+          tab_max_width = 32,
           hide_tab_bar_if_only_one_tab = false,
           keys = {
             { key = 'LeftArrow', mods = 'SHIFT', action = wezterm.action.ActivateTabRelative(-1) },
