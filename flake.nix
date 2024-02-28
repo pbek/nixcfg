@@ -32,7 +32,7 @@ outputs =
 #     config = nixpkgs.config.systems.${builtins.currentSystem}.config;
 #     hostname = config.networking.hostName;
     nixosModules = import ./modules { lib = nixpkgs.lib; };
-    commonArgs = { username = "omega"; };
+    commonArgs = { username = "omega"; weztermFontSize = "16.0"; };
 
     nixosConfigurations = {
       # Office Work PC
@@ -69,7 +69,10 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = self.commonArgs // { inherit inputs; };
+        specialArgs = self.commonArgs // {
+          inputs = inputs;
+          weztermFontSize = "12.0";
+        };
       };
       # macBook
       neptun = nixpkgs.lib.nixosSystem {
@@ -105,7 +108,10 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = self.commonArgs // { inherit inputs; };
+        specialArgs = self.commonArgs // {
+          inputs = inputs;
+          weztermFontSize = "12.0";
+        };
       };
 
       # TUG VM

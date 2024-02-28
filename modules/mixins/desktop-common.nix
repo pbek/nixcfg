@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, username, ... }:
+{ config, pkgs, inputs, username, weztermFontSize, ... }:
 {
   imports = [
     ./common.nix
@@ -325,7 +325,7 @@
             'FiraCode Nerd Font',
             { weight = 'Medium' }
           ),
-          font_size = 16.0,
+          font_size = ${weztermFontSize},
           color_scheme = 'Breeze (Gogh)',
           use_fancy_tab_bar = false,
           tab_max_width = 32,
