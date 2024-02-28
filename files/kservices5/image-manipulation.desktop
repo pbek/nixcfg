@@ -2,7 +2,7 @@
 Type=Service
 X-KDE-ServiceTypes=KonqPopupMenu/Plugin
 MimeType=image/*;
-Actions=stripImageMeta;resizeImage1024;convertWebp;convertWebpLossless;convertWebp50;convertWebp70;
+Actions=stripImageMeta;convertJpg90;resizeImage1024;convertWebp;convertWebpLossless;convertWebp50;convertWebp70;
 
 [Desktop Action stripImageMeta]
 Name=Strip Image Meta Information
