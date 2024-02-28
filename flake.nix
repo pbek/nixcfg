@@ -184,6 +184,7 @@ outputs =
         ];
         specialArgs = self.commonArgs // { inherit inputs; };
       };
+      # Netcup Server netcup01
       netcup01 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
@@ -193,21 +194,23 @@ outputs =
         ];
         specialArgs = self.commonArgs // { inherit inputs; };
       };
-      home01 = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          home-manager.nixosModules.home-manager
-          disko.nixosModules.disko
-          ./hosts/home01/configuration.nix
-        ];
-        specialArgs = self.commonArgs // { inherit inputs; };
-      };
+      # Netcup Server netcup02
       netcup02 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           home-manager.nixosModules.home-manager
           disko.nixosModules.disko
           ./hosts/netcup02/configuration.nix
+        ];
+        specialArgs = self.commonArgs // { inherit inputs; };
+      };
+      # Home Server home01
+      home01 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
+          ./hosts/home01/configuration.nix
         ];
         specialArgs = self.commonArgs // { inherit inputs; };
       };
