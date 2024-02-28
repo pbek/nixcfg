@@ -20,6 +20,11 @@ Name=Convert image to WebP
 Icon=editimage
 Exec=nix-shell -p imagemagick --run 'convert "%u" "%u.webp"'
 
+[Desktop Action convertJpg90]
+Name=Convert image to JPG 90%
+Icon=editimage
+Exec=nix-shell -p imagemagick --run 'convert "%u" -quality 90 "%u.jpg"'
+
 [Desktop Action convertWebpLossless]
 Name=Convert image to WebP lossless
 Icon=editimage
