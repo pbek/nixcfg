@@ -208,13 +208,15 @@ outputs =
       # Server moobox01 for Alex
       moobox01 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        username = "cow";
         modules = [
           home-manager.nixosModules.home-manager
           disko.nixosModules.disko
           ./hosts/moobox01/configuration.nix
         ];
-        specialArgs = self.commonArgs // { inherit inputs; };
+        specialArgs = self.commonArgs // {
+          inputs = inputs;
+          username = "cow";
+        };
       };
       vm-netcup02 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
