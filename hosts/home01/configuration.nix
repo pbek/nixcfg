@@ -72,6 +72,8 @@
         53  # DNS
         67  # DHCP
         443 # HTTPS
+        2048  # Homeatic
+        2049  # Homeatic
       ];
     };
   };
