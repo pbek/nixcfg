@@ -99,7 +99,6 @@
     magic-wormhole
     libsForQt5.yakuake
     xclip
-    nmap
     fzf
     fishPlugins.fzf-fish
     chromium
@@ -111,7 +110,6 @@
     qtcreator
     hub
     usbutils  # lsusb
-    netcat-gnu
 
 #    qt5.qmake
 #    libsForQt5.qt5.qt3d

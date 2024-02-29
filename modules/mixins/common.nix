@@ -111,6 +111,8 @@
     tldr  # man replacement
     fd  # find replacement
     zellij  # terminal multiplexer (like tmux)
+    netcat-gnu
+    nmap
   ];
 
   # Do garbage collection
