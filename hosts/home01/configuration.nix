@@ -78,6 +78,14 @@
     };
   };
 
+  # Increase ulimit for influxdb
+  security.pam.loginLimits = [{
+    domain = "*";
+    type = "soft";
+    item = "nofile";
+    value = "8192";
+  }];
+
   environment.systemPackages = with pkgs; [
   ];
 }
