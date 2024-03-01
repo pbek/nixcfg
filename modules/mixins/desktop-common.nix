@@ -19,7 +19,7 @@
   # Enable the KDE Plasma Desktop Environment.
   # https://nixos.wiki/wiki/KDE
   services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.desktopManager.plasma6.enable = true;
   programs.kdeconnect.enable = true;
 
   # Enable bluetooth
@@ -97,7 +97,6 @@
     gittyup
 
     magic-wormhole
-    libsForQt5.yakuake
     xclip
     fzf
     fishPlugins.fzf-fish
@@ -180,31 +179,31 @@
     wireguard-tools
     nixpkgs-review
 
-    libsForQt5.kwalletmanager
-    libsForQt5.plasma-systemmonitor
-    libsForQt5.kfind
-    libsForQt5.kontact
-    libsForQt5.akonadiconsole
-    libsForQt5.kleopatra
-    libsForQt5.kmail
-    libsForQt5.korganizer
-    libsForQt5.kaddressbook
-    libsForQt5.yakuake
-    libsForQt5.spectacle
-    libsForQt5.ark
-    libsForQt5.bluedevil
-    libsForQt5.dolphin
-    libsForQt5.dolphin-plugins
-    libsForQt5.gwenview
-    libsForQt5.kaccounts-integration
-    libsForQt5.kaccounts-providers
-    libsForQt5.ksshaskpass
-    libsForQt5.okular
-    libsForQt5.plasma-browser-integration
-    libsForQt5.plasma-disks
-    libsForQt5.plasma-nm
-    libsForQt5.plasma-pa
-    libsForQt5.plasma-vault
+    kdePackages.kwalletmanager
+    kdePackages.plasma-systemmonitor
+    kdePackages.kfind
+    kdePackages.kontact
+    kdePackages.akonadiconsole
+    kdePackages.kleopatra
+    kdePackages.kmail
+    kdePackages.korganizer
+    kdePackages.kaddressbook
+    kdePackages.yakuake
+    kdePackages.spectacle
+    kdePackages.ark
+    kdePackages.bluedevil
+    kdePackages.dolphin
+    kdePackages.dolphin-plugins
+    kdePackages.gwenview
+    kdePackages.kaccounts-integration
+    kdePackages.kaccounts-providers
+    kdePackages.ksshaskpass
+    kdePackages.okular
+    kdePackages.plasma-browser-integration
+    kdePackages.plasma-disks
+    kdePackages.plasma-nm
+    kdePackages.plasma-pa
+    kdePackages.plasma-vault
     kdiff3
 
     pinentry-curses
