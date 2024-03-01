@@ -39,7 +39,7 @@
   users.users.${username} = {
     isNormalUser = true;
     description = "Patrizio Bekerle";
-    extraGroups = [ "networkmanager" "wheel" "docker" "dialout" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "dialout" "input" ];
     shell = pkgs.fish;
     packages = with pkgs; [
     ];
