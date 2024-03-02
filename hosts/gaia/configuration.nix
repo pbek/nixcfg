@@ -39,6 +39,7 @@
   networking.networkmanager.enable = true;
 
   services.avahi.enable = true;
+  services.avahi.nssmdns4 = true;
   # Samsung printer driver for ML-1710
   services.printing.drivers = [ pkgs.splix ];
 
