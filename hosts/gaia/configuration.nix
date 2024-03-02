@@ -47,7 +47,7 @@
     calibre
     arduino
     g810-led # Logitech G213 keyboard
-    libsForQt5.kdialog
+    kdePackages.kdialog
     bitscope.meter
     bitscope.dso
     bitscope.logic
