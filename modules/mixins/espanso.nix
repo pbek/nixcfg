@@ -57,7 +57,7 @@
               replace = "Sehr geehrter ";
             }
             {
-              trigger = ":lg";
+              trigger = ":lgp";
               replace = "Liebe Grüße\nPatrizio";
             }
             {
