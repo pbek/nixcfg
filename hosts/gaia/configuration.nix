@@ -97,5 +97,5 @@
   # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
 
   # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
-  # hardware.nvidia.modesetting.enable = true;
+  hardware.nvidia.modesetting.enable = true;
 }
