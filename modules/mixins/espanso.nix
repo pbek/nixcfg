@@ -5,7 +5,6 @@
     # https://mynixos.com/home-manager/options/services.espanso
     services.espanso = {
       enable = true;
-      package = (pkgs.callPackage ../../apps/espanso/espanso.nix { });
       configs = {
         default = {
           search_shortcut = "ALT+SHIFT+SPACE";
