@@ -61,6 +61,7 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.opengl.enable = true;
+  hardware.nvidia.modesetting.enable = true;
 
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/
   # Turn off for now, because build is broken
