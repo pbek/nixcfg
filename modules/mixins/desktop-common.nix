@@ -18,6 +18,7 @@
 
   # Enable the KDE Plasma Desktop Environment.
   # https://nixos.wiki/wiki/KDE
+  services.xserver.desktopManager.plasma6.enable = true;
   services.xserver.displayManager.sddm.enable = true;
   programs.kdeconnect.enable = true;
 
@@ -181,6 +182,35 @@
     onlyoffice-bin
     gh
     smartmontools
+
+    kdePackages.kwalletmanager
+    kdePackages.plasma-systemmonitor
+    kdePackages.kfind
+    kdePackages.kontact
+    kdePackages.akonadiconsole
+    kdePackages.kleopatra
+    kdePackages.kmail
+    kdePackages.korganizer
+    kdePackages.kaddressbook
+    kdePackages.yakuake
+    kdePackages.spectacle
+    kdePackages.ark
+    kdePackages.bluedevil
+    kdePackages.dolphin
+    kdePackages.dolphin-plugins
+    kdePackages.gwenview
+    kdePackages.kaccounts-integration
+    kdePackages.kaccounts-providers
+    kdePackages.ksshaskpass
+    kdePackages.okular
+    kdePackages.plasma-browser-integration
+    kdePackages.plasma-disks
+    kdePackages.plasma-nm
+    kdePackages.plasma-pa
+    kdePackages.plasma-vault
+    kdePackages.kate
+    kdePackages.kmail
+    kdePackages.filelight
 
     # TU Graz
     vpnc
