@@ -81,8 +81,6 @@
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
   ];
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
 #    (pkgs.callPackage "${builtins.fetchTarball {
 #      url = "https://github.com/zhaofengli/attic/tarball/main";
@@ -100,50 +98,11 @@
     fzf
     fishPlugins.fzf-fish
     chromium
-    # Builds qtwebkit from source!
-#    qt5.full
     # always says "Too many open files" while building
 #    qtcreator-qt6
     qtcreator
     hub
     usbutils  # lsusb
-
-#    qt5.qmake
-#    libsForQt5.qt5.qt3d
-#    libsForQt5.qt5.qtsensors
-#    libsForQt5.qt5.qtserialport
-#    libsForQt5.qt5.qtvirtualkeyboard
-#    libsForQt5.qt5.qtwebchannel
-#    libsForQt5.qt5.qtlottie
-#    libsForQt5.qt5.qtvirtualkeyboard
-#
-#    libsForQt5.qt5.qtcharts
-#    libsForQt5.qt5.qtconnectivity
-#    libsForQt5.qt5.qtdeclarative
-#    libsForQt5.qt5.qtdoc
-#    libsForQt5.qt5.qtgraphicaleffects
-#    libsForQt5.qt5.qtimageformats
-#    libsForQt5.qt5.qtlocation
-#    libsForQt5.qt5.qtmultimedia
-#    libsForQt5.qt5.qtwebkit
-#
-#    libsForQt5.qt5.qtquickcontrols
-#    libsForQt5.qt5.qtquickcontrols2
-#    libsForQt5.qt5.qtscript
-#    libsForQt5.qt5.qttranslations
-#    libsForQt5.qt5.qtwebengine
-#    libsForQt5.qt5.qtwebview
-
-    # libsForQt5.qt5.qmake
-    # libsForQt5.qt5.qttools
-    # libsForQt5.qt5.qtbase
-    # libsForQt5.qt5.qtdeclarative
-    # libsForQt5.qt5.qtsvg
-    # libsForQt5.qt5.qtwayland
-    # libsForQt5.qt5.qtwebsockets
-    # libsForQt5.qt5.qtx11extras
-    # libsForQt5.qt5.qtxmlpatterns
-    # libsForQt5.qt5.wrapQtAppsHook
 
 #    qownnotes
     (pkgs.qt6Packages.callPackage ../../apps/qownnotes/default.nix { })
