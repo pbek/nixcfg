@@ -160,7 +160,10 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = self.commonArgs // { inherit inputs; };
+        specialArgs = self.commonArgs // {
+          inputs = inputs;
+          weztermFontSize = "12.0";
+        };
       };
       # VM Desktop
       vm-desktop = nixpkgs.lib.nixosSystem {
