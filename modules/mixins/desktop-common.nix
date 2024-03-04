@@ -90,8 +90,6 @@
     inputs.attic.packages.x86_64-linux.default
     inputs.agenix.packages.x86_64-linux.default
     firefox
-    kate
-    kmail
     smartgithg
     gittyup
 
@@ -100,7 +98,6 @@
     fzf
     fishPlugins.fzf-fish
     chromium
-    filelight
     # Builds qtwebkit from source!
 #    qt5.full
     # always says "Too many open files" while building
@@ -173,11 +170,9 @@
     nextcloud-client
     ferdium
     topgrade
-    ksnip
     sniffnet
     wireguard-tools
     nixpkgs-review
-    kdiff3
 
     pinentry-curses
     pinentry-qt

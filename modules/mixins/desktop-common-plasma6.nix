@@ -34,6 +34,10 @@
     kdePackages.plasma-nm
     kdePackages.plasma-pa
     kdePackages.plasma-vault
+    kdePackages.kate
+    kdePackages.kmail
+    kdePackages.kdiff3
+    kdePackages.filelight
 
     # Add missing dependency for espanso
     wl-clipboard
