@@ -98,8 +98,6 @@
     fzf
     fishPlugins.fzf-fish
     chromium
-    # always says "Too many open files" while building
-#    qtcreator-qt6
     qtcreator
     hub
     usbutils  # lsusb
