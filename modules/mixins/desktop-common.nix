@@ -92,6 +92,7 @@
     firefox
     smartgithg
     gittyup
+    kdiff3
 
     magic-wormhole
     xclip

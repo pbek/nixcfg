@@ -36,7 +36,6 @@
     kdePackages.plasma-vault
     kdePackages.kate
     kdePackages.kmail
-    kdePackages.kdiff3
     kdePackages.filelight
 
     # Add missing dependency for espanso
