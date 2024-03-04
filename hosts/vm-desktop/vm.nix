@@ -17,7 +17,7 @@
     imports =
     [
       ../../modules/mixins/users.nix
-      ../../modules/mixins/desktop-common.nix
+      ../../modules/mixins/desktop-common-plasma6.nix
       ../../modules/mixins/jetbrains.nix
       ../../modules/mixins/openssh.nix
       ../../modules/mixins/local-store-cache.nix

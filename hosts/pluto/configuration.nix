@@ -11,7 +11,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/mixins/users.nix
-      ../../modules/mixins/desktop-common.nix
+      ../../modules/mixins/desktop-common-plasma6.nix
       ../../modules/mixins/audio.nix
       ../../modules/mixins/jetbrains.nix
       ../../modules/mixins/openssh.nix
