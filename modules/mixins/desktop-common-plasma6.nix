@@ -34,6 +34,9 @@
     kdePackages.plasma-nm
     kdePackages.plasma-pa
     kdePackages.plasma-vault
+
+    # Add missing dependency for espanso
+    wl-clipboard
   ];
 
   # Get around: [ERROR] Error: could not open uinput device
@@ -43,11 +46,6 @@
   services.udev.extraRules = ''
     KERNEL=="uinput", SUBSYSTEM=="misc", TAG+="uaccess", OPTIONS+="static_node=uinput", GROUP="input", MODE="0660"
   '';
-
-  # Add missing dependency
-  environment.systemPackages = with pkgs; [
-    wl-clipboard
-  ];
 
   home-manager.users.${username} = {
     # https://mynixos.com/home-manager/options/services.espanso
