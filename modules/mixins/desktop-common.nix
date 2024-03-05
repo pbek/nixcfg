@@ -167,6 +167,8 @@
     kdePackages.plasma-vault
     kdePackages.kate
     kdePackages.kmail
+    kdePackages.akonadi
+    kdePackages.kdepim-runtime
     kdePackages.filelight
 
     # TU Graz
