@@ -136,7 +136,10 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = self.commonArgs // { inherit inputs; };
+        specialArgs = self.commonArgs // {
+          inputs = inputs;
+          weztermFontSize = "12.0";
+        };
       };
       # TU HP EliteBook Laptop 820 G4
       eris = nixpkgs.lib.nixosSystem {
