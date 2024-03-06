@@ -244,6 +244,8 @@
       # https://wezfurlong.org/wezterm/config/lua/wezterm/font.html?h=font
       extraConfig = ''
         return {
+          animation_fps = 1,
+          cursor_blink_rate = 0,
           font = wezterm.font(
             'FiraCode Nerd Font',
             { weight = 'Medium' }
