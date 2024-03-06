@@ -2,6 +2,6 @@
 {
   imports = [
     ./desktop-common.nix
-    ./desktop-common-plasma6.nix
+    ./desktop-common-plasma5.nix
   ];
 }
