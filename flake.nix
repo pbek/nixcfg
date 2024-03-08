@@ -98,7 +98,7 @@ outputs =
         ];
         specialArgs = self.commonArgs // { inherit inputs; };
       };
-      # Asus Vivobook
+      # Asus Vivobook Laptop
       rhea = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
