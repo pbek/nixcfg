@@ -113,6 +113,21 @@ outputs =
           weztermFontSize = "12.0";
         };
       };
+      # Acer Aspire 5 Laptop
+      hyperion = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/hyperion/configuration.nix
+          ./hosts/hyperion/hardware-configuration.nix
+          home-manager.nixosModules.home-manager
+          agenix.nixosModules.age
+          attic.nixosModules.atticd
+        ];
+        specialArgs = self.commonArgs // {
+          inputs = inputs;
+          weztermFontSize = "12.0";
+        };
+      };
 
       # TUG VM
       astra = nixpkgs.lib.nixosSystem {
