@@ -5,6 +5,8 @@
     ./desktop-common-plasma6.nix
   ];
 
+  services.xserver.displayManager.defaultSession = "plasma";
+
   environment.systemPackages = with pkgs; [
     # Add missing dependency for espanso
     wl-clipboard
