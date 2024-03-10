@@ -7,6 +7,16 @@
 
   services.xserver.displayManager.defaultSession = "plasma";
 
+  # Launch SDDM in Wayland too
+  # https://nixos.wiki/wiki/KDE#Launch_SDDM_in_Wayland_too
+  services.xserver.displayManager.sddm.wayland.enable = true;
+
+  # KMail Renders Blank Messages
+  # https://nixos.wiki/wiki/KDE#KMail_Renders_Blank_Messages
+  environment.sessionVariables = {
+    NIX_PROFILES = "${pkgs.lib.concatStringsSep " " (pkgs.lib.reverseList config.environment.profiles)}";
+  };
+
   environment.systemPackages = with pkgs; [
     # Add missing dependency for espanso
     wl-clipboard
