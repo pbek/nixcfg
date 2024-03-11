@@ -37,6 +37,16 @@
           ];
         };
         greethings = {
+          global_vars = [
+            {
+              name = "quote";
+              type = "shell";
+              params = {
+#                cmd = "curl -s 'https://zenquotes.io/api/random' | jq -r '.[0].q'";
+                cmd = "nix-shell -p neo-cowsay --run \"curl -s 'https://zenquotes.io/api/random' | jq -r '.[0].q' | cowthink\"";
+              };
+            }
+          ];
           matches = [
             {
               trigger = ":sg";
@@ -64,11 +74,11 @@
             }
             {
               triggers = [ ":omor" ":gmo" ];
-              replace = "Good morning from the office! 🌄🏢";
+              replace = "Good morning from the office! 🌄🏢\n\n```\n{{quote}}\n```";
             }
             {
               triggers = [ ":gmho" ];
-              replace = "Good morning from home office! 🌄🏡";
+              replace = "Good morning from home office! 🌄🏡\n\n```\n{{quote}}\n```";
             }
             {
               triggers = [ ":gna" ":gnsg" ];
