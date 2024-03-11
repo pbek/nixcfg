@@ -22,7 +22,7 @@
         base = {
           matches = [
             {
-              trigger = ":date";
+              trigger = ":mydate";
               replace = "{{mydate}}";
               vars = [
                 {
