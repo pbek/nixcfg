@@ -77,8 +77,16 @@
               replace = "Good morning from the office! 🌄🏢\n\n```\n{{quote}}\n```";
             }
             {
+              triggers = [ ":.omor" ":.gmo" ];
+              replace = "Good morning from the office! 🌄🏢";
+            }
+            {
               triggers = [ ":gmho" ];
               replace = "Good morning from home office! 🌄🏡\n\n```\n{{quote}}\n```";
+            }
+            {
+              triggers = [ ":.gmho" ];
+              replace = "Good morning from home office! 🌄🏡";
             }
             {
               triggers = [ ":gna" ":gnsg" ];
