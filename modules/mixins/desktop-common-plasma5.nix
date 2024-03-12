@@ -1,6 +1,13 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, username, ... }:
 {
   services.xserver.desktopManager.plasma5.enable = true;
+
+  home-manager.users.${username} = {
+    # https://mynixos.com/home-manager/options/services.espanso
+    services.espanso = {
+      package = (pkgs.callPackage ../../apps/espanso/espanso.nix { });
+    };
+  };
 
   environment.systemPackages = with pkgs.libsForQt5; [
     kwalletmanager
