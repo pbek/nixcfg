@@ -155,4 +155,10 @@
     /* The home.stateVersion option does not have a default and must be set */
     home.stateVersion = "24.05";
   };
+
+  # Enable ZRAM swap to get more memory
+  # https://search.nixos.org/options?channel=23.11&from=0&size=50&sort=relevance&type=packages&query=zram
+  zramSwap = {
+    enable = true;
+  };
 }
