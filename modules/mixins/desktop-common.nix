@@ -132,8 +132,8 @@
     wireguard-tools
     nixpkgs-review
 
-    pinentry-curses
-    pinentry-qt
+#    pinentry-curses
+#    pinentry-qt
     cryfs
     onlyoffice-bin
     gh
