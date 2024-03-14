@@ -35,5 +35,18 @@
     services.espanso = {
       package = (pkgs.callPackage ../../apps/espanso/espanso.nix { });
     };
+
+    xdg.desktopEntries = {
+      ferdium-wayland = {
+        name = "Ferdium Wayland";
+        genericName = "Messaging Client";
+        comment = "Desktop app bringing all your messaging services into one installable";
+        icon = "ferdium";
+        exec = "ferdium --ozone-platform=wayland --enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations";
+        terminal = false;
+        mimeType = [ "x-scheme-handler/ferdium" ];
+        categories = [ "Network" "InstantMessaging" ];
+      };
+    };
   };
 }
