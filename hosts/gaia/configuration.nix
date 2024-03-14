@@ -45,7 +45,7 @@
 
   environment.systemPackages = with pkgs; [
     calibre
-    arduino
+    arduino-ide
     g810-led # Logitech G213 keyboard
     kdePackages.kdialog
     bitscope.meter
