@@ -131,6 +131,7 @@
     sniffnet
     wireguard-tools
     nixpkgs-review
+    kitty # Terminal with OSC 52 support
 
 #    pinentry-curses
 #    pinentry-qt
