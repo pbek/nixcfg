@@ -32,7 +32,7 @@ outputs =
 #     config = nixpkgs.config.systems.${builtins.currentSystem}.config;
 #     hostname = config.networking.hostName;
     nixosModules = import ./modules { lib = nixpkgs.lib; };
-    commonArgs = { username = "omega"; weztermFontSize = "16.0"; };
+    commonArgs = { username = "omega"; weztermFontSize = "15.0"; };
 
     nixosConfigurations = {
       # Office Work PC
