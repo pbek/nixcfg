@@ -145,6 +145,17 @@
                 The issue dialog in the help menu can help you with all of that.
               '';
             }
+            {
+              triggers = [ ":ghdet" ":ghexp" ];
+              replace = ''
+                <details><summary>Expand</summary>
+
+                ```
+                <!-- Replace this with the output -->
+                ```
+                </details>
+              '';
+            }
           ];
         };
         mail = {
