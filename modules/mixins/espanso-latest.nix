@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, username, ... }:
+{ config, pkgs, inputs, username, x11Support, waylandSupport, ... }:
 {
   # Get around: [ERROR] Error: could not open uinput device
   boot.kernelModules = [ "uinput" ];

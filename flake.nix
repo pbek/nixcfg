@@ -32,7 +32,12 @@ outputs =
 #     config = nixpkgs.config.systems.${builtins.currentSystem}.config;
 #     hostname = config.networking.hostName;
     nixosModules = import ./modules { lib = nixpkgs.lib; };
-    commonArgs = { username = "omega"; weztermFontSize = "15.0"; };
+    commonArgs = {
+      username = "omega";
+      weztermFontSize = "15.0";
+      x11Support = false;
+      waylandSupport = true;
+    };
 
     nixosConfigurations = {
       # Office Work PC
@@ -45,7 +50,11 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = self.commonArgs // { inherit inputs; };
+        specialArgs = self.commonArgs // {
+          inputs = inputs;
+          x11Support = true;
+          waylandSupport = false;
+        };
       };
       # PC Garage
       pluto = nixpkgs.lib.nixosSystem {
@@ -57,7 +66,11 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = self.commonArgs // { inherit inputs; };
+        specialArgs = self.commonArgs // {
+          inputs = inputs;
+          x11Support = true;
+          waylandSupport = false;
+        };
       };
       # Asus Laptop
       jupiter = nixpkgs.lib.nixosSystem {
@@ -139,7 +152,11 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = self.commonArgs // { inherit inputs; };
+        specialArgs = self.commonArgs // {
+          inputs = inputs;
+          x11Support = true;
+          waylandSupport = false;
+        };
       };
       # TU Work PC
       caliban = nixpkgs.lib.nixosSystem {
@@ -154,6 +171,8 @@ outputs =
         specialArgs = self.commonArgs // {
           inputs = inputs;
           weztermFontSize = "12.0";
+          x11Support = true;
+          waylandSupport = false;
         };
       };
       # TU HP EliteBook Laptop 820 G4

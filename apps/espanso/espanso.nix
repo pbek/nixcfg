@@ -18,11 +18,10 @@
 , wxGTK32
 , makeWrapper
 , stdenv
-, waylandSupport ? true
-, x11Support ? false
+, waylandSupport ? false
+, x11Support ? stdenv.isLinux
 , ...
 }:
-#, x11Support ? stdenv.isLinux
 # espanso does not support building with both X11 and Wayland support at the same time
 assert stdenv.isLinux -> x11Support != waylandSupport;
 assert stdenv.isDarwin -> !x11Support;
@@ -30,8 +29,6 @@ assert stdenv.isDarwin -> !waylandSupport;
 rustPlatform.buildRustPackage rec {
   pname = "espanso";
   version = "2.2.1";
-  x11Support = false;
-  waylandSupport = true;
 
   src = fetchFromGitHub {
     owner = "espanso";
