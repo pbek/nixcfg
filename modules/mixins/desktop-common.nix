@@ -89,7 +89,8 @@
     inputs.agenix.packages.x86_64-linux.default
     firefox
     smartgithg
-    gittyup
+#    gittyup
+    (pkgs.libsForQt5.callPackage ../../apps/gittyup/default.nix { })
     kdiff3
 
     magic-wormhole
