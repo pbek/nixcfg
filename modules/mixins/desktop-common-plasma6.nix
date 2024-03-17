@@ -1,5 +1,9 @@
 { config, pkgs, inputs, ... }:
 {
+  imports = [
+    ./kmail-fix.nix
+  ];
+
   services.desktopManager.plasma6.enable = true;
 
   # GTK themes are not applied in Wayland applications / Window Decorations missing / Cursor looks different
@@ -32,9 +36,10 @@
     plasma-pa
     plasma-vault
     kate
-    kmail
-    akonadi
-    kdepim-runtime
+    # Fall back to Qt5
+#    kmail
+#    akonadi
+#    kdepim-runtime
     filelight
   ];
 }
