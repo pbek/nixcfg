@@ -13,7 +13,6 @@
     kontact
     akonadiconsole
     kleopatra
-    kmail
     korganizer
     kaddressbook
     yakuake
