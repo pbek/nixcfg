@@ -31,7 +31,7 @@
     "/crypto_keyfile.bin" = null;
   };
 
-  networking.hostName = "hyperion"; # Define your hostname.
+  networking.hostName = "rhea"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
