@@ -109,7 +109,11 @@ outputs =
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
-        specialArgs = self.commonArgs // { inherit inputs; };
+        specialArgs = self.commonArgs // {
+          inputs = inputs;
+          x11Support = true;
+          waylandSupport = false;
+        };
       };
       # Asus Vivobook Laptop
       rhea = nixpkgs.lib.nixosSystem {
