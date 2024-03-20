@@ -35,8 +35,10 @@ outputs =
     commonArgs = {
       username = "omega";
       weztermFontSize = "15.0";
+      # By default we will use Wayland with Plasma 6
       x11Support = false;
       waylandSupport = true;
+      usePlasma6 = true;  # Plasma 6 is the default, otherwise use Plasma 5
     };
 
     nixosConfigurations = {
@@ -177,6 +179,7 @@ outputs =
           weztermFontSize = "12.0";
           x11Support = true;
           waylandSupport = false;
+          usePlasma6 = false;
         };
       };
       # TU HP EliteBook Laptop 820 G4

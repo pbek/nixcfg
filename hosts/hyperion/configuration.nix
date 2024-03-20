@@ -12,7 +12,7 @@
       ./hardware-configuration.nix
       ./disk-config.zfs.nix
       ../../modules/mixins/users.nix
-      ../../modules/mixins/desktop-wayland.nix
+      ../../modules/mixins/desktop.nix
       ../../modules/mixins/audio.nix
       ../../modules/mixins/jetbrains.nix
       ../../modules/mixins/openssh.nix
