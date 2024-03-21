@@ -191,11 +191,6 @@
       }
     '';
 
-    # thefuck for fish shell
-    home.file.".config/fish/conf.d/thefuck.fish".text = ''
-      thefuck --alias | source
-    '';
-
     # Set the path to the pia-manual repository and the username and password for the PIA VPN script
     home.file."Scripts/pia.sh" = {
       text = ''
@@ -278,8 +273,6 @@
 
   # https://github.com/NixOS/nixpkgs/pull/66480/files
   programs.fuse.userAllowOther = true;
-
-  programs.thefuck.enable = true;
 
   # KDE partition-manager doesn't work when installed directly
   programs.partition-manager.enable = true;
