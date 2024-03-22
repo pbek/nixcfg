@@ -140,6 +140,7 @@ outputs =
           ./hosts/hyperion/configuration.nix
           ./hosts/hyperion/hardware-configuration.nix
           home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
