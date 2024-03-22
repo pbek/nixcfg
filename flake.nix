@@ -56,6 +56,7 @@ outputs =
           inputs = inputs;
           x11Support = true;
           waylandSupport = false;
+          usePlasma6 = false;
         };
       };
       # PC Garage
