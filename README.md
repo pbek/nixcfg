@@ -117,6 +117,8 @@ passwd
 
 # Clone nixcfg repository
 cd /home/omega && git clone https://github.com/pbek/nixcfg.git && cd nixcfg
+# or...
+cd /home/omega/Code && git clone git@github.com:pbek/nixcfg.git && cd nixcfg
 
 # Update channels, so command-not-found will work
 sudo nix-channel --update
