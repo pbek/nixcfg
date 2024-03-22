@@ -44,11 +44,6 @@
     };
   };
 
-  # Set empty password initially. Don't forget to set a password with "passwd".
-  users.users.${username} = {
-    initialHashedPassword = "";
-  };
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [

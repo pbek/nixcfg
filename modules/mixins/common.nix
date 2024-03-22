@@ -43,6 +43,8 @@
     shell = pkgs.fish;
     packages = with pkgs; [
     ];
+    # Set empty password initially. Don't forget to set a password with "passwd".
+    initialHashedPassword = "";
   };
 
   # Set your time zone.
