@@ -51,9 +51,9 @@
               keylocation = "file:///tmp/secret.key";
             };
             # use this to read the key during boot
-            # postCreateHook = ''
-            #   zfs set keylocation="prompt" "zroot/$name";
-            # '';
+            postCreateHook = ''
+              zfs set keylocation="prompt" "zroot/$name";
+            '';
           };
           "encrypted/root" = {
             type = "zfs_fs";
