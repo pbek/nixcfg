@@ -191,7 +191,7 @@
             }
             {
               triggers = [ ":lgtm" ];
-              replace = "Looks good to me";
+              replace = "Looks good to me!";
             }
           ];
         };
