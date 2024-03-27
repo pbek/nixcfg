@@ -66,4 +66,13 @@
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/
   # Turn off for now, because build is broken
 #  virtualisation.multipass.enable = true;
+
+  users.users.omegah = {
+    isNormalUser = true;
+    description = "Patrizio Bekerle Home";
+    extraGroups = [ "networkmanager" "wheel" "docker" "dialout" "input" ];
+    shell = pkgs.fish;
+    # Set empty password initially. Don't forget to set a password with "passwd".
+    initialHashedPassword = "";
+  };
 }
