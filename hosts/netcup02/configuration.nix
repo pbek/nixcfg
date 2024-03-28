@@ -59,10 +59,10 @@
       };
     };
     datasets = {
-      "zpool/home" = {
+      "zroot/home" = {
         useTemplate = ["hourly"];
       };
-      "zpool/docker" = {
+      "zroot/docker" = {
         useTemplate = ["hourly"];
       };
     };
