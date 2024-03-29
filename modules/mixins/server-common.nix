@@ -2,6 +2,7 @@
 {
   imports = [
     ./common.nix
+    ./server-snapshots.nix
   ];
 
   # https://mynixos.com/options/services.openssh
