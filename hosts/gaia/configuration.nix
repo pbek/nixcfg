@@ -13,6 +13,7 @@
       ../../modules/mixins/users.nix
       ../../modules/mixins/desktop.nix
       ../../modules/mixins/audio.nix
+      ../../modules/mixins/platformio.nix
       ../../modules/mixins/jetbrains.nix
       ../../modules/mixins/openssh.nix
       ../../modules/mixins/virt-manager.nix
