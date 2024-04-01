@@ -80,15 +80,23 @@
 #    };
 #  };
 
-  # Enable suspend to RAM
+#  # Enable suspend to RAM
+#  # Sleep is hindered by a compontent on the motherboard
+#  # Problem with "00:01.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge"
+#  powerManagement.powerUpCommands = ''
+#    echo GPP0 > /proc/acpi/wakeup
+#  '';
+#  # powerManagement.powerDownCommands = ''
+#  #   echo GPP0 > /proc/acpi/wakeup
+#  # '';
+
   # Sleep is hindered by a compontent on the motherboard
   # Problem with "00:01.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge"
-  powerManagement.powerUpCommands = ''
-    echo GPP0 > /proc/acpi/wakeup
+  # Disabling wakeup triggers for all PCIe devices
+  # https://nixos.wiki/wiki/Power_Management#Solution_1:_Disabling_wakeup_triggers_for_all_PCIe_devices
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="pci", DRIVER=="pcieport", ATTR{power/wakeup}="disabled"
   '';
-  # powerManagement.powerDownCommands = ''
-  #   echo GPP0 > /proc/acpi/wakeup
-  # '';
 
   # https://nixos.wiki/wiki/VirtualBox
   virtualisation.virtualbox.host.enable = true;
