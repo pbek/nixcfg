@@ -246,6 +246,10 @@
               replace = "🙈";
             }
             {
+              triggers = [ ":peek" ];
+              replace = "🫣";
+            }
+            {
               triggers = [ ":hug" ];
               replace = "🤗";
             }
@@ -278,7 +282,7 @@
               replace = "😇";
             }
             {
-              triggers = [ ":crazy" "%)" "%-)" ];
+              triggers = [ ":crazy" "%)" "%-)" ":zany" ];
               replace = "🤪🙃";
             }
             {
