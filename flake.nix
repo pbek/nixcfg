@@ -149,6 +149,19 @@ outputs =
           weztermFontSize = "12.0";
         };
       };
+      # Asus ROG Ally
+      ally = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/ally/configuration.nix
+          ./hosts/ally/hardware-configuration.nix
+          home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
+          agenix.nixosModules.age
+          attic.nixosModules.atticd
+        ];
+        specialArgs = self.commonArgs // { inherit inputs; };
+      };
 
       # TUG VM
       astra = nixpkgs.lib.nixosSystem {
