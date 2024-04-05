@@ -2,7 +2,6 @@
 {
   imports = [
     ./common.nix
-    ./git.nix
   ];
 
   boot.kernel.sysctl = {

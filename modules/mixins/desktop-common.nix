@@ -2,6 +2,7 @@
 {
   imports = [
     ./desktop-common-minimum.nix
+    ./git.nix
     ./espanso.nix
   ];
 

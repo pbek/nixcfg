@@ -54,4 +54,16 @@
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   };
+
+  # https://rycee.gitlab.io/home-manager/options.html
+  home-manager.users.${username} = {
+    programs.git = {
+      enable = true;
+      # use "git diff --no-ext-diff" for creating patches!
+      difftastic.enable = true;
+      userName  = "Patrizio Bekerle";
+      userEmail = "patrizio@bekerle.com";
+      ignores = [ ".idea" ".direnv" ];
+    };
+  };
 }
