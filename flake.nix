@@ -14,6 +14,7 @@
     catppuccin.flake = false;
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
 outputs =
@@ -26,6 +27,7 @@ outputs =
   , pia
   , catppuccin
   , disko
+  , nixos-hardware
 #      , robotnix
   , ...
   } @ inputs: {
@@ -155,6 +157,7 @@ outputs =
         modules = [
           ./hosts/ally/configuration.nix
           ./hosts/ally/hardware-configuration.nix
+          nixos-hardware.nixosModules.asus-ally-rc71l
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
           attic.nixosModules.atticd
