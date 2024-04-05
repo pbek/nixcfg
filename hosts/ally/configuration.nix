@@ -25,6 +25,7 @@
   };
 
   services.desktopManager.plasma6.enable = true;
+  services.xserver.displayManager.defaultSession = "plasmax11";
 
   # GTK themes are not applied in Wayland applications / Window Decorations missing / Cursor looks different
   # https://nixos.wiki/wiki/KDE#GTK_themes_are_not_applied_in_Wayland_applications_.2F_Window_Decorations_missing_.2F_Cursor_looks_different
