@@ -156,7 +156,6 @@ outputs =
           ./hosts/ally/configuration.nix
           ./hosts/ally/hardware-configuration.nix
           home-manager.nixosModules.home-manager
-          disko.nixosModules.disko
           agenix.nixosModules.age
           attic.nixosModules.atticd
         ];
