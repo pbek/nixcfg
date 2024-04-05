@@ -17,31 +17,10 @@
     ];
 
   # Bootloader.
-  boot.supportedFilesystems = [ "zfs" ];
-  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
-  services.zfs.autoScrub.enable = true;
-  boot.zfs.requestEncryptionCredentials = true;
-
-  boot.loader.grub = {
-    enable = true;
-    zfsSupport = true;
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-    mirroredBoots = [
-      { devices = [ "nodev"]; path = "/boot"; }
-    ];
-  };
-
-  boot.initrd.network = {
-    enable = true;
-    postCommands = ''
-      sleep 2
-      zpool import -a;
-    '';
-  };
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   networking = {
-    hostId = "dacfda01";  # needed for ZFS
     hostName = "ally";
     networkmanager.enable = true;
   };
