@@ -27,7 +27,7 @@
   # Virtual keyboard at login screen does not work in plasma6!
 #  services.desktopManager.plasma6.enable = true;
 
-  services.desktopManager.plasma5.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
   services.xserver.displayManager.defaultSession = "plasmax11";
 
   # GTK themes are not applied in Wayland applications / Window Decorations missing / Cursor looks different
