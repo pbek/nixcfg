@@ -52,7 +52,9 @@
     libsForQt5.kate
 
     onboard # On-screen keyboard
-    google-chrome
+    google-chrome # Touch scrolling in Chrome
+    heroic-unwrapped # Epic Games Store
+    lutris-unwrapped # Game manager
   ];
 
   # https://nixos.wiki/wiki/steam
