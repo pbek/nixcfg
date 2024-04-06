@@ -24,28 +24,35 @@
     networkmanager.enable = true;
   };
 
-  services.desktopManager.plasma6.enable = true;
+  # Virtual keyboard at login screen does not work in plasma6!
+#  services.desktopManager.plasma6.enable = true;
+
+  services.desktopManager.plasma5.enable = true;
   services.xserver.displayManager.defaultSession = "plasmax11";
 
   # GTK themes are not applied in Wayland applications / Window Decorations missing / Cursor looks different
   # https://nixos.wiki/wiki/KDE#GTK_themes_are_not_applied_in_Wayland_applications_.2F_Window_Decorations_missing_.2F_Cursor_looks_different
   programs.dconf.enable = true;
 
-  environment.systemPackages = with pkgs.kdePackages; [
-    kwalletmanager
-    plasma-systemmonitor
-    spectacle
-    ark
-    bluedevil
-    dolphin
-    dolphin-plugins
-    gwenview
-    okular
-    plasma-browser-integration
-    plasma-disks
-    plasma-nm
-    plasma-pa
-    kate
+#  environment.systemPackages = with pkgs.kdePackages; [
+  environment.systemPackages = with pkgs; [
+    libsForQt5.kwalletmanager
+    libsForQt5.plasma-systemmonitor
+    libsForQt5.spectacle
+    libsForQt5.ark
+    libsForQt5.bluedevil
+    libsForQt5.dolphin
+    libsForQt5.dolphin-plugins
+    libsForQt5.gwenview
+    libsForQt5.okular
+    libsForQt5.plasma-browser-integration
+    libsForQt5.plasma-disks
+    libsForQt5.plasma-nm
+    libsForQt5.plasma-pa
+    libsForQt5.kate
+
+    onboard # On-screen keyboard
+    google-chrome
   ];
 
   # https://nixos.wiki/wiki/steam
@@ -66,4 +73,7 @@
       ignores = [ ".idea" ".direnv" ];
     };
   };
+
+  # Touch screen gestures
+  services.touchegg.enable = true;
 }
