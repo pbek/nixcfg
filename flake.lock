@@ -21,28 +21,6 @@
         "type": "github"
       }
     },
-    "attic": {
-      "inputs": {
-        "crane": "crane",
-        "flake-compat": "flake-compat",
-        "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs_2",
-        "nixpkgs-stable": "nixpkgs-stable"
-      },
-      "locked": {
-        "lastModified": 1711742460,
-        "narHash": "sha256-0O4v6e4a1toxXZ2gf5INhg4WPE5C5T+SVvsBt+45Mcc=",
-        "owner": "zhaofengli",
-        "repo": "attic",
-        "rev": "4dbdbee45728d8ce5788db6461aaaa89d98081f0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zhaofengli",
-        "repo": "attic",
-        "type": "github"
-      }
-    },
     "catppuccin": {
       "flake": false,
       "locked": {
@@ -62,7 +40,6 @@
     "crane": {
       "inputs": {
         "nixpkgs": [
-          "attic",
           "nixpkgs"
         ]
       },
@@ -307,7 +284,6 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
-        "attic": "attic",
         "catppuccin": "catppuccin",
         "disko": "disko",
         "home-manager": "home-manager_2",

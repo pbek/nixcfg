@@ -71,11 +71,7 @@
   ];
 
   environment.systemPackages = with pkgs; [
-#    (pkgs.callPackage "${builtins.fetchTarball {
-#      url = "https://github.com/zhaofengli/attic/tarball/main";
-#      sha256 = "sha256:0p9n5m0qc34ji6hljlw4ns8sqyn6861k18crwxcw6v9pwmjqxgzl";
-#    }}/package.nix" {})
-    inputs.attic.packages.x86_64-linux.default
+    attic-client
     inputs.agenix.packages.x86_64-linux.default
     firefox
     magic-wormhole

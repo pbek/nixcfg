@@ -27,7 +27,6 @@ upgrade-push-all:
 	make upgrade && make push-all; make push
 
 push:
-	attic push main `which attic` && \
 	attic push main `which espanso` && \
 	attic push main `which gittyup` && \
 	attic push qownnotes `which qownnotes` && \

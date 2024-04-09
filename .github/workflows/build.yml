@@ -30,8 +30,8 @@ jobs:
 #        run: nix-channel --update
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Get attic
-        run: nix-shell https://github.com/zhaofengli/attic/tarball/main -A demo --run "attic login server https://nix-cache.qownnotes.org $ATTIC_SECRET_KEY"
+      - name: Log-in into attic
+        run: nix-shell -p attic-client --run "attic login server https://nix-cache.qownnotes.org $ATTIC_SECRET_KEY"
         env:
           ATTIC_SECRET_KEY: ${{ secrets.ATTIC_SECRET_KEY }}
 #      - name: Build qc package
@@ -43,4 +43,4 @@ jobs:
         run: |
           cd apps/qownnotes && \
           nix-build -E '((import <nixpkgs> {}).qt6Packages.callPackage (import ./default.nix) { })' && \
-          nix-shell https://github.com/zhaofengli/attic/tarball/main -A demo --run "attic push qownnotes ./result"
+          nix-shell -p attic-client --run "attic push qownnotes ./result"

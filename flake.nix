@@ -6,7 +6,6 @@
 #    nixinate.url = "github:matthewcroughan/nixinate";
     home-manager.url = "github:nix-community/home-manager";
     agenix.url = "github:ryantm/agenix";
-    attic.url = "github:zhaofengli/attic";
 #    robotnix.url = "github:danielfullmer/robotnix";
     pia.url = "github:pia-foss/manual-connections";
     pia.flake = false;
@@ -23,7 +22,6 @@ outputs =
   , home-manager
   , nixpkgs
   , agenix
-  , attic
   , pia
   , catppuccin
   , disko
@@ -52,7 +50,6 @@ outputs =
           ./hosts/gaia/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          attic.nixosModules.atticd
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
@@ -69,7 +66,6 @@ outputs =
           ./hosts/pluto/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          attic.nixosModules.atticd
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
@@ -85,7 +81,6 @@ outputs =
           ./hosts/jupiter/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          attic.nixosModules.atticd
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
@@ -100,7 +95,6 @@ outputs =
           ./hosts/neptun/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          attic.nixosModules.atticd
         ];
         specialArgs = self.commonArgs // { inherit inputs; };
       };
@@ -112,7 +106,6 @@ outputs =
           ./hosts/venus/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          attic.nixosModules.atticd
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
@@ -128,7 +121,6 @@ outputs =
           ./hosts/rhea/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          attic.nixosModules.atticd
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
@@ -144,7 +136,6 @@ outputs =
           home-manager.nixosModules.home-manager
           disko.nixosModules.disko
           agenix.nixosModules.age
-          attic.nixosModules.atticd
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
@@ -160,7 +151,6 @@ outputs =
           nixos-hardware.nixosModules.asus-ally-rc71l
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          attic.nixosModules.atticd
         ];
         specialArgs = self.commonArgs // { inherit inputs; };
       };
@@ -173,7 +163,6 @@ outputs =
           ./hosts/astra/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          attic.nixosModules.atticd
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
@@ -189,7 +178,6 @@ outputs =
           ./hosts/caliban/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          attic.nixosModules.atticd
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
@@ -207,7 +195,6 @@ outputs =
           ./hosts/eris/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          attic.nixosModules.atticd
         ];
         specialArgs = self.commonArgs // { inherit inputs; };
       };
@@ -219,7 +206,6 @@ outputs =
           ./hosts/sinope/hardware-configuration.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          attic.nixosModules.atticd
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
@@ -233,7 +219,6 @@ outputs =
           ./hosts/vm-desktop/vm.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          attic.nixosModules.atticd
         ];
         specialArgs = self.commonArgs // { inherit inputs; };
       };
@@ -244,7 +229,6 @@ outputs =
           ./hosts/vm-server/vm.nix
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
-          attic.nixosModules.atticd
         ];
         specialArgs = self.commonArgs // { inherit inputs; };
       };
