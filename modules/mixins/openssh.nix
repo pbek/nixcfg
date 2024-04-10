@@ -5,16 +5,15 @@
     enable = true;
     openFirewall = lib.mkForce true;
 
-    settings.PasswordAuthentication = false;
     settings.X11Forwarding = true;
+    settings.PasswordAuthentication = false;
     settings.PermitRootLogin = lib.mkForce "no";
 
-    extraConfig = ''StreamLocalBindUnlink yes'';
+    # To use with nixos-anywhere you need to use this settings
+#    settings.PermitRootLogin = "yes";
+#    settings.PasswordAuthentication = true;
 
-    # Deprecated in unstable
-#    passwordAuthentication = false;
-#    forwardX11 = true;
-#    permitRootLogin = lib.mkForce "no";
+    extraConfig = ''StreamLocalBindUnlink yes'';
   };
 
   # Add Yubikey public ssh key
