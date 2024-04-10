@@ -142,12 +142,24 @@ outputs =
           weztermFontSize = "12.0";
         };
       };
-      # Asus ROG Ally
+      # Asus ROG Ally (usually using Windows)
       ally = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./hosts/ally/configuration.nix
           ./hosts/ally/hardware-configuration.nix
+          nixos-hardware.nixosModules.asus-ally-rc71l
+          home-manager.nixosModules.home-manager
+          agenix.nixosModules.age
+        ];
+        specialArgs = self.commonArgs // { inherit inputs; };
+      };
+      # Asus ROG Ally (using NicOS)
+      ally2 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/ally2/configuration.nix
+          ./hosts/ally2/hardware-configuration.nix
           nixos-hardware.nixosModules.asus-ally-rc71l
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age

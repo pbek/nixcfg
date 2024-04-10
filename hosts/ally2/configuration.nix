@@ -1,4 +1,4 @@
-# Asus Rog Ally (usually using Windows)
+# Asus Rog Ally (using NixOS)
 
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
@@ -13,5 +13,5 @@
       ../../modules/mixins/rog-ally.nix
     ];
 
-  networking.hostName = "ally";
+  networking.hostName = "ally2";
 }
