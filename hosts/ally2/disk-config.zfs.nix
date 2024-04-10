@@ -2,7 +2,7 @@
 {
   disko.devices = {
     disk.disk1 = {
-      # SD Card
+      # SSD
       device = lib.mkDefault "/dev/nvme0n1";
       type = "disk";
       content = {
