@@ -346,6 +346,10 @@
               triggers = [ ":fruit" ];
               replace = "🥭🍉🍌🍇🍑🍓🍊🍈🍎🍏🍐🍒🍍🥥🥝🍅";
             }
+            {
+              triggers = [ ":penguin" ":linux" ];
+              replace = "🐧";
+            }
           ];
         };
       };
