@@ -338,6 +338,14 @@
               triggers = [ ":lambda" ":nix" ];
               replace = "λ❄️λ";
             }
+            {
+              triggers = [ ":climb" ":bloulder" ];
+              replace = "🧗🏼‍♂️";
+            }
+            {
+              triggers = [ ":fruit" ];
+              replace = "🥭🍉🍌🍇🍑🍓🍊🍈🍎🍏🍐🍒🍍🥥🥝🍅";
+            }
           ];
         };
       };
