@@ -16,7 +16,10 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.supportedFilesystems = [ "zfs" ];
 
   networking.hostName = "ally";
+
+  # To setup ally2 with nfs
+  boot.supportedFilesystems = [ "zfs" ];
+  networking.hostId = "3f2e973f";
 }
