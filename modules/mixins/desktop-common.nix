@@ -64,6 +64,10 @@
     networkmanager-openconnect
   ];
 
+  # Docker
+  # https://nixos.wiki/wiki/Docker
+  virtualisation.docker.enable = true;
+
   services.pcscd.enable = true;
   services.udev.packages = [ pkgs.yubikey-personalization ];
 #  programs.ssh.startAgent = false;

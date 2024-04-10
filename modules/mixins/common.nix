@@ -124,10 +124,6 @@
     options = "--delete-older-than 20d";
   };
 
-  # Docker
-  # https://nixos.wiki/wiki/Docker
-  virtualisation.docker.enable = true;
-
   # Add Restic Security Wrapper
   # https://nixos.wiki/wiki/Restic
   security.wrappers.restic = {

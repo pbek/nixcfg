@@ -13,6 +13,10 @@
     settings.PermitRootLogin = lib.mkForce "no";
   };
 
+  # Docker
+  # https://nixos.wiki/wiki/Docker
+  virtualisation.docker.enable = true;
+
   # https://nixos.wiki/wiki/Fail2ban
   services.fail2ban.enable = true;
 
