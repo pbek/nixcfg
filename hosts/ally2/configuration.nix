@@ -38,7 +38,7 @@
   };
 
   networking = {
-    hostId = "decfda01";  # needed for ZFS
+    hostId = "decfda01";  # needed for ZFS, use: head -c4 /dev/urandom | od -A none -t x4
     hostName = "ally2";
     networkmanager.enable = true;
   };
