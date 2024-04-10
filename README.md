@@ -109,7 +109,32 @@ make ssh-vm-server
 nix run github:nix-community/nixos-anywhere -- --flake .#netcup02 root@server-host
 ```
 
-### Todo after server setup
+## Desktop setup with nixos-anywhere
+
+- <https://github.com/nix-community/nixos-anywhere>
+
+```bash
+# First boot into minimal nixos and set root password
+# Then create a /tmp/secret.key with the disk-password
+# Set `services.openssh.settings.PermitRootLogin = "yes";`
+# Set `services.openssh.settings.PasswordAuthentication = true;`
+# Then use nixos-anywhere remotely
+nix run github:nix-community/nixos-anywhere -- --disk-encryption-keys /tmp/secret.key /tmp/secret.key --flake .#ally2 root@192.168.1.48
+```
+
+## Manual setup with disko
+
+- <https://github.com/nix-community/disko>
+
+```bash
+# Boot some nixos minimal image (for a ZFS setup you need to have ZFS support enabled)
+# Make sure you have nixcfg checked out and are in the nixcfg directory
+sudo nix run github:nix-community/disko -- --mode disko ./hosts/ally2/disk-config.zfs.nix
+sudo nix run github:nix-community/disko -- --flake .#ally2 --write-efi-entries
+sudo nixos-install --flake .#ally2
+```
+
+## Todo after server setup
 
 ```bash
 # Set password
