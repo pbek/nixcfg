@@ -162,6 +162,7 @@ outputs =
           ./hosts/ally2/hardware-configuration.nix
           nixos-hardware.nixosModules.asus-ally-rc71l
           home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // { inherit inputs; };

@@ -10,8 +10,36 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./disk-config.zfs.nix
       ../../modules/mixins/rog-ally.nix
     ];
 
-  networking.hostName = "ally2";
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+  services.zfs.autoScrub.enable = true;
+  boot.zfs.requestEncryptionCredentials = true;
+
+  boot.loader.grub = {
+    enable = true;
+    zfsSupport = true;
+    efiSupport = true;
+    efiInstallAsRemovable = true;
+    mirroredBoots = [
+      { devices = [ "nodev"]; path = "/boot"; }
+    ];
+  };
+
+  boot.initrd.network = {
+    enable = true;
+    postCommands = ''
+      sleep 2
+      zpool import -a;
+    '';
+  };
+
+  networking = {
+    hostId = "decfda01";  # needed for ZFS
+    hostName = "ally2";
+    networkmanager.enable = true;
+  };
 }
