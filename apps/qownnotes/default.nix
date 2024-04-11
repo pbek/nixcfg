@@ -13,19 +13,20 @@
 , wrapQtAppsHook
 , botan2
 , pkg-config
+, installShellFiles
 }:
 
 let
   pname = "qownnotes";
   appname = "QOwnNotes";
-  version = "24.4.0";
+  version = "24.4.1";
 in
 stdenv.mkDerivation {
   inherit pname appname version;
 
   src = fetchurl {
     url = "https://github.com/pbek/QOwnNotes/releases/download/v${version}/qownnotes-${version}.tar.xz";
-    hash = "sha256-SxoZD5DYuPAJZwBiw38jZYI+e9FExj+TiUlczvbXkWA=";
+    hash = "sha256-E4tLlzjIOElsZr2jcbsnge5jJqKQ0kWf86tFonZ1+Zs=";
   };
 
   nativeBuildInputs = [
@@ -33,6 +34,7 @@ stdenv.mkDerivation {
     qttools
     wrapQtAppsHook
     pkg-config
+    installShellFiles
   ] ++ lib.optionals stdenv.isDarwin [ makeWrapper ];
 
   buildInputs = [
@@ -48,9 +50,18 @@ stdenv.mkDerivation {
     "USE_SYSTEM_BOTAN=1"
   ];
 
-  postInstall =
+  postInstall = ''
+    # we need a writable home directory, or the completion files will be empty
+    export HOME=$(mktemp -d)
+    installShellCompletion --cmd ${appname} \
+      --bash <($out/bin/${appname} --completion bash) \
+      --fish <($out/bin/${appname} --completion fish)
+    installShellCompletion --cmd ${pname} \
+      --bash <($out/bin/${appname} --completion bash) \
+      --fish <($out/bin/${appname} --completion fish)
+  ''
   # Create a lowercase symlink for Linux
-  lib.optionalString stdenv.isLinux ''
+  + lib.optionalString stdenv.isLinux ''
     ln -s $out/bin/${appname} $out/bin/${pname}
   ''
   # Wrap application for macOS as lowercase binary
