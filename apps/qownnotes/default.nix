@@ -13,6 +13,7 @@
 , wrapQtAppsHook
 , botan2
 , pkg-config
+, xvfb-run
 , installShellFiles
 }:
 
@@ -35,6 +36,7 @@ stdenv.mkDerivation {
     wrapQtAppsHook
     pkg-config
     installShellFiles
+    xvfb-run
   ] ++ lib.optionals stdenv.isDarwin [ makeWrapper ];
 
   buildInputs = [
@@ -51,14 +53,12 @@ stdenv.mkDerivation {
   ];
 
   postInstall = ''
-    # we need a writable home directory, or the completion files will be empty
-    export HOME=$(mktemp -d)
     installShellCompletion --cmd ${appname} \
-      --bash <($out/bin/${appname} --completion bash) \
-      --fish <($out/bin/${appname} --completion fish)
+      --bash <(xvfb-run $out/bin/${appname} --completion bash --allow-multiple-instances) \
+      --fish <(xvfb-run $out/bin/${appname} --completion fish --allow-multiple-instances)
     installShellCompletion --cmd ${pname} \
-      --bash <($out/bin/${appname} --completion bash) \
-      --fish <($out/bin/${appname} --completion fish)
+      --bash <(xvfb-run $out/bin/${appname} --completion bash --allow-multiple-instances) \
+      --fish <(xvfb-run $out/bin/${appname} --completion fish --allow-multiple-instances)
   ''
   # Create a lowercase symlink for Linux
   + lib.optionalString stdenv.isLinux ''
