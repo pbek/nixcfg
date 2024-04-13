@@ -68,4 +68,19 @@
 
   # Touch screen gestures
   services.touchegg.enable = true;
+
+  # In addition to audio.nix we want to enable low-latency audio
+  # https://github.com/fufexan/nix-gaming?tab=readme-ov-file#pipewire-low-latency
+  services.pipewire = {
+    lowLatency = {
+      # enable this module
+      enable = true;
+      # defaults (no need to be set unless modified)
+      quantum = 64;
+      rate = 48000;
+    };
+  };
+
+  # Make pipewire realtime-capable
+  security.rtkit.enable = true;
 }
