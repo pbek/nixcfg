@@ -6,7 +6,7 @@
     ./espanso-latest.nix
   ];
 
-  services.xserver.displayManager.defaultSession = "plasma";
+  services.displayManager.defaultSession = "plasma";
 
   # Launch SDDM in Wayland too
   # https://nixos.wiki/wiki/KDE#Launch_SDDM_in_Wayland_too

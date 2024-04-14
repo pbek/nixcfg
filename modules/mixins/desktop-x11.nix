@@ -1,6 +1,6 @@
 { config, pkgs, inputs, ... }:
 {
-  services.xserver.displayManager.defaultSession = "plasmax11";
+  services.displayManager.defaultSession = "plasmax11";
 
   imports = [
     ./desktop-common.nix

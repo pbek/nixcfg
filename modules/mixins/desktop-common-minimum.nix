@@ -16,7 +16,7 @@
 
   # Enable the KDE Plasma Desktop Environment.
   # https://nixos.wiki/wiki/KDE
-  services.xserver.displayManager.sddm.enable = true;
+  services.displayManager.sddm.enable = true;
   programs.kdeconnect.enable = true;
 
   # Enable bluetooth

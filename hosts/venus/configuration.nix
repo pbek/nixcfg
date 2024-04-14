@@ -71,7 +71,7 @@
   hardware.nvidia.modesetting.enable = true;
 
   # Wayland
-#  services.xserver.displayManager.defaultSession = "plasmawayland";
+#  services.displayManager.defaultSession = "plasmawayland";
 #  # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
 #  home-manager.users.${username} = {
 #    # https://mynixos.com/home-manager/options/services.espanso
