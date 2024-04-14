@@ -10,7 +10,7 @@
 
   # Launch SDDM in Wayland too
   # https://nixos.wiki/wiki/KDE#Launch_SDDM_in_Wayland_too
-  services.xserver.displayManager.sddm.wayland.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
 
   # KMail Renders Blank Messages
   # https://nixos.wiki/wiki/KDE#KMail_Renders_Blank_Messages
