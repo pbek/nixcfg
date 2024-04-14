@@ -90,8 +90,4 @@
       default.clock.max-quantum = 32;
     };
   };
-
-  # Make pipewire realtime-capable
-  # https://github.com/fufexan/nix-gaming?tab=readme-ov-file#pipewire-low-latency
-  security.rtkit.enable = true;
 }
