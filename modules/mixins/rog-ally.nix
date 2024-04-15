@@ -43,7 +43,8 @@
 
     onboard # On-screen keyboard
     google-chrome # Touch scrolling in Chrome
-    heroic-unwrapped # Epic Games Store
+#    heroic-unwrapped # Epic Games Store
+    heroic # Epic Games Store
     lutris-unwrapped # Game manager
   ];
 
