@@ -90,4 +90,7 @@
       default.clock.max-quantum = 32;
     };
   };
+
+  # Enable asusctl daemon.
+  services.asusd.enable = lib.mkDefault true;
 }
