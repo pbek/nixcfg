@@ -93,4 +93,11 @@
 
   # Enable asusctl daemon.
   services.asusd.enable = lib.mkDefault true;
+
+  services.handheld-daemon = {
+    enable = true;
+    user = username;
+    package = (pkgs.callPackage ../../apps/handheld-daemon/package.nix { }).override {
+    };
+  };
 }
