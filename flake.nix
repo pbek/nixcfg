@@ -154,7 +154,7 @@ outputs =
         ];
         specialArgs = self.commonArgs // { inherit inputs; };
       };
-      # Asus ROG Ally (using NicOS)
+      # Asus ROG Ally (using NixOS)
       ally2 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
