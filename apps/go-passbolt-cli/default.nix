@@ -17,6 +17,8 @@ buildGoModule rec {
 
   ldflags = [
     "-X=main.version=${version}"
+    "-X=main.commit=${src.rev}"
+    "-X=main.date=1970-01-01T00:00:00Z"
   ];
 
   doCheck = false;
@@ -29,9 +31,7 @@ buildGoModule rec {
 
   installPhase = ''
     runHook preInstall
-
     install -D $GOPATH/bin/go-passbolt-cli $out/bin/passbolt
-
     runHook postInstall
   '';
 
@@ -40,11 +40,14 @@ buildGoModule rec {
       --bash <($out/bin/passbolt completion bash) \
       --fish <($out/bin/passbolt completion fish) \
       --zsh <($out/bin/passbolt completion zsh)
+
+    export tmpDir=$(mktemp -d)
+    cd $tmpDir && mkdir man && $out/bin/passbolt gendoc --type man && installManPage man/*
   '';
 
   meta = with lib; {
     description = "CLI tool to interact with Passbolt, an Open source Password Manager for teams";
-    homepage = "https://www.passbolt.com";
+    homepage = "https://github.com/passbolt/go-passbolt-cli";
     license = licenses.mit;
     maintainers = with maintainers; [ pbek ];
     platforms = platforms.linux ++ platforms.darwin;
