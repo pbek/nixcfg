@@ -1,0 +1,8 @@
+build:
+	nix-build -E '((import <nixpkgs> {}).callPackage (import ./default.nix) { })'
+
+build-force:
+	nix-build -E '((import <nixpkgs> {}).callPackage (import ./default.nix) { })' --check
+
+edit-app:
+	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || cd ~/Code/tools/nixpkgs; kate ./pkgs/by-name/go/go-passbolt-cli/package.nix
