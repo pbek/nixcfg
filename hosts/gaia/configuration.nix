@@ -52,6 +52,7 @@
     bitscope.meter
     bitscope.dso
     bitscope.logic
+    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
   ];
 
   # Handle keyboard leds
