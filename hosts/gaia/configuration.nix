@@ -83,6 +83,12 @@
   users.extraGroups.vboxusers.members = [ username ];
   # virtualisation.virtualbox.host.enableExtensionPack = true;
 
+  # Try to get get around: /nix/store/lx50avim6rzf20b69q4zwak07c479qwp-udev-rules/60-openocd.rules:188 Unknown group 'plugdev', ignoring.
+  # https://github.com/NixOS/nixpkgs/issues/81326#issuecomment-592790668
+  users.users.${username} = {
+    extraGroups = [ "plugdev" ];
+  };
+
   # https://nixos.wiki/wiki/steam
   programs.steam = {
     enable = true;
