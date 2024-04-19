@@ -21,8 +21,6 @@ buildGoModule rec {
     "-X=main.date=1970-01-01T00:00:00Z"
   ];
 
-  doCheck = false;
-
   subPackages = [ "." ];
 
   nativeBuildInputs = [
@@ -46,10 +44,11 @@ buildGoModule rec {
   '';
 
   meta = with lib; {
-    description = "CLI tool to interact with Passbolt, an Open source Password Manager for teams";
+    description = "CLI tool to interact with Passbolt, an open source password manager for teams";
     homepage = "https://github.com/passbolt/go-passbolt-cli";
     license = licenses.mit;
     maintainers = with maintainers; [ pbek ];
+    mainProgram = "passbolt";
     platforms = platforms.linux ++ platforms.darwin;
   };
 }
