@@ -18,7 +18,6 @@
     smartgithg
     gittyup
 #    (pkgs.libsForQt5.callPackage ../../apps/gittyup/default.nix { })
-    github-desktop
     kdiff3
     chromium
     qtcreator
