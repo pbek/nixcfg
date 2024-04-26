@@ -87,6 +87,13 @@
     value = "8192";
   }];
 
+  # Enable Fwupd
+  # https://nixos.wiki/wiki/Fwupd
+  services.fwupd.enable = true;
+
+  # Enable Netbird Wireguard VPN service
+  services.netbird.enable = true;
+
   environment.systemPackages = with pkgs; [
   ];
 }
