@@ -97,7 +97,7 @@
   # Enable Tailscale VPN
   # Use `tailscale up --advertise-exit-node`
   services.tailscale.enable = true;
-  services.tailscale.useRoutingFeatures = "server";
+  services.tailscale.useRoutingFeatures = "both";
 
   environment.systemPackages = with pkgs; [
   ];
