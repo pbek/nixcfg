@@ -95,7 +95,7 @@
 #  services.netbird.enable = true;
 
   # Enable Tailscale VPN
-  # Use `tailscale up --advertise-exit-node`
+  # Use `sudo tailscale up --advertise-exit-node --advertise-routes=192.168.1.0/24`
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = "both";
 
