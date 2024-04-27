@@ -92,7 +92,12 @@
   services.fwupd.enable = true;
 
   # Enable Netbird Wireguard VPN service
-  services.netbird.enable = true;
+#  services.netbird.enable = true;
+
+  # Enable Tailscale VPN
+  # Use `tailscale up --advertise-exit-node`
+  services.tailscale.enable = true;
+  services.tailscale.useRoutingFeatures = "server";
 
   environment.systemPackages = with pkgs; [
   ];
