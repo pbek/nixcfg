@@ -42,6 +42,10 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # Enable Tailscale VPN
+  # Use `sudo tailscale up --accept-routes` to connect to the VPN
+  services.tailscale.enable = true;
+
   environment.systemPackages = with pkgs; [
   ];
 }
