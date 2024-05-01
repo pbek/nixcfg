@@ -19,6 +19,7 @@
       vim = "nvim";
       ll = "eza -al";
       fish-reload = "exec fish";
+      lg = "lazygit";
     };
     shellAbbrs = {
       killall = "pkill";

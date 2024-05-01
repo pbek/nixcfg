@@ -65,6 +65,10 @@
     networkmanager-openconnect
   ];
 
+  programs.fish.shellAliases = {
+    ld = "lazydocker";
+  };
+
   # Docker
   # https://nixos.wiki/wiki/Docker
   virtualisation.docker.enable = true;

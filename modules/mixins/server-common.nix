@@ -55,4 +55,8 @@
     python3 # for Ansible
     lazydocker
   ];
+
+  programs.fish.shellAliases = {
+    ld = "lazydocker";
+  };
 }
