@@ -132,3 +132,7 @@ term:
 
 term-kill:
 	zellij delete-session nixcfg -f
+
+# Replace current shell with new instance of fish
+fish-replace:
+	exec fish
