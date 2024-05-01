@@ -115,6 +115,7 @@
     zellij  # terminal multiplexer (like tmux)
     netcat-gnu
     nmap
+    lazygit
   ];
 
   # Do garbage collection
@@ -152,6 +153,21 @@
   home-manager.users.${username} = {
     /* The home.stateVersion option does not have a default and must be set */
     home.stateVersion = "24.05";
+
+    # A smarter cd command
+    # https://github.com/ajeetdsouza/zoxide
+    programs.zoxide = {
+      enable = true;
+      enableFishIntegration = true;
+      options = [ "--cmd cd" ];
+    };
+
+    # Blazing fast terminal file manager written in Rust
+    # https://github.com/sxyazi/yazi
+    programs.yazi = {
+      enable = true;
+      enableFishIntegration = true;
+    };
   };
 
   # Enable ZRAM swap to get more memory

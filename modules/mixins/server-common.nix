@@ -53,5 +53,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     python3 # for Ansible
+    lazydocker
   ];
 }

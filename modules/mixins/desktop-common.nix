@@ -56,6 +56,7 @@
     onlyoffice-bin
     gh
     smartmontools
+    lazydocker
 
     # TU Graz
     vpnc
