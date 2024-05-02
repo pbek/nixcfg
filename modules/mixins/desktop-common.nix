@@ -66,7 +66,7 @@
   ];
 
   programs.fish.shellAliases = {
-    ld = "lazydocker";
+    ldo = "lazydocker";
   };
 
   # Docker
