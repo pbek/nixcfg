@@ -246,7 +246,7 @@
               replace = "🙈";
             }
             {
-              triggers = [ ":peek" ];
+              triggers = [ ":peek" ":cover" ];
               replace = "🫣";
             }
             {
@@ -263,7 +263,7 @@
             }
             {
               triggers = [ ":pray" ":nam" ":bow" ":thank" ];
-              replace = "🙏";
+              replace = "🙏🙇";
             }
             {
               triggers = [ ":sun" ];
@@ -341,6 +341,10 @@
             {
               triggers = [ ":climb" ":bloulder" ];
               replace = "🧗🏼‍♂️";
+            }
+            {
+              triggers = [ ":ner" ];
+              replace = "🤓";
             }
             {
               triggers = [ ":fruit" ];
