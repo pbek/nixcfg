@@ -263,7 +263,7 @@
             }
             {
               triggers = [ ":pray" ":nam" ":bow" ":thank" ];
-              replace = "🙏🙇";
+              replace = "🙏🏻🙇🏻‍♂️";
             }
             {
               triggers = [ ":sun" ];
