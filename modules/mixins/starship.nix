@@ -2,21 +2,6 @@
 {
   # https://rycee.gitlab.io/home-manager/options.html
   home-manager.users.${username} = {
-    # enable starship prompt in fish shell, enableFishIntegration in the starship config did not work
-    home.file.".config/fish/conf.d/starship.fish".text = ''
-      starship init fish | source
-    '';
-
-    # Enable starship for bash (did not work)
-    # programs.bash.bashrcExtra = ''
-    #   eval "$(starship init bash)"
-    # '';
-
-    # Enable starship for bash
-    home.file.".bash_aliases".text = ''
-      eval "$(starship init bash)"
-    '';
-
     # enable https://starship.rs
     programs.starship =
     let

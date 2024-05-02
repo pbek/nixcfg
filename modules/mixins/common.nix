@@ -155,11 +155,16 @@
     /* The home.stateVersion option does not have a default and must be set */
     home.stateVersion = "24.05";
 
+    # Enable fish and bash in home-manager to use enableFishIntegration and enableBashIntegration
+    programs.fish.enable = true;
+    programs.bash.enable = true;
+
     # A smarter cd command
     # https://github.com/ajeetdsouza/zoxide
     programs.zoxide = {
       enable = true;
       enableFishIntegration = true;
+      enableBashIntegration = true;
       options = [ "--cmd cd" ];
     };
 
@@ -168,6 +173,7 @@
     programs.yazi = {
       enable = true;
       enableFishIntegration = true;
+      enableBashIntegration = true;
     };
   };
 
