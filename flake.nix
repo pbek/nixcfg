@@ -34,7 +34,7 @@ outputs =
     nixosModules = import ./modules { lib = nixpkgs.lib; };
     commonArgs = {
       username = "omega";
-      weztermFontSize = "15.0";
+      termFontSize = 15.0;
       # By default we will use Wayland with Plasma 6
       x11Support = false;
       waylandSupport = true;
@@ -84,7 +84,7 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
-          weztermFontSize = "12.0";
+          termFontSize = 12.0;
         };
       };
       # macBook
@@ -111,6 +111,7 @@ outputs =
           inputs = inputs;
           x11Support = true;
           waylandSupport = false;
+          termFontSize = 12.0;
         };
       };
       # Asus Vivobook Laptop
@@ -124,7 +125,7 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
-          weztermFontSize = "12.0";
+          termFontSize = 12.0;
         };
       };
       # Acer Aspire 5 Laptop
@@ -139,7 +140,7 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
-          weztermFontSize = "12.0";
+          termFontSize = 12.0;
         };
       };
       # Asus ROG Ally (usually using Windows)
@@ -194,7 +195,7 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
-          weztermFontSize = "12.0";
+          termFontSize = 12.0;
           x11Support = true;
           waylandSupport = false;
           usePlasma6 = false;
@@ -222,7 +223,7 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
-          weztermFontSize = "12.0";
+          termFontSize = 12.0;
         };
       };
       # VM Desktop

@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, username, weztermFontSize, ... }:
+{ config, pkgs, inputs, username, termFontSize, ... }:
 {
   imports = [
     ./common.nix

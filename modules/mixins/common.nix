@@ -156,24 +156,26 @@
     home.stateVersion = "24.05";
 
     # Enable fish and bash in home-manager to use enableFishIntegration and enableBashIntegration
-    programs.fish.enable = true;
-    programs.bash.enable = true;
+    programs = {
+      fish.enable = true;
+      bash.enable = true;
 
-    # A smarter cd command
-    # https://github.com/ajeetdsouza/zoxide
-    programs.zoxide = {
-      enable = true;
-      enableFishIntegration = true;
-      enableBashIntegration = true;
-      options = [ "--cmd cd" ];
-    };
+      # A smarter cd command
+      # https://github.com/ajeetdsouza/zoxide
+      zoxide = {
+        enable = true;
+        enableFishIntegration = true;
+        enableBashIntegration = true;
+        options = [ "--cmd cd" ];
+      };
 
-    # Blazing fast terminal file manager written in Rust
-    # https://github.com/sxyazi/yazi
-    programs.yazi = {
-      enable = true;
-      enableFishIntegration = true;
-      enableBashIntegration = true;
+      # Blazing fast terminal file manager written in Rust
+      # https://github.com/sxyazi/yazi
+      yazi = {
+        enable = true;
+        enableFishIntegration = true;
+        enableBashIntegration = true;
+      };
     };
   };
 
