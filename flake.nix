@@ -34,7 +34,7 @@ outputs =
     nixosModules = import ./modules { lib = nixpkgs.lib; };
     commonArgs = {
       username = "omega";
-      termFontSize = 15.0;
+      termFontSize = 12.0;
       # By default we will use Wayland with Plasma 6
       x11Support = false;
       waylandSupport = true;
@@ -84,7 +84,6 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
-          termFontSize = 12.0;
         };
       };
       # macBook
@@ -111,7 +110,6 @@ outputs =
           inputs = inputs;
           x11Support = true;
           waylandSupport = false;
-          termFontSize = 12.0;
         };
       };
       # Asus Vivobook Laptop
@@ -125,7 +123,6 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
-          termFontSize = 12.0;
         };
       };
       # Acer Aspire 5 Laptop
@@ -140,7 +137,6 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
-          termFontSize = 12.0;
         };
       };
       # Asus ROG Ally (usually using Windows)
@@ -153,7 +149,10 @@ outputs =
           home-manager.nixosModules.home-manager
           agenix.nixosModules.age
         ];
-        specialArgs = self.commonArgs // { inherit inputs; };
+        specialArgs = self.commonArgs // {
+          inputs = inputs;
+          termFontSize = 15.0;
+        };
       };
       # Asus ROG Ally (using NixOS)
       ally2 = nixpkgs.lib.nixosSystem {
@@ -166,7 +165,10 @@ outputs =
           disko.nixosModules.disko
           agenix.nixosModules.age
         ];
-        specialArgs = self.commonArgs // { inherit inputs; };
+        specialArgs = self.commonArgs // {
+          inputs = inputs;
+          termFontSize = 15.0;
+        };
       };
 
       # TUG VM
@@ -182,6 +184,7 @@ outputs =
           inputs = inputs;
           x11Support = true;
           waylandSupport = false;
+          termFontSize = 15.0;
         };
       };
       # TU Work PC
@@ -195,7 +198,6 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
-          termFontSize = 12.0;
           x11Support = true;
           waylandSupport = false;
           usePlasma6 = false;
@@ -223,7 +225,6 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inputs = inputs;
-          termFontSize = 12.0;
         };
       };
       # VM Desktop
