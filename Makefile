@@ -136,3 +136,9 @@ term-kill:
 # Replace current shell with new instance of fish
 fish-replace:
 	exec fish
+
+linter-check:
+	statix check
+
+linter-fix:
+	statix fix

@@ -3,5 +3,6 @@
     nativeBuildInputs = with pkgs; [
       gnumake
       git
+      statix
     ];
 }
