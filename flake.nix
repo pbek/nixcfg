@@ -31,7 +31,7 @@ outputs =
   } @ inputs: {
 #     config = nixpkgs.config.systems.${builtins.currentSystem}.config;
 #     hostname = config.networking.hostName;
-    nixosModules = import ./modules { lib = nixpkgs.lib; };
+    nixosModules = import ./modules { inherit (nixpkgs) lib; };
     commonArgs = {
       username = "omega";
       termFontSize = 12.0;
@@ -52,7 +52,7 @@ outputs =
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
-          inputs = inputs;
+          inherit inputs;
           x11Support = true;
           waylandSupport = false;
           usePlasma6 = false;
@@ -68,7 +68,7 @@ outputs =
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
-          inputs = inputs;
+          inherit inputs;
           x11Support = true;
           waylandSupport = false;
         };
@@ -83,7 +83,7 @@ outputs =
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
-          inputs = inputs;
+          inherit inputs;
         };
       };
       # macBook
@@ -107,7 +107,7 @@ outputs =
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
-          inputs = inputs;
+          inherit inputs;
           x11Support = true;
           waylandSupport = false;
         };
@@ -122,7 +122,7 @@ outputs =
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
-          inputs = inputs;
+          inherit inputs;
         };
       };
       # Acer Aspire 5 Laptop
@@ -136,7 +136,7 @@ outputs =
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
-          inputs = inputs;
+          inherit inputs;
         };
       };
       # Asus ROG Ally (usually using Windows)
@@ -150,7 +150,7 @@ outputs =
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
-          inputs = inputs;
+          inherit inputs;
           termFontSize = 15.0;
         };
       };
@@ -166,7 +166,7 @@ outputs =
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
-          inputs = inputs;
+          inherit inputs;
           termFontSize = 15.0;
         };
       };
@@ -181,7 +181,7 @@ outputs =
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
-          inputs = inputs;
+          inherit inputs;
           x11Support = true;
           waylandSupport = false;
           termFontSize = 16.0;
@@ -197,7 +197,7 @@ outputs =
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
-          inputs = inputs;
+          inherit inputs;
           x11Support = true;
           waylandSupport = false;
           usePlasma6 = false;
@@ -224,7 +224,7 @@ outputs =
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
-          inputs = inputs;
+          inherit inputs;
         };
       };
       # VM Desktop
@@ -286,7 +286,7 @@ outputs =
           ./hosts/moobox01/configuration.nix
         ];
         specialArgs = self.commonArgs // {
-          inputs = inputs;
+          inherit inputs;
           username = "cow";
         };
       };

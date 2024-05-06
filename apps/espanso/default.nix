@@ -3,26 +3,26 @@
 let
   # Define a small set of required packages for your function
   myPackages = {
-    lib = pkgs.lib;
-    coreutils = pkgs.coreutils;
-    fetchFromGitHub = pkgs.fetchFromGitHub;
-    rustPlatform = pkgs.rustPlatform;
-    pkg-config = pkgs.pkg-config;
-    extra-cmake-modules = pkgs.extra-cmake-modules;
-    dbus = pkgs.dbus;
-    libX11 = pkgs.xorg.libX11;
-    libXi = pkgs.xorg.libXi;
-    libXtst = pkgs.xorg.libXtst;
-    libnotify = pkgs.libnotify;
-    libxkbcommon = pkgs.libxkbcommon;
-    openssl = pkgs.openssl;
-    xclip = pkgs.xclip;
-    xdotool = pkgs.xdotool;
-    setxkbmap = pkgs.xorg.setxkbmap;
-    wl-clipboard = pkgs.wl-clipboard;
-    wxGTK32 = pkgs.wxGTK32;
-    makeWrapper = pkgs.makeWrapper;
-    stdenv = pkgs.stdenv;
+    inherit (pkgs) lib;
+    inherit (pkgs) coreutils;
+    inherit (pkgs) fetchFromGitHub;
+    inherit (pkgs) rustPlatform;
+    inherit (pkgs) pkg-config;
+    inherit (pkgs) extra-cmake-modules;
+    inherit (pkgs) dbus;
+    inherit (pkgs.xorg) libX11;
+    inherit (pkgs.xorg) libXi;
+    inherit (pkgs.xorg) libXtst;
+    inherit (pkgs) libnotify;
+    inherit (pkgs) libxkbcommon;
+    inherit (pkgs) openssl;
+    inherit (pkgs) xclip;
+    inherit (pkgs) xdotool;
+    inherit (pkgs.xorg) setxkbmap;
+    inherit (pkgs) wl-clipboard;
+    inherit (pkgs) wxGTK32;
+    inherit (pkgs) makeWrapper;
+    inherit (pkgs) stdenv;
   };
 
   # Import the espanso package
