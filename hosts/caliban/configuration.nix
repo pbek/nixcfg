@@ -79,4 +79,5 @@
 
   # Try if another console fonts make the console apear
   console.font = "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+  console.earlySetup = true;
 }
