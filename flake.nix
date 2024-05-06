@@ -184,7 +184,7 @@ outputs =
           inputs = inputs;
           x11Support = true;
           waylandSupport = false;
-          termFontSize = 15.0;
+          termFontSize = 16.0;
         };
       };
       # TU Work PC
