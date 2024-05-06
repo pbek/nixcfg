@@ -76,4 +76,7 @@
     # Set empty password initially. Don't forget to set a password with "passwd".
     initialHashedPassword = "";
   };
+
+  # Try if another console fonts make the console apear
+  console.font = "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
 }
