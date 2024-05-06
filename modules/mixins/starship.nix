@@ -66,7 +66,7 @@
         # https://github.com/catppuccin/starship
         # https://github.com/catppuccin/starship/blob/main/palettes/mocha.toml
         palette = "catppuccin_${flavour}";
-      } // builtins.fromTOML (builtins.readFile("${inputs.catppuccin}/palettes/${flavour}.toml"));
+      } // builtins.fromTOML (builtins.readFile"${inputs.catppuccin}/palettes/${flavour}.toml");
     };
   };
 }

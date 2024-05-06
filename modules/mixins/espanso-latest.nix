@@ -12,8 +12,8 @@
     # https://mynixos.com/home-manager/options/services.espanso
     services.espanso = {
       package = (pkgs.callPackage ../../apps/espanso/espanso.nix { }).override {
-        x11Support = x11Support;
-        waylandSupport = waylandSupport;
+        inherit x11Support;
+        inherit waylandSupport;
       };
     };
   };
