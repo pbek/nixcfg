@@ -1,4 +1,4 @@
-{ buildGoModule, fetchFromGitHub, installShellFiles, lib }:
+{ buildGoModule, fetchFromGitHub, installShellFiles, lib, stdenv }:
 
 buildGoModule rec {
   pname = "go-passbolt-cli";
@@ -33,7 +33,7 @@ buildGoModule rec {
     runHook postInstall
   '';
 
-  postInstall = ''
+  postInstall = lib.optionalString (stdenv.buildPlatform.canExecute stdenv.hostPlatform) ''
     installShellCompletion --cmd passbolt \
       --bash <($out/bin/passbolt completion bash) \
       --fish <($out/bin/passbolt completion fish) \
