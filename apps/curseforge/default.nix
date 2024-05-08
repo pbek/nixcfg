@@ -1,17 +1,18 @@
-{ stdenv, lib, fetchzip, mkDerivation
+{ stdenv, lib, fetchzip
 , appimageTools
 , autoPatchelfHook
 , desktop-file-utils
 }:
 
-mkDerivation rec {
+stdenv.mkDerivation rec {
   pname = "curseforge";
   version = "1.250.2";
   name="${pname}-${version}";
 
   src = fetchzip {
+      # Is there a specific link for a version?
       url = "https://curseforge.overwolf.com/downloads/curseforge-latest-linux.zip";
-      hash = "sha256-NxEeKr3d2NranpiAZ+stAEWjNqb/hphYP9Hkortdy2A=";
+      hash = "sha256-L33MkjefgcoEEc/TvwHX+yedRrmeqvt+BELGe/0IJNs=";
   };
 
   appextracted = appimageTools.extractType2 {
@@ -26,7 +27,7 @@ mkDerivation rec {
 #  buildInputs = [ qtmultimedia stdenv.cc.cc ];
 
   installPhase = ''
-      ls $out
+      echo $out
 #      binary="$(realpath ${appextracted}/AppRun)"
 #      install -Dm755 $binary -t $out/bin
 #
