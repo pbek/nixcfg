@@ -125,7 +125,7 @@ optimize-store:
 	duf
 
 fwup:
-	fwupdmgr refresh && fwupdmgr update
+	fwupdmgr refresh; fwupdmgr update
 
 term:
 	zellij --layout term.kdl attach nixcfg -c
