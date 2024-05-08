@@ -46,6 +46,8 @@
 #    heroic-unwrapped # Epic Games Store
     heroic # Epic Games Store
     lutris-unwrapped # Game manager
+
+    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
   ];
 
   # https://nixos.wiki/wiki/steam

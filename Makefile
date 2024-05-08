@@ -30,6 +30,7 @@ push:
 	attic push main `which espanso` && \
 	attic push main `which gittyup` && \
 	attic push main `which go-passbolt-cli` && \
+	attic push main `which wowup-cf` && \
 	attic push qownnotes `which qownnotes` && \
 	attic push qownnotes `which loganalyzer` && \
 	attic push qownnotes `which qc`
