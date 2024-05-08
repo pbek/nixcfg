@@ -62,7 +62,15 @@
     zoom-us
     blender
     cura
+    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
   ];
+
+  # https://nixos.wiki/wiki/steam
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+  };
 
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
