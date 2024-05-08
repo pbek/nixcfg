@@ -47,6 +47,13 @@
     heroic # Epic Games Store
     lutris-unwrapped # Game manager
 
+    ferdium
+#    qownnotes
+    (pkgs.qt6Packages.callPackage ../../apps/qownnotes/default.nix { })
+    qc
+#    (pkgs.callPackage ../../apps/qc/default.nix { })
+    nextcloud-client
+
     (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
   ];
 
