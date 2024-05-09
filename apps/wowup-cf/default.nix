@@ -31,7 +31,7 @@ in appimageTools.wrapType1 {
     downloadPage = "https://github.com/WowUp/WowUp.CF/releases";
     license = licenses.unfree;
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
-    maintainers = with maintainers; [ pbek enoz ];
+    maintainers = with maintainers; [ pbek ];
     platforms = [ "x86_64-linux" ];
   };
 }
