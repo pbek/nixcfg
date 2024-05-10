@@ -242,6 +242,10 @@
               replace = "😅";
             }
             {
+              triggers = [ ":yawn" ];
+              replace = "🥱😫";
+            }
+            {
               triggers = [ ":see" ];
               replace = "🙈";
             }
