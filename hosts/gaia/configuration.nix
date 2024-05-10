@@ -52,6 +52,8 @@
     bitscope.meter
     bitscope.dso
     bitscope.logic
+    blender
+    cura
     (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
   ];
 
