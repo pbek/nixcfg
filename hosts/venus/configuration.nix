@@ -109,4 +109,7 @@
   # https://nixos.wiki/wiki/VirtualBox
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ username ];
+
+  programs.alvr.enable = true;
+  programs.alvr.openFirewall = true;
 }
