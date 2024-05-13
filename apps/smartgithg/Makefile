@@ -6,3 +6,9 @@ build-force:
 
 edit-app:
 	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs; kate ./pkgs/by-name/sm/smartgithg/package.nix
+
+build-nixpkgs:
+	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs; nix-build -A smartgithg
+
+run-nixpkgs:
+	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs; ./result/bin/smartgit
