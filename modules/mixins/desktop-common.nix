@@ -15,7 +15,8 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    smartgithg
+#    smartgithg
+    (pkgs.callPackage ../../apps/smartgithg/default.nix { })
     gittyup
 #    (pkgs.libsForQt5.callPackage ../../apps/gittyup/default.nix { })
     kdiff3
