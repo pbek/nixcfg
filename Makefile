@@ -145,5 +145,9 @@ linter-check:
 linter-fix:
 	statix fix
 
-fix-command-not-found-error:
+update-channels:
 	sudo nix-channel --update
+
+fix-command-not-found-error:
+	make update-channels
+
