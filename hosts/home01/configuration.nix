@@ -96,8 +96,8 @@
 
   # Enable Tailscale VPN
   # Use `sudo tailscale up --advertise-exit-node --advertise-routes=192.168.1.0/24`
-  services.tailscale.enable = true;
-  services.tailscale.useRoutingFeatures = "both";
+#  services.tailscale.enable = true;
+#  services.tailscale.useRoutingFeatures = "both";
 
   environment.systemPackages = with pkgs; [
   ];
