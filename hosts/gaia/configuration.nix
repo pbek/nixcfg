@@ -54,7 +54,8 @@
     bitscope.logic
     blender
     cura
-    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
+    go-passbolt-cli
+#    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
   ];
 
   # Handle keyboard leds

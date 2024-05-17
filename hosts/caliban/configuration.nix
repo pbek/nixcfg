@@ -44,7 +44,8 @@
     gimp
     inkscape
     krename
-    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
+    go-passbolt-cli
+#    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
   ];
 
   networking.firewall = {

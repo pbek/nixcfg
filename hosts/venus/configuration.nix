@@ -62,7 +62,8 @@
     zoom-us
     blender
     cura
-    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
+    wowup-cf
+#    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
   ];
 
   # https://nixos.wiki/wiki/steam

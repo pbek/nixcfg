@@ -54,7 +54,8 @@
 #    (pkgs.callPackage ../../apps/qc/default.nix { })
     nextcloud-client
 
-    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
+    wowup-cf
+#    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
   ];
 
   # https://nixos.wiki/wiki/steam
