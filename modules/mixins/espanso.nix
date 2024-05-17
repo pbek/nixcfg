@@ -226,7 +226,7 @@
               replace = "😱";
             }
             {
-              triggers = [ ":ki" ];
+              triggers = [ ":kiss" ];
               replace = "😘";
             }
             {
