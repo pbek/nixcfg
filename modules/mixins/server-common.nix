@@ -17,6 +17,9 @@
   # https://nixos.wiki/wiki/Docker
   virtualisation.docker.enable = true;
 
+  # https://nixos.wiki/wiki/Fail2ban
+  services.fail2ban.enable = true;
+
   # Firewall
   # https://nixos.wiki/wiki/Firewall
   networking.firewall = {

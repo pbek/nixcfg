@@ -15,9 +15,6 @@
     allowedTCPPorts = [ 2222 ]; # SSH
   };
 
-  # https://nixos.wiki/wiki/Fail2ban
-  services.fail2ban.enable = true;
-
   users.users.${username} = {
     openssh.authorizedKeys.keys = [
       # Yubikey public key
