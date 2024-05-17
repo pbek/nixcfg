@@ -1,18 +1,18 @@
 { config, pkgs, inputs, xdg, username, ... }:
 #{ config, inputs, xdg, ... }:
 
-## https://github.com/NixOS/nixpkgs/pull/244500
-#let
-#  pkgs = import
-#    (builtins.fetchTarball {
-#      url = https://github.com/NixOS/nixpkgs/archive/151c175a8528864be449ba30df62ef4c2c93a25d.tar.gz;
-#      sha256 = "sha256:06iyc7dqy863dkmy7nlnzfy2wd2gsb27szghp45rx2yfjr5b9mrf";
-#    })
-#    {
-#      config = config.nixpkgs.config;
-#      localSystem = { system = "x86_64-linux"; };
-#    };
-#in
+# https://github.com/NixOS/nixpkgs/pull/309011
+let
+  pkgs = import
+    (builtins.fetchTarball {
+      url = https://github.com/NixOS/nixpkgs/archive/c2fbe8c06eec0759234fce4a0453df200be021de.tar.gz;
+      sha256 = "sha256:1lhwzgzb0kr12903d1y5a2afghkknx9wgypisnnfz6xg2c6993wz";
+    })
+    {
+      config = config.nixpkgs.config;
+      localSystem = { system = "x86_64-linux"; };
+    };
+in
 {
   environment.systemPackages = with pkgs; [
     (jetbrains.plugins.addPlugins jetbrains.phpstorm [ "github-copilot" ])
