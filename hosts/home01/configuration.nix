@@ -96,6 +96,7 @@
 
   # Enable Tailscale VPN
   # Use `sudo tailscale up --advertise-exit-node --advertise-routes=192.168.1.0/24`
+  # But did cause DNS troubles in docker containers!
 #  services.tailscale.enable = true;
 #  services.tailscale.useRoutingFeatures = "both";
 
