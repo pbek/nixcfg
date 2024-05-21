@@ -151,3 +151,6 @@ update-channels:
 fix-command-not-found-error:
 	make update-channels
 
+# Can be used the warm up the cache at home
+build-venus:
+	nixos-rebuild --flake .#venus build
