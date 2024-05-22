@@ -25,4 +25,18 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGzO+EWuGkod47PvcI+ncJ11LTOMdlI4huXE4EWEaVoT omega@semaphore"
     ];
   };
+
+  # Add attic caches
+  nix = {
+    settings = {
+      substituters = [
+        "https://nix-cache.qownnotes.org/main"
+        "https://nix-cache.qownnotes.org/qownnotes"
+      ];
+      trusted-public-keys = [
+        "main:WYsIaF+ItMNE9Xt976bIGKSKp9jaaVeTzYlfqQqpP28="
+        "qownnotes:7hN006Z7xgK5v97WKFo9u3qcVbZIXHtFmPPM3NPERpM="
+      ];
+    };
+  };
 }
