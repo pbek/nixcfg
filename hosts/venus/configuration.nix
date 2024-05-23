@@ -64,6 +64,7 @@
     cura
     wowup-cf
 #    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
+    heroic # Epic Games Store
   ];
 
   # https://nixos.wiki/wiki/steam
