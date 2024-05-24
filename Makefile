@@ -1,6 +1,7 @@
 .PHONY: test switch switch-push update upgrade upgrade-push push push-all rekey-fallback rekey keyscan build-iso boot-iso build-vm boot-vm boot-vm-no-kvm flake-rebuild-current flake-update upgrade rebuild cleanup repair-store
 
 HOSTNAME = $(shell hostname)
+USER = $(shell whoami)
 
 test:
 	sudo nixos-rebuild test --flake .#${HOSTNAME} -L
@@ -154,3 +155,9 @@ fix-command-not-found-error:
 # Can be used the warm up the cache at home
 build-venus:
 	nixos-rebuild --flake .#venus build
+
+home-manager-logs:
+	journalctl --since today | grep "hm-activate-" | bat
+
+home-manager-status:
+	systemctl status home-manager-$(shell whoami).service
