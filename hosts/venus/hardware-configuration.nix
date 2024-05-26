@@ -19,12 +19,19 @@
       fsType = "ext4";
     };
     "/mnt/data02" = {
+      device = "/dev/disk/by-uuid/04130ba4-9bc6-434c-a729-ae3341000181";
+      fsType = "ext4";
+    };
+    "/mnt/data02ntfs" = {
       device = "/dev/sdc1";
       fsType = "ntfs";
     };
   };
 
+  # LUKS for "/"
   boot.initrd.luks.devices."luks-d0dbdb7a-a656-4c57-ab4c-116b843831a3".device = "/dev/disk/by-uuid/d0dbdb7a-a656-4c57-ab4c-116b843831a3";
+  # LUKS for "/mnt/data02"
+  boot.initrd.luks.devices."luks-e93d7ae8-319b-4525-97eb-37ddf8cf3911".device = "/dev/disk/by-uuid/e93d7ae8-319b-4525-97eb-37ddf8cf3911";
 
   fileSystems."/boot/efi" =
     { device = "/dev/disk/by-uuid/D55E-8533";
