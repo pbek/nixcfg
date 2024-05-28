@@ -95,7 +95,7 @@
     enable = true;
     enableSSHSupport = true;
     # You seem to need to set the default pinentry, otherwise there is a conflict
-    pinentryPackage = pkgs.pinentry-qt;
+    pinentryPackage = pkgs.pinentry-curses;
   };
 
   # Enable Fwupd
