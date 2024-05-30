@@ -157,7 +157,7 @@ build-venus:
 	nixos-rebuild --flake .#venus build
 
 home-manager-logs:
-	journalctl --since today | grep "hm-activate-" | bat
+	sudo journalctl --since today | grep "hm-activate-" | bat
 
 home-manager-status:
 	systemctl status home-manager-$(shell whoami).service
