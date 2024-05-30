@@ -1,6 +1,6 @@
 { config, pkgs, inputs, username, ... }:
 {
-  # https://rycee.gitlab.io/home-manager/options.html
+  # https://home-manager-options.extranix.com
   home-manager.users.${username} = {
     programs.git = {
       enable = true;
@@ -45,7 +45,7 @@
       [gpg]
         program = gpg
       [pull]
-        rebase = false
+        rebase = true
       [gui]
         pruneduringfetch = true
       [smartgit "submodule"]
