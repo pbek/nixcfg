@@ -266,6 +266,10 @@
               replace = "👏👏";
             }
             {
+              triggers = [ ":wave" ];
+              replace = "👋🏻";
+            }
+            {
               triggers = [ ":pray" ":nam" ":bow" ":thank" ];
               replace = "🙏🏻🙇🏻‍♂️";
             }
