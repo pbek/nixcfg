@@ -108,8 +108,8 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inherit inputs;
-          x11Support = true;
-          waylandSupport = false;
+#          x11Support = true;
+#          waylandSupport = false;
         };
       };
       # Asus Vivobook Laptop
