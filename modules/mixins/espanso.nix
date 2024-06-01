@@ -106,6 +106,10 @@
         github = {
           matches = [
             {
+              trigger = ":gsign";
+              replace = "Signed-off-by: Patrizio Bekerle <patrizio@bekerle.com>";
+            }
+            {
               trigger = ":ghrel";
               replace = "There now is a new release, could you please test it and report if it works for you?";
             }
