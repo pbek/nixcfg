@@ -143,7 +143,7 @@
       ln -sv ${pkgs.path} $out/nixpkgs
     '';
 
-    stateVersion = "24.05";
+    stateVersion = "24.11";
   };
 
   # Use symlink to the latest nixpkgs of the flake as nixpkgs, e.g. for nix-shell
@@ -153,7 +153,7 @@
   # https://nix-community.github.io/home-manager/options.html#opt-home.file
   home-manager.users.${username} = {
     /* The home.stateVersion option does not have a default and must be set */
-    home.stateVersion = "24.05";
+    home.stateVersion = "24.11";
 
     # Enable fish and bash in home-manager to use enableFishIntegration and enableBashIntegration
     programs = {
