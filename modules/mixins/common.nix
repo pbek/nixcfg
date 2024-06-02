@@ -90,6 +90,7 @@
     fish
     tmux
     git
+    gitflow
     jq
     less
     mc
