@@ -22,10 +22,10 @@
       device = "/dev/disk/by-uuid/04130ba4-9bc6-434c-a729-ae3341000181";
       fsType = "ext4";
     };
-    "/mnt/data02ntfs" = {
-      device = "/dev/sdc1";
-      fsType = "ntfs";
-    };
+#    "/mnt/data02ntfs" = {
+#      device = "/dev/sdc1";
+#      fsType = "ntfs";
+#    };
   };
 
   # LUKS for "/"
