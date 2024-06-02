@@ -23,6 +23,7 @@
     '';
 
     # we had that file by default in the past
+    # Migrate to https://search.nixos.org/options?channel=unstable&show=programs.git.config&from=0&size=50&sort=relevance&type=packages&query=programs.git
     home.file.".gitconfig".text = ''
       [user]
         name = Patrizio Bekerle
