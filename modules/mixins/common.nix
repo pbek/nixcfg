@@ -31,6 +31,7 @@
       df = "duf";
       tree = "erd";
       tmux = "zellij";
+      dig = "dog";
     };
   };
 
@@ -118,6 +119,7 @@
     netcat-gnu
     nmap
     lazygit
+    dogdns  # dig replacement
   ];
 
   # Do garbage collection
