@@ -9,6 +9,9 @@ test:
 switch:
 	sudo nixos-rebuild switch --flake .#${HOSTNAME} -L
 
+build:
+	sudo nixos-rebuild build --flake .#${HOSTNAME}
+
 switch-push:
 	make switch; make push
 
