@@ -58,5 +58,12 @@
       [init]
         defaultBranch = main
     '';
+
+    # Turn on signing off for git commits in lazygit
+    home.file.".config/lazygit/config.yml".text = ''
+      git:
+        commit:
+          signOff: true
+    '';
   };
 }
