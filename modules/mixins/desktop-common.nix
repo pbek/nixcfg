@@ -129,29 +129,29 @@
       };
 
       # Enable https://wezfurlong.org/wezterm/ for terminal with OSC 52 support for zellij clipboard via SSH
-      wezterm = {
-        enable = true;
-        # https://wezfurlong.org/wezterm/config/lua/wezterm/font.html?h=font
-        extraConfig = ''
-          return {
-            animation_fps = 1,
-            cursor_blink_rate = 0,
-            font = wezterm.font(
-              'FiraCode Nerd Font',
-              { weight = 'Medium' }
-            ),
-            font_size = ${toString termFontSize},
-            color_scheme = 'Breeze (Gogh)',
-            use_fancy_tab_bar = false,
-            tab_max_width = 32,
-            hide_tab_bar_if_only_one_tab = false,
-            keys = {
-              { key = 'LeftArrow', mods = 'SHIFT', action = wezterm.action.ActivateTabRelative(-1) },
-              { key = 'RightArrow', mods = 'SHIFT', action = wezterm.action.ActivateTabRelative(1) },
-            },
-          }
-        '';
-      };
+#      wezterm = {
+#        enable = true;
+#        # https://wezfurlong.org/wezterm/config/lua/wezterm/font.html?h=font
+#        extraConfig = ''
+#          return {
+#            animation_fps = 1,
+#            cursor_blink_rate = 0,
+#            font = wezterm.font(
+#              'FiraCode Nerd Font',
+#              { weight = 'Medium' }
+#            ),
+#            font_size = ${toString termFontSize},
+#            color_scheme = 'Breeze (Gogh)',
+#            use_fancy_tab_bar = false,
+#            tab_max_width = 32,
+#            hide_tab_bar_if_only_one_tab = false,
+#            keys = {
+#              { key = 'LeftArrow', mods = 'SHIFT', action = wezterm.action.ActivateTabRelative(-1) },
+#              { key = 'RightArrow', mods = 'SHIFT', action = wezterm.action.ActivateTabRelative(1) },
+#            },
+#          }
+#        '';
+#      };
     };
   };
 }
