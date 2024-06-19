@@ -11,10 +11,11 @@
   home-manager.users.${username} = {
     # https://mynixos.com/home-manager/options/services.espanso
     services.espanso = {
-      package = (pkgs.callPackage ../../apps/espanso/espanso.nix { }).override {
-        inherit x11Support;
-        inherit waylandSupport;
-      };
+      package = if waylandSupport then pkgs.espanso-wayland else pkgs.espanso;
+#      package = (pkgs.callPackage ../../apps/espanso/espanso.nix { }).override {
+#        inherit x11Support;
+#        inherit waylandSupport;
+#      };
     };
   };
 }
