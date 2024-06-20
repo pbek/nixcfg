@@ -10,7 +10,8 @@
     shellAliases = {
       gitc = "git commit";
       gitps = "git push";
-      gitpl = "git pull --rec";
+      gitplr = "git pull --rec";
+      gitpl = "git pull && git submodule update --init";
       gita = "git add -A";
       gits = "git status";
       gitd = "git diff";
