@@ -55,7 +55,7 @@ outputs =
           inherit inputs;
           x11Support = true;
           waylandSupport = false;
-          usePlasma6 = false;
+          usePlasma6 = true;
         };
       };
       # PC Garage
