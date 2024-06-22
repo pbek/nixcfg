@@ -65,6 +65,7 @@
         443   # HTTPS
         1880  # Node-RED Web UI
         1883  # MQTT
+        9000  # portainer web
       ];
       allowedUDPPorts = [
         443 # HTTPS
@@ -86,4 +87,17 @@
 
   environment.systemPackages = with pkgs; [
   ];
+
+  # Set mba specific fish config
+  programs.fish = {
+    shellAliases = {
+#      mc = "EDITOR=nano mc";
+    };
+    shellAbbrs = {
+#      cat = "bat";
+    };
+  };
+
+  environment.variables.EDITOR = "nano";
+  programs.fish.interactiveShellInit = "export EDITOR=nano";
 }
