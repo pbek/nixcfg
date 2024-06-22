@@ -2,8 +2,7 @@
 {
   disko.devices = {
     disk.disk1 = {
-      # TODO: Use the correct device name
-      device = lib.mkDefault "/dev/nvme0n1";
+      device = lib.mkDefault "/dev/sda";
       type = "disk";
       content = {
         type = "gpt";
