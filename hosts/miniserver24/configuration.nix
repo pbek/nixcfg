@@ -50,7 +50,7 @@
     networkmanager.enable = true;
 
     nameservers = ["192.168.1.100"];
-    defaultGateway = "192.168.1.1";
+    defaultGateway = "192.168.1.5";
 
     interfaces.enp3s0f0 = {
       ipv4.addresses = [{ address = "192.168.1.101"; prefixLength = 24; }];
