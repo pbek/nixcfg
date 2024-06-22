@@ -290,6 +290,19 @@ outputs =
           username = "cow";
         };
       };
+      # Home Server miniserver24 for Markus
+      miniserver24 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
+          ./hosts/miniserver24/configuration.nix
+        ];
+        specialArgs = self.commonArgs // {
+          inherit inputs;
+          username = "mba";
+        };
+      };
       vm-netcup02 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
@@ -298,6 +311,18 @@ outputs =
           ./hosts/netcup02/vm.nix
         ];
         specialArgs = self.commonArgs // { inherit inputs; };
+      };
+      vm-miniserver24 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
+          ./hosts/miniserver24/vm.nix
+        ];
+        specialArgs = self.commonArgs // {
+          inherit inputs;
+          username = "mba";
+        };
       };
     };
   };
