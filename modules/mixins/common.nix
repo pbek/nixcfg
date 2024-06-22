@@ -41,7 +41,7 @@
   # Define a user account. Don't forget to set a password with "passwd".
   users.users.${username} = {
     isNormalUser = true;
-    description = lib.mkDefault "Patrizio Bekerle";
+    description = "Patrizio Bekerle";
     extraGroups = [ "networkmanager" "wheel" "docker" "dialout" "input" ];
     shell = pkgs.fish;
     packages = with pkgs; [
