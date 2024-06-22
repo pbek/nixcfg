@@ -23,7 +23,7 @@
   # Firewall
   # https://nixos.wiki/wiki/Firewall
   networking.firewall = {
-    enable = true;
+    enable = lib.mkDefault true;
   };
 
   nix = {
