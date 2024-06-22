@@ -8,7 +8,7 @@
 # build in vm
 # > nixos-rebuild --flake .#vm-netcup02 build-vm
 #
-{ lib, config, ... }:
+{ lib, config, username, ... }:
 {
   imports =
   [

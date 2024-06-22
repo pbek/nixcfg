@@ -1,4 +1,4 @@
-# netcup02 Netcup server
+# home01 server
 { modulesPath, config, pkgs, ... }:
 
 {
