@@ -66,9 +66,13 @@
         1880  # Node-RED Web UI
         1883  # MQTT
         9000  # portainer web
+        51827 # HomeKit accessory communication
+        554   # HomeKit Secure Video RTSP
+        5223  # HomeKit notifications (APNS, Apple Push Notification Service)
       ];
       allowedUDPPorts = [
-        443 # HTTPS
+        443  # HTTPS
+        5353 # mDNS for HomeKit: Bonjour discovery and CIAO
       ];
     };
   };
