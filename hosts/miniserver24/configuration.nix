@@ -59,7 +59,7 @@
     # SSH is already enabled by the server-common mixin
     firewall = {
       # Disable the firewall if not needed
-#      enable = false;
+      enable = false;
       allowedTCPPorts = [
         80    # HTTP
         443   # HTTPS
