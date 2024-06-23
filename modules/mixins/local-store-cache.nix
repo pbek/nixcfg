@@ -2,6 +2,8 @@ _:
 {
   nix = {
     settings = {
+      # If the cache servers are not available, https://cache.nixos.org will be used as a fallback.
+      # https://hydra.nixos.org/build/263397466/download/1/manual/command-ref/conf-file.html#conf-fallback
       substituters = [
         # local attic
         "http://cicinas2.lan:8050/nix-store"
