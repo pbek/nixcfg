@@ -185,6 +185,7 @@ outputs =
           x11Support = true;
           waylandSupport = false;
           termFontSize = 16.0;
+          usePlasma6 = true;
         };
       };
       # TU Work PC
