@@ -200,7 +200,7 @@ outputs =
           inherit inputs;
           x11Support = true;
           waylandSupport = false;
-          usePlasma6 = false;
+          usePlasma6 = true;
         };
       };
       # TU HP EliteBook Laptop 820 G4
