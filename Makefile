@@ -171,3 +171,6 @@ home-manager-logs:
 
 home-manager-status:
 	systemctl status home-manager-$(shell whoami).service
+
+home01-restart-nix-serve:
+	systemctl restart nix-serve
