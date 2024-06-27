@@ -45,6 +45,11 @@
       ipv4.addresses = [{ address = "192.168.1.115"; prefixLength = 24; }];
     };
 
+    # Add local hostname to /etc/hosts so that it can be resolved for the binary cache
+    hosts = {
+      "192.168.1.115" = [ "home01.lan" ];
+    };
+
     # SSH is already enabled by the server-common mixin
     firewall = {
       allowedTCPPorts = [
