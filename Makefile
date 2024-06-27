@@ -40,8 +40,15 @@ push:
 #	attic push qownnotes `which loganalyzer` && \
 	attic push qownnotes `which qc`
 
+# Far too slow
 push-all:
 	./scripts/push-all-to-attic.sh
+
+# Too slow
+push-local:
+	attic push --ignore-upstream-cache-filter cicinas2:nix-store `which phpstorm` && \
+	attic push --ignore-upstream-cache-filter cicinas2:nix-store `which clion` && \
+	attic push --ignore-upstream-cache-filter cicinas2:nix-store `which goland`
 
 rekey-fallback:
 	cd ./secrets && agenix -i ~/.ssh/agenix --rekey
