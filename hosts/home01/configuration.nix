@@ -100,6 +100,12 @@
 #  services.tailscale.enable = true;
 #  services.tailscale.useRoutingFeatures = "both";
 
+  services.nix-serve = {
+    enable = true;
+    secretKeyFile = "/etc/cache-priv-key.pem";
+    openFirewall = true;
+  };
+
   environment.systemPackages = with pkgs; [
   ];
 }
