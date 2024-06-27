@@ -100,6 +100,8 @@
 #  services.tailscale.enable = true;
 #  services.tailscale.useRoutingFeatures = "both";
 
+  # Enable Nix-Cache
+  # See ./README.md
   services.nix-serve = {
     enable = true;
     secretKeyFile = "/etc/cache-priv-key.pem";
