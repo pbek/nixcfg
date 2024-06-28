@@ -109,6 +109,7 @@
   # See ./README.md
   services.nix-serve = {
     enable = true;
+    package = pkgs.nix-serve-ng;
     secretKeyFile = "/etc/cache-priv-key.pem";
     openFirewall = true;
   };
