@@ -16,7 +16,7 @@
       ../../modules/mixins/jetbrains.nix
       ../../modules/mixins/openssh.nix
       ../../modules/mixins/virt-manager.nix
-#      ../../modules/mixins/remote-store-cache.nix
+      ../../modules/mixins/caliban-store-cache.nix
 #    ../../modules/editor/nvim.nix
     # this brought me an infinite recursion
 #    mixins-openssh
@@ -45,18 +45,6 @@
   # Enable Tailscale VPN
   # Use `sudo tailscale up --accept-routes` to connect to the VPN
   services.tailscale.enable = true;
-
-  nix = {
-    settings = {
-      substituters = [
-        # Local caliban nix binary cache
-        "http://caliban.netbird.cloud:5000"
-      ];
-      trusted-public-keys = [
-        "caliban.netbird.cloud:DqNB0rEKs3/A69mLvTL8tbyqmOZ8SY8OFZsSHkwvEVU="
-      ];
-    };
-  };
 
   environment.systemPackages = with pkgs; [
   ];
