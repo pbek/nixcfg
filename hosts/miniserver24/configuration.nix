@@ -65,7 +65,7 @@
         443   # HTTPS
         1880  # Node-RED Web UI
         1883  # MQTT
-        9000  # portainer web
+        9000  # Portainer web
         51827 # HomeKit accessory communication
         554   # HomeKit Secure Video RTSP
         5223  # HomeKit notifications (APNS, Apple Push Notification Service)
@@ -90,7 +90,7 @@
   services.fwupd.enable = true;
 
   environment.systemPackages = with pkgs; [
-    samba
+    samba  # Needed for net command to remotely shut down the windows pc from node red and finall via homekit voice command
   ];
 
   # Set mba specific fish config
