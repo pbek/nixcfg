@@ -90,6 +90,7 @@
   services.fwupd.enable = true;
 
   environment.systemPackages = with pkgs; [
+    samba
   ];
 
   # Set mba specific fish config
