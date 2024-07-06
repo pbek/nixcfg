@@ -62,7 +62,7 @@
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
   hardware.nvidia.modesetting.enable = true;
 
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/
@@ -81,4 +81,13 @@
   # Try if another console fonts make the console apear
   console.font = "${pkgs.terminus_font}/share/consolefonts/ter-u18n.psf.gz";
   console.earlySetup = true;
+
+  # Enable Nix-Cache
+  # See ./README.md
+  services.nix-serve = {
+    enable = true;
+    package = pkgs.nix-serve-ng;
+    secretKeyFile = "/etc/cache-priv-key.pem";
+    openFirewall = true;
+  };
 }

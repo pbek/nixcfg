@@ -1,7 +1,7 @@
 { config, pkgs, inputs, ... }:
 {
   imports = [
-    ./kmail-fix.nix
+#    ./kmail-fix.nix
   ];
 
   services.desktopManager.plasma6.enable = true;
@@ -36,10 +36,10 @@
     plasma-pa
     plasma-vault
     kate
-    # Fall back to Qt5
-#    kmail
-#    akonadi
-#    kdepim-runtime
+#    # Fall back to Qt5
+    kmail
+    akonadi
+    kdepim-runtime
     filelight
   ];
 }

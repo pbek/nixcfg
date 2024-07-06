@@ -52,7 +52,7 @@
     kitty # Terminal with OSC 52 support
 
 #    pinentry-curses
-#    pinentry-qt
+    pinentry-qt # For some reason this wasn't installed by the gpg settings
     cryfs
     onlyoffice-bin
     gh

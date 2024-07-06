@@ -185,6 +185,7 @@ outputs =
           x11Support = true;
           waylandSupport = false;
           termFontSize = 16.0;
+          usePlasma6 = true;
         };
       };
       # TU Work PC
@@ -200,7 +201,7 @@ outputs =
           inherit inputs;
           x11Support = true;
           waylandSupport = false;
-          usePlasma6 = false;
+          usePlasma6 = true;
         };
       };
       # TU HP EliteBook Laptop 820 G4

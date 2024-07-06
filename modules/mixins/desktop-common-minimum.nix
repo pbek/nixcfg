@@ -95,7 +95,8 @@
     enable = true;
     enableSSHSupport = true;
     # You seem to need to set the default pinentry, otherwise there is a conflict
-    pinentryPackage = pkgs.pinentry-curses;
+    # Try to use pinentry-qt to be able to enter the password in kmail
+    pinentryPackage = pkgs.pinentry-qt;
   };
 
   # Enable Fwupd

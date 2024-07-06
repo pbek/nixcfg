@@ -77,7 +77,7 @@
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
   hardware.nvidia.modesetting.enable = true;
 
   # Wayland

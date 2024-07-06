@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, username, ... }:
+{ config, pkgs, inputs, username, lib, ... }:
 {
   imports = [
     ./starship.nix
@@ -41,7 +41,7 @@
   # Define a user account. Don't forget to set a password with "passwd".
   users.users.${username} = {
     isNormalUser = true;
-    description = "Patrizio Bekerle";
+    description = lib.mkDefault "Patrizio Bekerle";
     extraGroups = [ "networkmanager" "wheel" "docker" "dialout" "input" ];
     shell = pkgs.fish;
     packages = with pkgs; [

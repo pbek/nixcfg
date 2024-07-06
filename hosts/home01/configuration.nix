@@ -45,6 +45,11 @@
       ipv4.addresses = [{ address = "192.168.1.115"; prefixLength = 24; }];
     };
 
+    # Add local hostname to /etc/hosts so that it can be resolved for the binary cache
+    hosts = {
+      "192.168.1.115" = [ "home01.lan" ];
+    };
+
     # SSH is already enabled by the server-common mixin
     firewall = {
       allowedTCPPorts = [
@@ -99,6 +104,15 @@
   # But did cause DNS troubles in docker containers!
 #  services.tailscale.enable = true;
 #  services.tailscale.useRoutingFeatures = "both";
+
+  # Enable Nix-Cache
+  # See ./README.md
+  services.nix-serve = {
+    enable = true;
+    package = pkgs.nix-serve-ng;
+    secretKeyFile = "/etc/cache-priv-key.pem";
+    openFirewall = true;
+  };
 
   environment.systemPackages = with pkgs; [
   ];

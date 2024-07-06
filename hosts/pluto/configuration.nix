@@ -49,7 +49,7 @@
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   # The NVIDIA GeForce GTX 760 GPU needs the NVIDIA 470.xx Legacy drivers
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;

@@ -197,6 +197,10 @@
               triggers = [ ":lgtm" ];
               replace = "Looks good to me!";
             }
+            {
+              triggers = [ ":mast" ];
+              replace = "social.qownnotes.org";
+            }
           ];
         };
         emotes = {
