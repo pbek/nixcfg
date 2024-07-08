@@ -226,6 +226,10 @@
               replace = "🙄";
             }
             {
+              triggers = [ ":eye" ];
+              replace = "😳🤨";
+            }
+            {
               triggers = [ ":thi" ];
               replace = "🤔";
             }
