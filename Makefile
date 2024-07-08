@@ -180,3 +180,6 @@ home-manager-status:
 
 home01-restart-nix-serve:
 	systemctl restart nix-serve
+
+edit-qownnotes-build:
+	kate ./apps/qownnotes/default.nix -l 23 -c 19
