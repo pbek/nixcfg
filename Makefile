@@ -12,6 +12,12 @@ switch:
 build:
 	sudo nixos-rebuild build --flake .#${HOSTNAME}
 
+build-on-caliban:
+	nixos-rebuild --build-host omega@caliban.netbird.cloud --flake .#${HOSTNAME} build
+
+build-on-home01:
+	nixos-rebuild --build-host omega@home01.lan --flake .#${HOSTNAME} build
+
 switch-push:
 	make switch; make push
 
