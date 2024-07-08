@@ -121,6 +121,7 @@
     nmap
     lazygit
     dogdns  # dig replacement
+    broot # fast directory switcher (has "br" alias for changing into directories)
   ];
 
   # Do garbage collection
