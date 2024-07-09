@@ -129,7 +129,13 @@
       source = ../../files/shells;
     };
 
+    # KDE Plasma 5
     home.file.".local/share/kservices5" = {
+      source = ../../files/kservices5;
+    };
+
+    # KDE Plasma 6
+    home.file.".local/share/kio/servicemenus" = {
       source = ../../files/kservices5;
     };
 
