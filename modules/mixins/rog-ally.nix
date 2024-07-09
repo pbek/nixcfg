@@ -71,8 +71,8 @@
       enable = true;
       # use "git diff --no-ext-diff" for creating patches!
       difftastic.enable = true;
-      userName  = "Patrizio Bekerle";
-      userEmail = "patrizio@bekerle.com";
+      userName  = lib.mkDefault "Patrizio Bekerle";
+      userEmail = lib.mkDefault "patrizio@bekerle.com";
       ignores = [ ".idea" ".direnv" ];
     };
   };
