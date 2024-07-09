@@ -45,6 +45,13 @@
     ];
   };
 
+  home-manager.users.${username} = {
+    programs.git = {
+      userName  = "Markus Barta";
+      userEmail = "markus@barta.com";
+    };
+  };
+
   networking = {
     hostId = "dabfdb01";  # needed for ZFS
     hostName = "miniserver24";
