@@ -56,6 +56,7 @@
         53    # DNS
         80    # HTTP
         443   # HTTPS
+        1234  # Homepage
         1880  # Node-RED Web UI
         1883  # MQTT
         2048  # Homeatic
