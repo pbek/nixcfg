@@ -98,7 +98,7 @@
   services.fwupd.enable = true;
 
   # Enable Netbird Wireguard VPN service
-#  services.netbird.enable = true;
+  services.netbird.enable = true;
 
   # Enable Tailscale VPN
   # Use `sudo tailscale up --advertise-exit-node --advertise-routes=192.168.1.0/24`
