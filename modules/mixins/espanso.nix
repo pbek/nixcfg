@@ -103,6 +103,14 @@
             }
           ];
         };
+        searches = {
+          matches = [
+            {
+              trigger = "!np";
+              replace = "!nixpkgs ";
+            }
+          ];
+        };
         github = {
           matches = [
             {
