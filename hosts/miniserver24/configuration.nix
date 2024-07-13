@@ -1,4 +1,4 @@
-# miniserver24 server for Markus
+  # miniserver24 server for Markus
 { modulesPath, config, pkgs, username, ... }:
 
 {
@@ -99,6 +99,7 @@
 
   environment.systemPackages = with pkgs; [
     samba  # Needed for net command to remotely shut down the windows pc from node red and finall via homekit voice command
+    wol    # Needed for wake on lan of the windows 10 pc in node red - for a homekit voice command
   ];
 
   # Set mba specific fish config
