@@ -85,6 +85,10 @@
     };
   };
 
+
+  # Turn off fail2ban, because firewall is turned off
+  services.fail2ban.enable = false;
+
   # Increase ulimit for influxdb
   security.pam.loginLimits = [{
     domain = "*";

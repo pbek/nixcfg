@@ -18,7 +18,7 @@
   virtualisation.docker.enable = true;
 
   # https://nixos.wiki/wiki/Fail2ban
-  services.fail2ban.enable = true;
+  services.fail2ban.enable = lib.mkDefault true;
 
   # Firewall
   # https://nixos.wiki/wiki/Firewall
