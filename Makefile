@@ -133,7 +133,7 @@ cleanup:
 	duf
 
 repair-store:
-	nix-store --verify --check-contents --repair
+	sudo nix-store --verify --check-contents --repair
 
 list-generations:
 	nix profile history --profile /nix/var/nix/profiles/system
