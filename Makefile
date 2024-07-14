@@ -9,17 +9,34 @@ test:
 switch:
 	sudo nixos-rebuild switch --flake .#${HOSTNAME} -L
 
+nh-switch:
+	nh os switch -H ${HOSTNAME} .
+
 build:
 	sudo nixos-rebuild build --flake .#${HOSTNAME}
+
+nh-build:
+	nh os build -H ${HOSTNAME} .
 
 build-on-caliban:
 	nixos-rebuild --build-host omega@caliban.netbird.cloud --flake .#${HOSTNAME} build
 
+# TODO: "--build-host" not found
+nh-build-on-caliban:
+	nh os build -H ${HOSTNAME} . -- --build-host omega@caliban.netbird.cloud
+
 build-on-home01:
 	nixos-rebuild --build-host omega@home01.lan --flake .#${HOSTNAME} build
 
+# TODO: "--build-host" not found
+nh-build-on-home01:
+	nh os build -H ${HOSTNAME} . -- --build-host omega@home01.lan
+
 switch-push:
 	make switch; make push
+
+nh-switch-push:
+	make nh-switch; make push
 
 switch-push-all:
 	make switch && make push-all; make push
