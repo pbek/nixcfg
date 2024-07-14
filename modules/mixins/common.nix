@@ -5,39 +5,45 @@
   ];
 
   # Set some fish config
-  programs.fish = {
-    enable = true;
-    shellAliases = {
-      gitc = "git commit";
-      gitps = "git push";
-      gitplr = "git pull --rec";
-      gitpl = "git pull && git submodule update --init";
-      gita = "git add -A";
-      gits = "git status";
-      gitd = "git diff";
-      gitds = "git diff --staged";
-      gitl = "git log";
-      vim = "nvim";
-      ll = "eza -hal --icons --group-directories-first";
-      fish-reload = "exec fish";
-      lg = "lazygit";
+  programs = {
+    fish = {
+      enable = true;
+      shellAliases = {
+        gitc = "git commit";
+        gitps = "git push";
+        gitplr = "git pull --rec";
+        gitpl = "git pull && git submodule update --init";
+        gita = "git add -A";
+        gits = "git status";
+        gitd = "git diff";
+        gitds = "git diff --staged";
+        gitl = "git log";
+        vim = "nvim";
+        ll = "eza -hal --icons --group-directories-first";
+        fish-reload = "exec fish";
+        lg = "lazygit";
+      };
+      shellAbbrs = {
+        killall = "pkill";
+        less = "bat";
+  #      cat = "bat";
+  #      man = "tldr";
+        man = "batman";
+        du = "dua";
+        df = "duf";
+        tree = "erd";
+        tmux = "zellij";
+        dig = "dog";
+      };
     };
-    shellAbbrs = {
-      killall = "pkill";
-      less = "bat";
-#      cat = "bat";
-#      man = "tldr";
-      man = "batman";
-      du = "dua";
-      df = "duf";
-      tree = "erd";
-      tmux = "zellij";
-      dig = "dog";
-    };
+
+    bash.shellAliases = config.programs.fish.shellAliases;
+
+    # yet-another-nix-helper
+    # https://github.com/viperML/nh
+    nh.enable = true;
   };
-
-  programs.bash.shellAliases = config.programs.fish.shellAliases;
-
+  
   # Define a user account. Don't forget to set a password with "passwd".
   users.users.${username} = {
     isNormalUser = true;
