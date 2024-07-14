@@ -18,7 +18,7 @@
       gitds = "git diff --staged";
       gitl = "git log";
       vim = "nvim";
-      ll = "eza -al";
+      ll = "eza -hal --icons --group-directories-first";
       fish-reload = "exec fish";
       lg = "lazygit";
     };
