@@ -6,16 +6,16 @@ USER = $(shell whoami)
 test:
 	sudo nixos-rebuild test --flake .#${HOSTNAME} -L
 
-switch:
+nix-switch:
 	sudo nixos-rebuild switch --flake .#${HOSTNAME} -L
 
-nh-switch:
+switch:
 	nix-shell -p nh --run "nh os switch -H ${HOSTNAME} ."
 
-build:
+nix-build:
 	sudo nixos-rebuild build --flake .#${HOSTNAME}
 
-nh-build:
+build:
 	nix-shell -p nh --run "nh os build -H ${HOSTNAME} ."
 
 build-on-caliban:
@@ -35,9 +35,6 @@ nh-build-on-home01:
 switch-push:
 	make switch; make push
 
-nh-switch-push:
-	make nh-switch; make push
-
 switch-push-all:
 	make switch && make push-all; make push
 
@@ -46,9 +43,6 @@ update:
 
 upgrade:
 	make update && make switch
-
-nh-upgrade:
-	make update && make nh-switch
 
 upgrade-push:
 	make upgrade; make push
