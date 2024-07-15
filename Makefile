@@ -23,14 +23,14 @@ build-on-caliban:
 
 # TODO: "--build-host" not found
 nh-build-on-caliban:
-	nh os build -H ${HOSTNAME} . -- --build-host omega@caliban.netbird.cloud
+	nix-shell -p nh --run "nh os build -H ${HOSTNAME} . -- --build-host omega@caliban.netbird.cloud"
 
 build-on-home01:
 	nixos-rebuild --build-host omega@home01.lan --flake .#${HOSTNAME} build
 
 # TODO: "--build-host" not found
 nh-build-on-home01:
-	nh os build -H ${HOSTNAME} . -- --build-host omega@home01.lan
+	nix-shell -p nh --run "nh os build -H ${HOSTNAME} . -- --build-host omega@home01.lan"
 
 switch-push:
 	make switch; make push
