@@ -183,8 +183,12 @@ fix-command-not-found-error:
 	make update-channels
 
 # Can be used the warm up the cache at home
-build-venus:
+nix-build-venus:
 	nixos-rebuild --flake .#venus build
+
+# Can be used the warm up the cache at home
+build-venus:
+	nix-shell -p nh --run "nh os build -H venus ."
 
 home-manager-logs:
 	sudo journalctl --since today | grep "hm-activate-" | bat
