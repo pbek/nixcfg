@@ -61,7 +61,8 @@
     calibre
     zoom-us
     blender
-    cura
+    # Temporarily disabled for: sip-4.19.25 not supported for interpreter python3.12
+#     cura
     wowup-cf
 #    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
     heroic # Epic Games Store
