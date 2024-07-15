@@ -10,13 +10,13 @@ switch:
 	sudo nixos-rebuild switch --flake .#${HOSTNAME} -L
 
 nh-switch:
-	nh os switch -H ${HOSTNAME} .
+	nix-shell -p nh --run "nh os switch -H ${HOSTNAME} ."
 
 build:
 	sudo nixos-rebuild build --flake .#${HOSTNAME}
 
 nh-build:
-	nh os build -H ${HOSTNAME} .
+	nix-shell -p nh --run "nh os build -H ${HOSTNAME} ."
 
 build-on-caliban:
 	nixos-rebuild --build-host omega@caliban.netbird.cloud --flake .#${HOSTNAME} build
@@ -46,6 +46,9 @@ update:
 
 upgrade:
 	make update && make switch
+
+nh-upgrade:
+	make update && make nh-switch
 
 upgrade-push:
 	make upgrade; make push
