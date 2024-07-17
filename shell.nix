@@ -4,5 +4,6 @@
       gnumake
       git
       statix
+      nh
     ];
 }

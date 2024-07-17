@@ -10,27 +10,27 @@ nix-switch:
 	sudo nixos-rebuild switch --flake .#${HOSTNAME} -L
 
 switch:
-	nix-shell -p nh --run "nh os switch -H ${HOSTNAME} ."
+	nix-shell --run "nh os switch -H ${HOSTNAME} ."
 
 nix-build:
 	sudo nixos-rebuild build --flake .#${HOSTNAME}
 
 build:
-	nix-shell -p nh --run "nh os build -H ${HOSTNAME} ."
+	nix-shell --run "nh os build -H ${HOSTNAME} ."
 
 build-on-caliban:
 	nixos-rebuild --build-host omega@caliban.netbird.cloud --flake .#${HOSTNAME} build
 
 # TODO: "--build-host" not found
 nh-build-on-caliban:
-	nix-shell -p nh --run "nh os build -H ${HOSTNAME} . -- --build-host omega@caliban.netbird.cloud"
+	nix-shell --run "nh os build -H ${HOSTNAME} . -- --build-host omega@caliban.netbird.cloud"
 
 build-on-home01:
 	nixos-rebuild --build-host omega@home01.lan --flake .#${HOSTNAME} build
 
 # TODO: "--build-host" not found
 nh-build-on-home01:
-	nix-shell -p nh --run "nh os build -H ${HOSTNAME} . -- --build-host omega@home01.lan"
+	nix-shell --run "nh os build -H ${HOSTNAME} . -- --build-host omega@home01.lan"
 
 switch-push:
 	make switch; make push
@@ -188,7 +188,7 @@ nix-build-venus:
 
 # Can be used the warm up the cache at home
 build-venus:
-	nix-shell -p nh --run "nh os build -H venus ."
+	nix-shell --run "nh os build -H venus ."
 
 home-manager-logs:
 	sudo journalctl --since today | grep "hm-activate-" | bat
@@ -201,3 +201,6 @@ home01-restart-nix-serve:
 
 edit-qownnotes-build:
 	kate ./apps/qownnotes/default.nix -l 23 -c 19
+
+shell:
+	nix-shell --run fish
