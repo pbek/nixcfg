@@ -41,7 +41,11 @@
 
     # yet-another-nix-helper
     # https://github.com/viperML/nh
-    nh.enable = true;
+    nh = {
+      enable = true;
+      clean.enable = true;
+      clean.extraArgs = "--keep-since 4d --keep 3";
+    };
   };
 
   # Define a user account. Don't forget to set a password with "passwd".
