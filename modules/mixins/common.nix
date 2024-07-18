@@ -22,6 +22,7 @@
         ll = "eza -hal --icons --group-directories-first";
         fish-reload = "exec fish";
         lg = "lazygit";
+        duai = "dua interactive";
       };
       shellAbbrs = {
         killall = "pkill";
@@ -30,6 +31,7 @@
   #      man = "tldr";
         man = "batman";
         du = "dua";
+        ncdu = "dua interactive";
         df = "duf";
         tree = "erd";
         tmux = "zellij";
@@ -120,7 +122,7 @@
     restic
     nix-tree  # look into the nix store
     erdtree # tree replacement
-    ncdu  # disk usage (du) replacement
+    dust  # disk usage (du) replacement
     duf # disk free (df) replacement
     dua # disk usage (du) replacement
     ranger  # midnight commander replacement (not really)
