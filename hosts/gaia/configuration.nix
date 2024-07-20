@@ -53,7 +53,8 @@
     bitscope.dso
     bitscope.logic
     blender
-    cura
+    # Temporarily disabled for: sip-4.19.25 not supported for interpreter python3.12
+#    cura
     go-passbolt-cli
 #    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
   ];
