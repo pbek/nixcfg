@@ -142,11 +142,12 @@
   ];
 
   # Do garbage collection
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 20d";
-  };
+  # Disabled for "programs.nh.clean.enable"
+#  nix.gc = {
+#    automatic = true;
+#    dates = "weekly";
+#    options = "--delete-older-than 20d";
+#  };
 
   # Add Restic Security Wrapper
   # https://nixos.wiki/wiki/Restic
