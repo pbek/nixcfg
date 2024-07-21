@@ -204,3 +204,8 @@ edit-qownnotes-build:
 
 shell:
 	nix-shell --run fish
+
+qownnotes-hash:
+	@version=$$(gum input --placeholder "QOwnNotes version number") && \
+		url="https://github.com/pbek/QOwnNotes/releases/download/v$${version}/qownnotes-$${version}.tar.xz" && \
+		nix-prefetch-url "$$url" | xargs nix hash to-sri --type sha256

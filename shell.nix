@@ -5,5 +5,6 @@
       git
       statix
       nh
+      gum
     ];
 }
