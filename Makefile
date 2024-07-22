@@ -209,3 +209,7 @@ qownnotes-hash:
 	@version=$$(gum input --placeholder "QOwnNotes version number") && \
 		url="https://github.com/pbek/QOwnNotes/releases/download/v$${version}/qownnotes-$${version}.tar.xz" && \
 		nix-prefetch-url "$$url" | xargs nix hash to-sri --type sha256
+
+nix-store-reverse-dependencies:
+	@nixStorePath=$$(gum input --placeholder "Nix store path (e.g. /nix/store/hbldxn007k0y5qidna6fg0x168gnsmkj-botan-2.19.5.drv)") && \
+		nix-store --query --referrers "$$nixStorePath"
