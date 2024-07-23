@@ -139,6 +139,7 @@
     lazygit
     dogdns  # dig replacement
     broot # fast directory switcher (has "br" alias for changing into directories)
+    difftastic # Structural diff tool that compares files based on their syntax
   ];
 
   # Do garbage collection
