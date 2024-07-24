@@ -143,6 +143,7 @@
     broot # fast directory switcher (has "br" alias for changing into directories)
     difftastic # Structural diff tool that compares files based on their syntax
     pingu # ping, but more colorful
+    sysz # fzf terminal UI for systemctl
   ];
 
   # Do garbage collection
