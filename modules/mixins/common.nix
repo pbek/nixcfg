@@ -36,6 +36,7 @@
         tree = "erd";
         tmux = "zellij";
         dig = "dog";
+        ping = "pingu";
       };
     };
 
@@ -140,6 +141,7 @@
     dogdns  # dig replacement
     broot # fast directory switcher (has "br" alias for changing into directories)
     difftastic # Structural diff tool that compares files based on their syntax
+    pingu # ping, but more colorful
   ];
 
   # Do garbage collection
