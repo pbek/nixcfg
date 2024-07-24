@@ -36,6 +36,7 @@
         tree = "erd";
         tmux = "zellij";
         dig = "dog";
+        diff = "difft";
         ping = "pingu";
       };
     };
