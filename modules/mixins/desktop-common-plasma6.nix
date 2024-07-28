@@ -1,8 +1,6 @@
 { config, pkgs, inputs, ... }:
 {
-  imports = [
-#    ./kmail-fix.nix
-  ];
+  imports = [ ];
 
   services.desktopManager.plasma6.enable = true;
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
@@ -13,15 +11,19 @@
   # https://nixos.wiki/wiki/KDE#GTK_themes_are_not_applied_in_Wayland_applications_.2F_Window_Decorations_missing_.2F_Cursor_looks_different
   programs.dconf.enable = true;
 
+  # KDE PIM
+  programs.kde-pim = {
+    enable = true;
+    merkuro = false;
+    kmail = true;
+    kontact = true;
+  };
+
   environment.systemPackages = with pkgs.kdePackages; [
     kwalletmanager
     plasma-systemmonitor
     kfind
-    kontact
-    akonadiconsole
     kleopatra
-    korganizer
-    kaddressbook
     yakuake
     spectacle
     ark
@@ -39,10 +41,6 @@
     plasma-pa
     plasma-vault
     kate
-#    # Fall back to Qt5
-    kmail
-    akonadi
-    kdepim-runtime
     filelight
   ];
 }
