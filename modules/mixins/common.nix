@@ -144,6 +144,7 @@
     difftastic # Structural diff tool that compares files based on their syntax
     pingu # ping, but more colorful
     sysz # fzf terminal UI for systemctl
+    ouch # compress and decompress files
   ];
 
   # Do garbage collection
