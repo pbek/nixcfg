@@ -38,6 +38,7 @@
         dig = "dog";
         diff = "difft";
         ping = "pingu";
+        tar = "ouch";
       };
     };
 
