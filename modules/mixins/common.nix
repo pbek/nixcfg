@@ -39,6 +39,7 @@
         diff = "difft";
         ping = "pingu";
         tar = "ouch";
+        ps = "procs";
       };
     };
 
@@ -146,6 +147,7 @@
     pingu # ping, but more colorful
     sysz # fzf terminal UI for systemctl
     ouch # compress and decompress files
+    procs # ps "replacement"
   ];
 
   # Do garbage collection
