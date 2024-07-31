@@ -286,6 +286,10 @@
               replace = "😉";
             }
             {
+              triggers = [ ":P" ":p" ":-P" ":tongue" ];
+              replace = "😜";
+            }
+            {
               triggers = [ ":clap" ];
               replace = "👏👏";
             }
