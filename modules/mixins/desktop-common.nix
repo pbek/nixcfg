@@ -109,13 +109,7 @@
       };
     };
 
-    # Enable https://direnv.net/
     programs = {
-      direnv = {
-        enable = true;
-        nix-direnv.enable = true;
-      };
-
       kitty = {
         enable = true;
         font = {

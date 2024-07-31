@@ -189,6 +189,12 @@
 
     # Enable fish and bash in home-manager to use enableFishIntegration and enableBashIntegration
     programs = {
+      # Enable https://direnv.net/
+      direnv = {
+        enable = true;
+        nix-direnv.enable = true;
+      };
+
       fish.enable = true;
       bash.enable = true;
 
