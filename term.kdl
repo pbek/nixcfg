@@ -1,7 +1,10 @@
 layout {
   pane split_direction="vertical" {
-    pane
-    pane command="btop"
+    pane size="40%"
+    pane size="60%" split_direction="horizontal" {
+      pane command="btop"
+      pane command="lazygit"
+    }
   }
   pane size=1 borderless=true {
     plugin location="zellij:status-bar"
