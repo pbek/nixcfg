@@ -286,7 +286,8 @@
               replace = "😉";
             }
             {
-              triggers = [ ":P" ":p" ":-P" ":tongue" ];
+              # Don't use ":p", it's needed by other triggers!
+              triggers = [ ":P" ":-P" ":tongue" ];
               replace = "😜";
             }
             {
