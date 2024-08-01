@@ -81,7 +81,7 @@
   hardware.graphics.enable = true;
   hardware.nvidia.modesetting.enable = true;
   # Try NVIDIA driver 550, inestead of 555
-#  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production;
 
   # Wayland
 #  services.displayManager.defaultSession = "plasmawayland";
