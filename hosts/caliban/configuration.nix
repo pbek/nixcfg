@@ -46,6 +46,7 @@
     krename
     go-passbolt-cli
 #    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
+    docker-slim # Docker image size optimizer and analysis tool
   ];
 
   networking.firewall = {
