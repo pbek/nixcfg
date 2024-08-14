@@ -2,13 +2,13 @@ build:
 	nix-build -E '((import <nixpkgs> {}).qt6Packages.callPackage (import ./default.nix) { })'
 
 ui-tests:
-	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || ~/Code/tools/nixpkgs; nix-build . -A nixosTests.qownnotes
+	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || cd ~/Code/tools/nixpkgs; nix-build . -A nixosTests.qownnotes
 
 ui-tests-logs:
-	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || ~/Code/tools/nixpkgs; nix-store --read-log result
+	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || cd ~/Code/tools/nixpkgs; nix-store --read-log result
 
 edit-ui-tests:
-	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || ~/Code/tools/nixpkgs; kate ./nixos/tests/qownnotes.nix
+	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || cd ~/Code/tools/nixpkgs; kate ./nixos/tests/qownnotes.nix
 
 edit-app:
-	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || ~/Code/tools/nixpkgs; kate ./pkgs/applications/office/qownnotes/default.nix
+	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || cd ~/Code/tools/nixpkgs; kate ./pkgs/applications/office/qownnotes/default.nix
