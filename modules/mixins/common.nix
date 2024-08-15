@@ -102,6 +102,10 @@
       # https://fosstodon.org/@lhf/112773183844782048
       # https://github.com/NixOS/nix/issues/9649#issuecomment-1868001568
       trusted-substituters = [ "root" "@wheel" ];
+
+      # Allow fallback from local caches
+      connect-timeout = 5;
+      fallback = true;
     };
   };
 
