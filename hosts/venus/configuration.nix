@@ -112,9 +112,8 @@
     ACTION=="add", SUBSYSTEM=="pci", DRIVER=="pcieport", ATTR{power/wakeup}="disabled"
   '';
 
-  # Try if another console fonts make the console apear
-  console.font = "${pkgs.terminus_font}/share/consolefonts/ter-u12n.psf.gz";
-  console.earlySetup = true;
+  # Make the console font bigger
+  console.font = "${pkgs.terminus_font}/share/consolefonts/ter-u20n.psf.gz";
 
   # https://nixos.wiki/wiki/VirtualBox
   virtualisation.virtualbox.host.enable = true;
