@@ -20,7 +20,7 @@ hash=$(nix-prefetch-url "$url" | xargs nix hash to-sri --type sha256)
 echo "Using hash $hash..."
 
 # Update the default.nix file
-sed -i "s/version = \"[0-9.]*\";/version = \"$version\";/" apps/qownnotes/default.nix
-sed -i "s/hash = \"sha256-[A-Za-z0-9+/]*=*\";/hash = \"$hash\";/" apps/qownnotes/default.nix
+sed -i "s|version = \"[0-9.]*\";|version = \"$version\";|" apps/qownnotes/default.nix
+sed -i "s|hash = \"sha256-[A-Za-z0-9+/]*=*\";|hash = \"$hash\";|" apps/qownnotes/default.nix
 
 echo "Updated apps/qownnotes/default.nix with version $version and hash $hash"
