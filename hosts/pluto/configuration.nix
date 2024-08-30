@@ -50,6 +50,7 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.graphics.enable = true;
+  hardware.nvidia.open = false;
 
   # The NVIDIA GeForce GTX 760 GPU needs the NVIDIA 470.xx Legacy drivers
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
