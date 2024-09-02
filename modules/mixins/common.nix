@@ -96,7 +96,9 @@
       experimental-features = [ "nix-command" "flakes" ];
 
       # To do a "nix-build --repair" without sudo
-#      trusted-users = [ "root" "@wheel" ];
+      # We still need that to not get a "lacks a signature by a trusted key" error when building on a remote machine
+      # https://nixos.wiki/wiki/Nixos-rebuild
+      trusted-users = [ "root" "@wheel" ];
 
       # Above is more dangerous than below
       # https://fosstodon.org/@lhf/112773183844782048
