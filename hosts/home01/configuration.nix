@@ -61,6 +61,7 @@
         1883  # MQTT
         2048  # Homeatic
         2049  # Homeatic
+        4533  # Navidrome
         8086  # InfluxDB
         8087  # Chronograf
         3000  # Grafana
