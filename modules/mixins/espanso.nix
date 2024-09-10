@@ -312,7 +312,7 @@
             }
             {
               triggers = [ ":heart" ":lov" ];
-              replace = "😍❤️🥰";
+              replace = "🫶😍❤️🥰";
             }
             {
               triggers = [ ":halo" ":inn" ":angel" "O:)" "O:-)" ];
