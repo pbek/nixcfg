@@ -3,55 +3,57 @@
 
 # By default, run the `--choose` command
 default:
-  @just --choose
+    @just --choose
 
 # Set default shell to bash
+
 set shell := ["bash", "-c"]
 
 # Variables
+
 hostname := `hostname`
 user := `whoami`
 
 test:
-    sudo nixos-rebuild test --flake .#{{hostname}} -L
+    sudo nixos-rebuild test --flake .#{{ hostname }} -L
 
 nix-switch:
-    sudo nixos-rebuild switch --flake .#{{hostname}} -L
+    sudo nixos-rebuild switch --flake .#{{ hostname }} -L
 
 # Build and switch to the new configuration for the current host
 switch:
-    nix-shell --run "nh os switch -H {{hostname}} ."
+    nix-shell --run "nh os switch -H {{ hostname }} ."
 
 nix-build:
-    sudo nixos-rebuild build --flake .#{{hostname}}
+    sudo nixos-rebuild build --flake .#{{ hostname }}
 
 _build hostname:
-    nix-shell --run "nh os build -H {{hostname}} ."
+    nix-shell --run "nh os build -H {{ hostname }} ."
 
 build: (_build hostname)
 
 # Build the current host on the Caliban host
 build-on-caliban:
-    nixos-rebuild --build-host omega@caliban.netbird.cloud --flake .#{{hostname}} build
+    nixos-rebuild --build-host omega@caliban.netbird.cloud --flake .#{{ hostname }} build
 
 # TODO: "--build-host" not found
 nh-build-on-caliban:
-    nix-shell --run "nh os build -H {{hostname}} . -- --build-host omega@caliban.netbird.cloud"
+    nix-shell --run "nh os build -H {{ hostname }} . -- --build-host omega@caliban.netbird.cloud"
 
 # Build the current host on the Home01 host
 build-on-home01:
-    nixos-rebuild --build-host omega@home01.lan --flake .#{{hostname}} build
+    nixos-rebuild --build-host omega@home01.lan --flake .#{{ hostname }} build
 
 # TODO: "--build-host" not found
 nh-build-on-home01:
-    nix-shell --run "nh os build -H {{hostname}} . -- --build-host omega@home01.lan"
+    nix-shell --run "nh os build -H {{ hostname }} . -- --build-host omega@home01.lan"
 
 switch-push: switch && push
 
 switch-push-all:
-  switch
-  push-all
-  push
+    switch
+    push-all
+    push
 
 # Update the flakes
 update:
@@ -63,9 +65,9 @@ upgrade: update && switch
 upgrade-push: upgrade && push
 
 upgrade-push-all:
-  upgrade
-  push-all
-  push
+    upgrade
+    push-all
+    push
 
 push:
     attic push main `which espanso` && \
@@ -133,7 +135,7 @@ build-vm-netcup02:
     nixos-rebuild --flake .#vm-netcup02 build-vm
 
 flake-rebuild-current:
-    sudo nixos-rebuild switch --flake .#{{hostname}}
+    sudo nixos-rebuild switch --flake .#{{ hostname }}
 
 flake-update:
     nix flake update
@@ -201,7 +203,7 @@ home-manager-logs:
     sudo journalctl --since today | grep "hm-activate-" | bat
 
 home-manager-status:
-    systemctl status home-manager-{{user}}.service
+    systemctl status home-manager-{{ user }}.service
 
 home01-restart-nix-serve:
     systemctl restart nix-serve
