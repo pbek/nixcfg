@@ -1,6 +1,10 @@
 # Use `just <recipe>` to run a recipe
 # https://just.systems/man/en/
 
+# By default, run the `--choose` command
+default:
+  @just --choose
+
 # Set default shell to bash
 set shell := ["bash", "-c"]
 
@@ -76,14 +80,17 @@ push-local:
     attic push --ignore-upstream-cache-filter cicinas2:nix-store `which clion` && \
     attic push --ignore-upstream-cache-filter cicinas2:nix-store `which goland`
 
+[group('agenix')]
 rekey-fallback:
     cd ./secrets && agenix -i ~/.ssh/agenix --rekey
 
 # Rekey the agenix secrets
+[group('agenix')]
 rekey:
     cd ./secrets && agenix --rekey
 
 # Show ssh keys for agenix
+[group('agenix')]
 keyscan:
     ssh-keyscan localhost
 
@@ -108,6 +115,8 @@ boot-vm-server-console:
 ssh-vm-server:
     ssh -p 2222 omega@localhost -t "tmux new-session -A -s pbek"
 
+# Reset the VM
+[confirm("Are you sure you want to reset the VM?")]
 reset-vm:
     rm *.qcow2
 
@@ -129,6 +138,8 @@ flake-rebuild-current:
 flake-update:
     nix flake update
 
+# Clean up the system to free up space
+[confirm("Are you sure you want to clean up the system?")]
 cleanup:
     duf && \
     sudo journalctl --vacuum-time=3d && \
@@ -138,26 +149,34 @@ cleanup:
     nix-collect-garbage -d && \
     duf
 
+# Repair the nix store
 repair-store:
     sudo nix-store --verify --check-contents --repair
 
+# List the generations
 list-generations:
     nix profile history --profile /nix/var/nix/profiles/system
 
+# Garbage collect the nix store to free up space
 optimize-store:
     duf && \
     nix store optimise && \
     duf
 
+# Do firmware updates
 fwup:
-    fwupdmgr refresh && fwupdmgr update
+    -fwupdmgr refresh
+    fwupdmgr update
 
+# Open a terminal with the nixcfg session
 term:
     zellij --layout term.kdl attach nixcfg -c
 
+# Kill the nixcfg session
 term-kill:
     zellij delete-session nixcfg -f
 
+# Replace the current fish shell with a new one
 fish-replace:
     exec fish
 
@@ -188,6 +207,7 @@ home01-restart-nix-serve:
     systemctl restart nix-serve
 
 # Edit the QOwnNotes build file
+[group('qownnotes')]
 edit-qownnotes-build:
     kate ./apps/qownnotes/default.nix -l 23 -c 19
 
@@ -196,18 +216,22 @@ shell:
     nix-shell --run fish
 
 # Get the nix hash of a QOwnNotes release
+[group('qownnotes')]
 qownnotes-hash:
     #!/usr/bin/env bash
+    set -euxo pipefail
     version=$(gum input --placeholder "QOwnNotes version number")
     url="https://github.com/pbek/QOwnNotes/releases/download/v${version}/qownnotes-${version}.tar.xz"
     nix-prefetch-url "$url" | xargs nix hash to-sri --type sha256
 
 # Update the QOwnNotes release in the app
+[group('qownnotes')]
 qownnotes-update-release:
     ./scripts/update-qownnotes-release.sh
 
 # Get the reverse dependencies of a nix store path
 nix-store-reverse-dependencies:
     #!/usr/bin/env bash
+    set -euxo pipefail
     nixStorePath=$(gum input --placeholder "Nix store path (e.g. /nix/store/hbldxn007k0y5qidna6fg0x168gnsmkj-botan-2.19.5.drv)")
     nix-store --query --referrers "$nixStorePath"

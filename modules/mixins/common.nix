@@ -24,6 +24,7 @@
         fish-reload = "exec fish";
         lg = "lazygit";
         duai = "dua interactive";
+        j = "just";
       };
       shellAbbrs = {
         killall = "pkill";
