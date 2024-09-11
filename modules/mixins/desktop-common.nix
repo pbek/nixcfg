@@ -83,7 +83,7 @@
     basename = "uutils-basename";
     cut = "uutils-cut";
     cat = "uutils-cat";
-    install = "uutils-install";
+#    install = "uutils-install";
     rm = "uutils-rm";
     comm = "uutils-comm";
     mktemp = "uutils-mktemp";
@@ -92,7 +92,7 @@
     readlink = "uutils-readlink";
     stdbuf = "uutils-stdbuf";
     mkdir = "uutils-mkdir";
-    echo = "uutils-echo";
+#    echo = "uutils-echo";
     basenc = "uutils-basenc";
     sync = "uutils-sync";
     wc = "uutils-wc";
@@ -154,7 +154,7 @@
     seq = "uutils-seq";
     pr = "uutils-pr";
     pathchk = "uutils-pathchk";
-    true = "uutils-true";
+#    true = "uutils-true";
     touch = "uutils-touch";
     ln = "uutils-ln";
     cp = "uutils-cp --progress";
