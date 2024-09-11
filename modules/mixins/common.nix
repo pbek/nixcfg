@@ -155,6 +155,7 @@
     sysz # fzf terminal UI for systemctl
     ouch # compress and decompress files
     procs # ps "replacement"
+    just # command runner like make
   ];
 
   # Do garbage collection
