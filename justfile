@@ -21,8 +21,10 @@ switch:
 nix-build:
     sudo nixos-rebuild build --flake .#{{hostname}}
 
-build:
+_build hostname:
     nix-shell --run "nh os build -H {{hostname}} ."
+
+build: (_build hostname)
 
 build-on-caliban:
     nixos-rebuild --build-host omega@caliban.netbird.cloud --flake .#{{hostname}} build
@@ -167,8 +169,7 @@ fix-command-not-found-error: update-channels
 nix-build-venus:
     nixos-rebuild --flake .#venus build
 
-build-venus:
-    nix-shell --run "nh os build -H venus ."
+build-venus: (_build "venus")
 
 home-manager-logs:
     sudo journalctl --since today | grep "hm-activate-" | bat
