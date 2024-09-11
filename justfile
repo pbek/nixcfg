@@ -8,13 +8,13 @@ set shell := ["bash", "-c"]
 hostname := `hostname`
 user := `whoami`
 
-# Recipes
 test:
     sudo nixos-rebuild test --flake .#{{hostname}} -L
 
 nix-switch:
     sudo nixos-rebuild switch --flake .#{{hostname}} -L
 
+# Build and switch to the new configuration for the current host
 switch:
     nix-shell --run "nh os switch -H {{hostname}} ."
 
@@ -26,6 +26,7 @@ _build hostname:
 
 build: (_build hostname)
 
+# Build the current host on the Caliban host
 build-on-caliban:
     nixos-rebuild --build-host omega@caliban.netbird.cloud --flake .#{{hostname}} build
 
@@ -33,6 +34,7 @@ build-on-caliban:
 nh-build-on-caliban:
     nix-shell --run "nh os build -H {{hostname}} . -- --build-host omega@caliban.netbird.cloud"
 
+# Build the current host on the Home01 host
 build-on-home01:
     nixos-rebuild --build-host omega@home01.lan --flake .#{{hostname}} build
 
@@ -47,9 +49,11 @@ switch-push-all:
   push-all
   push
 
+# Update the flakes
 update:
     NIX_CONFIG="access-tokens = github.com=`cat ~/.secrets/github-token`" nix flake update
 
+# Update the flakes and switch to the new configuration
 upgrade: update && switch
 
 upgrade-push: upgrade && push
@@ -75,9 +79,11 @@ push-local:
 rekey-fallback:
     cd ./secrets && agenix -i ~/.ssh/agenix --rekey
 
+# Rekey the agenix secrets
 rekey:
     cd ./secrets && agenix --rekey
 
+# Show ssh keys for agenix
 keyscan:
     ssh-keyscan localhost
 
@@ -169,6 +175,7 @@ fix-command-not-found-error: update-channels
 nix-build-venus:
     nixos-rebuild --flake .#venus build
 
+# Build the Venus host
 build-venus: (_build "venus")
 
 home-manager-logs:
@@ -180,21 +187,26 @@ home-manager-status:
 home01-restart-nix-serve:
     systemctl restart nix-serve
 
+# Edit the QOwnNotes build file
 edit-qownnotes-build:
     kate ./apps/qownnotes/default.nix -l 23 -c 19
 
+# Run a fish shell with all needed tools
 shell:
     nix-shell --run fish
 
+# Get the nix hash of a QOwnNotes release
 qownnotes-hash:
     #!/usr/bin/env bash
     version=$(gum input --placeholder "QOwnNotes version number")
     url="https://github.com/pbek/QOwnNotes/releases/download/v${version}/qownnotes-${version}.tar.xz"
     nix-prefetch-url "$url" | xargs nix hash to-sri --type sha256
 
+# Update the QOwnNotes release in the app
 qownnotes-update-release:
     ./scripts/update-qownnotes-release.sh
 
+# Get the reverse dependencies of a nix store path
 nix-store-reverse-dependencies:
     #!/usr/bin/env bash
     nixStorePath=$(gum input --placeholder "Nix store path (e.g. /nix/store/hbldxn007k0y5qidna6fg0x168gnsmkj-botan-2.19.5.drv)")
