@@ -246,3 +246,12 @@ nix-store-reverse-dependencies:
     set -euxo pipefail
     nixStorePath=$(gum input --placeholder "Nix store path (e.g. /nix/store/hbldxn007k0y5qidna6fg0x168gnsmkj-botan-2.19.5.drv)")
     nix-store --query --referrers "$nixStorePath"
+
+# Format all justfiles
+just-format:
+    #!/usr/bin/env bash
+    # Find all files named "justfile" recursively and run just --fmt --unstable on them
+    find . -type f -name "justfile" -print0 | while IFS= read -r -d '' file; do
+        echo "Formatting $file"
+        just --fmt --unstable -f "$file"
+    done
