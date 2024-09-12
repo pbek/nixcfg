@@ -14,6 +14,15 @@ set shell := ["bash", "-c"]
 hostname := `hostname`
 user := `whoami`
 
+# Aliases
+
+alias s := switch
+alias u := upgrade
+alias c := cleanup
+alias b := build
+alias bh := build-on-home01
+alias bc := build-on-caliban
+
 test:
     sudo nixos-rebuild test --flake .#{{ hostname }} -L
 
