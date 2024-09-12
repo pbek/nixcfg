@@ -1,14 +1,14 @@
 build:
-	nix-build -E '((import <nixpkgs> {}).callPackage (import ./default.nix) { })'
+    nix-build -E '((import <nixpkgs> {}).callPackage (import ./default.nix) { })'
 
 build-force:
-	nix-build -E '((import <nixpkgs> {}).callPackage (import ./default.nix) { })' --check
+    nix-build -E '((import <nixpkgs> {}).callPackage (import ./default.nix) { })' --check
 
 edit-app:
-	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs; kate ./pkgs/by-name/sm/smartgithg/package.nix
+    cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs; kate ./pkgs/by-name/sm/smartgithg/package.nix
 
 build-nixpkgs:
-	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs; nix-build -A smartgithg
+    cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs; nix-build -A smartgithg
 
 run-nixpkgs:
-	cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs; ./result/bin/smartgit
+    cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs; ./result/bin/smartgit

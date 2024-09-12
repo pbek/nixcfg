@@ -1,5 +1,5 @@
 build:
-	nix-build -E '((import <nixpkgs> {}).callPackage (import ./default.nix) { })'
+    nix-build -E '((import <nixpkgs> {}).callPackage (import ./default.nix) { })'
 
 build-0-13-0:
-	nix-build -E '((import <nixpkgs> {}).callPackage (import ./default-0.13.0.nix) { })'
+    nix-build -E '((import <nixpkgs> {}).callPackage (import ./default-0.13.0.nix) { })'
