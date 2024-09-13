@@ -31,14 +31,14 @@ nix-switch:
 
 # Build and switch to the new configuration for the current host
 switch:
-    -nix-shell --run "nh os switch -H {{ hostname }} ."
+    -nh os switch -H {{ hostname }} .
     echo "❄️ nixcfg switch finished on {{ hostname }}" | neosay
 
 nix-build:
     sudo nixos-rebuild build --flake .#{{ hostname }}
 
 _build hostname:
-    nix-shell --run "nh os build -H {{ hostname }} ."
+    nh os build -H {{ hostname }} .
 
 build: (_build hostname)
 
@@ -48,7 +48,7 @@ build-on-caliban:
 
 # TODO: "--build-host" not found
 nh-build-on-caliban:
-    nix-shell --run "nh os build -H {{ hostname }} . -- --build-host omega@caliban.netbird.cloud"
+    nh os build -H {{ hostname }} . -- --build-host omega@caliban.netbird.cloud
 
 # Build the current host on the Home01 host
 build-on-home01:
@@ -56,7 +56,7 @@ build-on-home01:
 
 # TODO: "--build-host" not found
 nh-build-on-home01:
-    nix-shell --run "nh os build -H {{ hostname }} . -- --build-host omega@home01.lan"
+    nh os build -H {{ hostname }} . -- --build-host omega@home01.lan
 
 switch-push: switch && push
 
