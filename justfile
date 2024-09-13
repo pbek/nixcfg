@@ -17,6 +17,7 @@ user := `whoami`
 # Aliases
 
 alias s := switch
+alias ss := switch-simple
 alias u := upgrade
 alias c := cleanup
 alias b := build
@@ -29,10 +30,22 @@ test:
 nix-switch:
     sudo nixos-rebuild switch --flake .#{{ hostname }} -L
 
-# Build and switch to the new configuration for the current host
+# Build and switch to the new configuration for the current host (no notification)
+switch-simple:
+    nh os switch -H {{ hostname }} .
+
+# Build and switch to the new configuration for the current host (with notification)
 switch:
-    -nh os switch -H {{ hostname }} .
-    echo "❄️ nixcfg switch finished on {{ hostname }}" | neosay
+    #!/usr/bin/env bash
+    echo "❄️ Running switch for {{ hostname }}..."
+    start_time=$(date +%s)
+    nh os switch -H {{ hostname }} .
+    end_time=$(date +%s)
+    exit_code=$?
+    runtime=$((end_time - start_time))
+    if [ $runtime -gt 10 ]; then
+      echo "❄️ nixcfg switch finished on {{ hostname }}, exit code: $exit_code (runtime: ${runtime}s)" | neosay
+    fi
 
 nix-build:
     sudo nixos-rebuild build --flake .#{{ hostname }}
