@@ -157,6 +157,7 @@
     ouch # compress and decompress files
     procs # ps "replacement"
     just # command runner like make
+    neosay # send messages to matrix room
   ];
 
   # Do garbage collection

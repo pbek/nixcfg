@@ -74,4 +74,7 @@ in
 
   # agenix -e github-token.age
   "github-token.age".publicKeys = systems;
+
+  # agenix -e neosay.age
+  "neosay.age".publicKeys = systems;
 }

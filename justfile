@@ -31,7 +31,8 @@ nix-switch:
 
 # Build and switch to the new configuration for the current host
 switch:
-    nix-shell --run "nh os switch -H {{ hostname }} ."
+    -nix-shell --run "nh os switch -H {{ hostname }} ."
+    echo "❄️ nixcfg switch finished on {{ hostname }}" | neosay
 
 nix-build:
     sudo nixos-rebuild build --flake .#{{ hostname }}

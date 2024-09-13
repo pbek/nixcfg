@@ -56,5 +56,13 @@
       group = "users";
       mode = "600";
     };
+
+    neosay = {
+      file = ../../secrets/neosay.age;
+      path = "/home/${username}/.config/neosay/config.json";
+      owner = username;
+      group = "users";
+      mode = "600";
+    };
   };
 }
