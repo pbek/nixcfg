@@ -93,17 +93,17 @@ upgrade-push-all:
     push
 
 push:
-    attic push main `which espanso` && \
-    attic push qownnotes `which qownnotes` && \
-    attic push qownnotes `which qc`
+    attic push main `which espanso` --no-closure
+    attic push qownnotes `which qownnotes` --no-closure
+    attic push qownnotes `which qc` --no-closure
 
 push-all:
     ./scripts/push-all-to-attic.sh
 
 push-local:
-    attic push --ignore-upstream-cache-filter cicinas2:nix-store `which phpstorm` && \
-    attic push --ignore-upstream-cache-filter cicinas2:nix-store `which clion` && \
-    attic push --ignore-upstream-cache-filter cicinas2:nix-store `which goland`
+    attic push --ignore-upstream-cache-filter cicinas2:nix-store `which phpstorm` --no-closure
+    attic push --ignore-upstream-cache-filter cicinas2:nix-store `which clion` --no-closure
+    attic push --ignore-upstream-cache-filter cicinas2:nix-store `which goland` --no-closure
 
 [group('agenix')]
 rekey-fallback:
