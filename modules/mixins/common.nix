@@ -111,6 +111,9 @@
       connect-timeout = 5;
       fallback = true;
     };
+
+    # Use symlink to the latest nixpkgs of the flake as nixpkgs, e.g. for nix-shell
+    nixPath = [ "nixpkgs=/run/current-system/nixpkgs" ];
   };
 
   # List packages installed in system profile. To search, run:
@@ -187,9 +190,6 @@
 
     stateVersion = "24.11";
   };
-
-  # Use symlink to the latest nixpkgs of the flake as nixpkgs, e.g. for nix-shell
-  nix.nixPath = [ "nixpkgs=/run/current-system/nixpkgs" ];
 
   # https://rycee.gitlab.io/home-manager/options.html
   # https://nix-community.github.io/home-manager/options.html#opt-home.file
