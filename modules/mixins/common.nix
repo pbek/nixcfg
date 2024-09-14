@@ -114,6 +114,9 @@
 
     # Use symlink to the latest nixpkgs of the flake as nixpkgs, e.g. for nix-shell
     nixPath = [ "nixpkgs=/run/current-system/nixpkgs" ];
+
+    # Try out the latest nix version
+    package = pkgs.nixVersions.nix_2_23;
   };
 
   # List packages installed in system profile. To search, run:
