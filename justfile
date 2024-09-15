@@ -23,6 +23,8 @@ alias c := cleanup
 alias b := build
 alias bh := build-on-home01
 alias bc := build-on-caliban
+alias p := push
+alias sp := switch-push
 
 test:
     sudo nixos-rebuild test --flake .#{{ hostname }} -L
