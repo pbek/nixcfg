@@ -5,7 +5,9 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 #    nixinate.url = "github:matthewcroughan/nixinate";
     home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
 #    robotnix.url = "github:danielfullmer/robotnix";
     pia.url = "github:pia-foss/manual-connections";
     pia.flake = false;
