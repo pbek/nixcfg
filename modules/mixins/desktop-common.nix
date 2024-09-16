@@ -175,6 +175,10 @@
   # Docker
   # https://nixos.wiki/wiki/Docker
   virtualisation.docker.enable = true;
+  # Disable logging on desktop to prevent disk space issues and spamming the journal (but this causes no logging at all!)
+  # https://docs.docker.com/engine/logging/configure/
+  # Note: Doen't seem to do anything
+#  virtualisation.docker.logDriver = "none";
 
   services.pcscd.enable = true;
   services.udev.packages = [ pkgs.yubikey-personalization ];
