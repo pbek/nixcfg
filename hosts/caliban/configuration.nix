@@ -70,8 +70,7 @@
   hardware.nvidia.open = false;
 
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/
-  # Turn off for now, because build is broken
-#  virtualisation.multipass.enable = true;
+  virtualisation.multipass.enable = true;
 
   users.users.omegah = {
     isNormalUser = true;
