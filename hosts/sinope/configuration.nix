@@ -38,8 +38,7 @@
   networking.networkmanager.enable = true;
 
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/
-  # Turn off for now, because build is broken
-#  virtualisation.multipass.enable = true;
+  virtualisation.multipass.enable = true;
 
   environment.systemPackages = with pkgs; [
     (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
