@@ -128,6 +128,7 @@ push-local:
     attic push --ignore-upstream-cache-filter cicinas2:nix-store `which clion` --no-closure
     attic push --ignore-upstream-cache-filter cicinas2:nix-store `which goland` --no-closure
 
+# Rekey the agenix secrets using ~/.ssh/agenix
 [group('agenix')]
 rekey-fallback:
     cd ./secrets && agenix -i ~/.ssh/agenix --rekey
@@ -142,10 +143,12 @@ rekey:
 keyscan:
     ssh-keyscan localhost
 
+# Build an iso image
 [group('build')]
 build-iso:
     nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=iso.nix
 
+# Boot the built iso image in QEMU
 [group('build')]
 boot-iso:
     nix-shell -p qemu --run "qemu-system-x86_64 -m 256 -cdrom result/iso/nixos-*.iso"
@@ -192,10 +195,12 @@ build-vm-server:
 build-vm-netcup02:
     nixos-rebuild --flake .#vm-netcup02 build-vm
 
+# Rebuild the current host
 [group('build')]
 flake-rebuild-current:
     sudo nixos-rebuild switch --flake .#{{ hostname }}
 
+# Update the flakes
 [group('build')]
 flake-update:
     nix flake update
