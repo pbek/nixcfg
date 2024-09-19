@@ -369,7 +369,7 @@
             }
             {
               triggers = [ ":fist" ];
-              replace = "🤜🏻🤛🏻";
+              replace = "🤜🏻🤛🏻✊🏻";
             }
             {
               triggers = [ ":lambda" ":nix" ];
