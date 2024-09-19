@@ -104,6 +104,13 @@
 #  #   echo GPP0 > /proc/acpi/wakeup
 #  # '';
 
+  # Restart network and docker after suspend
+  # I had issues with KDE Plasma detecting that there is network after suspend
+  powerManagement.powerUpCommands = ''
+    nmcli n off && nmcli n on
+    systemctl restart docker
+  '';
+
   # Sleep is hindered by a compontent on the motherboard
   # Problem with "00:01.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge"
   # Disabling wakeup triggers for all PCIe devices
