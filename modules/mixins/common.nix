@@ -116,7 +116,7 @@
     nixPath = [ "nixpkgs=/run/current-system/nixpkgs" ];
 
     # Try out the latest nix version
-    package = pkgs.nixVersions.nix_2_23;
+    package = pkgs.nixVersions.latest;
   };
 
   # List packages installed in system profile. To search, run:
