@@ -1,9 +1,9 @@
 # Use `just <recipe>` to run a recipe
 # https://just.systems/man/en/
 
-# By default, run the `--choose` command
+# By default, run the `--list` command
 default:
-    @just --choose
+    @just --list
 
 # Set default shell to bash
 
@@ -25,18 +25,23 @@ alias bh := build-on-home01
 alias bc := build-on-caliban
 alias p := push
 alias sp := switch-push
+alias fix-command-not-found-error := update-channels
 
+[group('build')]
 test:
     sudo nixos-rebuild test --flake .#{{ hostname }} -L
 
+[group('build')]
 nix-switch:
     sudo nixos-rebuild switch --flake .#{{ hostname }} -L
 
 # Build and switch to the new configuration for the current host (no notification)
+[group('build')]
 switch-simple:
     nh os switch -H {{ hostname }} .
 
 # Build and switch to the new configuration for the current host (with notification)
+[group('build')]
 switch:
     #!/usr/bin/env bash
     echo "❄️ Running switch for {{ hostname }}..."
@@ -49,59 +54,75 @@ switch:
       echo "❄️ nixcfg switch finished on {{ hostname }}, exit code: $exit_code (runtime: ${runtime}s)" | neosay
     fi
 
+[group('build')]
 nix-build:
     sudo nixos-rebuild build --flake .#{{ hostname }}
 
+[group('build')]
 _build hostname:
     nh os build -H {{ hostname }} .
 
+[group('build')]
 build: (_build hostname)
 
 # Build the current host on the Caliban host
+[group('build')]
 build-on-caliban:
     nixos-rebuild --build-host omega@caliban.netbird.cloud --flake .#{{ hostname }} build
 
-# TODO: "--build-host" not found
+# Build with nh on caliban (--build-host" not found)
+[group('build')]
 nh-build-on-caliban:
     nh os build -H {{ hostname }} . -- --build-host omega@caliban.netbird.cloud
 
 # Build the current host on the Home01 host
+[group('build')]
 build-on-home01:
     nixos-rebuild --build-host omega@home01.lan --flake .#{{ hostname }} build
 
-# TODO: "--build-host" not found
+# Build with nh on homew01 (--build-host" not found)
+[group('build')]
 nh-build-on-home01:
     nh os build -H {{ hostname }} . -- --build-host omega@home01.lan
 
+[group('cache')]
 switch-push: switch && push
 
+[group('cache')]
 switch-push-all:
     switch
     push-all
     push
 
 # Update the flakes
+[group('build')]
 update:
     NIX_CONFIG="access-tokens = github.com=`cat ~/.secrets/github-token`" nix flake update
 
 # Update the flakes and switch to the new configuration
+[group('build')]
 upgrade: update && switch
 
+[group('cache')]
 upgrade-push: upgrade && push
 
+[group('cache')]
 upgrade-push-all:
     upgrade
     push-all
     push
 
+[group('cache')]
 push:
     attic push main `which espanso` --no-closure
     attic push qownnotes `which qownnotes` --no-closure
     attic push qownnotes `which qc` --no-closure
 
+[group('cache')]
 push-all:
     ./scripts/push-all-to-attic.sh
 
+[group('cache')]
 push-local:
     attic push --ignore-upstream-cache-filter cicinas2:nix-store `which phpstorm` --no-closure
     attic push --ignore-upstream-cache-filter cicinas2:nix-store `which clion` --no-closure
@@ -121,51 +142,66 @@ rekey:
 keyscan:
     ssh-keyscan localhost
 
+[group('build')]
 build-iso:
     nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=iso.nix
 
+[group('build')]
 boot-iso:
     nix-shell -p qemu --run "qemu-system-x86_64 -m 256 -cdrom result/iso/nixos-*.iso"
 
+[group('vm')]
 boot-vm:
     QEMU_OPTS="-m 4096 -smp 4 -enable-kvm" QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
 
+[group('vm')]
 boot-vm-no-kvm:
     QEMU_OPTS="-m 4096 -smp 4" QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
 
+[group('vm')]
 boot-vm-console:
     QEMU_OPTS="-nographic -serial mon:stdio" QEMU_KERNEL_PARAMS=console=ttyS0 QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
 
+[group('vm')]
 boot-vm-server-console:
     QEMU_OPTS="-nographic -serial mon:stdio" QEMU_KERNEL_PARAMS=console=ttyS0 QEMU_NET_OPTS="hostfwd=tcp::2222-:2222" ./result/bin/run-*-vm
 
+[group('vm')]
 ssh-vm-server:
     ssh -p 2222 omega@localhost -t "tmux new-session -A -s pbek"
 
 # Reset the VM
+[group('vm')]
 [confirm("Are you sure you want to reset the VM?")]
 reset-vm:
     rm *.qcow2
 
+[group('vm')]
 ssh-vm:
     ssh -p 2222 omega@localhost -t "tmux new-session -A -s pbek"
 
+[group('vm')]
 build-vm-desktop:
     nixos-rebuild --flake .#vm-desktop build-vm
 
+[group('vm')]
 build-vm-server:
     nixos-rebuild --flake .#vm-server build-vm
 
+[group('vm')]
 build-vm-netcup02:
     nixos-rebuild --flake .#vm-netcup02 build-vm
 
+[group('build')]
 flake-rebuild-current:
     sudo nixos-rebuild switch --flake .#{{ hostname }}
 
+[group('build')]
 flake-update:
     nix flake update
 
 # Clean up the system to free up space
+[group('maintenance')]
 [confirm("Are you sure you want to clean up the system?")]
 cleanup:
     duf && \
@@ -177,59 +213,79 @@ cleanup:
     duf
 
 # Repair the nix store
+[group('maintenance')]
 repair-store:
     sudo nix-store --verify --check-contents --repair
 
 # List the generations
+[group('maintenance')]
 list-generations:
     nix profile history --profile /nix/var/nix/profiles/system
 
 # Garbage collect the nix store to free up space
+[group('maintenance')]
 optimize-store:
     duf && \
     nix store optimise && \
     duf
 
 # Do firmware updates
+[group('maintenance')]
 fwup:
     -fwupdmgr refresh
     fwupdmgr update
 
 # Open a terminal with the nixcfg session
+[group('maintenance')]
 term:
     zellij --layout term.kdl attach nixcfg -c
 
 # Kill the nixcfg session
+[group('maintenance')]
 term-kill:
     zellij delete-session nixcfg -f
 
 # Replace the current fish shell with a new one
+[group('build')]
 fish-replace:
     exec fish
 
+# Use statix to check the nix files
+[group('linter')]
 linter-check:
     statix check
 
+# Use statix to fix the nix files
+[group('linter')]
 linter-fix:
     statix fix
 
+# Fix "command not found" error
+[group('maintenance')]
 update-channels:
     sudo nix-channel --update
 
-fix-command-not-found-error: update-channels
-
+# Build the Venus host with nix
+[group('build')]
 nix-build-venus:
     nixos-rebuild --flake .#venus build
 
-# Build the Venus host
+# Build the Venus host with nh
+[group('build')]
 build-venus: (_build "venus")
 
+# Show home-manager logs
+[group('maintenance')]
 home-manager-logs:
     sudo journalctl --since today | grep "hm-activate-" | bat
 
+# Show home-manager service status
+[group('maintenance')]
 home-manager-status:
     systemctl status home-manager-{{ user }}.service
 
+# Restart nix-serve (use on home01)
+[group('maintenance')]
 home01-restart-nix-serve:
     systemctl restart nix-serve
 
@@ -239,6 +295,7 @@ edit-qownnotes-build:
     kate ./apps/qownnotes/default.nix -l 23 -c 19
 
 # Run a fish shell with all needed tools
+[group('maintenance')]
 shell:
     nix-shell --run fish
 
@@ -257,6 +314,7 @@ qownnotes-update-release:
     ./scripts/update-qownnotes-release.sh
 
 # Get the reverse dependencies of a nix store path
+[group('maintenance')]
 nix-store-reverse-dependencies:
     #!/usr/bin/env bash
     set -euxo pipefail
@@ -264,6 +322,7 @@ nix-store-reverse-dependencies:
     nix-store --query --referrers "$nixStorePath"
 
 # Format all justfiles
+[group('linter')]
 just-format:
     #!/usr/bin/env bash
     # Find all files named "justfile" recursively and run just --fmt --unstable on them
