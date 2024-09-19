@@ -54,14 +54,17 @@ switch:
       echo "❄️ nixcfg switch finished on {{ hostname }}, exit code: $exit_code (runtime: ${runtime}s)" | neosay
     fi
 
+# Build the current host with nix-rebuild
 [group('build')]
 nix-build:
     sudo nixos-rebuild build --flake .#{{ hostname }}
 
+# Build a host with nh
 [group('build')]
 _build hostname:
     nh os build -H {{ hostname }} .
 
+# Build the current host with nh
 [group('build')]
 build: (_build hostname)
 
