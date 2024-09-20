@@ -106,8 +106,9 @@
 
   # Restart network and docker after suspend
   # I had issues with KDE Plasma detecting that there is network after suspend
-  powerManagement.powerUpCommands = ''
-    nmcli n off && nmcli n on
+  powerManagement.resumeCommands = ''
+    nmcli n off
+    nmcli n on
     systemctl restart docker
   '';
 
