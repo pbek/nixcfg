@@ -106,10 +106,6 @@
         searches = {
           matches = [
             {
-              trigger = "!np";
-              replace = "!nixpkgs ";
-            }
-            {
               trigger = "!am";
               replace = "!amazonde ";
             }
