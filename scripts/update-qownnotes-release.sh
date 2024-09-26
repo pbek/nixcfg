@@ -15,7 +15,7 @@ echo "Using version $version..."
 url="https://github.com/pbek/QOwnNotes/releases/download/v${version}/qownnotes-${version}.tar.xz"
 
 # Get the hash
-hash=$(nix-prefetch-url "$url" | xargs nix hash to-sri --type sha256)
+hash=$(nix-prefetch-url "$url" | xargs nix hash convert --hash-algo sha256)
 
 echo "Using hash $hash..."
 

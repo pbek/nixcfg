@@ -314,7 +314,7 @@ qownnotes-hash:
     set -euxo pipefail
     version=$(gum input --placeholder "QOwnNotes version number")
     url="https://github.com/pbek/QOwnNotes/releases/download/v${version}/qownnotes-${version}.tar.xz"
-    nix-prefetch-url "$url" | xargs nix hash to-sri --type sha256
+    nix-prefetch-url "$url" | xargs nix hash convert --hash-algo sha256
 
 # Update the QOwnNotes release in the app
 [group('qownnotes')]
