@@ -39,10 +39,12 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-  services.avahi.enable = true;
   services.avahi.nssmdns4 = true;
   # Samsung printer driver for ML-1710
   services.printing.drivers = [ pkgs.splix ];
+  # Disable avahi to avoid security issues
+  # https://discourse.nixos.org/t/cups-cups-filters-and-libppd-security-issues/52780
+  services.avahi.enable = false;
 
   environment.systemPackages = with pkgs; [
     calibre
