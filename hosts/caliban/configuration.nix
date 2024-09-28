@@ -60,6 +60,9 @@
   users.extraGroups.vboxusers.members = [ username ];
   # virtualisation.virtualbox.host.enableExtensionPack = true;
 
+  # Try to use the latest kernel
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
