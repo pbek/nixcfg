@@ -8,6 +8,9 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  # Disable avahi to avoid security issues
+  # https://discourse.nixos.org/t/cups-cups-filters-and-libppd-security-issues/52780
+  services.avahi.enable = false;
 
   # Allow some insecure packages to be installed
   nixpkgs.config.permittedInsecurePackages = [
