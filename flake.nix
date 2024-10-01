@@ -16,7 +16,12 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-  };
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+};
 
 outputs =
   { self
@@ -28,6 +33,7 @@ outputs =
   , catppuccin
   , disko
   , nixos-hardware
+  , plasma-manager
 #      , robotnix
   , ...
   } @ inputs: {
@@ -50,7 +56,7 @@ outputs =
         modules = [
           ./hosts/gaia/configuration.nix
           ./hosts/gaia/hardware-configuration.nix
-          home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
@@ -66,7 +72,7 @@ outputs =
         modules = [
           ./hosts/pluto/configuration.nix
           ./hosts/pluto/hardware-configuration.nix
-          home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
@@ -81,7 +87,7 @@ outputs =
         modules = [
           ./hosts/jupiter/configuration.nix
           ./hosts/jupiter/hardware-configuration.nix
-          home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
@@ -94,7 +100,7 @@ outputs =
         modules = [
           ./hosts/neptun/configuration.nix
           ./hosts/neptun/hardware-configuration.nix
-          home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // { inherit inputs; };
@@ -105,7 +111,7 @@ outputs =
         modules = [
           ./hosts/venus/configuration.nix
           ./hosts/venus/hardware-configuration.nix
-          home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
@@ -120,7 +126,7 @@ outputs =
         modules = [
           ./hosts/rhea/configuration.nix
           ./hosts/rhea/hardware-configuration.nix
-          home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
@@ -133,7 +139,7 @@ outputs =
         modules = [
           ./hosts/hyperion/configuration.nix
           ./hosts/hyperion/hardware-configuration.nix
-          home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           disko.nixosModules.disko
           agenix.nixosModules.age
         ];
@@ -148,7 +154,7 @@ outputs =
           ./hosts/ally/configuration.nix
           ./hosts/ally/hardware-configuration.nix
           nixos-hardware.nixosModules.asus-ally-rc71l
-          home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
@@ -163,7 +169,7 @@ outputs =
           ./hosts/ally2/configuration.nix
           ./hosts/ally2/hardware-configuration.nix
           nixos-hardware.nixosModules.asus-ally-rc71l
-          home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           disko.nixosModules.disko
           agenix.nixosModules.age
         ];
@@ -179,7 +185,7 @@ outputs =
         modules = [
           ./hosts/astra/configuration.nix
           ./hosts/astra/hardware-configuration.nix
-          home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
@@ -196,7 +202,7 @@ outputs =
         modules = [
           ./hosts/caliban/configuration.nix
           ./hosts/caliban/hardware-configuration.nix
-          home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
@@ -212,7 +218,7 @@ outputs =
         modules = [
           ./hosts/eris/configuration.nix
           ./hosts/eris/hardware-configuration.nix
-          home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // { inherit inputs; };
@@ -223,7 +229,7 @@ outputs =
         modules = [
           ./hosts/sinope/configuration.nix
           ./hosts/sinope/hardware-configuration.nix
-          home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
@@ -235,7 +241,7 @@ outputs =
         system = "x86_64-linux";
         modules = [
           ./hosts/vm-desktop/vm.nix
-          home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // { inherit inputs; };

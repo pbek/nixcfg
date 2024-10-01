@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, username, ... }:
 {
   imports = [ ];
 
@@ -43,4 +43,31 @@
     kate
     filelight
   ];
+
+  home-manager.users.${username} = {
+    # https://github.com/nix-community/plasma-manager/blob/trunk/examples/home.nix
+    programs.plasma = {
+      enable = true;
+
+      shortcuts = {
+        # ~/.config/kglobalshortcutsrc
+        kwin = {
+          "Expose" = "Meta+,";
+          "Switch to Desktop 1" = "Meta+1";
+          "Switch to Desktop 2" = "Meta+2";
+          "Switch to Desktop 3" = "Meta+3";
+          "Switch to Desktop 4" = "Meta+4";
+          "Window Move Center" = "Meta+C";
+          "Window to Next Screen" = "Meta+Shift+Right";
+          "Window to Previous Screen" = "Meta+Shift+Left";
+          "Window On All Desktops" = "Meta+A";
+          "Window Quick Tile Right" = "Meta+Right";
+          "Window Quick Tile Left" = "Meta+Left";
+          "Window Quick Tile Top" = "Meta+Up";
+          "Window Quick Tile Bottom" = "Meta+Down";
+          "Window Maximize" = "Meta+PgUp";
+        };
+      };
+    };
+  };
 }
