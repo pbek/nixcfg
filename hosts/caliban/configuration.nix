@@ -58,7 +58,7 @@
     host.enable = true;
     guest = {
       enable = true;
-      draganddrop = true;
+      dragAndDrop = true;
     };
   };
   users.extraGroups.vboxusers.members = [ username ];
