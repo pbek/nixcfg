@@ -72,10 +72,20 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.graphics.enable = true;
-#  hardware.nvidia.modesetting.enable = true;
-  # Try NVIDIA driver 550, inestead of 555
-#  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production;
-  hardware.nvidia.open = false;
+  hardware.nvidia = {
+#    modesetting.enable = true;
+    open = false;
+
+    # Try NVIDIA driver 550, inestead of 555
+#    package = config.boot.kernelPackages.nvidiaPackages.production;
+
+    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
+    # Enable this if you have graphical corruption issues or application crashes after waking
+    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
+    # of just the bare essentials.
+    powerManagement.enable = true;
+  };
+
 
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/
   virtualisation.multipass.enable = true;
