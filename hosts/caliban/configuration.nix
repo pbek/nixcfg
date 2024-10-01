@@ -53,11 +53,16 @@
     allowedTCPPorts = [ 9000 9003 ]; # xdebug
   };
 
-  # Extract
-
   # https://nixos.wiki/wiki/VirtualBox
-  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox = {
+    host.enable = true;
+    guest = {
+      enable = true;
+      draganddrop = true;
+    };
+  };
   users.extraGroups.vboxusers.members = [ username ];
+
   # virtualisation.virtualbox.host.enableExtensionPack = true;
 
   # Try to use the latest kernel
