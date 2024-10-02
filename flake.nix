@@ -21,6 +21,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+#    espanso-fix.url = "github:pitkling/nixpkgs/espanso-fix-capabilities-export";
 };
 
 outputs =
@@ -34,6 +35,7 @@ outputs =
   , disko
   , nixos-hardware
   , plasma-manager
+#  , espanso-fix
 #      , robotnix
   , ...
   } @ inputs: {
@@ -204,6 +206,7 @@ outputs =
           ./hosts/caliban/hardware-configuration.nix
           home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           agenix.nixosModules.age
+#          espanso-fix.nixosModules.espanso-capdacoverride
         ];
         specialArgs = self.commonArgs // {
           inherit inputs;
