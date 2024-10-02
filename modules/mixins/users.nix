@@ -64,5 +64,13 @@
       group = "users";
       mode = "600";
     };
+
+    atuin = {
+      file = ../../secrets/atuin.age;
+      path = "/home/${username}/.local/share/atuin/key";
+      owner = username;
+      group = "users";
+      mode = "600";
+    };
   };
 }

@@ -77,4 +77,7 @@ in
 
   # agenix -e neosay.age
   "neosay.age".publicKeys = systems;
+
+  # agenix -e atuin.age
+  "atuin.age".publicKeys = systems;
 }

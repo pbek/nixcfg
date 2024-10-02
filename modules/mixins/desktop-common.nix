@@ -231,10 +231,17 @@
         };
       };
 
+      # Sync your shell history across all your devices
+      # https://docs.atuin.sh
       atuin = {
         enable = true;
         enableFishIntegration = true;
         enableBashIntegration = true;
+        # https://docs.atuin.sh/configuration/config/
+        settings = {
+          sync_address = "https://atuin.bekerle.com";
+          enter_accept = true;
+        };
       };
 
       # Enable https://wezfurlong.org/wezterm/ for terminal with OSC 52 support for zellij clipboard via SSH
