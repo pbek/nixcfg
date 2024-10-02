@@ -65,8 +65,9 @@
 
   # virtualisation.virtualbox.host.enableExtensionPack = true;
 
-  # Try to use the latest kernel
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # latest: 6.11
+  # lts: 6.6
+#  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -76,8 +77,9 @@
 #    modesetting.enable = true;
     open = false;
 
-    # Try NVIDIA driver 550, inestead of 555
-#    package = config.boot.kernelPackages.nvidiaPackages.production;
+    # production: version 550
+    # latest: version 560
+    package = config.boot.kernelPackages.nvidiaPackages.production;
 
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
     # Enable this if you have graphical corruption issues or application crashes after waking
