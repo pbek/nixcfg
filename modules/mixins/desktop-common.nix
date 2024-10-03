@@ -240,6 +240,7 @@
         # https://docs.atuin.sh/configuration/config/
         settings = {
           sync_address = "https://atuin.bekerle.com";
+          sync_frequency = "15m";
           enter_accept = true;
         };
       };
