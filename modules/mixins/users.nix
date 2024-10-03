@@ -67,7 +67,7 @@
 
     atuin = {
       file = ../../secrets/atuin.age;
-      path = "/home/${username}/.local/share/atuin/key";
+      path = "/home/${username}/.secrets/atuin-key";
       owner = username;
       group = "users";
       mode = "600";

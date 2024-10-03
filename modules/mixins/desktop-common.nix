@@ -241,6 +241,7 @@
         settings = {
           sync_address = "https://atuin.bekerle.com";
           sync_frequency = "15m";
+          key_path = "/home/${username}/.secrets/atuin-key";
           enter_accept = true;
         };
       };
