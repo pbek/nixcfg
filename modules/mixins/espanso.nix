@@ -8,6 +8,9 @@
       configs = {
         default = {
           search_shortcut = "ALT+SHIFT+SPACE";
+          keyboard_layout = {
+            layout = "de";
+          };
         };
         # https://espanso.org/docs/configuration/app-specific-configurations/
         # Disable espanso for the VirtualBox VM window, so that the client can use the shortcuts
