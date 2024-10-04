@@ -21,7 +21,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
-#    espanso-fix.url = "github:pitkling/nixpkgs/espanso-fix-capabilities-export";
+    espanso-fix.url = "github:pitkling/nixpkgs/espanso-fix-capabilities-export";
 };
 
 outputs =
@@ -35,7 +35,7 @@ outputs =
   , disko
   , nixos-hardware
   , plasma-manager
-#  , espanso-fix
+  , espanso-fix
 #      , robotnix
   , ...
   } @ inputs: {
@@ -158,6 +158,7 @@ outputs =
           nixos-hardware.nixosModules.asus-ally-rc71l
           home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           agenix.nixosModules.age
+          espanso-fix.nixosModules.espanso-capdacoverride
         ];
         specialArgs = self.commonArgs // {
           inherit inputs;
@@ -174,6 +175,7 @@ outputs =
           home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           disko.nixosModules.disko
           agenix.nixosModules.age
+          espanso-fix.nixosModules.espanso-capdacoverride
         ];
         specialArgs = self.commonArgs // {
           inherit inputs;
@@ -189,6 +191,7 @@ outputs =
           ./hosts/astra/hardware-configuration.nix
           home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           agenix.nixosModules.age
+          espanso-fix.nixosModules.espanso-capdacoverride
         ];
         specialArgs = self.commonArgs // {
           inherit inputs;
@@ -206,7 +209,7 @@ outputs =
           ./hosts/caliban/hardware-configuration.nix
           home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           agenix.nixosModules.age
-#          espanso-fix.nixosModules.espanso-capdacoverride
+          espanso-fix.nixosModules.espanso-capdacoverride
         ];
         specialArgs = self.commonArgs // {
           inherit inputs;

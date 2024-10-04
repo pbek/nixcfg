@@ -81,6 +81,22 @@
         "type": "github"
       }
     },
+    "espanso-fix": {
+      "locked": {
+        "lastModified": 1725779331,
+        "narHash": "sha256-eoHok5w13GOMTgonmRZxsulof6rAwrFcu2c6kjZH+Kc=",
+        "owner": "pitkling",
+        "repo": "nixpkgs",
+        "rev": "aa6dd77b841efbcacd4f3aac1b6bd6047c7814d5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pitkling",
+        "ref": "espanso-fix-capabilities-export",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -198,6 +214,7 @@
         "agenix": "agenix",
         "catppuccin": "catppuccin",
         "disko": "disko",
+        "espanso-fix": "espanso-fix",
         "home-manager": "home-manager_2",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
