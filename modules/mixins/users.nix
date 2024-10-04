@@ -12,9 +12,9 @@
       cl6 = "nix-shell /home/${username}/.shells/qt6.nix --run clion";
       qmake5-path = "nix-shell /home/${username}/.shells/qt5.nix --run \"whereis qmake\"";
       qmake6-path = "nix-shell /home/${username}/.shells/qt6.nix --run \"whereis qmake\"";
-      qce = "qc exec --command";
-      qcel = "qc exec --command --last";
-      qcs = "qc search";
+      qce = "qc exec --command --color";
+      qcel = "qc exec --command --color --last";
+      qcs = "qc search --color";
       qcsw = "qc switch";
       pia-up = "~/Scripts/pia.sh";
       pia-down = "wg-quick down pia";
