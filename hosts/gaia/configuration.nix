@@ -99,14 +99,27 @@
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   };
 
-  # Try to use the latest kernel
+  # latest: 6.11
+  # lts: 6.6
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.graphics.enable = true;
-  hardware.nvidia.open = false;
+  hardware.nvidia = {
+    open = false;
+
+    # production: version 550
+    # latest: version 560
+    package = config.boot.kernelPackages.nvidiaPackages.production;
+
+    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
+    # Enable this if you have graphical corruption issues or application crashes after waking
+    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
+    # of just the bare essentials.
+    powerManagement.enable = true;
+  };
 
 
   # The NVIDIA GeForce GTX 760 GPU needs the NVIDIA 470.xx Legacy drivers
