@@ -72,5 +72,13 @@
       group = "users";
       mode = "600";
     };
+
+    qc-config = {
+      file = ../../secrets/qc-config.age;
+      path = "/home/${username}/.config/qc/config.toml";
+      owner = username;
+      group = "users";
+      mode = "600";
+    };
   };
 }

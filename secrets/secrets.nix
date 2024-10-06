@@ -80,4 +80,7 @@ in
 
   # agenix -e atuin.age
   "atuin.age".publicKeys = systems;
+
+  # agenix -e qc-config.age
+  "qc-config.age".publicKeys = systems;
 }
