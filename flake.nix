@@ -41,7 +41,7 @@ outputs =
   } @ inputs: {
 #     config = nixpkgs.config.systems.${builtins.currentSystem}.config;
 #     hostname = config.networking.hostName;
-    nixosModules = import ./modules { inherit (nixpkgs) lib; };
+#    nixosModules = import ./modules { inherit (nixpkgs) lib; };
     commonArgs = {
       username = "omega";
       termFontSize = 12.0;
