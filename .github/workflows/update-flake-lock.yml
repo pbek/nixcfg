@@ -1,4 +1,4 @@
-name: ?? Update flake.lock
+name: ⤴️ Update flake.lock
 on:
   workflow_dispatch: # Allows manual triggering
   schedule:
