@@ -92,10 +92,7 @@ nh-build-on-home01:
 switch-push: switch && push
 
 [group('cache')]
-switch-push-all:
-    switch
-    push-all
-    push
+switch-push-all: push-all push
 
 # Update the flakes
 [group('build')]
@@ -107,19 +104,16 @@ update:
 upgrade: update && switch
 
 [group('cache')]
-upgrade-push: upgrade && push
+upgrade-push: upgrade push
 
 [group('cache')]
-upgrade-push-all:
-    upgrade
-    push-all
-    push
+upgrade-push-all: upgrade push-all push
 
 [group('cache')]
 push:
-    attic push main `which espanso` --no-closure
-    attic push qownnotes `which qownnotes` --no-closure
-    attic push qownnotes `which qc` --no-closure
+    -attic push main `which espanso` --no-closure
+    -attic push qownnotes `which qownnotes` --no-closure
+    -attic push qownnotes `which qc` --no-closure
 
 [group('cache')]
 push-all:
