@@ -97,6 +97,10 @@
               replace = "Gute Nacht und schlaf gut! 🎑🌜🤗🌛🌃";
             }
             {
+              triggers = [ ":gmg" ];
+              replace = "Guten Morgen, wie hast du geschlafen? 🌄🤗☀️";
+            }
+            {
               triggers = [ ":vd" ];
               replace = "Vielen Dank!";
             }
