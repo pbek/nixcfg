@@ -18,7 +18,12 @@ jobs:
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@main
         with:
-          pr-title: "flake: update" # Title of PR to be created
-          pr-labels: |              # Labels to be set on the PR
+          commit-msg: "flake: update"   # Commit message to be used
+          pr-title: "Update flake.lock" # Title of PR to be created
+          pr-labels: |                  # Labels to be set on the PR
             dependencies
             automated
+          git-author-name: 'Patrizio Bekerle'
+          git-author-email: 'patrizio@bekerle.com'
+          git-committer-name: 'Patrizio Bekerle'
+          git-committer-email: 'patrizio@bekerle.com'
