@@ -1,4 +1,4 @@
-name: ?? Check flake for all systems
+name: 🔎️ Check flake for all systems
 
 on:
   push:
