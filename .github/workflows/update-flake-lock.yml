@@ -23,7 +23,7 @@ jobs:
           pr-labels: |                  # Labels to be set on the PR
             dependencies
             automated
-          git-author-name: 'Patrizio Bekerle'
-          git-author-email: 'patrizio@bekerle.com'
-          git-committer-name: 'Patrizio Bekerle'
-          git-committer-email: 'patrizio@bekerle.com'
+          # git-author-name: 'Patrizio Bekerle'
+          # git-author-email: 'patrizio@bekerle.com'
+          # git-committer-name: 'Patrizio Bekerle'
+          # git-committer-email: 'patrizio@bekerle.com'
