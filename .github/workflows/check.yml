@@ -8,8 +8,6 @@ on:
   pull_request:
     paths-ignore:
       - 'docker/**'
-  repository_dispatch:
-    types: [trigger-checks]
 
 jobs:
   check:

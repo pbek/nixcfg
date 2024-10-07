@@ -31,13 +31,3 @@ jobs:
           # git-author-email: 'patrizio@bekerle.com'
           # git-committer-name: 'Patrizio Bekerle'
           # git-committer-email: 'patrizio@bekerle.com'
-
-#  trigger-checks:
-#    name: Trigger checks
-#    needs: create-pr
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Trigger check workflow
-#        uses: peter-evans/repository-dispatch@v2
-#        with:
-#          event-type: trigger-checks
