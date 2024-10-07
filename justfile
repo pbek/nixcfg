@@ -77,6 +77,7 @@ build: (_build hostname)
 [group('build')]
 build-on-caliban:
     nixos-rebuild --build-host omega@caliban.netbird.cloud --flake .#{{ hostname }} build
+    echo "❄️ nixcfg build-on-caliban finished on {{ hostname }}" | neosay
 
 # Build with nh on caliban (--build-host" not found)
 [group('build')]
@@ -87,6 +88,7 @@ nh-build-on-caliban:
 [group('build')]
 build-on-home01:
     nixos-rebuild --build-host omega@home01.lan --flake .#{{ hostname }} build
+    echo "❄️ nixcfg build-on-home01 finished on {{ hostname }}" | neosay
 
 # Build with nh on homew01 (--build-host" not found)
 [group('build')]
