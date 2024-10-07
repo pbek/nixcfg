@@ -1,5 +1,5 @@
 # home01 server
-{ modulesPath, config, pkgs, ... }:
+{ modulesPath, config, pkgs, username, ... }:
 
 {
   imports =
@@ -120,7 +120,7 @@
       description = "Timer for automated NixOS configuration build";
       script = "${config.system.build.nixos-rebuild} build --flake github:pbek/nixcfg#venus";
       serviceConfig = {
-        User = config.users.users.default.name;
+        User = username;
       };
       startAt = "2h";
     };
