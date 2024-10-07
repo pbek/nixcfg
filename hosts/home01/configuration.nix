@@ -122,7 +122,7 @@
       serviceConfig = {
         User = username;
       };
-      startAt = "2h";
+      startAt = "hourly";
     };
   };
 
