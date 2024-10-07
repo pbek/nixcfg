@@ -118,7 +118,10 @@
   systemd.services = {
     nixcfg-autobuild = {
       description = "Timer for automated NixOS configuration build";
-      script = "${config.system.build.nixos-rebuild} build --flake github:pbek/nixcfg#venus";
+      path = [
+        pkgs.nixos-rebuild
+      ];
+      script = "nixos-rebuild build --flake github:pbek/nixcfg#venus";
       serviceConfig = {
         User = username;
       };
