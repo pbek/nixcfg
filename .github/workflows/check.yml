@@ -2,8 +2,6 @@ name: 🔎️ Check flake for all systems
 
 on:
   push:
-    branches:
-      - main
     paths-ignore:
       - 'docker/**'
   workflow_dispatch:
