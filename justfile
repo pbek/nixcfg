@@ -32,6 +32,10 @@ test:
     sudo nixos-rebuild test --flake .#{{ hostname }} -L
 
 [group('build')]
+check:
+    nix flake check --no-build --keep-going
+
+[group('build')]
 nix-switch:
     sudo nixos-rebuild switch --flake .#{{ hostname }} -L
 
