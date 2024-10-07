@@ -22,4 +22,4 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Check flake for all systems
-        run: nix flake check --no-build
+        run: nix flake check --no-build --keep-going
