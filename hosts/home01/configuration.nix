@@ -115,6 +115,17 @@
     openFirewall = true;
   };
 
+  systemd.services = {
+    nixcfg-autobuild = {
+      description = "Timer for automated NixOS configuration build";
+      script = "${config.system.build.nixos-rebuild} build --flake github:pbek/nixcfg#venus";
+      serviceConfig = {
+        User = config.users.users.default.name;
+      };
+      startAt = "2h";
+    };
+  };
+
   environment.systemPackages = with pkgs; [
   ];
 }
