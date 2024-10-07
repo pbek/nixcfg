@@ -67,45 +67,6 @@ outputs =
           waylandSupport = false;
         };
       };
-      # PC Garage
-      pluto = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/pluto/configuration.nix
-          ./hosts/pluto/hardware-configuration.nix
-          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
-          agenix.nixosModules.age
-        ];
-        specialArgs = self.commonArgs // {
-          inherit inputs;
-          x11Support = true;
-          waylandSupport = false;
-        };
-      };
-      # Asus Laptop
-      jupiter = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/jupiter/configuration.nix
-          ./hosts/jupiter/hardware-configuration.nix
-          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
-          agenix.nixosModules.age
-        ];
-        specialArgs = self.commonArgs // {
-          inherit inputs;
-        };
-      };
-      # macBook
-      neptun = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/neptun/configuration.nix
-          ./hosts/neptun/hardware-configuration.nix
-          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
-          agenix.nixosModules.age
-        ];
-        specialArgs = self.commonArgs // { inherit inputs; };
-      };
       # Livingroom PC
       venus = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -146,22 +107,6 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inherit inputs;
-        };
-      };
-      # Asus ROG Ally (usually using Windows)
-      ally = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/ally/configuration.nix
-          ./hosts/ally/hardware-configuration.nix
-          nixos-hardware.nixosModules.asus-ally-rc71l
-          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
-          agenix.nixosModules.age
-          espanso-fix.nixosModules.espanso-capdacoverride
-        ];
-        specialArgs = self.commonArgs // {
-          inherit inputs;
-          termFontSize = 15.0;
         };
       };
       # Asus ROG Ally (using NixOS)
@@ -217,17 +162,6 @@ outputs =
           usePlasma6 = true;
         };
       };
-      # TU HP EliteBook Laptop 820 G4
-      eris = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/eris/configuration.nix
-          ./hosts/eris/hardware-configuration.nix
-          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
-          agenix.nixosModules.age
-        ];
-        specialArgs = self.commonArgs // { inherit inputs; };
-      };
       # TU HP EliteBook Laptop 840 G5
       sinope= nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -241,26 +175,6 @@ outputs =
           inherit inputs;
         };
       };
-#      # VM Desktop
-#      vm-desktop = nixpkgs.lib.nixosSystem {
-#        system = "x86_64-linux";
-#        modules = [
-#          ./hosts/vm-desktop/vm.nix
-#          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
-#          agenix.nixosModules.age
-#        ];
-#        specialArgs = self.commonArgs // { inherit inputs; };
-#      };
-#      # VM Server
-#      vm-server = nixpkgs.lib.nixosSystem {
-#        system = "x86_64-linux";
-#        modules = [
-#          ./hosts/vm-server/vm.nix
-#          home-manager.nixosModules.home-manager
-#          agenix.nixosModules.age
-#        ];
-#        specialArgs = self.commonArgs // { inherit inputs; };
-#      };
       # Netcup Server netcup01
       netcup01 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -304,40 +218,126 @@ outputs =
           username = "cow";
         };
       };
-      # Home Server miniserver24 for Markus
-      miniserver24 = nixpkgs.lib.nixosSystem {
+      # Asus Laptop
+      jupiter = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          home-manager.nixosModules.home-manager
-          disko.nixosModules.disko
-          ./hosts/miniserver24/configuration.nix
+          ./hosts/jupiter/configuration.nix
+          ./hosts/jupiter/hardware-configuration.nix
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
+          agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // {
           inherit inputs;
-          username = "mba";
         };
       };
-      vm-netcup02 = nixpkgs.lib.nixosSystem {
+      # Asus ROG Ally (usually using Windows)
+      ally = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          home-manager.nixosModules.home-manager
-          disko.nixosModules.disko
-          ./hosts/netcup02/vm.nix
+          ./hosts/ally/configuration.nix
+          ./hosts/ally/hardware-configuration.nix
+          nixos-hardware.nixosModules.asus-ally-rc71l
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
+          agenix.nixosModules.age
+          espanso-fix.nixosModules.espanso-capdacoverride
+        ];
+        specialArgs = self.commonArgs // {
+          inherit inputs;
+          termFontSize = 15.0;
+        };
+      };
+      # PC Garage
+      pluto = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/pluto/configuration.nix
+          ./hosts/pluto/hardware-configuration.nix
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
+          agenix.nixosModules.age
+        ];
+        specialArgs = self.commonArgs // {
+          inherit inputs;
+          x11Support = true;
+          waylandSupport = false;
+        };
+      };
+      # macBook
+      neptun = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/neptun/configuration.nix
+          ./hosts/neptun/hardware-configuration.nix
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
+          agenix.nixosModules.age
         ];
         specialArgs = self.commonArgs // { inherit inputs; };
       };
-      vm-miniserver24 = nixpkgs.lib.nixosSystem {
+      # TU HP EliteBook Laptop 820 G4
+      eris = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          home-manager.nixosModules.home-manager
-          disko.nixosModules.disko
-          ./hosts/miniserver24/vm.nix
+          ./hosts/eris/configuration.nix
+          ./hosts/eris/hardware-configuration.nix
+          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
+          agenix.nixosModules.age
         ];
-        specialArgs = self.commonArgs // {
-          inherit inputs;
-          username = "mba";
-        };
+        specialArgs = self.commonArgs // { inherit inputs; };
       };
+#      # Home Server miniserver24 for Markus
+#      miniserver24 = nixpkgs.lib.nixosSystem {
+#        system = "x86_64-linux";
+#        modules = [
+#          home-manager.nixosModules.home-manager
+#          disko.nixosModules.disko
+#          ./hosts/miniserver24/configuration.nix
+#        ];
+#        specialArgs = self.commonArgs // {
+#          inherit inputs;
+#          username = "mba";
+#        };
+#      };
+#      vm-netcup02 = nixpkgs.lib.nixosSystem {
+#        system = "x86_64-linux";
+#        modules = [
+#          home-manager.nixosModules.home-manager
+#          disko.nixosModules.disko
+#          ./hosts/netcup02/vm.nix
+#        ];
+#        specialArgs = self.commonArgs // { inherit inputs; };
+#      };
+#      vm-miniserver24 = nixpkgs.lib.nixosSystem {
+#        system = "x86_64-linux";
+#        modules = [
+#          home-manager.nixosModules.home-manager
+#          disko.nixosModules.disko
+#          ./hosts/miniserver24/vm.nix
+#        ];
+#        specialArgs = self.commonArgs // {
+#          inherit inputs;
+#          username = "mba";
+#        };
+#      };
+#      # VM Desktop
+#      vm-desktop = nixpkgs.lib.nixosSystem {
+#        system = "x86_64-linux";
+#        modules = [
+#          ./hosts/vm-desktop/vm.nix
+#          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
+#          agenix.nixosModules.age
+#        ];
+#        specialArgs = self.commonArgs // { inherit inputs; };
+#      };
+#      # VM Server
+#      vm-server = nixpkgs.lib.nixosSystem {
+#        system = "x86_64-linux";
+#        modules = [
+#          ./hosts/vm-server/vm.nix
+#          home-manager.nixosModules.home-manager
+#          agenix.nixosModules.age
+#        ];
+#        specialArgs = self.commonArgs // { inherit inputs; };
+#      };
     };
   };
 }
