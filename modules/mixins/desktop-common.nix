@@ -231,27 +231,6 @@
         };
       };
 
-      # Sync your shell history across all your devices
-      # https://docs.atuin.sh
-      atuin = {
-        enable = true;
-        enableFishIntegration = true;
-        enableBashIntegration = true;
-        # https://docs.atuin.sh/configuration/config/
-        # Writes ~/.config/atuin/config.toml
-        settings = {
-          sync_address = "https://atuin.bekerle.com";
-          sync_frequency = "15m";
-          key_path = "/home/${username}/.secrets/atuin-key";
-          enter_accept = true;  # Enter runs command
-          style = "compact";  # No extra box around UI
-          inline_height = 32; # Max height of inline preview
-          prefers_reduced_motion = true;  # No automatic time updates
-#          sync.records = true; # v2 sync (not working)
-          workspaces = true;  # Filter in directories with git repositories
-        };
-      };
-
       # Enable https://wezfurlong.org/wezterm/ for terminal with OSC 52 support for zellij clipboard via SSH
 #      wezterm = {
 #        enable = true;
