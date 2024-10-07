@@ -2,7 +2,15 @@
 
 [GitHub](https://github.com/pbek/nixcfg)
 
-NixOS config
+My personal NixOS config of my machines.
+
+**Not be meant to be used by others**, but feel free to take inspiration from it.
+
+## Screenhots
+
+#### Shell
+
+![Shell](./screenshots/shell.png)
 
 ## Setup
 
