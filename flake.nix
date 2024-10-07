@@ -241,26 +241,26 @@ outputs =
           inherit inputs;
         };
       };
-      # VM Desktop
-      vm-desktop = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/vm-desktop/vm.nix
-          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
-          agenix.nixosModules.age
-        ];
-        specialArgs = self.commonArgs // { inherit inputs; };
-      };
-      # VM Server
-      vm-server = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/vm-server/vm.nix
-          home-manager.nixosModules.home-manager
-          agenix.nixosModules.age
-        ];
-        specialArgs = self.commonArgs // { inherit inputs; };
-      };
+#      # VM Desktop
+#      vm-desktop = nixpkgs.lib.nixosSystem {
+#        system = "x86_64-linux";
+#        modules = [
+#          ./hosts/vm-desktop/vm.nix
+#          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
+#          agenix.nixosModules.age
+#        ];
+#        specialArgs = self.commonArgs // { inherit inputs; };
+#      };
+#      # VM Server
+#      vm-server = nixpkgs.lib.nixosSystem {
+#        system = "x86_64-linux";
+#        modules = [
+#          ./hosts/vm-server/vm.nix
+#          home-manager.nixosModules.home-manager
+#          agenix.nixosModules.age
+#        ];
+#        specialArgs = self.commonArgs // { inherit inputs; };
+#      };
       # Netcup Server netcup01
       netcup01 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
