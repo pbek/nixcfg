@@ -19,6 +19,9 @@ jobs:
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@main
         with:
+          # https://github.com/DeterminateSystems/update-flake-lock?tab=readme-ov-file#with-a-personal-authentication-token
+          # Token needed so it can trigger the check workflow
+          token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
           commit-msg: "flake: update"   # Commit message to be used
           pr-title: "Update flake.lock" # Title of PR to be created
           pr-labels: |                  # Labels to be set on the PR
@@ -29,12 +32,12 @@ jobs:
           # git-committer-name: 'Patrizio Bekerle'
           # git-committer-email: 'patrizio@bekerle.com'
 
-  trigger-checks:
-    name: Trigger checks
-    needs: create-pr
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger check workflow
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          event-type: trigger-checks
+#  trigger-checks:
+#    name: Trigger checks
+#    needs: create-pr
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Trigger check workflow
+#        uses: peter-evans/repository-dispatch@v2
+#        with:
+#          event-type: trigger-checks
