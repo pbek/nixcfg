@@ -21,6 +21,7 @@ jobs:
         with:
           # https://github.com/DeterminateSystems/update-flake-lock?tab=readme-ov-file#with-a-personal-authentication-token
           # Token needed so it can trigger the check workflow
+          # Also see https://github.com/orgs/community/discussions/65321
           token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
           commit-msg: "flake: update"   # Commit message to be used
           pr-title: "Update flake.lock" # Title of PR to be created
