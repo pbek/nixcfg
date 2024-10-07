@@ -21,5 +21,6 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
       - name: Checkout code
         uses: actions/checkout@v3
+      # https://nix.dev/manual/nix/2.18/command-ref/new-cli/nix3-flake-check.html
       - name: Check flake for all systems
         run: nix flake check --no-build --keep-going

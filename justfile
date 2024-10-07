@@ -31,6 +31,7 @@ alias fix-command-not-found-error := update-channels
 test:
     sudo nixos-rebuild test --flake .#{{ hostname }} -L
 
+# https://nix.dev/manual/nix/2.18/command-ref/new-cli/nix3-flake-check.html
 [group('build')]
 check:
     nix flake check --no-build --keep-going
