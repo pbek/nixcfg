@@ -125,7 +125,9 @@
       serviceConfig = {
         User = username;
       };
-      startAt = "hourly";
+      # https://www.freedesktop.org/software/systemd/man/latest/systemd.time.html
+      # Use `systemd-analyze calendar "*-*-* 5,7,8,9,12,15,16,18,21:00:00"` to test
+      startAt = "*-*-* 5,7,8,9,12,15,16,18,21:00:00";
     };
   };
 
