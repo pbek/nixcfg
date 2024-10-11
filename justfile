@@ -45,13 +45,13 @@ nix-switch:
 switch-simple:
     nh os switch -H {{ hostname }} .
 
-# Build and switch to the new configuration for the current host (with notification)
+# Build and switch to the new configuration for the current host (with notification, use "--max-jobs 1" to restict downloads)
 [group('build')]
-switch:
+switch args='':
     #!/usr/bin/env bash
     echo "❄️ Running switch for {{ hostname }}..."
     start_time=$(date +%s)
-    nh os switch -H {{ hostname }} .
+    nh os switch -H {{ hostname }} . -- {{ args }}
     end_time=$(date +%s)
     exit_code=$?
     runtime=$((end_time - start_time))
@@ -84,10 +84,10 @@ build-on-caliban:
 nh-build-on-caliban:
     nh os build -H {{ hostname }} . -- --build-host omega@caliban.netbird.cloud
 
-# Build the current host on the Home01 host
+# Build the current host on the Home01 host (use "--max-jobs 1" to restict downloads)
 [group('build')]
-build-on-home01:
-    nixos-rebuild --build-host omega@home01.lan --flake .#{{ hostname }} build
+build-on-home01 args='':
+    nixos-rebuild --max-jobs 1 --build-host omega@home01.lan --flake .#{{ hostname }} build {{ args }}
     echo "❄️ nixcfg build-on-home01 finished on {{ hostname }}" | neosay
 
 # Build with nh on homew01 (--build-host" not found)
