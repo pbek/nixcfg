@@ -255,7 +255,7 @@
           key_path = "/home/${username}/.secrets/atuin-key";
           enter_accept = true;  # Enter runs command
           style = "compact";  # No extra box around UI
-          inline_height = 32; # Max height of inline preview
+          inline_height = 32; # Maximum number of lines Atuin’s interface should take up
           prefers_reduced_motion = true;  # No automatic time updates
 #          sync.records = true; # v2 sync (not working)
           workspaces = true;  # Filter in directories with git repositories
