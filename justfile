@@ -87,7 +87,7 @@ nh-build-on-caliban:
 # Build the current host on the Home01 host (use "--max-jobs 1" to restict downloads)
 [group('build')]
 build-on-home01 args='':
-    nixos-rebuild --max-jobs 1 --build-host omega@home01.lan --flake .#{{ hostname }} build {{ args }}
+    nixos-rebuild --build-host omega@home01.lan --flake .#{{ hostname }} build {{ args }}
     echo "❄️ nixcfg build-on-home01 finished on {{ hostname }}" | neosay
 
 # Build with nh on homew01 (--build-host" not found)
