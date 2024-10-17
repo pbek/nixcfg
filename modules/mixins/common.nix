@@ -39,7 +39,7 @@
         tmux = "zellij";
         dig = "dog";
         diff = "difft";
-        ping = "pingu";
+#        ping = "pingu";
         tar = "ouch";
         ps = "procs";
       };
@@ -158,7 +158,7 @@
     dogdns  # dig replacement
     broot # fast directory switcher (has "br" alias for changing into directories)
     difftastic # Structural diff tool that compares files based on their syntax
-    pingu # ping, but more colorful
+#    pingu # ping, but more colorful
     sysz # fzf terminal UI for systemctl
     ouch # compress and decompress files
     procs # ps "replacement"
