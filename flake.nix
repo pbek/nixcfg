@@ -86,6 +86,7 @@ outputs =
       x11Support = false;
       waylandSupport = true;
       usePlasma6 = true;  # Plasma 6 is the default, otherwise use Plasma 5
+      useStableJetbrains = false;  # Set this to true to use stable versions
     };
 
     nixosConfigurations = {
@@ -124,6 +125,7 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inherit inputs;
+          useStableJetbrains = true;
         };
       };
       # Acer Aspire 5 Laptop
@@ -136,6 +138,7 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inherit inputs;
+          useStableJetbrains = true;
         };
       };
       # Asus ROG Ally (using NixOS)
@@ -243,6 +246,7 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inherit inputs;
+          useStableJetbrains = true;
         };
       };
       # Asus ROG Ally (usually using Windows)
@@ -269,6 +273,7 @@ outputs =
           inherit inputs;
           x11Support = true;
           waylandSupport = false;
+          useStableJetbrains = true;
         };
       };
       # macBook
@@ -278,7 +283,10 @@ outputs =
           ./hosts/neptun/configuration.nix
           ./hosts/neptun/hardware-configuration.nix
         ];
-        specialArgs = self.commonArgs // { inherit inputs; };
+        specialArgs = self.commonArgs // {
+          inherit inputs;
+          useStableJetbrains = true;
+        };
       };
       # TU HP EliteBook Laptop 820 G4
       eris = nixpkgs.lib.nixosSystem {
