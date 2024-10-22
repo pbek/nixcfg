@@ -17,14 +17,9 @@ in python.pkgs.buildPythonApplication rec {
     hash = "sha256-dKLLGrFmoA8RfLyLUsVeO74JRdLV4YfSO4C8Yy8F148=";
   };
 
-#  postPatch = ''
-#    # only setup.py has up to date dependencies
-#    rm pyproject.toml
-#  '';
-#
-#  nativeBuildInputs = with python.pkgs; [
-#    setuptools
-#  ];
+  nativeBuildInputs = with python.pkgs; [
+    setuptools
+  ];
 
   # has no tests
   doCheck = false;
@@ -32,8 +27,9 @@ in python.pkgs.buildPythonApplication rec {
   meta = with lib; {
     changelog = "https://github.com/marph91/jimmy/releases/tag/${src.rev}";
     description = " Convert your notes to Markdown";
+    mainProgram = "jimmy";
     homepage = "https://github.com/marph91/jimmy";
     license = licenses.gpl3Only;
-    maintainers = [ maintainers.pbek ];
+    maintainers = with maintainers; [ pbek ];
   };
 }
