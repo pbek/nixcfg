@@ -58,7 +58,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    stable.calibre
+    calibre
     zoom-us
     blender
     # Temporarily disabled for: sip-4.19.25 not supported for interpreter python3.12
