@@ -85,7 +85,10 @@
   hardware.nvidia.modesetting.enable = true;
   # Try NVIDIA driver 550, inestead of 555
 #  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production;
-  hardware.nvidia.open = false;
+
+  # GeForce RTX 2070 SUPER should support open source driver
+  # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
+  hardware.nvidia.open = true;
 
   # Wayland
 #  services.displayManager.defaultSession = "plasmawayland";
