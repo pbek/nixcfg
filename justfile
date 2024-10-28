@@ -79,6 +79,12 @@ build-on-caliban:
     nixos-rebuild --build-host omega@caliban.netbird.cloud --flake .#{{ hostname }} build
     echo "❄️ nixcfg build-on-caliban finished on {{ hostname }}" | neosay
 
+# Build the current host on the Sinope host
+[group('build')]
+build-on-sinope:
+    nixos-rebuild --build-host omega@sinope.netbird.cloud --flake .#{{ hostname }} build
+    echo "❄️ nixcfg build-on-sinope finished on {{ hostname }}" | neosay
+
 # Build with nh on caliban (--build-host" not found)
 [group('build')]
 nh-build-on-caliban:
