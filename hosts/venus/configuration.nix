@@ -61,6 +61,7 @@
     calibre
     zoom-us
     blender
+#    blender-hip
     # Temporarily disabled for: sip-4.19.25 not supported for interpreter python3.12
 #     cura
     wowup-cf
@@ -78,10 +79,12 @@
   # Try to use the latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # Enable hardware accelerated graphics drivers
+  hardware.graphics.enable = true;
+
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
-  hardware.graphics.enable = true;
   hardware.nvidia.modesetting.enable = true;
   # Try NVIDIA driver 550, inestead of 555
 #  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production;
@@ -89,6 +92,10 @@
   # GeForce RTX 2070 SUPER should support open source driver
   # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
   hardware.nvidia.open = true;
+
+#  # https://nixos.wiki/wiki/AMD_GPU
+#  services.xserver.videoDrivers = [ "amdgpu" ];
+#  boot.initrd.kernelModules = [ "amdgpu" ];
 
   # Wayland
 #  services.displayManager.defaultSession = "plasmawayland";
