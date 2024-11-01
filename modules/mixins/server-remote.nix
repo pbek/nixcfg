@@ -4,6 +4,9 @@
     ./server-common.nix
   ];
 
+  # Enable QEMU guest services (qemu-guest-agent) for Netcup
+  services.qemuGuest.enable = true;
+
   # https://mynixos.com/options/services.openssh
   services.openssh = {
     listenAddresses = [ { addr = "0.0.0.0"; port = 2222; } ];
