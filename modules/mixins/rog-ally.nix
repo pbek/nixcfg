@@ -17,8 +17,12 @@
   # Virtual keyboard at login screen does not work in plasma6!
 #  services.desktopManager.plasma6.enable = true;
 #  services.displayManager.defaultSession = "plasmax11";
+  services.desktopManager.plasma6.enable = true;
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+    baloo
+  ];
 
-  services.xserver.desktopManager.plasma5.enable = true;
+#  services.xserver.desktopManager.plasma5.enable = true;
 
   # GTK themes are not applied in Wayland applications / Window Decorations missing / Cursor looks different
   # https://nixos.wiki/wiki/KDE#GTK_themes_are_not_applied_in_Wayland_applications_.2F_Window_Decorations_missing_.2F_Cursor_looks_different
@@ -26,20 +30,20 @@
 
 #  environment.systemPackages = with pkgs.kdePackages; [
   environment.systemPackages = with pkgs; [
-    libsForQt5.kwalletmanager
-    libsForQt5.plasma-systemmonitor
-    libsForQt5.spectacle
-    libsForQt5.ark
-    libsForQt5.bluedevil
-    libsForQt5.dolphin
-    libsForQt5.dolphin-plugins
-    libsForQt5.gwenview
-    libsForQt5.okular
-    libsForQt5.plasma-browser-integration
-    libsForQt5.plasma-disks
-    libsForQt5.plasma-nm
-    libsForQt5.plasma-pa
-    libsForQt5.kate
+    kdePackages.kwalletmanager
+    kdePackages.plasma-systemmonitor
+    kdePackages.spectacle
+    kdePackages.ark
+    kdePackages.bluedevil
+    kdePackages.dolphin
+    kdePackages.dolphin-plugins
+    kdePackages.gwenview
+    kdePackages.okular
+    kdePackages.plasma-browser-integration
+    kdePackages.plasma-disks
+    kdePackages.plasma-nm
+    kdePackages.plasma-pa
+    kdePackages.kate
 
     onboard # On-screen keyboard
     google-chrome # Touch scrolling in Chrome
