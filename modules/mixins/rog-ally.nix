@@ -14,15 +14,10 @@
     networkmanager.enable = true;
   };
 
-  # Virtual keyboard at login screen does not work in plasma6!
-#  services.desktopManager.plasma6.enable = true;
-#  services.displayManager.defaultSession = "plasmax11";
   services.desktopManager.plasma6.enable = true;
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
     baloo
   ];
-
-#  services.xserver.desktopManager.plasma5.enable = true;
 
   # GTK themes are not applied in Wayland applications / Window Decorations missing / Cursor looks different
   # https://nixos.wiki/wiki/KDE#GTK_themes_are_not_applied_in_Wayland_applications_.2F_Window_Decorations_missing_.2F_Cursor_looks_different
