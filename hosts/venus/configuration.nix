@@ -82,20 +82,20 @@
   # Enable hardware accelerated graphics drivers
   hardware.graphics.enable = true;
 
-  # https://nixos.wiki/wiki/nvidia
-  services.xserver.videoDrivers = [ "nvidia" ];
-  nixpkgs.config.nvidia.acceptLicense = true;
-  hardware.nvidia.modesetting.enable = true;
-  # Try NVIDIA driver 550, inestead of 555
-#  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production;
+#  # https://nixos.wiki/wiki/nvidia
+#  services.xserver.videoDrivers = [ "nvidia" ];
+#  nixpkgs.config.nvidia.acceptLicense = true;
+#  hardware.nvidia.modesetting.enable = true;
+#  # Try NVIDIA driver 550, inestead of 555
+##  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production;
 
-  # GeForce RTX 2070 SUPER should support open source driver
-  # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
-  hardware.nvidia.open = true;
+#  # GeForce RTX 2070 SUPER should support open source driver
+#  # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
+#  hardware.nvidia.open = true;
 
-#  # https://nixos.wiki/wiki/AMD_GPU
-#  services.xserver.videoDrivers = [ "amdgpu" ];
-#  boot.initrd.kernelModules = [ "amdgpu" ];
+  # https://nixos.wiki/wiki/AMD_GPU
+  services.xserver.videoDrivers = [ "amdgpu" ];
+  boot.initrd.kernelModules = [ "amdgpu" ];
 
   # Wayland
 #  services.displayManager.defaultSession = "plasmawayland";
