@@ -108,7 +108,9 @@
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.graphics.enable = true;
   hardware.nvidia = {
-    open = false;
+    # GeForce RTX 2070 SUPER should support open source driver
+    # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
+    open = true;
 
     # production: version 550
     # latest: version 560
@@ -119,12 +121,8 @@
     # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
     # of just the bare essentials.
     powerManagement.enable = true;
+
+#    # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
+#    modesetting.enable = true;
   };
-
-
-  # The NVIDIA GeForce GTX 760 GPU needs the NVIDIA 470.xx Legacy drivers
-  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
-
-  # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
-  hardware.nvidia.modesetting.enable = true;
 }
