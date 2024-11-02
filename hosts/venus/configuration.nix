@@ -60,13 +60,14 @@
   environment.systemPackages = with pkgs; [
     calibre
     zoom-us
-    blender
-#    blender-hip
+#    blender
+    blender-hip # Blender with HIP support for AMD GPUs
     # Temporarily disabled for: sip-4.19.25 not supported for interpreter python3.12
 #     cura
     wowup-cf
 #    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
     heroic # Epic Games Store
+    amdgpu_top # AMD GPU monitoring
   ];
 
   # https://nixos.wiki/wiki/steam
@@ -82,30 +83,18 @@
   # Enable hardware accelerated graphics drivers
   hardware.graphics.enable = true;
 
-#  # https://nixos.wiki/wiki/nvidia
-#  services.xserver.videoDrivers = [ "nvidia" ];
-#  nixpkgs.config.nvidia.acceptLicense = true;
-#  hardware.nvidia.modesetting.enable = true;
-#  # Try NVIDIA driver 550, inestead of 555
-##  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production;
-
-#  # GeForce RTX 2070 SUPER should support open source driver
-#  # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
-#  hardware.nvidia.open = true;
-
   # https://nixos.wiki/wiki/AMD_GPU
   services.xserver.videoDrivers = [ "amdgpu" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
 
-  # Wayland
-#  services.displayManager.defaultSession = "plasmawayland";
-#  # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
-#  home-manager.users.${username} = {
-#    # https://mynixos.com/home-manager/options/services.espanso
-#    services.espanso = {
-#      package = pkgs.espanso-wayland;
+  services.ollama = {
+    enable = true;
+    acceleration = "rocm";
+#    environmentVariables = {
+#      HCC_AMDGPU_TARGET = "gfx1100"; # used to be necessary, but doesn't seem to anymore
 #    };
-#  };
+    rocmOverrideGfx = "11.0.0";
+  };
 
 #  # Enable suspend to RAM
 #  # Sleep is hindered by a compontent on the motherboard
