@@ -200,6 +200,14 @@
               triggers = [ ":ellip" ":..." ];
               replace = "…";
             }
+            {
+              triggers = [ ":tm" ];
+              replace = "™";
+            }
+            {
+              triggers = [ ":copy" ];
+              replace = "©";
+            }
           ];
         };
         abbreviations = {
