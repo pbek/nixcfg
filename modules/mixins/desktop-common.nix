@@ -39,7 +39,8 @@
     chromium
     google-chrome
     vscode
-    yubikey-manager
+    # Use stable version of yubikey-manager, because of https://github.com/NixOS/nixpkgs/issues/352598
+    stable.yubikey-manager
     pam_u2f
     yubico-pam
 #    scdaemon
