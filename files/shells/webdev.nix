@@ -2,7 +2,7 @@
   pkgs.mkShell {
     # nativeBuildInputs is usually what you want -- tools you need to run
     nativeBuildInputs = with pkgs; [
-      nodejs-18_x
+      nodejs_22
       php83
       php83Extensions.ldap
       php83Extensions.gd
