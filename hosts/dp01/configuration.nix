@@ -10,7 +10,6 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./disk-config.zfs.nix
       ../../modules/mixins/users.nix
       ../../modules/mixins/desktop.nix
       ../../modules/mixins/audio.nix
@@ -20,35 +19,21 @@
     ];
 
   # Bootloader.
-  boot.supportedFilesystems = [ "zfs" ];
-  services.zfs.autoScrub.enable = true;
-  boot.zfs.requestEncryptionCredentials = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.loader.grub = {
-    enable = true;
-    zfsSupport = true;
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-    mirroredBoots = [
-      { devices = [ "nodev"]; path = "/boot"; }
-    ];
+  # Setup keyfile
+  boot.initrd.secrets = {
+    "/crypto_keyfile.bin" = null;
   };
 
-  boot.initrd.network = {
-    enable = true;
-    postCommands = ''
-      sleep 2
-      zpool import -a;
-    '';
-  };
+  networking.hostName = "dp01"; # Define your hostname.
 
-  users.users.${username}.initialPassword = username;
+  # Enable networking
+  networking.networkmanager.enable = true;
 
-  networking = {
-    hostId = "dddfda01";  # needed for ZFS
-    hostName = "db01";
-    networkmanager.enable = true;
-  };
+  # For testing https://gitlab.tugraz.at/vpu-private/ansible/
+  virtualisation.multipass.enable = true;
 
   environment.systemPackages = with pkgs; [
     (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
