@@ -149,10 +149,10 @@ sudo nixos-install --flake .#${HOST}
 # Set password
 passwd
 
-# Clone nixcfg repository
-cd /home/omega && git clone https://github.com/pbek/nixcfg.git && cd nixcfg
-# or...
-cd /home/omega/Code && git clone git@github.com:pbek/nixcfg.git && cd nixcfg
+# Clone nixcfg repository via https (read-only)
+cd ~ && git clone https://github.com/pbek/nixcfg.git && cd nixcfg
+# or via ssh (read-write)
+cd ~ && git clone git@github.com:pbek/nixcfg.git && cd nixcfg
 
 # Update channels, so command-not-found will work
 sudo nix-channel --update
