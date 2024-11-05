@@ -297,6 +297,18 @@ outputs =
         ];
         specialArgs = self.commonArgs // { inherit inputs; };
       };
+      # TU "Guest" HP EliteBook Laptop 840 G5
+      dp01 = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = commonDesktopModules ++ [
+          ./hosts/dp01/configuration.nix
+          ./hosts/dp01/hardware-configuration.nix
+        ];
+        specialArgs = self.commonArgs // {
+          inherit inputs;
+          username = "dp";
+        };
+      };
 #      # Home Server miniserver24 for Markus
 #      miniserver24 = nixpkgs.lib.nixosSystem {
 #        inherit system;
