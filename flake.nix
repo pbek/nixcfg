@@ -303,6 +303,7 @@ outputs =
         modules = commonDesktopModules ++ [
           ./hosts/dp01/configuration.nix
           ./hosts/dp01/hardware-configuration.nix
+          disko.nixosModules.disko
         ];
         specialArgs = self.commonArgs // {
           inherit inputs;
