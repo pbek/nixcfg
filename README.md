@@ -138,8 +138,8 @@ nix run github:nix-community/nixos-anywhere -- --disk-encryption-keys /tmp/secre
 # Boot some nixos minimal image (for a ZFS setup you need to have ZFS support enabled)
 # Make sure you have nixcfg checked out and are in the nixcfg directory
 export HOST=ally2
-sudo nix --experimental-features nix-command --experimental-features flakes run github:nix-community/disko -- --mode disko ./hosts/${HOST}/disk-config.zfs.nix
-sudo nix --experimental-features nix-command --experimental-features flakes run github:nix-community/disko -- --flake .#${HOST} --write-efi-entries
+sudo nix --experimental-features nix-command --extra-experimental-features flakes run github:nix-community/disko -- --mode disko ./hosts/${HOST}/disk-config.zfs.nix
+sudo nix --experimental-features nix-command --extra-experimental-features flakes run github:nix-community/disko -- --flake .#${HOST} --write-efi-entries
 sudo nixos-install --flake .#${HOST}
 ```
 
