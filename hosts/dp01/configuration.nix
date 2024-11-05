@@ -42,6 +42,8 @@
     '';
   };
 
+  users.users.${username}.initialPassword = username;
+
   networking = {
     hostId = "dddfda01";  # needed for ZFS
     hostName = "db01";
