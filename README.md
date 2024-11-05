@@ -136,6 +136,7 @@ nix run github:nix-community/nixos-anywhere -- --disk-encryption-keys /tmp/secre
 
 ```bash
 # Boot some nixos minimal image (for a ZFS setup you need to have ZFS support enabled)
+# If there is disk encryption, then create a /tmp/secret.key with the disk-password (at least 8 characters)
 # Make sure you have nixcfg checked out and are in the nixcfg directory
 export HOST=ally2
 sudo nix --experimental-features nix-command --extra-experimental-features flakes run github:nix-community/disko -- --mode disko ./hosts/${HOST}/disk-config.zfs.nix
