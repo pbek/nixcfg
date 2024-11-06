@@ -22,20 +22,14 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Setup keyfile
-  boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
-  };
+  boot.initrd.luks.devices."luks-0eda41dc-43e4-4a37-92ac-b33be4c24d4f".device = "/dev/disk/by-uuid/0eda41dc-43e4-4a37-92ac-b33be4c24d4f";
 
   networking.hostName = "dp01"; # Define your hostname.
 
   # Enable networking
   networking.networkmanager.enable = true;
 
-  # For testing https://gitlab.tugraz.at/vpu-private/ansible/
-  virtualisation.multipass.enable = true;
-
   environment.systemPackages = with pkgs; [
-    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
+    go-passbolt-cli
   ];
 }
