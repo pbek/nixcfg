@@ -164,8 +164,6 @@
     procs # ps "replacement"
     just # command runner like make
     neosay # send messages to matrix room
-    # Use stable yazi temporarily, because of https://github.com/NixOS/nixpkgs/issues/353119
-    stable.yazi # terminal file manager
   ];
 
   # Do garbage collection
@@ -225,9 +223,7 @@
       # Blazing fast terminal file manager written in Rust
       # https://github.com/sxyazi/yazi
       yazi = {
-        # Disable yazi temporarily, because of https://github.com/NixOS/nixpkgs/issues/353119 and
-        # https://github.com/NixOS/nixpkgs/issues/353119#issuecomment-2453521926 caused an error
-#        enable = true;
+        enable = true;
         enableFishIntegration = true;
         enableBashIntegration = true;
       };
