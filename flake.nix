@@ -313,8 +313,13 @@ outputs =
         specialArgs = self.commonArgs // {
           inherit inputs;
           userLogin = "dp";
-          userNameLong = "dp";
-          userEmail = "dp@dp";
+#          userNameLong = "dp";
+#          userNameShort = "dp";
+#          userEmail = "dp@dp";
+          # Temporary "owner" of this machine
+          userNameLong = "Andrea Ortner";
+          userNameShort = "Andrea";
+          userEmail = "andrea.ortner@tugraz.at";
         };
       };
 #      # Home Server miniserver24 for Markus
