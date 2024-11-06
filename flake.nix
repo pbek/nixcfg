@@ -239,6 +239,7 @@ outputs =
           inherit inputs;
           userLogin = "cow";
           userNameLong = "cow";
+          userNameShort = "cow";
           userEmail = "cow@cow";
         };
       };
