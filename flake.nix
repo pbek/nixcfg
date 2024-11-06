@@ -209,7 +209,10 @@ outputs =
           disko.nixosModules.disko
           ./hosts/netcup01/configuration.nix
         ];
-        specialArgs = self.commonArgs // { inherit inputs; };
+        specialArgs = self.commonArgs // {
+          inherit inputs;
+          useSecrets = false;
+        };
       };
       # Netcup Server netcup02
       netcup02 = nixpkgs.lib.nixosSystem {
@@ -218,7 +221,10 @@ outputs =
           disko.nixosModules.disko
           ./hosts/netcup02/configuration.nix
         ];
-        specialArgs = self.commonArgs // { inherit inputs; };
+        specialArgs = self.commonArgs // {
+          inherit inputs;
+          useSecrets = false;
+        };
       };
       # Home Server home01
       home01 = nixpkgs.lib.nixosSystem {
@@ -227,7 +233,10 @@ outputs =
           disko.nixosModules.disko
           ./hosts/home01/configuration.nix
         ];
-        specialArgs = self.commonArgs // { inherit inputs; };
+        specialArgs = self.commonArgs // {
+          inherit inputs;
+          useSecrets = false;
+        };
       };
       # Server moobox01 for Alex
       moobox01 = nixpkgs.lib.nixosSystem {
@@ -242,6 +251,7 @@ outputs =
           userNameLong = "cow";
           userNameShort = "cow";
           userEmail = "cow@cow";
+          useSecrets = false;
         };
       };
       # Asus Laptop
@@ -267,6 +277,7 @@ outputs =
         specialArgs = self.commonArgs // {
           inherit inputs;
           termFontSize = 15.0;
+          useSecrets = false;
         };
       };
       # PC Garage
