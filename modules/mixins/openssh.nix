@@ -1,4 +1,4 @@
-{ lib, userLogin, ... }:
+{ lib, userLogin, useSecrets, ... }:
 {
   # https://mynixos.com/options/services.openssh
   services.openssh = {
@@ -25,7 +25,7 @@
   };
 
   # Add Yubikey private ssh key
-  age.secrets = {
+  age.secrets = if useSecrets then {
     id_ecdsa_sk = {
       file = ../../secrets/id_ecdsa_sk.age;
       path = "/home/${userLogin}/.ssh/id_ecdsa_sk";
@@ -33,5 +33,5 @@
       group = "users";
       mode = "600";
     };
-  };
+  } else {};
 }

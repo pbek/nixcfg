@@ -84,6 +84,7 @@ outputs =
       userNameLong = "Patrizio Bekerle";
       userNameShort = "Patrizio";
       userEmail = "patrizio@bekerle.com";
+      useSecrets = true;
       termFontSize = 12.0;
       # By default we will use Wayland with Plasma 6
       x11Support = false;
@@ -320,6 +321,7 @@ outputs =
           userNameLong = "Andrea Ortner";
           userNameShort = "Andrea";
           userEmail = "andrea.ortner@tugraz.at";
+          useSecrets = false;
         };
       };
 #      # Home Server miniserver24 for Markus

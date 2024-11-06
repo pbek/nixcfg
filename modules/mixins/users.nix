@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, userLogin, ... }:
+{ lib, config, pkgs, inputs, userLogin, useSecrets, ... }:
 
 {
   # Set some fish config
@@ -23,8 +23,8 @@
     };
   };
 
-  # Add nixpkgs-review environment
-  age.secrets = {
+  age.secrets = if useSecrets then {
+    # Add nixpkgs-review environment
     nixpkgs-review = {
       file = ../../secrets/nixpkgs-review.age;
       path = "/home/${userLogin}/.secrets/nixpkgs-review.env";
@@ -80,5 +80,5 @@
       group = "users";
       mode = "600";
     };
-  };
+  } else {};
 }
