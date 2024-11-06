@@ -61,7 +61,7 @@
     calibre
     zoom-us
 #    blender
-    stable.blender-hip # Blender with HIP support for AMD GPUs
+    blender-hip # Blender with HIP support for AMD GPUs
     # Temporarily disabled for: sip-4.19.25 not supported for interpreter python3.12
 #     cura
     wowup-cf

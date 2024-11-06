@@ -51,7 +51,7 @@
     bitscope.meter
     bitscope.dso
     bitscope.logic
-    stable.blender
+    blender
     # Temporarily disabled for: sip-4.19.25 not supported for interpreter python3.12
 #    cura
     go-passbolt-cli
