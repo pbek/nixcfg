@@ -56,7 +56,7 @@ switch args='':
     exit_code=$?
     runtime=$((end_time - start_time))
     if [ $runtime -gt 10 ]; then
-      echo "❄️ nixcfg switch finished on {{ hostname }}, exit code: $exit_code (runtime: ${runtime}s)" | neosay
+      if test -f ~/.config/neosay/config.json; then echo "❄️ nixcfg switch finished on {{ hostname }}, exit code: $exit_code (runtime: ${runtime}s)" | neosay; fi
     fi
 
 # Build the current host with nix-rebuild
@@ -77,13 +77,13 @@ build: (_build hostname)
 [group('build')]
 build-on-caliban:
     nixos-rebuild --build-host omega@caliban.netbird.cloud --flake .#{{ hostname }} build
-    echo "❄️ nixcfg build-on-caliban finished on {{ hostname }}" | neosay
+    if test -f ~/.config/neosay/config.json; then echo "❄️ nixcfg build-on-caliban finished on {{ hostname }}" | neosay; fi
 
 # Build the current host on the Sinope host
 [group('build')]
 build-on-sinope:
     nixos-rebuild --build-host omega@sinope.netbird.cloud --flake .#{{ hostname }} build
-    echo "❄️ nixcfg build-on-sinope finished on {{ hostname }}" | neosay
+    if test -f ~/.config/neosay/config.json; then echo "❄️ nixcfg build-on-sinope finished on {{ hostname }}" | neosay; fi
 
 # Build with nh on caliban (--build-host" not found)
 [group('build')]
@@ -94,7 +94,7 @@ nh-build-on-caliban:
 [group('build')]
 build-on-home01 args='':
     nixos-rebuild --build-host omega@home01.lan --flake .#{{ hostname }} build {{ args }}
-    echo "❄️ nixcfg build-on-home01 finished on {{ hostname }}" | neosay
+    if test -f ~/.config/neosay/config.json; then echo "❄️ nixcfg build-on-home01 finished on {{ hostname }}" | neosay; fi
 
 # Build with nh on homew01 (--build-host" not found)
 [group('build')]
