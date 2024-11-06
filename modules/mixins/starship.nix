@@ -24,7 +24,7 @@
         git_branch = {
           style = "bold pink";
         };
-        userLogin = {
+        username = {
           disabled = false;
           show_always = true;
         };
