@@ -16,5 +16,5 @@
   ];
 
   users.users.root.initialPassword = "root";
-  users.users.${username}.initialPassword = username;
+  users.users.${userLogin}.initialPassword = userLogin;
 }

@@ -1,4 +1,4 @@
-{ config, inputs, username, ... }:
+{ config, inputs, userLogin, ... }:
 {
   imports = [
     ./server-common.nix
@@ -14,7 +14,7 @@
   # Allow local IPs to connect even if they fail to login
   services.fail2ban.ignoreIP = [ "192.168.1.0/16" ];
 
-  users.users.${username} = {
+  users.users.${userLogin} = {
     openssh.authorizedKeys.keys = [
       # Yubikey public key
       "sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBFDWxqigrXdCx7mX/yvBpHJf2JIab9HIrjof+sCbn0cOr/NySAirjE7tWxkZJPBrUs/8wSgn/rFO742O+NkOXTYAAAAEc3NoOg== omega@yubikey"

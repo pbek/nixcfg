@@ -1,7 +1,7 @@
-{ config, pkgs, inputs, username, ... }:
+{ config, pkgs, inputs, userLogin, ... }:
 {
   # https://rycee.gitlab.io/home-manager/options.html
-  home-manager.users.${username} = {
+  home-manager.users.${userLogin} = {
     # enable https://starship.rs
     programs.starship =
     let
@@ -24,7 +24,7 @@
         git_branch = {
           style = "bold pink";
         };
-        username = {
+        userLogin = {
           disabled = false;
           show_always = true;
         };

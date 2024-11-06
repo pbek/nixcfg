@@ -8,7 +8,7 @@
 # build in vm
 # > nixos-rebuild --flake .#vm-home01 build-vm
 #
-{ lib, config, username, ... }:
+{ lib, config, userLogin, ... }:
 {
   imports =
   [
@@ -16,5 +16,5 @@
   ];
 
   users.users.root.initialPassword = "root";
-  users.users.${username}.initialPassword = username;
+  users.users.${userLogin}.initialPassword = userLogin;
 }

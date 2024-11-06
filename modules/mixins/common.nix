@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, username, lib, ... }:
+{ config, pkgs, inputs, userLogin, userNameLong, lib, ... }:
 {
   imports = [
     ./starship.nix
@@ -57,9 +57,9 @@
   };
 
   # Define a user account. Don't forget to set a password with "passwd".
-  users.users.${username} = {
+  users.users.${userLogin} = {
     isNormalUser = true;
-    description = lib.mkDefault "Patrizio Bekerle";
+    description = lib.mkDefault userNameLong;
     extraGroups = [ "networkmanager" "wheel" "docker" "dialout" "input" ];
     shell = pkgs.fish;
     packages = with pkgs; [
@@ -180,7 +180,7 @@
   # https://nixos.wiki/wiki/Restic
   security.wrappers.restic = {
     source = "${pkgs.restic.out}/bin/restic";
-    owner = username;
+    owner = userLogin;
     group = "users";
     permissions = "u=rwx,g=,o=";
     capabilities = "cap_dac_read_search=+ep";
@@ -198,7 +198,7 @@
 
   # https://rycee.gitlab.io/home-manager/options.html
   # https://nix-community.github.io/home-manager/options.html#opt-home.file
-  home-manager.users.${username} = {
+  home-manager.users.${userLogin} = {
     /* The home.stateVersion option does not have a default and must be set */
     home.stateVersion = "24.11";
 
@@ -258,7 +258,7 @@
         settings = {
           sync_address = "https://atuin.bekerle.com";
           sync_frequency = "15m";
-          key_path = "/home/${username}/.secrets/atuin-key";
+          key_path = "/home/${userLogin}/.secrets/atuin-key";
           enter_accept = true;  # Enter runs command
           style = "compact";  # No extra box around UI
           inline_height = 32; # Maximum number of lines Atuin’s interface should take up

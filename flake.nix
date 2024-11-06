@@ -80,7 +80,10 @@ outputs =
 #     hostname = config.networking.hostName;
 #    nixosModules = import ./modules { inherit (nixpkgs) lib; };
     commonArgs = {
-      username = "omega";
+      userLogin = "omega";
+      userNameLong = "Patrizio Bekerle";
+      userNameShort = "Patrizio";
+      userEmail = "patrizio@bekerle.com";
       termFontSize = 12.0;
       # By default we will use Wayland with Plasma 6
       x11Support = false;
@@ -234,7 +237,9 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inherit inputs;
-          username = "cow";
+          userLogin = "cow";
+          userNameLong = "cow";
+          userEmail = "cow@cow";
         };
       };
       # Asus Laptop
@@ -306,7 +311,9 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inherit inputs;
-          username = "dp";
+          userLogin = "dp";
+          userNameLong = "dp";
+          userEmail = "dp@dp";
         };
       };
 #      # Home Server miniserver24 for Markus
@@ -319,7 +326,7 @@ outputs =
 #        ];
 #        specialArgs = self.commonArgs // {
 #          inherit inputs;
-#          username = "mba";
+#          userLogin = "mba";
 #        };
 #      };
 #      vm-netcup02 = nixpkgs.lib.nixosSystem {
@@ -340,7 +347,7 @@ outputs =
 #        ];
 #        specialArgs = self.commonArgs // {
 #          inherit inputs;
-#          username = "mba";
+#          userLogin = "mba";
 #        };
 #      };
 #      # VM Desktop

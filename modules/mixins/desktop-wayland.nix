@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, username, ... }:
+{ config, pkgs, inputs, userLogin, ... }:
 {
   imports = [
     ./desktop-common.nix
@@ -23,7 +23,7 @@
     wl-clipboard
   ];
 
-  home-manager.users.${username} = {
+  home-manager.users.${userLogin} = {
     xdg.desktopEntries = {
       ferdium-wayland = {
         name = "Ferdium Wayland";

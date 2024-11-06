@@ -4,7 +4,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, username, ... }:
+{ config, pkgs, userLogin, ... }:
 
 {
   imports =
@@ -36,7 +36,7 @@
 
   # https://nixos.wiki/wiki/VirtualBox
   virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = [ username ];
+  users.extraGroups.vboxusers.members = [ userLogin ];
   # virtualisation.virtualbox.host.enableExtensionPack = true;
 
   # https://nixos.wiki/wiki/steam

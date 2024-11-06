@@ -1,5 +1,5 @@
   # miniserver24 server for Markus
-{ modulesPath, config, pkgs, username, ... }:
+{ modulesPath, config, pkgs, userLogin, ... }:
 
 {
   imports =
@@ -35,7 +35,7 @@
   # No password needed for sudo for wheel group
   security.sudo.wheelNeedsPassword = false;
 
-  users.users.${username} = {
+  users.users.${userLogin} = {
     description = "Markus";
     openssh.authorizedKeys.keys = [
       # Markus public key
@@ -44,7 +44,7 @@
     ];
   };
 
-  home-manager.users.${username} = {
+  home-manager.users.${userLogin} = {
     programs.git = {
       userName  = "Markus Barta";
       userEmail = "markus@barta.com";

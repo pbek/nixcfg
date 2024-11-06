@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, username, ... }:
+{ config, pkgs, inputs, userLogin, ... }:
 {
   imports = [ ];
 
@@ -44,7 +44,7 @@
     filelight
   ];
 
-  home-manager.users.${username} = {
+  home-manager.users.${userLogin} = {
     # https://github.com/nix-community/plasma-manager/blob/trunk/examples/home.nix
     programs.plasma = {
       enable = true;

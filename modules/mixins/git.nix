@@ -1,13 +1,13 @@
-{ config, pkgs, inputs, username, lib, ... }:
+{ config, pkgs, inputs, userLogin, userNameLong, userEmail, lib, ... }:
 {
   # https://home-manager-options.extranix.com
-  home-manager.users.${username} = {
+  home-manager.users.${userLogin} = {
     programs.git = {
       enable = true;
       # use "git diff --no-ext-diff" for creating patches!
       difftastic.enable = true;
-      userName  = lib.mkDefault "Patrizio Bekerle";
-      userEmail = lib.mkDefault "patrizio@bekerle.com";
+      userName  = lib.mkDefault userNameLong;
+      userEmail = lib.mkDefault userEmail;
       ignores = [ ".idea" ".direnv" ];
       signing = {
         signByDefault = false;
@@ -26,8 +26,8 @@
     # Migrate to https://search.nixos.org/options?channel=unstable&show=programs.git.config&from=0&size=50&sort=relevance&type=packages&query=programs.git
     home.file.".gitconfig".text = ''
       [user]
-        name = Patrizio Bekerle
-        email = patrizio@bekerle.com
+        name = ${userNameLong}
+        email = ${userEmail}
         signingkey = E00548D5D6AC812CAAD2AFFA9C42B05E591360DC
       [gc]
         autoDetach = false
@@ -40,7 +40,7 @@
       [url "ssh://git@gitlab.tugraz.at/"]
         insteadOf = https://gitlab.tugraz.at/
       [core]
-        excludesfile = /home/${username}/.gitignore
+        excludesfile = /home/${userLogin}/.gitignore
       [commit]
         gpgsign = false
       [gpg]

@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, lib, username, ... }:
+{ config, pkgs, inputs, lib, userLogin, userNameLong, userEmail, ... }:
 {
   imports = [
     ./common.nix
@@ -38,13 +38,13 @@
   };
 
   # https://rycee.gitlab.io/home-manager/options.html
-  home-manager.users.${username} = {
+  home-manager.users.${userLogin} = {
     programs.git = {
       enable = true;
       # use "git diff --no-ext-diff" for creating patches!
       difftastic.enable = true;
-      userName  = lib.mkDefault "Patrizio Bekerle";
-      userEmail = lib.mkDefault "patrizio@bekerle.com";
+      userName  = lib.mkDefault userNameLong;
+      userEmail = lib.mkDefault userEmail;
       ignores = [ ".idea" ".direnv" ];
     };
   };

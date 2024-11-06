@@ -1,5 +1,5 @@
 # home01 server
-{ modulesPath, config, pkgs, username, ... }:
+{ modulesPath, config, pkgs, userLogin, ... }:
 
 {
   imports =

@@ -1,4 +1,4 @@
-{ config, pkgs, username, lib, ... }:
+{ config, pkgs, userLogin, userNameLong, userEmail, lib, ... }:
 
 {
   imports =
@@ -65,13 +65,13 @@
   };
 
   # https://rycee.gitlab.io/home-manager/options.html
-  home-manager.users.${username} = {
+  home-manager.users.${userLogin} = {
     programs.git = {
       enable = true;
       # use "git diff --no-ext-diff" for creating patches!
       difftastic.enable = true;
-      userName  = lib.mkDefault "Patrizio Bekerle";
-      userEmail = lib.mkDefault "patrizio@bekerle.com";
+      userName  = lib.mkDefault userNameLong;
+      userEmail = lib.mkDefault userEmail;
       ignores = [ ".idea" ".direnv" ];
     };
   };
@@ -106,7 +106,7 @@
 
   services.handheld-daemon = {
     enable = true;
-    user = username;
+    user = userLogin;
     package = (pkgs.callPackage ../../apps/handheld-daemon/package.nix { }).override {
     };
   };

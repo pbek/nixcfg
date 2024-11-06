@@ -4,7 +4,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, username, ... }:
+{ config, pkgs, userLogin, ... }:
 
 {
   imports =
@@ -70,7 +70,7 @@
   # Extract
 
   # https://github.com/NixOS/nixpkgs/issues/215450
-  # users.users.${username} = {
+  # users.users.${userLogin} = {
   #   packages = with pkgs; [
   #     playwright
   #     (runCommand "wrapped-playwright" { buildInputs = [ makeWrapper ]; } ''
@@ -83,12 +83,12 @@
 
   # https://nixos.wiki/wiki/VirtualBox
   virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = [ username ];
+  users.extraGroups.vboxusers.members = [ userLogin ];
   # virtualisation.virtualbox.host.enableExtensionPack = true;
 
   # Try to get get around: /nix/store/lx50avim6rzf20b69q4zwak07c479qwp-udev-rules/60-openocd.rules:188 Unknown group 'plugdev', ignoring.
   # https://github.com/NixOS/nixpkgs/issues/81326#issuecomment-592790668
-  users.users.${username} = {
+  users.users.${userLogin} = {
     extraGroups = [ "plugdev" ];
   };
 

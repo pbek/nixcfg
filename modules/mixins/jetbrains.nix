@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, xdg, username, useStableJetbrains, ... }:
+{ config, pkgs, inputs, xdg, userLogin, useStableJetbrains, ... }:
 #{ config, inputs, xdg, ... }:
 
 let
@@ -20,14 +20,14 @@ in
     (jetbrainsPackages.plugins.addPlugins jetbrainsPackages.clion [ "github-copilot" ])
     (jetbrainsPackages.plugins.addPlugins jetbrainsPackages.goland [ "github-copilot" ])
   ];
-  home-manager.users.${username} = {
+  home-manager.users.${userLogin} = {
     xdg.desktopEntries = {
       clion-nix-shell = {
         name = "CLion with nix-shell";
         genericName = "C/C++ IDE. New. Intelligent. Cross-platform";
         comment = "Test Enhancing productivity for every C and C++ developer on Linux, macOS and Windows.";
         icon = "${jetbrainsPackages.clion}/share/pixmaps/clion.svg";
-        exec = "nix-shell /home/${username}/.shells/qt5.nix --run clion";
+        exec = "nix-shell /home/${userLogin}/.shells/qt5.nix --run clion";
         terminal = false;
         categories = [ "Development" ];
       };
@@ -37,7 +37,7 @@ in
         genericName = "Professional IDE for Web and PHP developers";
         comment = "PhpStorm provides an editor for PHP, HTML and JavaScript with on-the-fly code analysis, error prevention and automated refactorings for PHP and JavaScript code.";
         icon = "${jetbrainsPackages.phpstorm}/share/pixmaps/phpstorm.svg";
-        exec = "nix-shell /home/${username}/.shells/webdev.nix --run phpstorm";
+        exec = "nix-shell /home/${userLogin}/.shells/webdev.nix --run phpstorm";
         terminal = false;
         categories = [ "Development" ];
       };

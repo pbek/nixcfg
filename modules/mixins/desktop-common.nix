@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, username, termFontSize, ... }:
+{ config, pkgs, inputs, userLogin, termFontSize, ... }:
 {
   imports = [
     ./desktop-common-minimum.nix
@@ -193,8 +193,8 @@
 
   # https://rycee.gitlab.io/home-manager/options.html
   # https://nix-community.github.io/home-manager/options.html#opt-home.file
-  home-manager.users.${username} = {
-    # Set the path to the pia-manual repository and the username and password for the PIA VPN script
+  home-manager.users.${userLogin} = {
+    # Set the path to the pia-manual repository and the userLogin and password for the PIA VPN script
     home.file."Scripts/pia.sh" = {
       text = ''
         #!/usr/bin/env bash
@@ -213,7 +213,7 @@
         comment = "";
 #        icon = "${pkgs.qtcreator-qt6}/share/icons/hicolor/128x128/apps/QtProject-qtcreator.png";
         icon = "${pkgs.qtcreator}/share/icons/hicolor/128x128/apps/QtProject-qtcreator.png";
-        exec = "nix-shell /home/${username}/.shells/qt5.nix --run qtcreator";
+        exec = "nix-shell /home/${userLogin}/.shells/qt5.nix --run qtcreator";
         terminal = false;
         categories = [ "Development" ];
       };

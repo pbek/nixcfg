@@ -1,6 +1,6 @@
 # This module defines a small NixOS installation CD.
 # https://nixos.wiki/wiki/Creating_a_NixOS_live_CD
-{ config, pkgs, username, ... }:
+{ config, pkgs, userLogin, ... }:
 {
   imports = [
     # <nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix>

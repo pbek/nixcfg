@@ -1,7 +1,7 @@
-{ config, pkgs, username, lib, ... }:
+{ config, pkgs, userLogin, userNameShort, userNameLong, userEmail, lib, ... }:
 
 {
-  home-manager.users.${username} = {
+  home-manager.users.${userLogin} = {
     # https://mynixos.com/home-manager/options/services.espanso
     services.espanso = {
       enable = true;
@@ -58,23 +58,23 @@
             }
             {
               trigger = ":lgp";
-              replace = "Liebe Grüße\nPatrizio";
+              replace = "Liebe Grüße\n${userNameShort}";
             }
             {
               trigger = ":glg";
-              replace = "Ganz liebe Grüße\nPatrizio";
+              replace = "Ganz liebe Grüße\n${userNameShort}";
             }
             {
               trigger = ":mfg";
-              replace = "Mit freundlichen Grüßen\nPatrizio Bekerle";
+              replace = "Mit freundlichen Grüßen\n${userNameLong}";
             }
             {
               trigger = ":kr";
-              replace = "Kind regards\nPatrizio Bekerle";
+              replace = "Kind regards\n${userNameLong}";
             }
             {
               trigger = ":cp";
-              replace = "Cheers\nPatrizio";
+              replace = "Cheers\n${userNameShort}";
             }
             {
               triggers = [ ":omor" ":gmo" ];
@@ -122,7 +122,7 @@
           matches = [
             {
               trigger = ":gsign";
-              replace = "Signed-off-by: Patrizio Bekerle <patrizio@bekerle.com>";
+              replace = "Signed-off-by: ${userNameLong} <${userEmail}>";
             }
             {
               trigger = ":ghrel";
@@ -189,7 +189,7 @@
               replace = ''
                 Thanks a lot for your generous donation!
 
-                Cheers Patrizio
+                Cheers ${userNameShort}
               '';
             }
           ];
