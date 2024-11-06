@@ -20,7 +20,6 @@
       php83Extensions.gmp
       php83Extensions.sqlite3
       php83Extensions.xdebug
-      # Disable temporarily, because of https://github.com/NixOS/nixpkgs/issues/353119
-#      php83Packages.composer
+      php83Packages.composer
     ];
 }
