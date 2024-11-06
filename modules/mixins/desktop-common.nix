@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, userLogin, termFontSize, ... }:
+{ config, pkgs, inputs, userLogin, termFontSize, useSecrets, ... }:
 {
   imports = [
     ./desktop-common-minimum.nix
@@ -196,13 +196,13 @@
   home-manager.users.${userLogin} = {
     # Set the path to the pia-manual repository and the userLogin and password for the PIA VPN script
     home.file."Scripts/pia.sh" = {
-      text = ''
+      text = if useSecrets then ''
         #!/usr/bin/env bash
         # PIA startup script
         set -e
         cd "${inputs.pia}"
         sudo VPN_PROTOCOL=wireguard DISABLE_IPV6=yes DIP_TOKEN=no AUTOCONNECT=true PIA_PF=false PIA_DNS=false PIA_USER=$(cat "${config.age.secrets.pia-user.path}") PIA_PASS=$(cat "${config.age.secrets.pia-pass.path}") ./run_setup.sh
-      '';
+      '' else "";
       executable = true;
     };
 
