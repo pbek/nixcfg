@@ -10,9 +10,6 @@
     ../../modules/mixins/users.nix
     ../../modules/mixins/desktop.nix
     ../../modules/mixins/openssh.nix
-#    ../../modules/editor/nvim.nix
-    # this brought me an infinite recursion
-#    mixins-openssh
   ];
 
   # Bootloader.

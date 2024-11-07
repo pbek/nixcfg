@@ -18,9 +18,6 @@
       ../../modules/mixins/openssh.nix
       ../../modules/mixins/virt-manager.nix
       ../../modules/mixins/local-store-cache.nix
-#    ../../modules/editor/nvim.nix
-    # this brought me an infinite recursion
-#    mixins-openssh
     ];
 
   # Bootloader.
