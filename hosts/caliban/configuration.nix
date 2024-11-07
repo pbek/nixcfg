@@ -4,7 +4,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, userLogin, ... }:
+{ lib, config, pkgs, userLogin, ... }:
 
 {
   imports =
@@ -29,11 +29,22 @@
     "/crypto_keyfile.bin" = null;
   };
 
-  networking.hostName = "caliban"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking = {
+    hostName = "caliban";
+    networkmanager.enable = true;
+    useDHCP = lib.mkDefault true;
 
-  # Enable networking
-  networking.networkmanager.enable = true;
+    # Adding a 2nd IP address temporarily to the interface didn't work out, best use the ip command
+    # `sudo ip addr add 192.168.1.100/255.255.255.0 dev eno1`
+#    interfaces.eno1 = {
+#      useDHCP = true;
+#      ipv4.addresses = [{ address = "192.168.1.100"; prefixLength = 24; }];
+#    };
+
+    firewall = {
+        allowedTCPPorts = [ 9000 9003 ]; # xdebug
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     soapui
@@ -45,10 +56,6 @@
 #    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
     docker-slim # Docker image size optimizer and analysis tool
   ];
-
-  networking.firewall = {
-    allowedTCPPorts = [ 9000 9003 ]; # xdebug
-  };
 
   # https://nixos.wiki/wiki/VirtualBox
   virtualisation.virtualbox = {
