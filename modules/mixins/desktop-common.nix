@@ -62,6 +62,7 @@
     smartmontools
     lazydocker
     uutils-coreutils # GNU coreutils replacement
+    inkscape
 
     # TU Graz
     vpnc

@@ -36,5 +36,6 @@
     akonadi
     kdepim-runtime
     filelight
+    kcolorchooser
   ];
 }

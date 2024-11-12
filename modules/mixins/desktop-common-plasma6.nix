@@ -42,6 +42,7 @@
     plasma-vault
     kate
     filelight
+    kcolorchooser
   ];
 
   home-manager.users.${userLogin} = {
