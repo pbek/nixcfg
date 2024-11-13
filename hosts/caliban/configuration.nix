@@ -71,15 +71,15 @@
 
   # latest: 6.11
   # lts: 6.6
-#  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.graphics.enable = true;
   hardware.nvidia = {
-#    modesetting.enable = true;
-    open = false;
+    modesetting.enable = true;
+    open = true;
 
     # production: version 550
     # latest: version 560
@@ -89,7 +89,7 @@
     # Enable this if you have graphical corruption issues or application crashes after waking
     # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
     # of just the bare essentials.
-    powerManagement.enable = true;
+    powerManagement.enable = false;
   };
 
 
