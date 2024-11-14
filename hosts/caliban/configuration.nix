@@ -10,6 +10,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./disk-config.zfs.nix
       ../../modules/mixins/users.nix
       ../../modules/mixins/desktop.nix
       ../../modules/mixins/audio.nix
@@ -20,16 +21,30 @@
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.supportedFilesystems = [ "zfs" ];
+  services.zfs.autoScrub.enable = true;
+  boot.zfs.requestEncryptionCredentials = true;
 
-  # Setup keyfile
-  boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
+  boot.loader.grub = {
+    enable = true;
+    zfsSupport = true;
+    efiSupport = true;
+    efiInstallAsRemovable = true;
+    mirroredBoots = [
+      { devices = [ "nodev"]; path = "/boot"; }
+    ];
+  };
+
+  boot.initrd.network = {
+    enable = true;
+    postCommands = ''
+      sleep 2
+      zpool import -a;
+    '';
   };
 
   networking = {
+    hostId = "dccada01";  # needed for ZFS
     hostName = "caliban";
     networkmanager.enable = true;
     useDHCP = lib.mkDefault true;
@@ -71,7 +86,7 @@
 
   # latest: 6.11
   # lts: 6.6
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+#  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -91,7 +106,6 @@
     # of just the bare essentials.
     powerManagement.enable = true;
   };
-
 
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/
   virtualisation.multipass.enable = true;

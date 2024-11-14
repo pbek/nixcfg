@@ -183,6 +183,7 @@ outputs =
           ./hosts/caliban/hardware-configuration.nix
           home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
           agenix.nixosModules.age
+          disko.nixosModules.disko
         ];
         specialArgs = self.commonArgs // {
           inherit inputs;
