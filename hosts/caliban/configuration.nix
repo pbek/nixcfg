@@ -44,7 +44,7 @@
   };
 
   networking = {
-    hostId = "dccada01";  # needed for ZFS
+    hostId = "dccada02";  # needed for ZFS
     hostName = "caliban";
     networkmanager.enable = true;
     useDHCP = lib.mkDefault true;

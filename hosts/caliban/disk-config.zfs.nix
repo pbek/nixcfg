@@ -2,7 +2,7 @@
 {
   disko.devices = {
     disk.disk1 = {
-      device = lib.mkDefault "/dev/nvme0n1";
+      device = lib.mkDefault "/dev/nvme1n1";
       type = "disk";
       content = {
         type = "gpt";
@@ -26,20 +26,20 @@
             size = "100%";
             content = {
               type = "zfs";
-              pool = "zroot";
+              pool = "calroot";
             };
           };
         };
       };
     };
     zpool = {
-      zroot = {
+      calroot = {
         type = "zpool";
         rootFsOptions = {
           compression = "zstd";
           "com.sun:auto-snapshot" = "false";
         };
-        postCreateHook = "zfs snapshot zroot@blank";
+        postCreateHook = "zfs snapshot calroot@blank";
 
         datasets = {
           encrypted = {
@@ -52,7 +52,7 @@
             };
             # use this to read the key during boot
             postCreateHook = ''
-              zfs set keylocation="prompt" "zroot/$name";
+              zfs set keylocation="prompt" "calroot/$name";
             '';
           };
           "encrypted/root" = {
