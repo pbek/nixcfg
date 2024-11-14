@@ -186,8 +186,8 @@ outputs =
         ];
         specialArgs = self.commonArgs // {
           inherit inputs;
-          x11Support = false;
-          waylandSupport = true;
+          x11Support = true;
+          waylandSupport = false;
           usePlasma6 = true;
         };
       };
