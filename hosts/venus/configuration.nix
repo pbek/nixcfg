@@ -66,6 +66,7 @@
 #    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
     heroic # Epic Games Store
     amdgpu_top # AMD GPU monitoring
+    lact # AMD GPU monitoring
   ];
 
   # https://nixos.wiki/wiki/steam
