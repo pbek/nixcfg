@@ -76,7 +76,7 @@ build: (_build hostname)
 # Build the current host on the Caliban host
 [group('build')]
 build-on-caliban:
-    nixos-rebuild --build-host omega@caliban.netbird.cloud --flake .#{{ hostname }} build
+    nixos-rebuild --build-host omega@caliban-1.netbird.cloud --flake .#{{ hostname }} build
     if test -f ~/.config/neosay/config.json; then echo "❄️ nixcfg build-on-caliban finished on {{ hostname }}" | neosay; fi
 
 # Build the current host on the Sinope host
@@ -88,7 +88,7 @@ build-on-sinope:
 # Build with nh on caliban (--build-host" not found)
 [group('build')]
 nh-build-on-caliban:
-    nh os build -H {{ hostname }} . -- --build-host omega@caliban.netbird.cloud
+    nh os build -H {{ hostname }} . -- --build-host omega@caliban-1.netbird.cloud
 
 # Build the current host on the Home01 host (use "--max-jobs 1" to restict downloads)
 [group('build')]
