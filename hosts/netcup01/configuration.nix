@@ -56,4 +56,27 @@
 
   environment.systemPackages = with pkgs; [
   ];
+
+  # Fixes issue with updating the OwnNotes releases RSS feed
+  systemd.services.restart-qownnotes = {
+    description = "Restart QOwnNotes Docker Compose services";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = ''
+        ${pkgs.docker-compose}/bin/docker-compose rm -f -s -v qownnotes-api
+        ${pkgs.docker-compose}/bin/docker-compose rm -f -s -v qownnotes-webpage
+        ${pkgs.docker-compose}/bin/docker-compose up -d qownnotes-api qownnotes-webpage
+      '';
+      WorkingDirectory = "/home/omega/server";
+    };
+  };
+
+  systemd.timers.restart-qownnotes = {
+    wantedBy = [ "timers.target" ];
+    partOf = [ "restart-qownnotes.service" ];
+    timerConfig = {
+      OnCalendar = "*-*-* 08:00:00";
+      Persistent = true;
+    };
+  };
 }
