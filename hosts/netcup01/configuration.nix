@@ -1,5 +1,5 @@
 # netcup01 Netcup server
-{ modulesPath, config, pkgs, ... }:
+{ modulesPath, config, pkgs, userLogin, ... }:
 
 {
   imports =
@@ -62,9 +62,10 @@
     description = "Restart QOwnNotes Docker Compose services";
     serviceConfig = {
       Type = "oneshot";
+      User = userLogin;
       ExecStart = ''
-        ${pkgs.docker-compose}/bin/docker-compose rm -f -s -v qownnotes-api
-        ${pkgs.docker-compose}/bin/docker-compose rm -f -s -v qownnotes-webpage
+        ${pkgs.docker-compose}/bin/docker-compose rm -f -s -v qownnotes-api; \
+        ${pkgs.docker-compose}/bin/docker-compose rm -f -s -v qownnotes-webpage; \
         ${pkgs.docker-compose}/bin/docker-compose up -d qownnotes-api qownnotes-webpage
       '';
       WorkingDirectory = "/home/omega/server";
