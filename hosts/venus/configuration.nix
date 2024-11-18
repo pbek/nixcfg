@@ -55,7 +55,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    calibre
+    stable.calibre
     zoom-us
 #    blender
     blender-hip # Blender with HIP support for AMD GPUs
