@@ -16,9 +16,10 @@ let
 in
 {
   environment.systemPackages = with pkgs; [
-    (jetbrainsPackages.plugins.addPlugins jetbrainsPackages.phpstorm [ "github-copilot" ])
-    (jetbrainsPackages.plugins.addPlugins jetbrainsPackages.clion [ "github-copilot" ])
-    (jetbrainsPackages.plugins.addPlugins jetbrainsPackages.goland [ "github-copilot" ])
+    # https://plugins.jetbrains.com/plugin/17718-github-copilot
+    (jetbrainsPackages.plugins.addPlugins jetbrainsPackages.phpstorm [ "17718" ])
+    (jetbrainsPackages.plugins.addPlugins jetbrainsPackages.clion [ "17718" ])
+    (jetbrainsPackages.plugins.addPlugins jetbrainsPackages.goland [ "17718" ])
   ];
   home-manager.users.${userLogin} = {
     xdg.desktopEntries = {
