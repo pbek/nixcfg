@@ -151,4 +151,7 @@
     secretKeyFile = "/etc/cache-priv-key.pem";
     openFirewall = true;
   };
+
+  # We have enough RAM
+  zramSwap.enable = false;
 }

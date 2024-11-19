@@ -124,4 +124,7 @@
 #    # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
 #    modesetting.enable = true;
   };
+
+  # We have enough RAM
+  zramSwap.enable = false;
 }
