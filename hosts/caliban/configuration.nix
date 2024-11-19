@@ -139,8 +139,9 @@
   };
 
   # Try if another console fonts make the console apear
-  console.font = "${pkgs.terminus_font}/share/consolefonts/ter-u12n.psf.gz";
-  console.earlySetup = true;
+  # Disabled, because since the new installation with ZFS the console was very small
+#  console.font = "${pkgs.terminus_font}/share/consolefonts/ter-u12n.psf.gz";
+#  console.earlySetup = true;
 
   # Enable Nix-Cache
   # See ./README.md
