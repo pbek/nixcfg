@@ -261,9 +261,43 @@
           prefers_reduced_motion = true;  # No automatic time updates
 #          sync.records = true; # v2 sync (not working)
           workspaces = true;  # Filter in directories with git repositories
+          # Fixes ZFS issues
+          # See https://github.com/atuinsh/atuin/issues/952
+          daemon = {
+            enabled = true;
+            systemd_socket = true;
+          };
         };
       };
     };
+
+    # Systemd user services for Atuin
+    # See https://forum.atuin.sh/t/getting-the-daemon-working-on-nixos/334/5
+    systemd.user =
+      let
+        atuinSockDir = "/home/${userLogin}/.local/share/atuin";
+        atuinSock = "${atuinSockDir}/atuin.sock";
+        unitConfig = {
+          Description = "Atuin Magical Shell History Daemon";
+          ConditionPathIsDirectory = atuinSockDir;
+          ConditionPathExists = "/home/${userLogin}/.config/atuin/config.toml";
+        };
+      in
+      {
+        sockets.atuin-daemon = {
+          Unit = unitConfig;
+          Install.WantedBy = [ "default.target" ];
+          Socket = {
+            ListenStream = atuinSock;
+            Accept = false;
+            SocketMode = "0600";
+          };
+        };
+        services.atuin-daemon = {
+          Unit = unitConfig;
+          Service.ExecStart = "${pkgs.atuin}/bin/atuin daemon";
+        };
+      };
   };
 
   # Enable ZRAM swap to get more memory
