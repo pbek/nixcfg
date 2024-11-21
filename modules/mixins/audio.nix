@@ -16,4 +16,11 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
+
+  # Try turning timer-based scheduling off for pulseaudio to prevent clicking and garbled audio
+  # See https://nixos.wiki/wiki/PulseAudio#Clicking_and_Garbled_Audio
+  hardware.pulseaudio.configFile = pkgs.runCommand "default.pa" {} ''
+    sed 's/module-udev-detect$/module-udev-detect tsched=0/' \
+      ${pkgs.pulseaudio}/etc/pulse/default.pa > $out
+  '';
 }
