@@ -54,6 +54,11 @@
     "192.168.1.111" = [ "cicinas2" "cicinas2.lan" ];
   };
 
+  networking.firewall = {
+    allowedTCPPorts = [ 3389 ]; # RDP
+  };
+
+
   environment.systemPackages = with pkgs; [
     stable.calibre
     zoom-us
