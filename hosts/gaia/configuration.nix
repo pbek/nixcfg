@@ -98,9 +98,13 @@
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   };
 
-  # latest: 6.11
+  # latest: 6.12
   # lts: 6.6
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+#  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  # Stick to 6.11, because NVIDIA driver is broken on 6.12
+  # See https://github.com/NixOS/nixpkgs/issues/357643
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_11;
 
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
