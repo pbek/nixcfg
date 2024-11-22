@@ -18,4 +18,10 @@ _:
       ];
     };
   };
+
+  # Add static hosts in case there are troubles with DNS
+  networking.hosts = {
+    "192.168.1.115" = [ "home01.lan" ];
+    "192.168.1.111" = [ "cicinas2.lan" ];
+  };
 }
