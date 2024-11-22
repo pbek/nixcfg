@@ -19,7 +19,7 @@
       php84Extensions.redis
       php84Extensions.gmp
       php84Extensions.sqlite3
-      php84Extensions.xdebug
+#      php84Extensions.xdebug
       php84Packages.composer
     ];
 }
