@@ -3,24 +3,24 @@
   pkgs.mkShell {
     # nativeBuildInputs is usually what you want -- tools you need to run
     nativeBuildInputs = with pkgs; [
-      php83
-      php83Extensions.ldap
-      php83Extensions.gd
-      php83Extensions.mysqli
-      php83Extensions.soap
-      php83Extensions.ldap
-      php83Extensions.mbstring
-      php83Extensions.xml
-      php83Extensions.intl
-#      php83Extensions.apcu
-      php83Extensions.curl
-      php83Extensions.readline
-      php83Extensions.zip
-      php83Extensions.redis
-      php83Extensions.gmp
-      php83Extensions.sqlite3
-      php83Extensions.xdebug
-      php83Packages.composer
+      php84
+      php84Extensions.ldap
+      php84Extensions.gd
+      php84Extensions.mysqli
+      php84Extensions.soap
+      php84Extensions.ldap
+      php84Extensions.mbstring
+      php84Extensions.xml
+      php84Extensions.intl
+#      php84Extensions.apcu
+      php84Extensions.curl
+      php84Extensions.readline
+      php84Extensions.zip
+      php84Extensions.redis
+      php84Extensions.gmp
+      php84Extensions.sqlite3
+#      php84Extensions.xdebug
+      php84Packages.composer
       # nur.repos.izorkin.php74
       # nur.repos.izorkin.php74Packages.composer2
     ];
