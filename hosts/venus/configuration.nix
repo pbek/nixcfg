@@ -92,6 +92,22 @@
   services.xserver.videoDrivers = [ "amdgpu" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
 
+  # Try amdvlk for Dragon Dogma 2
+  # See: https://www.protondb.com/app/2054970
+  hardware.amdgpu.amdvlk = {
+    enable = true;
+    support32Bit.enable = true;
+  }
+
+  # https://nixos.wiki/wiki/AMD_GPU#AMDVLK
+#  hardware.opengl.extraPackages = with pkgs; [
+#    amdvlk
+#  ];
+#  # For 32 bit applications
+#  hardware.opengl.extraPackages32 = with pkgs; [
+#    driversi686Linux.amdvlk
+#  ];
+
   services.ollama = {
     enable = true;
     acceleration = "rocm";
