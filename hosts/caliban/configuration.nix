@@ -89,6 +89,8 @@
     go-passbolt-cli
 #    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
     docker-slim # Docker image size optimizer and analysis tool
+    amdgpu_top # AMD GPU monitoring
+    lact # AMD GPU monitoring
   ];
 
   # https://nixos.wiki/wiki/VirtualBox
@@ -107,24 +109,30 @@
   # lts: 6.6
 #  boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # https://nixos.wiki/wiki/nvidia
-  services.xserver.videoDrivers = [ "nvidia" ];
-  nixpkgs.config.nvidia.acceptLicense = true;
+  # Enable hardware accelerated graphics drivers
   hardware.graphics.enable = true;
-  hardware.nvidia = {
-    modesetting.enable = true;
-    open = true;
 
-    # production: version 550
-    # latest: version 560
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
+  # https://nixos.wiki/wiki/AMD_GPU
+  services.xserver.videoDrivers = [ "amdgpu" ];
+  boot.initrd.kernelModules = [ "amdgpu" ];
 
-    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    # Enable this if you have graphical corruption issues or application crashes after waking
-    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
-    # of just the bare essentials.
-    powerManagement.enable = false;
-  };
+#  # https://nixos.wiki/wiki/nvidia
+#  services.xserver.videoDrivers = [ "nvidia" ];
+#  nixpkgs.config.nvidia.acceptLicense = true;
+#  hardware.nvidia = {
+#    modesetting.enable = true;
+#    open = true;
+#
+#    # production: version 550
+#    # latest: version 560
+#    package = config.boot.kernelPackages.nvidiaPackages.latest;
+#
+#    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
+#    # Enable this if you have graphical corruption issues or application crashes after waking
+#    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
+#    # of just the bare essentials.
+#    powerManagement.enable = false;
+#  };
 
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/
   virtualisation.multipass.enable = true;
