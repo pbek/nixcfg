@@ -14,7 +14,8 @@
         };
         # https://espanso.org/docs/configuration/app-specific-configurations/
         # Disable espanso for the VirtualBox VM window, so that the client can use the shortcuts
-        virtualbox = {
+        # Note: App-specific configurations are not yet supported in Wayland!
+        virtualbox-x11 = {
           # You can type "#detect#" in the application to find out filter_exec, filter_title and filter_class
           filter_class = "VirtualBox Machine";  # Or use xprop to find out
           enable = false;
