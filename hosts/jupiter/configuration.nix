@@ -4,19 +4,24 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, userLogin, ... }:
+{
+  config,
+  pkgs,
+  userLogin,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../modules/mixins/users.nix
-      ../../modules/mixins/audio.nix
-      ../../modules/mixins/desktop.nix
-#      ../../modules/mixins/jetbrains.nix
-      ../../modules/mixins/openssh.nix
-      ../../modules/mixins/local-store-cache.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../modules/mixins/users.nix
+    ../../modules/mixins/audio.nix
+    ../../modules/mixins/desktop.nix
+    #      ../../modules/mixins/jetbrains.nix
+    ../../modules/mixins/openssh.nix
+    ../../modules/mixins/local-store-cache.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -38,8 +43,10 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-  environment.systemPackages = with pkgs; [
-  ];
+  environment.systemPackages =
+    with pkgs;
+    [
+    ];
 
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];

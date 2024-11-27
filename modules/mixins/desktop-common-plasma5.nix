@@ -1,4 +1,10 @@
-{ config, pkgs, inputs, userLogin, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  userLogin,
+  ...
+}:
 {
   services.xserver.desktopManager.plasma5.enable = true;
   environment.plasma5.excludePackages = with pkgs.libsForQt5; [

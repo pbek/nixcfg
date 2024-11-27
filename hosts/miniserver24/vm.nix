@@ -8,10 +8,14 @@
 # build in vm
 # > nixos-rebuild --flake .#vm-miniserver24 build-vm
 #
-{ lib, config, userLogin, ... }:
 {
-  imports =
-  [
+  lib,
+  config,
+  userLogin,
+  ...
+}:
+{
+  imports = [
     ./configuration.nix
   ];
 

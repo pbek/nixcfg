@@ -1,11 +1,12 @@
-{ config
-, fetchFromGitHub
-, hidapi
-, kmod
-, lib
-, python3
-, toybox
-, coreutils
+{
+  config,
+  fetchFromGitHub,
+  hidapi,
+  kmod,
+  lib,
+  python3,
+  toybox,
+  coreutils,
 }:
 python3.pkgs.buildPythonApplication rec {
   pname = "handheld-daemon";
@@ -36,12 +37,12 @@ python3.pkgs.buildPythonApplication rec {
   # handheld-daemon contains a fork of the python module `hid`, so this hook
   # is borrowed from the `hid` derivation.
   postPatch = ''
-    hidapi=${ hidapi }/lib/
+    hidapi=${hidapi}/lib/
     test -d $hidapi || { echo "ERROR: $hidapi doesn't exist, please update/fix this build expression."; exit 1; }
     sed -i -e "s|libhidapi|$hidapi/libhidapi|" src/hhd/controller/lib/hid.py
 
     # The generated udev rules point to /bin/chroot, which does not exist in NixOS
-    chmod=${ coreutils }/bin/chmod
+    chmod=${coreutils}/bin/chmod
     sed -i -e "s|/bin/chmod|$chmod|" src/hhd/controller/lib/hide.py
   '';
 

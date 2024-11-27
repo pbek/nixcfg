@@ -1,4 +1,13 @@
-{ config, pkgs, inputs, lib, x11Support, waylandSupport, usePlasma6, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  lib,
+  x11Support,
+  waylandSupport,
+  usePlasma6,
+  ...
+}:
 {
   imports =
     lib.optional (x11Support && usePlasma6) ./desktop-x11.nix

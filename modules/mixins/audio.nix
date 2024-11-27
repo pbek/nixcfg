@@ -1,4 +1,9 @@
-{ config, pkgs, userLogin, ... }:
+{
+  config,
+  pkgs,
+  userLogin,
+  ...
+}:
 
 {
   # Enable sound with pipewire.
@@ -19,7 +24,7 @@
 
   # Try turning timer-based scheduling off for pulseaudio to prevent clicking and garbled audio
   # See https://nixos.wiki/wiki/PulseAudio#Clicking_and_Garbled_Audio
-  hardware.pulseaudio.configFile = pkgs.runCommand "default.pa" {} ''
+  hardware.pulseaudio.configFile = pkgs.runCommand "default.pa" { } ''
     sed 's/module-udev-detect$/module-udev-detect tsched=0/' \
       ${pkgs.pulseaudio}/etc/pulse/default.pa > $out
   '';

@@ -4,20 +4,25 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, userLogin, ... }:
+{
+  config,
+  pkgs,
+  userLogin,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../modules/mixins/users.nix
-      ../../modules/mixins/desktop-x11.nix
-      ../../modules/mixins/audio.nix
-      ../../modules/mixins/jetbrains.nix
-      ../../modules/mixins/openssh.nix
-      ../../modules/mixins/virt-manager.nix
-      ../../modules/mixins/local-store-cache.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../modules/mixins/users.nix
+    ../../modules/mixins/desktop-x11.nix
+    ../../modules/mixins/audio.nix
+    ../../modules/mixins/jetbrains.nix
+    ../../modules/mixins/openssh.nix
+    ../../modules/mixins/virt-manager.nix
+    ../../modules/mixins/local-store-cache.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -37,11 +42,11 @@
   # virtualisation.virtualbox.host.enableExtensionPack = true;
 
   # https://nixos.wiki/wiki/steam
-#  programs.steam = {
-#    enable = true;
-#    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-#    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-#  };
+  #  programs.steam = {
+  #    enable = true;
+  #    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+  #    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+  #  };
 
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];

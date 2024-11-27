@@ -1,4 +1,10 @@
-{ config, pkgs, inputs, userLogin, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  userLogin,
+  ...
+}:
 {
   imports = [
     ./desktop-common.nix
@@ -15,7 +21,9 @@
   # KMail Renders Blank Messages
   # https://nixos.wiki/wiki/KDE#KMail_Renders_Blank_Messages
   environment.sessionVariables = {
-    NIX_PROFILES = "${pkgs.lib.concatStringsSep " " (pkgs.lib.reverseList config.environment.profiles)}";
+    NIX_PROFILES = "${pkgs.lib.concatStringsSep " " (
+      pkgs.lib.reverseList config.environment.profiles
+    )}";
   };
 
   environment.systemPackages = with pkgs; [
@@ -33,7 +41,10 @@
         exec = "ferdium --ozone-platform=wayland --enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations";
         terminal = false;
         mimeType = [ "x-scheme-handler/ferdium" ];
-        categories = [ "Network" "InstantMessaging" ];
+        categories = [
+          "Network"
+          "InstantMessaging"
+        ];
       };
     };
   };

@@ -1,8 +1,17 @@
-{ config, pkgs, inputs, xdg, userLogin, useStableJetbrains, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  xdg,
+  userLogin,
+  useStableJetbrains,
+  ...
+}:
 #{ config, inputs, xdg, ... }:
 
 let
   jetbrainsPackages = if useStableJetbrains then pkgs.stable.jetbrains else pkgs.jetbrains;
+in
 ## https://github.com/NixOS/nixpkgs/pull/309011
 #  pkgs = import
 #    (builtins.fetchTarball {
@@ -13,7 +22,6 @@ let
 #      config = config.nixpkgs.config;
 #      localSystem = { system = "x86_64-linux"; };
 #    };
-in
 {
   environment.systemPackages = with pkgs; [
     # https://plugins.jetbrains.com/plugin/17718-github-copilot

@@ -23,7 +23,7 @@
   };
 
   # Enable grub cryptodisk
-  boot.loader.grub.enableCryptodisk=true;
+  boot.loader.grub.enableCryptodisk = true;
 
   boot.initrd.luks.devices."luks-39fcb0d4-0d32-4438-858a-0b3a9bef7019".keyFile = "/crypto_keyfile.bin";
   networking.hostName = "omega-nix2"; # Define your hostname.

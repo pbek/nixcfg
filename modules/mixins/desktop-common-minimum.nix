@@ -1,4 +1,11 @@
-{ config, pkgs, inputs, userLogin, termFontSize, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  userLogin,
+  termFontSize,
+  ...
+}:
 {
   imports = [
     ./common.nix
@@ -27,11 +34,17 @@
   networking.firewall = {
     enable = true;
     allowedTCPPortRanges = [
-      { from = 1714; to = 1764; } # KDE Connect
+      {
+        from = 1714;
+        to = 1764;
+      } # KDE Connect
     ];
     allowedTCPPorts = [ 22 ]; # SSH
     allowedUDPPortRanges = [
-      { from = 1714; to = 1764; } # KDE Connect
+      {
+        from = 1714;
+        to = 1764;
+      } # KDE Connect
     ];
   };
 
@@ -67,7 +80,12 @@
   fonts.packages = with pkgs; [
     fira-code
     fira-code-symbols
-    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+    (nerdfonts.override {
+      fonts = [
+        "FiraCode"
+        "DroidSansMono"
+      ];
+    })
   ];
 
   environment.systemPackages = with pkgs; [
@@ -78,12 +96,12 @@
     xclip
     fzf
     fishPlugins.fzf-fish
-    usbutils  # lsusb
+    usbutils # lsusb
 
-#    qownnotes
+    #    qownnotes
     (pkgs.qt6Packages.callPackage ../../apps/qownnotes/default.nix { })
     qc
-#    (pkgs.callPackage ../../apps/qc/default.nix { })
+    #    (pkgs.callPackage ../../apps/qc/default.nix { })
     bluez
     nextcloud-client
   ];

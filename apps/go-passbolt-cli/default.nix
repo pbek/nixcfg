@@ -1,4 +1,10 @@
-{ buildGoModule, fetchFromGitHub, installShellFiles, lib, stdenv }:
+{
+  buildGoModule,
+  fetchFromGitHub,
+  installShellFiles,
+  lib,
+  stdenv,
+}:
 
 buildGoModule rec {
   pname = "go-passbolt-cli";
@@ -12,7 +18,7 @@ buildGoModule rec {
   };
 
   # first use: lib.fakeHash
-#  vendorHash = lib.fakeHash;
+  #  vendorHash = lib.fakeHash;
   vendorHash = "sha256-XRHGq3Qeq7VWHzw5WWVv4x5orQu740lttGVreiu7qP4=";
 
   ldflags = [

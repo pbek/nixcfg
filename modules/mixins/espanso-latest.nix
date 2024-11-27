@@ -1,4 +1,12 @@
-{ config, pkgs, inputs, userLogin, x11Support, waylandSupport, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  userLogin,
+  x11Support,
+  waylandSupport,
+  ...
+}:
 {
   # Get around: [ERROR] Error: could not open uinput device
   boot.kernelModules = [ "uinput" ];
@@ -12,10 +20,10 @@
     # https://mynixos.com/home-manager/options/services.espanso
     services.espanso = {
       package = if waylandSupport then pkgs.espanso-wayland else pkgs.espanso;
-#      package = (pkgs.callPackage ../../apps/espanso/espanso.nix { }).override {
-#        inherit x11Support;
-#        inherit waylandSupport;
-#      };
+      #      package = (pkgs.callPackage ../../apps/espanso/espanso.nix { }).override {
+      #        inherit x11Support;
+      #        inherit waylandSupport;
+      #      };
     };
   };
 }

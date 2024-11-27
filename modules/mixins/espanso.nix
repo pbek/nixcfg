@@ -1,4 +1,13 @@
-{ config, pkgs, userLogin, userNameShort, userNameLong, userEmail, lib, ... }:
+{
+  config,
+  pkgs,
+  userLogin,
+  userNameShort,
+  userNameLong,
+  userEmail,
+  lib,
+  ...
+}:
 
 {
   home-manager.users.${userLogin} = {
@@ -17,7 +26,7 @@
         # Note: App-specific configurations are not yet supported in Wayland!
         virtualbox-x11 = {
           # You can type "#detect#" in the application to find out filter_exec, filter_title and filter_class
-          filter_class = "VirtualBox Machine";  # Or use xprop to find out
+          filter_class = "VirtualBox Machine"; # Or use xprop to find out
           enable = false;
         };
       };
@@ -46,8 +55,8 @@
               name = "quote";
               type = "shell";
               params = {
-#                cmd = "curl -s 'https://zenquotes.io/api/random' | jq -r '.[0].q'";
-#                cmd = "nix-shell -p neo-cowsay --run \"curl -s 'https://zenquotes.io/api/random' | jq -r '.[0].q' | cowthink\"";
+                #                cmd = "curl -s 'https://zenquotes.io/api/random' | jq -r '.[0].q'";
+                #                cmd = "nix-shell -p neo-cowsay --run \"curl -s 'https://zenquotes.io/api/random' | jq -r '.[0].q' | cowthink\"";
                 cmd = "${lib.getExe pkgs.curl} -s https://zenquotes.io/api/random | ${lib.getExe pkgs.jq} -r '.[0].q' | ${pkgs.neo-cowsay}/bin/cowthink";
               };
             }
@@ -78,11 +87,17 @@
               replace = "Cheers\n${userNameShort}";
             }
             {
-              triggers = [ ":omor" ":gmo" ];
+              triggers = [
+                ":omor"
+                ":gmo"
+              ];
               replace = "Good morning from the office! 🌄🏢\n\n```\n{{quote}}\n```";
             }
             {
-              triggers = [ ":.omor" ":.gmo" ];
+              triggers = [
+                ":.omor"
+                ":.gmo"
+              ];
               replace = "Good morning from the office! 🌄🏢";
             }
             {
@@ -94,7 +109,10 @@
               replace = "Good morning from home office! 🌄🏡";
             }
             {
-              triggers = [ ":gna" ":gnsg" ];
+              triggers = [
+                ":gna"
+                ":gnsg"
+              ];
               replace = "Gute Nacht und schlaf gut! 🎑🌜🤗🌛🌃";
             }
             {
@@ -130,7 +148,11 @@
               replace = "There now is a new release, could you please test it and report if it works for you?";
             }
             {
-              triggers = [ ":ghtest" ":ghtst" ":ghgr" ];
+              triggers = [
+                ":ghtest"
+                ":ghtst"
+                ":ghgr"
+              ];
               replace = "Great, thank you for testing!\n";
             }
             {
@@ -138,7 +160,11 @@
               replace = "Can you please explain in more detail and step by step what you did, what happened and what you expected?";
             }
             {
-              triggers = [ ":ghnotetree" ":ghwip" ":gh790" ];
+              triggers = [
+                ":ghnotetree"
+                ":ghwip"
+                ":gh790"
+              ];
               replace = ''
                 Looks like you are talking about the work in progress feature #790, right?
                 If yes, then best deposit your request there... 😉
@@ -157,7 +183,10 @@
               '';
             }
             {
-              triggers = [ ":ghrep" ":ghlog" ];
+              triggers = [
+                ":ghrep"
+                ":ghlog"
+              ];
               replace = ''
                 Thank you for reporting.
                 Can you please post the output from the *Debug settings* in the settings dialog? You just need to paste it here.
@@ -167,7 +196,10 @@
               '';
             }
             {
-              triggers = [ ":ghdet" ":ghexp" ];
+              triggers = [
+                ":ghdet"
+                ":ghexp"
+              ];
               replace = ''
                 <details><summary>Expand</summary>
 
@@ -198,7 +230,10 @@
         characters = {
           matches = [
             {
-              triggers = [ ":ellip" ":..." ];
+              triggers = [
+                ":ellip"
+                ":..."
+              ];
               replace = "…";
             }
             {
@@ -230,19 +265,36 @@
         emotes = {
           matches = [
             {
-              triggers = [ ":+1" ":up" ":ok" ];
+              triggers = [
+                ":+1"
+                ":up"
+                ":ok"
+              ];
               replace = "👍️";
             }
             {
-              triggers = [ ":)" ":-)" ":smile" ];
+              triggers = [
+                ":)"
+                ":-)"
+                ":smile"
+              ];
               replace = "😊";
             }
             {
-              triggers = [ ":|" ":-|" ":grim" ];
+              triggers = [
+                ":|"
+                ":-|"
+                ":grim"
+              ];
               replace = "😬";
             }
             {
-              triggers = [ ":(" ":-(" ":sad" ":frown" ];
+              triggers = [
+                ":("
+                ":-("
+                ":sad"
+                ":frown"
+              ];
               replace = "☹️";
             }
             {
@@ -266,11 +318,18 @@
               replace = "😘";
             }
             {
-              triggers = [ ":D" ":-D" ":grin" ];
+              triggers = [
+                ":D"
+                ":-D"
+                ":grin"
+              ];
               replace = "😁";
             }
             {
-              triggers = [ ":lau" ":laugh" ];
+              triggers = [
+                ":lau"
+                ":laugh"
+              ];
               replace = "😆";
             }
             {
@@ -286,7 +345,10 @@
               replace = "🙈";
             }
             {
-              triggers = [ ":peek" ":cover" ];
+              triggers = [
+                ":peek"
+                ":cover"
+              ];
               replace = "🫣";
             }
             {
@@ -294,12 +356,19 @@
               replace = "🤗";
             }
             {
-              triggers = [ ";)" ":wink" ];
+              triggers = [
+                ";)"
+                ":wink"
+              ];
               replace = "😉";
             }
             {
               # Don't use ":p", it's needed by other triggers!
-              triggers = [ ":P" ":-P" ":tong" ];
+              triggers = [
+                ":P"
+                ":-P"
+                ":tong"
+              ];
               replace = "😜";
             }
             {
@@ -311,7 +380,12 @@
               replace = "👋🏻";
             }
             {
-              triggers = [ ":pray" ":nam" ":bow" ":thank" ];
+              triggers = [
+                ":pray"
+                ":nam"
+                ":bow"
+                ":thank"
+              ];
               replace = "🙏🏻🙇🏻‍♂️";
             }
             {
@@ -319,19 +393,36 @@
               replace = "☀️";
             }
             {
-              triggers = [ ":wow" ":ast" ];
+              triggers = [
+                ":wow"
+                ":ast"
+              ];
               replace = "😲";
             }
             {
-              triggers = [ ":heart" ":lov" ];
+              triggers = [
+                ":heart"
+                ":lov"
+              ];
               replace = "🫶😍❤️🥰";
             }
             {
-              triggers = [ ":halo" ":inn" ":angel" "O:)" "O:-)" ];
+              triggers = [
+                ":halo"
+                ":inn"
+                ":angel"
+                "O:)"
+                "O:-)"
+              ];
               replace = "😇";
             }
             {
-              triggers = [ ":crazy" "%)" "%-)" ":zany" ];
+              triggers = [
+                ":crazy"
+                "%)"
+                "%-)"
+                ":zany"
+              ];
               replace = "🤪🙃";
             }
             {
@@ -343,7 +434,10 @@
               replace = "🚀";
             }
             {
-              triggers = [ ":cross" ":fing" ];
+              triggers = [
+                ":cross"
+                ":fing"
+              ];
               replace = "🤞🏻🤞🏻";
             }
             {
@@ -355,7 +449,10 @@
               replace = "🥳🎉🎁";
             }
             {
-              triggers = [ ":xmas" ":christ" ];
+              triggers = [
+                ":xmas"
+                ":christ"
+              ];
               replace = "🎄🎅🏻";
             }
             {
@@ -371,12 +468,18 @@
               replace = "️🤷🏻";
             }
             {
-              triggers = [ ":cry" ":'(" ];
+              triggers = [
+                ":cry"
+                ":'("
+              ];
               replace = "🥹😢😭";
             }
             {
               # Don't use ":/" trigger because of "http://" and "https://"!
-              triggers = [ ":-/" ":conf" ];
+              triggers = [
+                ":-/"
+                ":conf"
+              ];
               replace = "😕🫤";
             }
             {
@@ -384,11 +487,17 @@
               replace = "🤜🏻🤛🏻✊🏻";
             }
             {
-              triggers = [ ":lambda" ":nix" ];
+              triggers = [
+                ":lambda"
+                ":nix"
+              ];
               replace = "λ❄️λ";
             }
             {
-              triggers = [ ":climb" ":bloulder" ];
+              triggers = [
+                ":climb"
+                ":bloulder"
+              ];
               replace = "🧗🏼‍♂️";
             }
             {
@@ -404,7 +513,10 @@
               replace = "🥭🍉🍌🍇🍑🍓🍊🍈🍎🍏🍐🍒🍍🥥🥝🍅";
             }
             {
-              triggers = [ ":penguin" ":linux" ];
+              triggers = [
+                ":penguin"
+                ":linux"
+              ];
               replace = "🐧";
             }
           ];

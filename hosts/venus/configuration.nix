@@ -4,22 +4,27 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, userLogin, ... }:
+{
+  config,
+  pkgs,
+  userLogin,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../modules/mixins/users.nix
-#      ../../modules/mixins/desktop-x11.nix
-      ../../modules/mixins/desktop.nix
-      ../../modules/mixins/audio.nix
-      ../../modules/mixins/jetbrains.nix
-      ../../modules/mixins/openssh.nix
-      ../../modules/mixins/virt-manager.nix
-      ../../modules/mixins/local-store-cache.nix
-#      ../../modules/mixins/remote-store-cache.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../modules/mixins/users.nix
+    #      ../../modules/mixins/desktop-x11.nix
+    ../../modules/mixins/desktop.nix
+    ../../modules/mixins/audio.nix
+    ../../modules/mixins/jetbrains.nix
+    ../../modules/mixins/openssh.nix
+    ../../modules/mixins/virt-manager.nix
+    ../../modules/mixins/local-store-cache.nix
+    #      ../../modules/mixins/remote-store-cache.nix
+  ];
 
   # Bootloader
   # Getting the bootloader to detect Windows didn't work, use F12 at boot for a boot manager
@@ -50,25 +55,30 @@
   networking.networkmanager.enable = true;
 
   networking.hosts = {
-    "192.168.1.110" = [ "cicinas" "cicinas.lan" ];
-    "192.168.1.111" = [ "cicinas2" "cicinas2.lan" ];
+    "192.168.1.110" = [
+      "cicinas"
+      "cicinas.lan"
+    ];
+    "192.168.1.111" = [
+      "cicinas2"
+      "cicinas2.lan"
+    ];
   };
 
   networking.firewall = {
     allowedTCPPorts = [ 3389 ]; # RDP
   };
 
-
   environment.systemPackages = with pkgs; [
     calibre
     zoom-us
-#    blender
+    #    blender
     blender-hip # Blender with HIP support for AMD GPUs
     # Temporarily disabled for: sip-4.19.25 not supported for interpreter python3.12
     # Using stable.blender-hip doesn't work because of: Cannot mix incompatible Qt library (5.15.15) with this library (5.15.14)
-#     cura
+    #     cura
     wowup-cf
-#    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
+    #    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
     heroic # Epic Games Store
     amdgpu_top # AMD GPU monitoring
     lact # AMD GPU monitoring
@@ -94,38 +104,38 @@
 
   # Try amdvlk for Dragon Dogma 2
   # See: https://www.protondb.com/app/2054970
-#  hardware.amdgpu.amdvlk = {
-#    enable = true;
-#    support32Bit.enable = true;
-#  };
+  #  hardware.amdgpu.amdvlk = {
+  #    enable = true;
+  #    support32Bit.enable = true;
+  #  };
 
   # https://nixos.wiki/wiki/AMD_GPU#AMDVLK
-#  hardware.opengl.extraPackages = with pkgs; [
-#    amdvlk
-#  ];
-#  # For 32 bit applications
-#  hardware.opengl.extraPackages32 = with pkgs; [
-#    driversi686Linux.amdvlk
-#  ];
+  #  hardware.opengl.extraPackages = with pkgs; [
+  #    amdvlk
+  #  ];
+  #  # For 32 bit applications
+  #  hardware.opengl.extraPackages32 = with pkgs; [
+  #    driversi686Linux.amdvlk
+  #  ];
 
   services.ollama = {
     enable = true;
     acceleration = "rocm";
-#    environmentVariables = {
-#      HCC_AMDGPU_TARGET = "gfx1100"; # used to be necessary, but doesn't seem to anymore
-#    };
+    #    environmentVariables = {
+    #      HCC_AMDGPU_TARGET = "gfx1100"; # used to be necessary, but doesn't seem to anymore
+    #    };
     rocmOverrideGfx = "11.0.0";
   };
 
-#  # Enable suspend to RAM
-#  # Sleep is hindered by a compontent on the motherboard
-#  # Problem with "00:01.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge"
-#  powerManagement.powerUpCommands = ''
-#    echo GPP0 > /proc/acpi/wakeup
-#  '';
-#  # powerManagement.powerDownCommands = ''
-#  #   echo GPP0 > /proc/acpi/wakeup
-#  # '';
+  #  # Enable suspend to RAM
+  #  # Sleep is hindered by a compontent on the motherboard
+  #  # Problem with "00:01.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge"
+  #  powerManagement.powerUpCommands = ''
+  #    echo GPP0 > /proc/acpi/wakeup
+  #  '';
+  #  # powerManagement.powerDownCommands = ''
+  #  #   echo GPP0 > /proc/acpi/wakeup
+  #  # '';
 
   # Restart network and docker after suspend
   # I had issues with KDE Plasma detecting that there is network after suspend

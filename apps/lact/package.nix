@@ -1,15 +1,16 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, blueprint-compiler
-, pkg-config
-, wrapGAppsHook4
-, gdk-pixbuf
-, gtk4
-, libdrm
-, vulkan-loader
-, coreutils
-, hwdata
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
+  blueprint-compiler,
+  pkg-config,
+  wrapGAppsHook4,
+  gdk-pixbuf,
+  gtk4,
+  libdrm,
+  vulkan-loader,
+  coreutils,
+  hwdata,
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -27,10 +28,10 @@ rustPlatform.buildRustPackage rec {
 
   cargoDeps = rustPlatform.importCargoLock {
     lockFile = ./Cargo.lock;
-#    outputHashes = {
-#      "nvml-wrapper-0.10.0" = "sha256-3k9rc4yHWhqsCUJ17K55F8aQoCKdVamrWAn6IDWo3Sg=";
-#      "nvml-wrapper-sys-0.8.0" = "sha256-3k9rc4yHWhqsCUJ17K55F8aQoCKdVamrWAn6IDWo3Sd=";
-#    };
+    #    outputHashes = {
+    #      "nvml-wrapper-0.10.0" = "sha256-3k9rc4yHWhqsCUJ17K55F8aQoCKdVamrWAn6IDWo3Sg=";
+    #      "nvml-wrapper-sys-0.8.0" = "sha256-3k9rc4yHWhqsCUJ17K55F8aQoCKdVamrWAn6IDWo3Sd=";
+    #    };
   };
 
   nativeBuildInputs = [

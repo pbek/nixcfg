@@ -1,4 +1,13 @@
-{ config, pkgs, inputs, userLogin, userNameLong, userEmail, lib, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  userLogin,
+  userNameLong,
+  userEmail,
+  lib,
+  ...
+}:
 {
   # https://home-manager-options.extranix.com
   home-manager.users.${userLogin} = {
@@ -6,9 +15,12 @@
       enable = true;
       # use "git diff --no-ext-diff" for creating patches!
       difftastic.enable = true;
-      userName  = lib.mkDefault userNameLong;
+      userName = lib.mkDefault userNameLong;
       userEmail = lib.mkDefault userEmail;
-      ignores = [ ".idea" ".direnv" ];
+      ignores = [
+        ".idea"
+        ".direnv"
+      ];
       signing = {
         signByDefault = false;
         key = "E00548D5D6AC812CAAD2AFFA9C42B05E591360DC";

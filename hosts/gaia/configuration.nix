@@ -4,21 +4,26 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, userLogin, ... }:
+{
+  config,
+  pkgs,
+  userLogin,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../modules/mixins/users.nix
-      ../../modules/mixins/desktop.nix
-      ../../modules/mixins/audio.nix
-      ../../modules/mixins/platformio.nix
-      ../../modules/mixins/jetbrains.nix
-      ../../modules/mixins/openssh.nix
-      ../../modules/mixins/virt-manager.nix
-      ../../modules/mixins/local-store-cache.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../modules/mixins/users.nix
+    ../../modules/mixins/desktop.nix
+    ../../modules/mixins/audio.nix
+    ../../modules/mixins/platformio.nix
+    ../../modules/mixins/jetbrains.nix
+    ../../modules/mixins/openssh.nix
+    ../../modules/mixins/virt-manager.nix
+    ../../modules/mixins/local-store-cache.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -51,10 +56,10 @@
     blender
     # Temporarily disabled for: sip-4.19.25 not supported for interpreter python3.12
     # Using stable.blender-hip doesn't work because of: Cannot mix incompatible Qt library (5.15.15) with this library (5.15.14)
-#    cura
+    #    cura
     go-passbolt-cli
-#    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
-#    (pkgs.callPackage ../../apps/lact/package.nix { })
+    #    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
+    #    (pkgs.callPackage ../../apps/lact/package.nix { })
   ];
 
   # Handle keyboard leds
@@ -100,7 +105,7 @@
 
   # latest: 6.12
   # lts: 6.6
-#  boot.kernelPackages = pkgs.linuxPackages_latest;
+  #  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Stick to 6.11, because NVIDIA driver is broken on 6.12
   # See https://github.com/NixOS/nixpkgs/issues/357643
@@ -125,8 +130,8 @@
     # of just the bare essentials.
     powerManagement.enable = true;
 
-#    # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
-#    modesetting.enable = true;
+    #    # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
+    #    modesetting.enable = true;
   };
 
   # We have enough RAM

@@ -1,4 +1,10 @@
-{ stdenv, lib, fetchgit, makeWrapper, bash }:
+{
+  stdenv,
+  lib,
+  fetchgit,
+  makeWrapper,
+  bash,
+}:
 
 let
   pname = "sensible-utils";
@@ -49,4 +55,3 @@ stdenv.mkDerivation rec {
     platforms = platforms.unix;
   };
 }
-

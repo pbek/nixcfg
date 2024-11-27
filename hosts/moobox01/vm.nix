@@ -10,8 +10,7 @@
 #
 { lib, config, ... }:
 {
-  imports =
-  [
+  imports = [
     ./configuration.nix
   ];
 

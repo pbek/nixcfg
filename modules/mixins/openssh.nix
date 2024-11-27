@@ -1,4 +1,9 @@
-{ lib, userLogin, useSecrets, ... }:
+{
+  lib,
+  userLogin,
+  useSecrets,
+  ...
+}:
 {
   # https://mynixos.com/options/services.openssh
   services.openssh = {
@@ -10,8 +15,8 @@
     settings.PermitRootLogin = lib.mkForce "no";
 
     # To use with nixos-anywhere you need to use this settings
-#    settings.PermitRootLogin = "yes";
-#    settings.PasswordAuthentication = true;
+    #    settings.PermitRootLogin = "yes";
+    #    settings.PasswordAuthentication = true;
 
     extraConfig = ''StreamLocalBindUnlink yes'';
   };
@@ -25,13 +30,17 @@
   };
 
   # Add Yubikey private ssh key
-  age.secrets = if useSecrets then {
-    id_ecdsa_sk = {
-      file = ../../secrets/id_ecdsa_sk.age;
-      path = "/home/${userLogin}/.ssh/id_ecdsa_sk";
-      owner = userLogin;
-      group = "users";
-      mode = "600";
-    };
-  } else {};
+  age.secrets =
+    if useSecrets then
+      {
+        id_ecdsa_sk = {
+          file = ../../secrets/id_ecdsa_sk.age;
+          path = "/home/${userLogin}/.ssh/id_ecdsa_sk";
+          owner = userLogin;
+          group = "users";
+          mode = "600";
+        };
+      }
+    else
+      { };
 }

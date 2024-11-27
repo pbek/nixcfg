@@ -1,4 +1,9 @@
-{ config, inputs, userLogin, ... }:
+{
+  config,
+  inputs,
+  userLogin,
+  ...
+}:
 {
   imports = [
     ./server-common.nix
@@ -9,7 +14,12 @@
 
   # https://mynixos.com/options/services.openssh
   services.openssh = {
-    listenAddresses = [ { addr = "0.0.0.0"; port = 2222; } ];
+    listenAddresses = [
+      {
+        addr = "0.0.0.0";
+        port = 2222;
+      }
+    ];
   };
 
   # Firewall

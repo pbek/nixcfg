@@ -12,16 +12,20 @@
 # > nixos-rebuild -I nixos-config=./vm.nix -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/pull/223593/head.tar.gz build-vm
 # > QEMU_OPTS="-m 4096 -smp 4 -enable-kvm" ./result/bin/run-*-vm
 #
-{ lib, config, userLogin, ... }:
 {
-    imports =
-    [
-      ../../modules/mixins/users.nix
-      ../../modules/mixins/desktop.nix
-      ../../modules/mixins/jetbrains.nix
-      ../../modules/mixins/openssh.nix
-      ../../modules/mixins/local-store-cache.nix
-    ];
+  lib,
+  config,
+  userLogin,
+  ...
+}:
+{
+  imports = [
+    ../../modules/mixins/users.nix
+    ../../modules/mixins/desktop.nix
+    ../../modules/mixins/jetbrains.nix
+    ../../modules/mixins/openssh.nix
+    ../../modules/mixins/local-store-cache.nix
+  ];
 
   users.users.root.initialPassword = "root";
   users.users.${userLogin}.initialPassword = userLogin;

@@ -4,19 +4,26 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, userLogin, userNameLong, userEmail, ... }:
+{
+  config,
+  pkgs,
+  userLogin,
+  userNameLong,
+  userEmail,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../modules/mixins/users.nix
-      ../../modules/mixins/desktop.nix
-      ../../modules/mixins/audio.nix
-      ../../modules/mixins/jetbrains.nix
-      ../../modules/mixins/openssh.nix
-      ../../modules/mixins/remote-store-cache.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../modules/mixins/users.nix
+    ../../modules/mixins/desktop.nix
+    ../../modules/mixins/audio.nix
+    ../../modules/mixins/jetbrains.nix
+    ../../modules/mixins/openssh.nix
+    ../../modules/mixins/remote-store-cache.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

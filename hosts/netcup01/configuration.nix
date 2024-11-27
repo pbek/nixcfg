@@ -1,13 +1,18 @@
 # netcup01 Netcup server
-{ modulesPath, config, pkgs, userLogin, ... }:
+{
+  modulesPath,
+  config,
+  pkgs,
+  userLogin,
+  ...
+}:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../../modules/mixins/server-remote.nix
-      ./disk-config.zfs.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/mixins/server-remote.nix
+    ./disk-config.zfs.nix
+  ];
 
   # Bootloader.
   boot.supportedFilesystems = [ "zfs" ];
@@ -19,7 +24,10 @@
     efiSupport = true;
     efiInstallAsRemovable = true;
     mirroredBoots = [
-      { devices = [ "nodev"]; path = "/boot"; }
+      {
+        devices = [ "nodev" ];
+        path = "/boot";
+      }
     ];
   };
 
@@ -32,30 +40,32 @@
   };
 
   networking = {
-    hostId = "dafdad01";  # needed for ZFS
+    hostId = "dafdad01"; # needed for ZFS
     hostName = "netcup01";
     networkmanager.enable = true;
 
     # SSH is already enabled by the server-common mixin
     firewall = {
       allowedTCPPorts = [
-        25    # SMTP
-        80    # HTTP
-        143   # IMAP
-        443   # HTTPS
-        587   # SMTP
-        993   # IMAPS
-        4190  # ManageSieve
-        8883  # MQTT
+        25 # SMTP
+        80 # HTTP
+        143 # IMAP
+        443 # HTTPS
+        587 # SMTP
+        993 # IMAPS
+        4190 # ManageSieve
+        8883 # MQTT
       ];
       allowedUDPPorts = [
-        443   # HTTPS
+        443 # HTTPS
       ];
     };
   };
 
-  environment.systemPackages = with pkgs; [
-  ];
+  environment.systemPackages =
+    with pkgs;
+    [
+    ];
 
   # Fixes issue with updating the OwnNotes releases RSS feed
   systemd.services.restart-qownnotes = {

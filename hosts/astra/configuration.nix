@@ -4,20 +4,25 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, userLogin, ... }:
+{
+  config,
+  pkgs,
+  userLogin,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../modules/mixins/users.nix
-      ../../modules/mixins/desktop-x11.nix
-      ../../modules/mixins/audio.nix
-      ../../modules/mixins/jetbrains.nix
-      ../../modules/mixins/openssh.nix
-      ../../modules/mixins/virt-manager.nix
-      ../../modules/mixins/caliban-store-cache.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../modules/mixins/users.nix
+    ../../modules/mixins/desktop-x11.nix
+    ../../modules/mixins/audio.nix
+    ../../modules/mixins/jetbrains.nix
+    ../../modules/mixins/openssh.nix
+    ../../modules/mixins/virt-manager.nix
+    ../../modules/mixins/caliban-store-cache.nix
+  ];
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -30,7 +35,7 @@
   };
 
   # Enable grub cryptodisk
-  boot.loader.grub.enableCryptodisk=true;
+  boot.loader.grub.enableCryptodisk = true;
 
   boot.initrd.luks.devices."luks-c98e1bec-9e77-4107-bbcc-2be56cceb9d4".keyFile = "/crypto_keyfile.bin";
   networking.hostName = "astra"; # Define your hostname.
@@ -43,6 +48,8 @@
   # Use `sudo tailscale up --accept-routes` to connect to the VPN
   services.tailscale.enable = true;
 
-  environment.systemPackages = with pkgs; [
-  ];
+  environment.systemPackages =
+    with pkgs;
+    [
+    ];
 }

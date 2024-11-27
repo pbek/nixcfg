@@ -1,13 +1,17 @@
 # netcup02 Netcup server
-{ modulesPath, config, pkgs, ... }:
+{
+  modulesPath,
+  config,
+  pkgs,
+  ...
+}:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../../modules/mixins/server-remote.nix
-      ./disk-config.zfs.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/mixins/server-remote.nix
+    ./disk-config.zfs.nix
+  ];
 
   # Bootloader.
   boot.supportedFilesystems = [ "zfs" ];
@@ -19,7 +23,10 @@
     efiSupport = true;
     efiInstallAsRemovable = true;
     mirroredBoots = [
-      { devices = [ "nodev"]; path = "/boot"; }
+      {
+        devices = [ "nodev" ];
+        path = "/boot";
+      }
     ];
   };
 
@@ -32,7 +39,7 @@
   };
 
   networking = {
-    hostId = "dafdad02";  # needed for ZFS
+    hostId = "dafdad02"; # needed for ZFS
     hostName = "netcup02";
     networkmanager.enable = true;
 
@@ -42,6 +49,8 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
-  ];
+  environment.systemPackages =
+    with pkgs;
+    [
+    ];
 }

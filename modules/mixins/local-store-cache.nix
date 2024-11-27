@@ -1,5 +1,4 @@
-_:
-{
+_: {
   nix = {
     settings = {
       # If the cache servers are not available, https://cache.nixos.org will be used as a fallback.

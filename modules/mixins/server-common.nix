@@ -1,4 +1,13 @@
-{ config, pkgs, inputs, lib, userLogin, userNameLong, userEmail, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  lib,
+  userLogin,
+  userNameLong,
+  userEmail,
+  ...
+}:
 {
   imports = [
     ./common.nix
@@ -43,9 +52,12 @@
       enable = true;
       # use "git diff --no-ext-diff" for creating patches!
       difftastic.enable = true;
-      userName  = lib.mkDefault userNameLong;
+      userName = lib.mkDefault userNameLong;
       userEmail = lib.mkDefault userEmail;
-      ignores = [ ".idea" ".direnv" ];
+      ignores = [
+        ".idea"
+        ".direnv"
+      ];
     };
   };
 

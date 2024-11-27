@@ -7,12 +7,12 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./disk-config.zfs.nix
-      ../../modules/mixins/rog-ally.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./disk-config.zfs.nix
+    ../../modules/mixins/rog-ally.nix
+  ];
 
   boot.supportedFilesystems = [ "zfs" ];
   services.zfs.autoScrub.enable = true;
@@ -24,7 +24,10 @@
     efiSupport = true;
     efiInstallAsRemovable = true;
     mirroredBoots = [
-      { devices = [ "nodev"]; path = "/boot"; }
+      {
+        devices = [ "nodev" ];
+        path = "/boot";
+      }
     ];
   };
 
@@ -37,7 +40,7 @@
   };
 
   networking = {
-    hostId = "decfda01";  # needed for ZFS, use: head -c4 /dev/urandom | od -A none -t x4
+    hostId = "decfda01"; # needed for ZFS, use: head -c4 /dev/urandom | od -A none -t x4
     hostName = "ally2";
     networkmanager.enable = true;
   };
@@ -56,7 +59,7 @@
     };
     datasets = {
       "zroot/encrypted/home" = {
-        useTemplate = ["hourly"];
+        useTemplate = [ "hourly" ];
       };
     };
   };

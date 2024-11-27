@@ -1,5 +1,9 @@
 #{ appimageTools, fetchurl, lib }:
-{ pkgs ? import <nixpkgs> {}, appimageTools, makeWrapper }:
+{
+  pkgs ? import <nixpkgs> { },
+  appimageTools,
+  makeWrapper,
+}:
 
 let
   name = "curseforge";
@@ -30,8 +34,10 @@ appimageTools.wrapType2 {
   extraPkgs = pkgs: with pkgs; [ ];
 
   extraInstallCommands =
-    let contents = appimageTools.extract { inherit pname version src; };
-    in ''
+    let
+      contents = appimageTools.extract { inherit pname version src; };
+    in
+    ''
       source "${makeWrapper}/nix-support/setup-hook"
       wrapProgram $out/bin/${pname} \
         --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}"
@@ -42,11 +48,11 @@ appimageTools.wrapType2 {
       cp -r ${contents}/usr/share/icons $out/share
     '';
 
-#  meta = with lib; {
-#    description = "QOwnNotes command-line snippet manager";
-#    homepage = "https://github.com/qownnotes/qc";
-#    license = licenses.mit;
-#    maintainers = with maintainers; [ pbek totoroot ];
-#    platforms = platforms.linux ++ platforms.darwin;
-#  };
+  #  meta = with lib; {
+  #    description = "QOwnNotes command-line snippet manager";
+  #    homepage = "https://github.com/qownnotes/qc";
+  #    license = licenses.mit;
+  #    maintainers = with maintainers; [ pbek totoroot ];
+  #    platforms = platforms.linux ++ platforms.darwin;
+  #  };
 }

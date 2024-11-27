@@ -1,49 +1,52 @@
-{ stdenv, lib, fetchzip
-, appimageTools
-, autoPatchelfHook
-, desktop-file-utils
+{
+  stdenv,
+  lib,
+  fetchzip,
+  appimageTools,
+  autoPatchelfHook,
+  desktop-file-utils,
 }:
 
 stdenv.mkDerivation rec {
   pname = "curseforge";
   version = "1.250.2";
-  name="${pname}-${version}";
+  name = "${pname}-${version}";
 
   src = fetchzip {
-      # Is there a specific link for a version?
-      url = "https://curseforge.overwolf.com/downloads/curseforge-latest-linux.zip";
-      hash = "sha256-L33MkjefgcoEEc/TvwHX+yedRrmeqvt+BELGe/0IJNs=";
+    # Is there a specific link for a version?
+    url = "https://curseforge.overwolf.com/downloads/curseforge-latest-linux.zip";
+    hash = "sha256-L33MkjefgcoEEc/TvwHX+yedRrmeqvt+BELGe/0IJNs=";
   };
 
   appextracted = appimageTools.extractType2 {
     inherit name;
-    src="${src}/build/CurseForge-${version}-17763.AppImage";
+    src = "${src}/build/CurseForge-${version}-17763.AppImage";
   };
 
   dontBuild = true;
   dontConfigure = true;
 
-#  nativeBuildInputs = [ imagemagick autoPatchelfHook desktop-file-utils ];
-#  buildInputs = [ qtmultimedia stdenv.cc.cc ];
+  #  nativeBuildInputs = [ imagemagick autoPatchelfHook desktop-file-utils ];
+  #  buildInputs = [ qtmultimedia stdenv.cc.cc ];
 
   installPhase = ''
-      echo $out
-#      binary="$(realpath ${appextracted}/AppRun)"
-#      install -Dm755 $binary -t $out/bin
-#
-#      # fixup and install desktop file
-#      desktop-file-install --dir $out/share/applications \
-#        --set-key Exec --set-value $binary \
-#        --set-key Comment --set-value "${meta.description}" \
-#        --set-key Categories --set-value Network ${appextracted}/default.desktop
-#      mv $out/share/applications/default.desktop $out/share/applications/SoulseekQt.desktop
-#      #TODO: write generic code to read icon path from $binary.desktop
-#      icon="$(realpath ${appextracted}/.DirIcon)"
-#      for size in 16 32 48 64 72 96 128 192 256 512 1024; do
-#        mkdir -p $out/share/icons/hicolor/"$size"x"$size"/apps
-#        convert -resize "$size"x"$size" $icon $out/share/icons/hicolor/"$size"x"$size"/apps/$(basename $icon)
-#      done
-    '';
+          echo $out
+    #      binary="$(realpath ${appextracted}/AppRun)"
+    #      install -Dm755 $binary -t $out/bin
+    #
+    #      # fixup and install desktop file
+    #      desktop-file-install --dir $out/share/applications \
+    #        --set-key Exec --set-value $binary \
+    #        --set-key Comment --set-value "${meta.description}" \
+    #        --set-key Categories --set-value Network ${appextracted}/default.desktop
+    #      mv $out/share/applications/default.desktop $out/share/applications/SoulseekQt.desktop
+    #      #TODO: write generic code to read icon path from $binary.desktop
+    #      icon="$(realpath ${appextracted}/.DirIcon)"
+    #      for size in 16 32 48 64 72 96 128 192 256 512 1024; do
+    #        mkdir -p $out/share/icons/hicolor/"$size"x"$size"/apps
+    #        convert -resize "$size"x"$size" $icon $out/share/icons/hicolor/"$size"x"$size"/apps/$(basename $icon)
+    #      done
+  '';
 
   meta = with lib; {
     description = "Curseforge";

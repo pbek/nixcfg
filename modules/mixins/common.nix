@@ -1,4 +1,12 @@
-{ config, pkgs, inputs, userLogin, userNameLong, lib, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  userLogin,
+  userNameLong,
+  lib,
+  ...
+}:
 {
   imports = [
     ./starship.nix
@@ -29,8 +37,8 @@
       shellAbbrs = {
         killall = "pkill";
         less = "bat";
-  #      cat = "bat";
-  #      man = "tldr";
+        #      cat = "bat";
+        #      man = "tldr";
         man = "batman";
         du = "dua";
         ncdu = "dua interactive";
@@ -60,10 +68,18 @@
   users.users.${userLogin} = {
     isNormalUser = true;
     description = lib.mkDefault userNameLong;
-    extraGroups = [ "networkmanager" "wheel" "docker" "dialout" "input" ];
-    shell = pkgs.fish;
-    packages = with pkgs; [
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "dialout"
+      "input"
     ];
+    shell = pkgs.fish;
+    packages =
+      with pkgs;
+      [
+      ];
     # Set empty password initially. Don't forget to set a password with "passwd".
     initialHashedPassword = "";
   };
@@ -95,17 +111,26 @@
   nix = {
     settings = {
       # Allow flakes
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
 
       # To do a "nix-build --repair" without sudo
       # We still need that to not get a "lacks a signature by a trusted key" error when building on a remote machine
       # https://nixos.wiki/wiki/Nixos-rebuild
-      trusted-users = [ "root" "@wheel" ];
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
 
       # Above is more dangerous than below
       # https://fosstodon.org/@lhf/112773183844782048
       # https://github.com/NixOS/nix/issues/9649#issuecomment-1868001568
-      trusted-substituters = [ "root" "@wheel" ];
+      trusted-substituters = [
+        "root"
+        "@wheel"
+      ];
 
       # Allow fallback from local caches
       connect-timeout = 5;
@@ -138,24 +163,24 @@
     dig
     gnumake
     restic
-    nix-tree  # look into the nix store
+    nix-tree # look into the nix store
     erdtree # tree replacement
-    dust  # disk usage (du) replacement
+    dust # disk usage (du) replacement
     duf # disk free (df) replacement
     dua # disk usage (du) replacement
-    ranger  # midnight commander replacement (not really)
+    ranger # midnight commander replacement (not really)
     ripgrep # grep replacement
     eza # ls replacement
     bat # less replacement with syntax highlighting
-    bat-extras.batgrep  # ripgrep with bat
+    bat-extras.batgrep # ripgrep with bat
     bat-extras.batman # man with bat
-    tldr  # man replacement
-    fd  # find replacement
-    zellij  # terminal multiplexer (like tmux)
+    tldr # man replacement
+    fd # find replacement
+    zellij # terminal multiplexer (like tmux)
     netcat-gnu
     nmap
     lazygit
-    dogdns  # dig replacement
+    dogdns # dig replacement
     broot # fast directory switcher (has "br" alias for changing into directories)
     difftastic # Structural diff tool that compares files based on their syntax
     pingu # ping, but more colorful
@@ -168,11 +193,11 @@
 
   # Do garbage collection
   # Disabled for "programs.nh.clean.enable"
-#  nix.gc = {
-#    automatic = true;
-#    dates = "weekly";
-#    options = "--delete-older-than 20d";
-#  };
+  #  nix.gc = {
+  #    automatic = true;
+  #    dates = "weekly";
+  #    options = "--delete-older-than 20d";
+  #  };
 
   # Add Restic Security Wrapper
   # https://nixos.wiki/wiki/Restic
@@ -197,7 +222,7 @@
   # https://rycee.gitlab.io/home-manager/options.html
   # https://nix-community.github.io/home-manager/options.html#opt-home.file
   home-manager.users.${userLogin} = {
-    /* The home.stateVersion option does not have a default and must be set */
+    # The home.stateVersion option does not have a default and must be set
     home.stateVersion = "24.11";
 
     # Enable fish and bash in home-manager to use enableFishIntegration and enableBashIntegration
@@ -255,12 +280,12 @@
           sync_address = "https://atuin.bekerle.com";
           sync_frequency = "15m";
           key_path = "/home/${userLogin}/.secrets/atuin-key";
-          enter_accept = true;  # Enter runs command
-          style = "compact";  # No extra box around UI
+          enter_accept = true; # Enter runs command
+          style = "compact"; # No extra box around UI
           inline_height = 32; # Maximum number of lines Atuin’s interface should take up
-          prefers_reduced_motion = true;  # No automatic time updates
-#          sync.records = true; # v2 sync (not working)
-          workspaces = true;  # Filter in directories with git repositories
+          prefers_reduced_motion = true; # No automatic time updates
+          #          sync.records = true; # v2 sync (not working)
+          workspaces = true; # Filter in directories with git repositories
           # Fixes ZFS issues
           # See https://github.com/atuinsh/atuin/issues/952
           daemon = {

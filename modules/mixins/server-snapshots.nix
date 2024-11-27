@@ -14,10 +14,10 @@
     };
     datasets = {
       "zroot/home" = {
-        useTemplate = ["hourly"];
+        useTemplate = [ "hourly" ];
       };
       "zroot/docker" = {
-        useTemplate = ["hourly"];
+        useTemplate = [ "hourly" ];
       };
     };
   };

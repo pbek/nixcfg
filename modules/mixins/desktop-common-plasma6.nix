@@ -1,4 +1,10 @@
-{ config, pkgs, inputs, userLogin, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  userLogin,
+  ...
+}:
 {
   imports = [ ];
 

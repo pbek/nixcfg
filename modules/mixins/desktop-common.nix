@@ -1,4 +1,12 @@
-{ config, pkgs, inputs, userLogin, termFontSize, useSecrets, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  userLogin,
+  termFontSize,
+  useSecrets,
+  ...
+}:
 {
   imports = [
     ./desktop-common-minimum.nix
@@ -18,19 +26,19 @@
   ];
 
   environment.systemPackages = with pkgs; [
-#    smartgithg
-#    (pkgs.callPackage ../../apps/smartgithg/default.nix { })
-#    gittyup
-#    (pkgs.libsForQt5.callPackage ../../apps/gittyup/default.nix { })
+    #    smartgithg
+    #    (pkgs.callPackage ../../apps/smartgithg/default.nix { })
+    #    gittyup
+    #    (pkgs.libsForQt5.callPackage ../../apps/gittyup/default.nix { })
     kdiff3
     chromium
     qtcreator
     hub
 
     loganalyzer
-#    (pkgs.libsForQt5.callPackage ../../apps/loganalyzer/default.nix { })
-#    noseyparker
-#    (pkgs.callPackage ../../apps/noseyparker/default.nix { })
+    #    (pkgs.libsForQt5.callPackage ../../apps/loganalyzer/default.nix { })
+    #    noseyparker
+    #    (pkgs.callPackage ../../apps/noseyparker/default.nix { })
 
     keepassxc
     gcc
@@ -42,8 +50,8 @@
     yubikey-manager
     pam_u2f
     yubico-pam
-#    scdaemon
-#    pcscd
+    #    scdaemon
+    #    pcscd
     exfatprogs
     f2fs-tools
     ferdium
@@ -54,7 +62,7 @@
     nix-search-cli
     kitty # Terminal with OSC 52 support
 
-#    pinentry-curses
+    #    pinentry-curses
     pinentry-qt # For some reason this wasn't installed by the gpg settings
     cryfs
     onlyoffice-bin
@@ -87,7 +95,7 @@
     basename = "uutils-basename";
     cut = "uutils-cut";
     cat = "uutils-cat";
-#    install = "uutils-install";
+    #    install = "uutils-install";
     rm = "uutils-rm";
     comm = "uutils-comm";
     mktemp = "uutils-mktemp";
@@ -96,7 +104,7 @@
     readlink = "uutils-readlink";
     stdbuf = "uutils-stdbuf";
     mkdir = "uutils-mkdir";
-#    echo = "uutils-echo";
+    #    echo = "uutils-echo";
     basenc = "uutils-basenc";
     sync = "uutils-sync";
     wc = "uutils-wc";
@@ -115,7 +123,7 @@
     expr = "uutils-expr";
     whoami = "uutils-whoami";
     tr = "uutils-tr";
-#    test = "uutils-test";
+    #    test = "uutils-test";
     tail = "uutils-tail";
     who = "uutils-who";
     tac = "uutils-tac";
@@ -158,7 +166,7 @@
     seq = "uutils-seq";
     pr = "uutils-pr";
     pathchk = "uutils-pathchk";
-#    true = "uutils-true";
+    #    true = "uutils-true";
     touch = "uutils-touch";
     ln = "uutils-ln";
     cp = "uutils-cp --progress";
@@ -182,11 +190,11 @@
   # Disable logging on desktop to prevent disk space issues and spamming the journal (but this causes no logging at all!)
   # https://docs.docker.com/engine/logging/configure/
   # Note: Doen't seem to do anything
-#  virtualisation.docker.logDriver = "none";
+  #  virtualisation.docker.logDriver = "none";
 
   services.pcscd.enable = true;
   services.udev.packages = [ pkgs.yubikey-personalization ];
-#  programs.ssh.startAgent = false;
+  #  programs.ssh.startAgent = false;
 
   # Enable resoved to let wireguard set a DNS
   services.resolved.enable = true;
@@ -196,13 +204,17 @@
   home-manager.users.${userLogin} = {
     # Set the path to the pia-manual repository and the userLogin and password for the PIA VPN script
     home.file."Scripts/pia.sh" = {
-      text = if useSecrets then ''
-        #!/usr/bin/env bash
-        # PIA startup script
-        set -e
-        cd "${inputs.pia}"
-        sudo VPN_PROTOCOL=wireguard DISABLE_IPV6=yes DIP_TOKEN=no AUTOCONNECT=true PIA_PF=false PIA_DNS=false PIA_USER=$(cat "${config.age.secrets.pia-user.path}") PIA_PASS=$(cat "${config.age.secrets.pia-pass.path}") ./run_setup.sh
-      '' else "";
+      text =
+        if useSecrets then
+          ''
+            #!/usr/bin/env bash
+            # PIA startup script
+            set -e
+            cd "${inputs.pia}"
+            sudo VPN_PROTOCOL=wireguard DISABLE_IPV6=yes DIP_TOKEN=no AUTOCONNECT=true PIA_PF=false PIA_DNS=false PIA_USER=$(cat "${config.age.secrets.pia-user.path}") PIA_PASS=$(cat "${config.age.secrets.pia-pass.path}") ./run_setup.sh
+          ''
+        else
+          "";
       executable = true;
     };
 
@@ -211,7 +223,7 @@
         name = "Qt Creator with nix-shell";
         genericName = "C++ IDE for developing Qt applications";
         comment = "";
-#        icon = "${pkgs.qtcreator-qt6}/share/icons/hicolor/128x128/apps/QtProject-qtcreator.png";
+        #        icon = "${pkgs.qtcreator-qt6}/share/icons/hicolor/128x128/apps/QtProject-qtcreator.png";
         icon = "${pkgs.qtcreator}/share/icons/hicolor/128x128/apps/QtProject-qtcreator.png";
         exec = "nix-shell /home/${userLogin}/.shells/qt5.nix --run qtcreator";
         terminal = false;
@@ -233,29 +245,29 @@
       };
 
       # Enable https://wezfurlong.org/wezterm/ for terminal with OSC 52 support for zellij clipboard via SSH
-#      wezterm = {
-#        enable = true;
-#        # https://wezfurlong.org/wezterm/config/lua/wezterm/font.html?h=font
-#        extraConfig = ''
-#          return {
-#            animation_fps = 1,
-#            cursor_blink_rate = 0,
-#            font = wezterm.font(
-#              'FiraCode Nerd Font',
-#              { weight = 'Medium' }
-#            ),
-#            font_size = ${toString termFontSize},
-#            color_scheme = 'Breeze (Gogh)',
-#            use_fancy_tab_bar = false,
-#            tab_max_width = 32,
-#            hide_tab_bar_if_only_one_tab = false,
-#            keys = {
-#              { key = 'LeftArrow', mods = 'SHIFT', action = wezterm.action.ActivateTabRelative(-1) },
-#              { key = 'RightArrow', mods = 'SHIFT', action = wezterm.action.ActivateTabRelative(1) },
-#            },
-#          }
-#        '';
-#      };
+      #      wezterm = {
+      #        enable = true;
+      #        # https://wezfurlong.org/wezterm/config/lua/wezterm/font.html?h=font
+      #        extraConfig = ''
+      #          return {
+      #            animation_fps = 1,
+      #            cursor_blink_rate = 0,
+      #            font = wezterm.font(
+      #              'FiraCode Nerd Font',
+      #              { weight = 'Medium' }
+      #            ),
+      #            font_size = ${toString termFontSize},
+      #            color_scheme = 'Breeze (Gogh)',
+      #            use_fancy_tab_bar = false,
+      #            tab_max_width = 32,
+      #            hide_tab_bar_if_only_one_tab = false,
+      #            keys = {
+      #              { key = 'LeftArrow', mods = 'SHIFT', action = wezterm.action.ActivateTabRelative(-1) },
+      #              { key = 'RightArrow', mods = 'SHIFT', action = wezterm.action.ActivateTabRelative(1) },
+      #            },
+      #          }
+      #        '';
+      #      };
     };
   };
 }

@@ -1,14 +1,21 @@
-{ config, pkgs, userLogin, userNameLong, userEmail, lib, ... }:
+{
+  config,
+  pkgs,
+  userLogin,
+  userNameLong,
+  userEmail,
+  lib,
+  ...
+}:
 
 {
-  imports =
-    [
-      ./users.nix
-      ./desktop-common-minimum.nix
-      ./audio.nix
-      ./openssh.nix
-      ./local-store-cache.nix
-    ];
+  imports = [
+    ./users.nix
+    ./desktop-common-minimum.nix
+    ./audio.nix
+    ./openssh.nix
+    ./local-store-cache.nix
+  ];
 
   networking = {
     networkmanager.enable = true;
@@ -23,7 +30,7 @@
   # https://nixos.wiki/wiki/KDE#GTK_themes_are_not_applied_in_Wayland_applications_.2F_Window_Decorations_missing_.2F_Cursor_looks_different
   programs.dconf.enable = true;
 
-#  environment.systemPackages = with pkgs.kdePackages; [
+  #  environment.systemPackages = with pkgs.kdePackages; [
   environment.systemPackages = with pkgs; [
     kdePackages.kwalletmanager
     kdePackages.plasma-systemmonitor
@@ -42,19 +49,19 @@
 
     onboard # On-screen keyboard
     google-chrome # Touch scrolling in Chrome
-#    heroic-unwrapped # Epic Games Store
+    #    heroic-unwrapped # Epic Games Store
     heroic # Epic Games Store
     lutris-unwrapped # Game manager
 
     ferdium
-#    qownnotes
+    #    qownnotes
     (pkgs.qt6Packages.callPackage ../../apps/qownnotes/default.nix { })
     qc
-#    (pkgs.callPackage ../../apps/qc/default.nix { })
+    #    (pkgs.callPackage ../../apps/qc/default.nix { })
     nextcloud-client
 
     wowup-cf
-#    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
+    #    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
   ];
 
   # https://nixos.wiki/wiki/steam
@@ -70,26 +77,29 @@
       enable = true;
       # use "git diff --no-ext-diff" for creating patches!
       difftastic.enable = true;
-      userName  = lib.mkDefault userNameLong;
+      userName = lib.mkDefault userNameLong;
       userEmail = lib.mkDefault userEmail;
-      ignores = [ ".idea" ".direnv" ];
+      ignores = [
+        ".idea"
+        ".direnv"
+      ];
     };
   };
 
   # Touch screen gestures
   services.touchegg.enable = true;
 
-#  # In addition to audio.nix we want to enable low-latency audio
-#  # https://github.com/fufexan/nix-gaming?tab=readme-ov-file#pipewire-low-latency
-#  services.pipewire = {
-#    lowLatency = {
-#      # enable this module
-#      enable = true;
-#      # defaults (no need to be set unless modified)
-#      quantum = 64;
-#      rate = 48000;
-#    };
-#  };
+  #  # In addition to audio.nix we want to enable low-latency audio
+  #  # https://github.com/fufexan/nix-gaming?tab=readme-ov-file#pipewire-low-latency
+  #  services.pipewire = {
+  #    lowLatency = {
+  #      # enable this module
+  #      enable = true;
+  #      # defaults (no need to be set unless modified)
+  #      quantum = 64;
+  #      rate = 48000;
+  #    };
+  #  };
 
   # https://nixos.wiki/wiki/PipeWire#Low-latency_setup
   services.pipewire.extraConfig.pipewire."92-low-latency" = {
@@ -107,7 +117,9 @@
   services.handheld-daemon = {
     enable = true;
     user = userLogin;
-    package = (pkgs.callPackage ../../apps/handheld-daemon/package.nix { }).override {
-    };
+    package =
+      (pkgs.callPackage ../../apps/handheld-daemon/package.nix { }).override
+        {
+        };
   };
 }

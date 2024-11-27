@@ -4,21 +4,26 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, userLogin, ... }:
+{
+  config,
+  pkgs,
+  userLogin,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./disk-config.zfs.nix
-      ../../modules/mixins/users.nix
-      ../../modules/mixins/desktop.nix
-      ../../modules/mixins/audio.nix
-      ../../modules/mixins/jetbrains.nix
-      ../../modules/mixins/openssh.nix
-      ../../modules/mixins/virt-manager.nix
-      ../../modules/mixins/local-store-cache.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./disk-config.zfs.nix
+    ../../modules/mixins/users.nix
+    ../../modules/mixins/desktop.nix
+    ../../modules/mixins/audio.nix
+    ../../modules/mixins/jetbrains.nix
+    ../../modules/mixins/openssh.nix
+    ../../modules/mixins/virt-manager.nix
+    ../../modules/mixins/local-store-cache.nix
+  ];
 
   # Bootloader.
   boot.supportedFilesystems = [ "zfs" ];
@@ -31,7 +36,10 @@
     efiSupport = true;
     efiInstallAsRemovable = true;
     mirroredBoots = [
-      { devices = [ "nodev"]; path = "/boot"; }
+      {
+        devices = [ "nodev" ];
+        path = "/boot";
+      }
     ];
   };
 
@@ -44,7 +52,7 @@
   };
 
   networking = {
-    hostId = "dbbfda01";  # needed for ZFS
+    hostId = "dbbfda01"; # needed for ZFS
     hostName = "hyperion";
     networkmanager.enable = true;
   };

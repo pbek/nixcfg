@@ -1,9 +1,10 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, qtbase
-, qtsvg
-, wrapQtAppsHook
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  qtbase,
+  qtsvg,
+  wrapQtAppsHook,
 }:
 
 let
@@ -48,20 +49,20 @@ stdenv.mkDerivation {
 
   # installPhase = ''
   #   runHook preInstall
-    
+
   #   make install PREFIX=$(out) INSTALL_ROOT=$(out)
   #   install -vD ${appname} $out/bin/${pname}
-    
+
   #   runHook postInstall
   # '';
 
   installFlags = [ "INSTALL_ROOT=$(out)" ];
 
   postInstall =
-  # Create a lowercase symlink for Linux
-  lib.optionalString stdenv.isLinux ''
-    ln -s $out/bin/${appname} $out/bin/${pname}
-  '';
+    # Create a lowercase symlink for Linux
+    lib.optionalString stdenv.isLinux ''
+      ln -s $out/bin/${appname} $out/bin/${pname}
+    '';
 
   meta = with lib; {
     description = "Tool that helps you to analyze your log files by reducing the content with patterns you define";
