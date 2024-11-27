@@ -26,6 +26,7 @@ alias bc := build-on-caliban
 alias p := push
 alias sp := switch-push
 alias fix-command-not-found-error := update-channels
+alias nixfmt := nix-format
 
 [group('build')]
 test:
@@ -335,6 +336,11 @@ nix-store-reverse-dependencies:
     set -euxo pipefail
     nixStorePath=$(gum input --placeholder "Nix store path (e.g. /nix/store/hbldxn007k0y5qidna6fg0x168gnsmkj-botan-2.19.5.drv)")
     nix-store --query --referrers "$nixStorePath"
+
+# Format the nix files
+[group('maintenance')]
+nix-format:
+    nix-shell -p fd nixfmt-rfc-style --run "fd -e nix --exec-batch nixfmt"
 
 # Format all justfiles
 [group('linter')]
