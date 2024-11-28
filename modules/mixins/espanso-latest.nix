@@ -3,7 +3,6 @@
   pkgs,
   inputs,
   userLogin,
-  x11Support,
   waylandSupport,
   ...
 }:
@@ -21,7 +20,6 @@
     services.espanso = {
       package = if waylandSupport then pkgs.espanso-wayland else pkgs.espanso;
       #      package = (pkgs.callPackage ../../apps/espanso/espanso.nix { }).override {
-      #        inherit x11Support;
       #        inherit waylandSupport;
       #      };
     };

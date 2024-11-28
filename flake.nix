@@ -89,9 +89,7 @@
         userEmail = "patrizio@bekerle.com";
         useSecrets = true;
         termFontSize = 12.0;
-        # By default we will use Wayland with Plasma 6
-        x11Support = false;
-        waylandSupport = true;
+        waylandSupport = true; # Wayland is the default, otherwise use X11
         usePlasma6 = true; # Plasma 6 is the default, otherwise use Plasma 5
         useStableJetbrains = false; # Set this to true to use stable versions
       };
@@ -106,7 +104,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            x11Support = false;
             waylandSupport = true;
           };
         };
@@ -119,7 +116,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            x11Support = false;
             waylandSupport = true;
           };
         };
@@ -172,7 +168,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            x11Support = true;
             waylandSupport = false;
             termFontSize = 16.0;
             usePlasma6 = true;
@@ -191,7 +186,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            x11Support = false;
             waylandSupport = true;
             usePlasma6 = true;
           };
@@ -294,7 +288,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            x11Support = true;
             waylandSupport = false;
             useStableJetbrains = true;
           };
