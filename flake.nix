@@ -92,6 +92,7 @@
         waylandSupport = true; # Wayland is the default, otherwise use X11
         usePlasma6 = true; # Plasma 6 is the default, otherwise use Plasma 5
         useStableJetbrains = false; # Set this to true to use stable versions
+        useEspanso = true; # Use Espanso by default
       };
 
       nixosConfigurations = {
@@ -171,6 +172,7 @@
             waylandSupport = false;
             termFontSize = 16.0;
             usePlasma6 = true;
+            useEspanso = false; # App-specific configurations are not yet supported in Wayland on caliban!
           };
         };
         # TU Work PC

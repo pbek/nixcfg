@@ -5,13 +5,14 @@
   userLogin,
   termFontSize,
   useSecrets,
+  useEspanso,
+  lib,
   ...
 }:
 {
-  imports = [
+  imports = lib.optional (useEspanso) ./espanso.nix ++ [
     ./desktop-common-minimum.nix
     ./git.nix
-    ./espanso.nix
   ];
 
   # Enable CUPS to print documents.
