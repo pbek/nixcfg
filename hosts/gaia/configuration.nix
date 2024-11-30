@@ -60,6 +60,7 @@
     go-passbolt-cli
     #    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
     #    (pkgs.callPackage ../../apps/lact/package.nix { })
+    lact
   ];
 
   # Handle keyboard leds
