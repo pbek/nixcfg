@@ -10,7 +10,10 @@
 #{ config, inputs, xdg, ... }:
 
 let
-  jetbrainsPackages = if useStableJetbrains then pkgs.stable.jetbrains else pkgs.jetbrains;
+#  jetbrainsPackages = if useStableJetbrains then pkgs.stable.jetbrains else pkgs.jetbrains;
+  # Wait until 24.11 jetbrains work again
+  # https://github.com/NixOS/nixpkgs/issues/358171
+  jetbrainsPackages = pkgs.jetbrains;
 in
 ## https://github.com/NixOS/nixpkgs/pull/309011
 #  pkgs = import
