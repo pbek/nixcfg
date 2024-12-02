@@ -80,6 +80,12 @@ build-on-caliban:
     nixos-rebuild --build-host omega@caliban-1.netbird.cloud --flake .#{{ hostname }} build
     if test -f ~/.config/neosay/config.json; then echo "❄️ nixcfg build-on-caliban finished on {{ hostname }}" | neosay; fi
 
+# Build and deploy the astra host
+[group('build')]
+build-deploy-astra:
+    nixos-rebuild --target-host omega@astra.netbird.cloud --flake .#astra build
+    if test -f ~/.config/neosay/config.json; then echo "❄️ nixcfg build-deploy-astra finished on {{ hostname }}" | neosay; fi
+
 # Build the current host on the Sinope host
 [group('build')]
 build-on-sinope:
