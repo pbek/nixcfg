@@ -217,6 +217,7 @@
     '';
 
     # Careful with this, see https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+    # Also see https://mynixos.com/nixpkgs/option/system.stateVersion
     stateVersion = "24.11";
   };
 
