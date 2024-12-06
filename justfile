@@ -28,6 +28,10 @@ alias sp := switch-push
 alias fix-command-not-found-error := update-channels
 alias nixfmt := nix-format
 
+# Notify the user with neosay
+@_notify text:
+    if test -f ~/.config/neosay/config.json; then echo "❄️ nixcfg {{ text }}" | neosay; fi
+
 [group('build')]
 test:
     sudo nixos-rebuild test --flake .#{{ hostname }} -L
@@ -57,7 +61,7 @@ switch args='':
     exit_code=$?
     runtime=$((end_time - start_time))
     if [ $runtime -gt 10 ]; then
-      if test -f ~/.config/neosay/config.json; then echo "❄️ nixcfg switch finished on {{ hostname }}, exit code: $exit_code (runtime: ${runtime}s)" | neosay; fi
+      just _notify "switch finished on {{ hostname }}, exit code: $exit_code (runtime: ${runtime}s)"
     fi
 
 # Build the current host with nix-rebuild
@@ -69,6 +73,7 @@ nix-build:
 [group('build')]
 _build hostname:
     nh os build -H {{ hostname }} .
+    just _notify "build finished on {{ hostname }}"
 
 # Build the current host with nh
 [group('build')]
@@ -78,19 +83,19 @@ build: (_build hostname)
 [group('build')]
 build-on-caliban:
     nixos-rebuild --build-host omega@caliban-1.netbird.cloud --flake .#{{ hostname }} build
-    if test -f ~/.config/neosay/config.json; then echo "❄️ nixcfg build-on-caliban finished on {{ hostname }}" | neosay; fi
+    just _notify "build-on-caliban finished on {{ hostname }}"
 
 # Build and deploy the astra host
 [group('build')]
 build-deploy-astra:
     nixos-rebuild --target-host omega@astra.netbird.cloud --flake .#astra build
-    if test -f ~/.config/neosay/config.json; then echo "❄️ nixcfg build-deploy-astra finished on {{ hostname }}" | neosay; fi
+    just _notify "build-deploy-astra finished on {{ hostname }}"
 
 # Build the current host on the Sinope host
 [group('build')]
 build-on-sinope:
     nixos-rebuild --build-host omega@sinope.netbird.cloud --flake .#{{ hostname }} build
-    if test -f ~/.config/neosay/config.json; then echo "❄️ nixcfg build-on-sinope finished on {{ hostname }}" | neosay; fi
+    just _notify "build-on-sinope finished on {{ hostname }}"
 
 # Build with nh on caliban (--build-host" not found)
 [group('build')]
@@ -101,7 +106,7 @@ nh-build-on-caliban:
 [group('build')]
 build-on-home01 args='':
     nixos-rebuild --build-host omega@home01.lan --flake .#{{ hostname }} build {{ args }}
-    if test -f ~/.config/neosay/config.json; then echo "❄️ nixcfg build-on-home01 finished on {{ hostname }}" | neosay; fi
+    just _notify "build-on-home01 finished on {{ hostname }}"
 
 # Build with nh on homew01 (--build-host" not found)
 [group('build')]
