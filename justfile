@@ -143,6 +143,7 @@ upgrade-push-all: upgrade push-all push
 [group('cache')]
 push:
     -attic push main `which espanso` --no-closure
+    -attic push main `which cura5` --no-closure
     -attic push qownnotes `which qownnotes` --no-closure
     -attic push qownnotes `which qc` --no-closure
 
