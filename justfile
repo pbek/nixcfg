@@ -91,6 +91,12 @@ build-deploy-astra:
     nixos-rebuild --target-host omega@astra.netbird.cloud --flake .#astra build
     just _notify "build-deploy-astra finished on {{ hostname }}"
 
+# Build and deploy the ally2 host
+[group('build')]
+build-deploy-ally2:
+    nixos-rebuild --target-host omega@ally2.lan --flake .#ally2 build
+    just _notify "build-deploy-ally2 finished on {{ hostname }}"
+
 # Build the current host on the Sinope host
 [group('build')]
 build-on-sinope:
