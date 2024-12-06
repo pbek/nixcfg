@@ -57,6 +57,8 @@
     # Temporarily disabled for: sip-4.19.25 not supported for interpreter python3.12
     # Using stable.blender-hip doesn't work because of: Cannot mix incompatible Qt library (5.15.15) with this library (5.15.14)
     #    cura
+    # Taken from https://github.com/nix-community/nur-combined/blob/master/repos/xeals/pkgs/by-name/cu/cura5/package.nix
+    (pkgs.callPackage ../../apps/cura5/package.nix { })
     go-passbolt-cli
     #    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
     #    (pkgs.callPackage ../../apps/lact/package.nix { })
