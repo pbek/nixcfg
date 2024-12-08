@@ -37,8 +37,7 @@ stdenv.mkDerivation {
     wrapQtAppsHook
     pkg-config
     installShellFiles
-    xvfb-run
-  ] ++ lib.optionals stdenv.isDarwin [ makeWrapper ];
+  ] ++ lib.optionals stdenv.isLinux [ xvfb-run ] ++ lib.optionals stdenv.isDarwin [ makeWrapper ];
 
   buildInputs = [
     qtbase
@@ -54,7 +53,9 @@ stdenv.mkDerivation {
   ];
 
   postInstall =
-    ''
+    ""
+    # Install shell completion on Linux (there is no xvfb-run on macOS)
+    + lib.optionalString stdenv.isLinux ''
       installShellCompletion --cmd ${appname} \
         --bash <(xvfb-run $out/bin/${appname} --completion bash) \
         --fish <(xvfb-run $out/bin/${appname} --completion fish)
