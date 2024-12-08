@@ -12,3 +12,6 @@ edit-ui-tests:
 
 edit-app:
     cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || cd ~/Code/tools/nixpkgs && kate ./pkgs/applications/office/qownnotes/default.nix
+
+open-browser:
+    xdg-open https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/applications/office/qownnotes/default.nix
