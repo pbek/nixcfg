@@ -1,10 +1,11 @@
-{ lib
-, stdenv
-, fetchurl
-, writeScriptBin
-, appimageTools
-, copyDesktopItems
-, makeDesktopItem
+{
+  lib,
+  stdenv,
+  fetchurl,
+  writeScriptBin,
+  appimageTools,
+  copyDesktopItems,
+  makeDesktopItem,
 }:
 
 let
@@ -71,7 +72,10 @@ stdenv.mkDerivation rec {
         "model/vnd.collada+xml+zip"
       ];
       categories = [ "Graphics" ];
-      keywords = [ "3D" "Printing" ];
+      keywords = [
+        "3D"
+        "Printing"
+      ];
     })
   ];
 

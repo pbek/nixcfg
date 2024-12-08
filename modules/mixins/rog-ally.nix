@@ -22,11 +22,11 @@
   };
 
   # Virtual keyboard at lock screen does not work in plasma6!
-#  services.desktopManager.plasma6.enable = true;
-#  services.displayManager.defaultSession = "plasmax11";
-#  environment.plasma6.excludePackages = with pkgs.kdePackages; [
-#    baloo
-#  ];
+  #  services.desktopManager.plasma6.enable = true;
+  #  services.displayManager.defaultSession = "plasmax11";
+  #  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+  #    baloo
+  #  ];
 
   services.xserver.desktopManager.plasma5.enable = true;
 
