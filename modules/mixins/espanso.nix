@@ -353,7 +353,11 @@
             }
             {
               triggers = [ ":hug" ];
-              replace = "🤗🫂";
+              replace = "🤗";
+            }
+            {
+              triggers = [ ":phug" ];
+              replace = "🫂";
             }
             {
               triggers = [
