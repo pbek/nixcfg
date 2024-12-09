@@ -56,8 +56,6 @@
     exfatprogs
     f2fs-tools
     ferdium
-    topgrade
-    sniffnet
     wireguard-tools
     nixpkgs-review
     nix-search-cli
