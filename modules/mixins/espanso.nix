@@ -132,7 +132,7 @@
         searches = {
           matches = [
             {
-              trigger = "!am";
+              trigger = "!amaz";
               replace = "!amazonde ";
             }
           ];
