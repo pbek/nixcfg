@@ -337,6 +337,22 @@
             useSecrets = false;
           };
         };
+        # TU ThinkBook Manuel
+        dp02 = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = commonDesktopModules ++ [
+            ./hosts/dp02/configuration.nix
+            ./hosts/dp02/hardware-configuration.nix
+          ];
+          specialArgs = self.commonArgs // {
+            inherit inputs;
+            userLogin = "mkocher";
+            userNameLong = "Manuel Kocher";
+            userNameShort = "Manuel";
+            userEmail = "manuel.kocher@tugraz.at";
+            useSecrets = false;
+          };
+        };
         #      # Home Server miniserver24 for Markus
         #      miniserver24 = nixpkgs.lib.nixosSystem {
         #        inherit system;
