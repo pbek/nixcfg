@@ -29,7 +29,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.luks.devices."luks-0eda41dc-43e4-4a37-92ac-b33be4c24d4f".device = "/dev/disk/by-uuid/0eda41dc-43e4-4a37-92ac-b33be4c24d4f";
+  boot.initrd.luks.devices."luks-0eda41dc-43e4-4a37-92ac-b33be4c24d4f".device =
+    "/dev/disk/by-uuid/0eda41dc-43e4-4a37-92ac-b33be4c24d4f";
 
   networking.hostName = "dp01"; # Define your hostname.
 

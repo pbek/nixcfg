@@ -37,7 +37,8 @@
   # Enable grub cryptodisk
   boot.loader.grub.enableCryptodisk = true;
 
-  boot.initrd.luks.devices."luks-c98e1bec-9e77-4107-bbcc-2be56cceb9d4".keyFile = "/crypto_keyfile.bin";
+  boot.initrd.luks.devices."luks-c98e1bec-9e77-4107-bbcc-2be56cceb9d4".keyFile =
+    "/crypto_keyfile.bin";
   networking.hostName = "astra"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -48,8 +49,6 @@
   # Use `sudo tailscale up --accept-routes` to connect to the VPN
   services.tailscale.enable = true;
 
-  environment.systemPackages =
-    with pkgs;
-    [
-    ];
+  environment.systemPackages = with pkgs; [
+  ];
 }

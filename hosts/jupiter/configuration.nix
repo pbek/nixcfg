@@ -34,8 +34,10 @@
   };
 
   # Enable swap on luks
-  boot.initrd.luks.devices."luks-fd774d6e-6a78-4d0b-a06e-fb759e2eb6b2".device = "/dev/disk/by-uuid/fd774d6e-6a78-4d0b-a06e-fb759e2eb6b2";
-  boot.initrd.luks.devices."luks-fd774d6e-6a78-4d0b-a06e-fb759e2eb6b2".keyFile = "/crypto_keyfile.bin";
+  boot.initrd.luks.devices."luks-fd774d6e-6a78-4d0b-a06e-fb759e2eb6b2".device =
+    "/dev/disk/by-uuid/fd774d6e-6a78-4d0b-a06e-fb759e2eb6b2";
+  boot.initrd.luks.devices."luks-fd774d6e-6a78-4d0b-a06e-fb759e2eb6b2".keyFile =
+    "/crypto_keyfile.bin";
 
   networking.hostName = "jupiter"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -43,10 +45,8 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-  environment.systemPackages =
-    with pkgs;
-    [
-    ];
+  environment.systemPackages = with pkgs; [
+  ];
 
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];

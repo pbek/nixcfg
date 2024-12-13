@@ -62,10 +62,8 @@
     };
   };
 
-  environment.systemPackages =
-    with pkgs;
-    [
-    ];
+  environment.systemPackages = with pkgs; [
+  ];
 
   # Fixes issue with updating the OwnNotes releases RSS feed
   systemd.services.restart-qownnotes = {

@@ -25,7 +25,8 @@
   # Enable grub cryptodisk
   boot.loader.grub.enableCryptodisk = true;
 
-  boot.initrd.luks.devices."luks-800753af-5100-407e-b720-4a63512a1d75".keyFile = "/crypto_keyfile.bin";
+  boot.initrd.luks.devices."luks-800753af-5100-407e-b720-4a63512a1d75".keyFile =
+    "/crypto_keyfile.bin";
   networking.hostName = "omega-nix"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 }

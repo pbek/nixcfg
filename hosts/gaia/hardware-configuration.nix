@@ -32,7 +32,8 @@
     fsType = "ext4";
   };
 
-  boot.initrd.luks.devices."luks-790ee1ef-d6b8-42f0-8605-6715be4f128c".device = "/dev/disk/by-uuid/790ee1ef-d6b8-42f0-8605-6715be4f128c";
+  boot.initrd.luks.devices."luks-790ee1ef-d6b8-42f0-8605-6715be4f128c".device =
+    "/dev/disk/by-uuid/790ee1ef-d6b8-42f0-8605-6715be4f128c";
 
   fileSystems."/boot/efi" = {
     device = "/dev/disk/by-uuid/7E62-DB9C";
@@ -44,7 +45,8 @@
     fsType = "ext4";
   };
 
-  boot.initrd.luks.devices."encrypted".device = "/dev/disk/by-uuid/36945148-a697-405c-b907-c2a2a468f05e";
+  boot.initrd.luks.devices."encrypted".device =
+    "/dev/disk/by-uuid/36945148-a697-405c-b907-c2a2a468f05e";
 
   swapDevices = [ ];
 

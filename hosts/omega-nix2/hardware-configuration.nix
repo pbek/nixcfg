@@ -28,7 +28,8 @@
     fsType = "ext4";
   };
 
-  boot.initrd.luks.devices."luks-39fcb0d4-0d32-4438-858a-0b3a9bef7019".device = "/dev/disk/by-uuid/39fcb0d4-0d32-4438-858a-0b3a9bef7019";
+  boot.initrd.luks.devices."luks-39fcb0d4-0d32-4438-858a-0b3a9bef7019".device =
+    "/dev/disk/by-uuid/39fcb0d4-0d32-4438-858a-0b3a9bef7019";
 
   swapDevices = [ ];
 

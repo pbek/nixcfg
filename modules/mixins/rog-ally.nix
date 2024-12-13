@@ -121,9 +121,7 @@
   services.handheld-daemon = {
     enable = true;
     user = userLogin;
-    package =
-      (pkgs.callPackage ../../apps/handheld-daemon/package.nix { }).override
-        {
-        };
+    package = (pkgs.callPackage ../../apps/handheld-daemon/package.nix { }).override {
+    };
   };
 }

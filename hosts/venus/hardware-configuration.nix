@@ -42,7 +42,8 @@
   };
 
   # LUKS for "/"
-  boot.initrd.luks.devices."luks-d0dbdb7a-a656-4c57-ab4c-116b843831a3".device = "/dev/disk/by-uuid/d0dbdb7a-a656-4c57-ab4c-116b843831a3";
+  boot.initrd.luks.devices."luks-d0dbdb7a-a656-4c57-ab4c-116b843831a3".device =
+    "/dev/disk/by-uuid/d0dbdb7a-a656-4c57-ab4c-116b843831a3";
 
   fileSystems."/boot/efi" = {
     device = "/dev/disk/by-uuid/D55E-8533";
