@@ -10,7 +10,7 @@ in
   chart =
     let
       toolName = "bitscope-chart";
-      version = "1.1.DK05B";
+      version = "2.0.FK22M";
     in
     mkBitscope {
       inherit toolName version;
@@ -22,7 +22,7 @@ in
 
       src = fetchurl {
         url = "https://pbek.github.io/bitscope-mirror/download/${toolName}_${version}_amd64.deb";
-        sha256 = "sha256-mA8akpPIdGstvDmE59MyRaJU9SetRZQyxUTh+cfyf8I=";
+        sha256 = "08mc82pjamyyyhh15sagsv0sc7yx5v5n54bg60fpj7v41wdwrzxw";
       };
     };
 
@@ -40,7 +40,7 @@ in
       };
 
       src = fetchurl {
-        url = "http://bitscope.com/download/files/${toolName}_${version}_amd64.deb";
+        url = "https://pbek.github.io/bitscope-mirror/download/${toolName}_${version}_amd64.deb";
         sha256 = "00b4gxwz7w6pmfrcz14326b24kl44hp0gzzqcqxwi5vws3f0y49d";
       };
     };
@@ -59,7 +59,7 @@ in
       };
 
       src = fetchurl {
-        url = "http://bitscope.com/download/files/${toolName}_${version}_amd64.deb";
+        url = "https://pbek.github.io/bitscope-mirror/download/${toolName}_${version}_amd64.deb";
         sha256 = "05xr5mnka1v3ibcasg74kmj6nlv1nmn3lca1wv77whkq85cmz0s1";
       };
     };
@@ -67,7 +67,7 @@ in
   dso =
     let
       toolName = "bitscope-dso";
-      version = "2.6.EA17H";
+      version = "2.8.FE22H";
     in
     mkBitscope {
       inherit toolName version;
@@ -79,14 +79,14 @@ in
 
       src = fetchurl {
         url = "https://pbek.github.io/bitscope-mirror/download/${toolName}_${version}_amd64.deb";
-        sha256 = "sha256-xbesOnnrr3gkjq7bGIiy/p17oQgcEsg/IEEZ4dujAMQ=";
+        sha256 = "0fc6crfkprj78dxxhvhbn1dx1db5chm0cpwlqpqv8sz6whp12mcj";
       };
     };
 
   logic =
     let
       toolName = "bitscope-logic";
-      version = "1.2.DJ20C";
+      version = "1.2.FC20C";
     in
     mkBitscope {
       inherit toolName version;
@@ -98,14 +98,14 @@ in
 
       src = fetchurl {
         url = "https://pbek.github.io/bitscope-mirror/download/${toolName}_${version}_amd64.deb";
-        sha256 = "sha256-KzwgIaX63FRSKd9Smje2Yo0LkgUtXb9EPDkWsa0Q1GE=";
+        sha256 = "0lkb7z9gfkiyxdwh4dq1zxfls8gzdw0na1vrrbgnxfg3klv4xns3";
       };
     };
 
   meter =
     let
       toolName = "bitscope-meter";
-      version = "2.0.DK05B";
+      version = "2.0.FK22G";
     in
     mkBitscope {
       inherit toolName version;
@@ -117,7 +117,7 @@ in
 
       src = fetchurl {
         url = "https://pbek.github.io/bitscope-mirror/download/${toolName}_${version}_amd64.deb";
-        sha256 = "sha256-YtMtlDmjm6DZutJDVcxGM0VupFC/BTHgDGEHDsxJhPQ=";
+        sha256 = "0nirbci6ymhk4h4bck2s4wbsl5r9yndk2jvvv72zwkg21248mnbp";
       };
     };
 
@@ -138,7 +138,7 @@ in
       };
 
       src = fetchurl {
-        url = "http://bitscope.com/download/files/${toolName}_${version}_amd64.deb";
+        url = "https://pbek.github.io/bitscope-mirror/download/${toolName}_${version}_amd64.deb";
         sha256 = "1ybjfbh3narn29ll4nci4b7rnxy0hj3wdfm4v8c6pjr8pfvv9spy";
       };
     };
@@ -157,7 +157,7 @@ in
       };
 
       src = fetchurl {
-        url = "http://bitscope.com/download/files/${toolName}_${version}_amd64.deb";
+        url = "https://pbek.github.io/bitscope-mirror/download/${toolName}_${version}_amd64.deb";
         sha256 = "1079n7msq6ks0n4aasx40rd4q99w8j9hcsaci71nd2im2jvjpw9a";
       };
     };
