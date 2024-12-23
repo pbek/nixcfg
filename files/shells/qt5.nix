@@ -6,12 +6,8 @@ pkgs.mkShell {
   nativeBuildInputs = with pkgs; [
     crowdin-cli
     cmakeWithGui
-    libsForQt5.qt5.qtbase
-    libsForQt5.qt5.qttools
+    libsForQt5.qt5.full # You need the full Qt5 package to not get QSqlError messages like "Driver not loaded" when running a built Qt5 application
     libsForQt5.qt5.wrapQtAppsHook
-    libsForQt5.qt5.qtx11extras
-    libsForQt5.qt5.qtwebsockets
-    libsForQt5.qt5.qtdeclarative
-    libsForQt5.qt5.qtsvg
+    gdb
   ];
 }
