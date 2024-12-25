@@ -47,6 +47,8 @@
     firewall = {
       allowedTCPPorts = [
         25 # SMTP
+        80 # HTTP
+        443 # HTTPS
         587 # SMTP
       ];
     };
