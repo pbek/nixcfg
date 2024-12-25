@@ -45,7 +45,10 @@
 
     # ssh is already enabled by the server-common mixin
     firewall = {
-      allowedTCPPorts = [ 25 ]; # SMTP
+      allowedTCPPorts = [
+        25 # SMTP
+        587 # SMTP
+      ];
     };
   };
 
