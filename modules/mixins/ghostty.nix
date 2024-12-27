@@ -1,11 +1,6 @@
 {
-  config,
   pkgs,
   userLogin,
-  userNameShort,
-  userNameLong,
-  userEmail,
-  lib,
   ...
 }:
 
