@@ -13,6 +13,7 @@
   imports = lib.optional (useEspanso) ./espanso.nix ++ [
     ./desktop-common-minimum.nix
     ./git.nix
+    ./ghostty.nix
   ];
 
   # Enable CUPS to print documents.
@@ -70,7 +71,6 @@
     lazydocker
     uutils-coreutils # GNU coreutils replacement
     inkscape
-    (pkgs.callPackage ../../apps/ghostty/package.nix { })
 
     # TU Graz
     vpnc
