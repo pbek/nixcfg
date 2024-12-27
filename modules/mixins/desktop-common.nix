@@ -70,6 +70,7 @@
     lazydocker
     uutils-coreutils # GNU coreutils replacement
     inkscape
+    (pkgs.callPackage ../../apps/ghostty/package.nix { })
 
     # TU Graz
     vpnc
