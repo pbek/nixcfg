@@ -9,19 +9,28 @@
 }:
 
 let
-  pname = "cura5";
-  version = "5.6.0";
-  name = "${pname}-${version}";
+  pname = "cura-appimage";
+  version = "5.9.0";
 
-  cura5 = appimageTools.wrapType2 {
-    inherit pname version;
+  # Give some good names so the intermediate packages are easy
+  # to recognise by name in the Nix store.
+  appimageBinName = "cura-appimage-tools-output";
+  wrapperScriptName = "${pname}-wrapper-script";
+
+  curaAppimageToolsWrapped = appimageTools.wrapType2 {
+    # For `appimageTools.wrapType2`, `pname` determines the binary's name in `bin/`.
+    pname = appimageBinName;
+    inherit version;
     src = fetchurl {
       url = "https://github.com/Ultimaker/Cura/releases/download/${version}/Ultimaker-Cura-${version}-linux-X64.AppImage";
-      hash = "sha256-EHiWoNpLKHPzv6rZrtNgEr7y//iVcRYeV/TaCn8QpEA=";
+      hash = "sha256-STtVeM4Zs+PVSRO3cI0LxnjRDhOxSlttZF+2RIXnAp4=";
     };
     extraPkgs = _: [ ];
   };
-  script = writeScriptBin pname ''
+
+  # The `QT_QPA_PLATFORM=xcb` fixes Wayland support, see
+  #     https://github.com/NixOS/nixpkgs/issues/186570#issuecomment-2526277637
+  script = writeScriptBin wrapperScriptName ''
     #!${stdenv.shell}
     # AppImage version of Cura loses current working directory and treats all paths relateive to $HOME.
     # So we convert each of the files passed as argument to an absolute path.
@@ -34,7 +43,7 @@ let
       fi
       args+=("$a")
     done
-    QT_QPA_PLATFORM=xcb exec "${cura5}/bin/cura5" "''${args[@]}"
+    QT_QPA_PLATFORM=xcb exec "${curaAppimageToolsWrapped}/bin/${appimageBinName}" "''${args[@]}"
   '';
 in
 stdenv.mkDerivation rec {
@@ -44,13 +53,13 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ copyDesktopItems ];
   desktopItems = [
     # Based on upstream.
-    # https://github.com/Ultimaker/Cura/blob/main/packaging/AppImage/cura.desktop.jinja
+    # https://github.com/Ultimaker/Cura/blob/382b98e8b0c910fdf8b1509557ae8afab38f1817/packaging/AppImage/cura.desktop.jinja
     (makeDesktopItem {
       name = "cura";
       desktopName = "UltiMaker Cura";
       genericName = "3D Printing Software";
       comment = meta.longDescription;
-      exec = "cura5";
+      exec = "cura";
       icon = "cura-icon";
       terminal = false;
       type = "Application";
@@ -81,8 +90,11 @@ stdenv.mkDerivation rec {
 
   # TODO: Extract cura-icon from AppImage source.
   installPhase = ''
+    runHook preInstall
+
     mkdir -p $out/bin
-    cp ${script}/bin/cura5 $out/bin/cura5
+    cp ${script}/bin/${wrapperScriptName} $out/bin/cura
+
     runHook postInstall
   '';
 
@@ -94,5 +106,8 @@ stdenv.mkDerivation rec {
     '';
     license = lib.licenses.lgpl3;
     platforms = [ "x86_64-linux" ];
+    maintainers = with lib.maintainers; [
+      nh2 pbek
+    ];
   };
 }
