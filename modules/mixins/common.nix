@@ -23,7 +23,7 @@
         gitpl = "git pull && git submodule update --init";
         gitpls = "git pull";
         gita = "git add -A";
-        gits = "git status";
+        gitst = "git status";
         gitd = "git diff";
         gitds = "git diff --staged";
         gitl = "git log";

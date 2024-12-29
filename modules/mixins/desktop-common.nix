@@ -67,6 +67,7 @@
     cryfs
     onlyoffice-bin
     gh
+    git-town # Git extension
     smartmontools
     lazydocker
     uutils-coreutils # GNU coreutils replacement
@@ -81,6 +82,8 @@
 
   programs.fish.shellAliases = {
     lzd = "lazydocker";
+    gits = "git town sync";
+    gith = "git town hack";
 
     # Replace GNU coreutils with uutils-coreutils
     hostid = "uutils-hostid";
