@@ -84,6 +84,7 @@
     lzd = "lazydocker";
     gits = "git town sync";
     gith = "git town hack";
+    gitdel = "git town delete";
 
     # Replace GNU coreutils with uutils-coreutils
     hostid = "uutils-hostid";
