@@ -107,7 +107,8 @@ stdenv.mkDerivation rec {
     license = lib.licenses.lgpl3;
     platforms = [ "x86_64-linux" ];
     maintainers = with lib.maintainers; [
-      nh2 pbek
+      nh2
+      pbek
     ];
   };
 }
