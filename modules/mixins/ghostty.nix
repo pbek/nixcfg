@@ -6,8 +6,8 @@
 
 {
   environment.systemPackages = with pkgs; [
-    # Until https://github.com/NixOS/nixpkgs/pull/368404 is merged
-    (pkgs.callPackage ../../apps/ghostty/package.nix { })
+    ghostty
+    # (pkgs.callPackage ../../apps/ghostty/package.nix { })
   ];
 
   # https://rycee.gitlab.io/home-manager/options.html

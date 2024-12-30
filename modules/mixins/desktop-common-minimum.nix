@@ -88,7 +88,7 @@
     attic-client
     inputs.agenix.packages.x86_64-linux.default
     firefox
-    stable.magic-wormhole
+    magic-wormhole
     xclip
     fzf
     fishPlugins.fzf-fish

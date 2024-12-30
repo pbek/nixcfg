@@ -34,7 +34,7 @@
     #    (pkgs.libsForQt5.callPackage ../../apps/gittyup/default.nix { })
     kdiff3
     chromium
-    stable.qtcreator
+    qtcreator
     hub
 
     loganalyzer
