@@ -34,7 +34,7 @@
     #    (pkgs.libsForQt5.callPackage ../../apps/gittyup/default.nix { })
     kdiff3
     chromium
-    qtcreator
+    stable.qtcreator
     hub
 
     loganalyzer
@@ -228,7 +228,7 @@
         genericName = "C++ IDE for developing Qt applications";
         comment = "";
         #        icon = "${pkgs.qtcreator-qt6}/share/icons/hicolor/128x128/apps/QtProject-qtcreator.png";
-        icon = "${pkgs.qtcreator}/share/icons/hicolor/128x128/apps/QtProject-qtcreator.png";
+        icon = "${pkgs.stable.qtcreator}/share/icons/hicolor/128x128/apps/QtProject-qtcreator.png";
         exec = "nix-shell /home/${userLogin}/.shells/qt5.nix --run qtcreator";
         terminal = false;
         categories = [ "Development" ];
