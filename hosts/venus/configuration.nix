@@ -73,7 +73,7 @@
     calibre
     zoom-us
     #    blender
-    blender-hip # Blender with HIP support for AMD GPUs
+    stable.blender-hip # Blender with HIP support for AMD GPUs
     # Temporarily disabled for: sip-4.19.25 not supported for interpreter python3.12
     # Using stable.blender-hip doesn't work because of: Cannot mix incompatible Qt library (5.15.15) with this library (5.15.14)
     #     cura
@@ -123,6 +123,7 @@
   services.ollama = {
     enable = true;
     acceleration = "rocm";
+    package = pkgs.stable.ollama;
     #    environmentVariables = {
     #      HCC_AMDGPU_TARGET = "gfx1100"; # used to be necessary, but doesn't seem to anymore
     #    };
