@@ -71,13 +71,13 @@ nix-build:
 
 # Build a host with nh
 [group('build')]
-_build hostname:
+build-host hostname:
     nh os build -H {{ hostname }} .
     just _notify "build finished on {{ hostname }}"
 
 # Build the current host with nh
 [group('build')]
-build: (_build hostname)
+build: (build-host hostname)
 
 # Build the current host on the Caliban host
 [group('build')]
@@ -307,7 +307,7 @@ nix-build-venus:
 
 # Build the Venus host with nh
 [group('build')]
-build-venus: (_build "venus")
+build-venus: (build-host "venus")
 
 # Show home-manager logs
 [group('maintenance')]
