@@ -204,8 +204,8 @@ ssh-vm-server:
     ssh -p 2222 omega@localhost -t "tmux new-session -A -s pbek"
 
 # Reset the VM
-[group('vm')]
 [confirm("Are you sure you want to reset the VM?")]
+[group('vm')]
 reset-vm:
     rm *.qcow2
 
@@ -236,8 +236,8 @@ flake-update:
     nix flake update
 
 # Clean up the system to free up space
-[group('maintenance')]
 [confirm("Are you sure you want to clean up the system?")]
+[group('maintenance')]
 cleanup:
     duf && \
     sudo journalctl --vacuum-time=3d && \
