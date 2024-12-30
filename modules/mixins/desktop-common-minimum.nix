@@ -95,7 +95,7 @@
     usbutils # lsusb
 
     #    qownnotes
-    (pkgs.qt6Packages.callPackage ../../apps/qownnotes/default.nix { })
+    (callPackage ../../apps/qownnotes/package.nix { })
     qc
     #    (pkgs.callPackage ../../apps/qc/default.nix { })
     bluez

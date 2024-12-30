@@ -1,5 +1,5 @@
 build:
-    nix-build -E '((import <nixpkgs> {}).qt6Packages.callPackage (import ./default.nix) { })'
+    nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })'
 
 ui-tests:
     cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || cd ~/Code/tools/nixpkgs && nix-build . -A nixosTests.qownnotes
@@ -11,7 +11,7 @@ edit-ui-tests:
     cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || cd ~/Code/tools/nixpkgs && kate ./nixos/tests/qownnotes.nix
 
 edit-app:
-    cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || cd ~/Code/tools/nixpkgs && kate ./pkgs/applications/office/qownnotes/default.nix
+    cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || cd ~/Code/tools/nixpkgs && kate ./pkgs/by-name/qo/qownnotes/package.nix
 
 open-browser:
-    xdg-open https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/applications/office/qownnotes/default.nix
+    xdg-open https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/qo/qownnotes/package.nix

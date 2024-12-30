@@ -59,7 +59,7 @@
 
     ferdium
     #    qownnotes
-    (pkgs.qt6Packages.callPackage ../../apps/qownnotes/default.nix { })
+    (pkgs.qt6Packages.callPackage ../../apps/qownnotes/package.nix { })
     qc
     #    (pkgs.callPackage ../../apps/qc/default.nix { })
     nextcloud-client

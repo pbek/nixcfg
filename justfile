@@ -327,7 +327,7 @@ home01-restart-nix-serve:
 # Edit the QOwnNotes build file
 [group('qownnotes')]
 edit-qownnotes-build:
-    kate ./apps/qownnotes/default.nix -l 23 -c 19
+    kate ./apps/qownnotes/package.nix -l 23 -c 19
 
 # Run a fish shell with all needed tools
 [group('maintenance')]
