@@ -209,6 +209,53 @@
                 </details>
               '';
             }
+            # Option to highlight a "Note" and "Warning" using blockquote
+            # See https://github.com/orgs/community/discussions/16925
+            {
+              triggers = [
+                ":ghtip"
+              ];
+              replace = ''
+                > [!TIP]
+                > $|$
+              '';
+            }
+            {
+              triggers = [
+                ":ghwarn"
+              ];
+              replace = ''
+                > [!WARNING]
+                > $|$
+              '';
+            }
+            {
+              triggers = [
+                ":ghnote"
+              ];
+              replace = ''
+                > [!NOTE]
+                > $|$
+              '';
+            }
+            {
+              triggers = [
+                ":ghimp"
+              ];
+              replace = ''
+                > [!IMPORTANT]
+                > $|$
+              '';
+            }
+            {
+              triggers = [
+                ":ghcaut"
+              ];
+              replace = ''
+                > [!CAUTION]
+                > $|$
+              '';
+            }
           ];
         };
         mail = {
