@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'apps/**'
+      - 'apps/qownnotes/**'
       - '.github/workflows/build.yml'
   workflow_dispatch:
 
@@ -42,5 +42,5 @@ jobs:
       - name: Build qownnotes package
         run: |
           cd apps/qownnotes && \
-          nix-build -E '((import <nixpkgs> {}).qt6Packages.callPackage (import ./default.nix) { })' && \
+          nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })' && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
