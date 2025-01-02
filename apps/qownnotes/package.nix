@@ -15,14 +15,14 @@
 let
   pname = "qownnotes";
   appname = "QOwnNotes";
-  version = "25.1.0";
+  version = "25.1.1";
 in
 qt6Packages.stdenv.mkDerivation {
   inherit pname version;
 
   src = fetchurl {
     url = "https://github.com/pbek/QOwnNotes/releases/download/v${version}/qownnotes-${version}.tar.xz";
-    hash = "sha256-tWcqYopD2++1G+KscJxAcFyQ89OXJfIcIpTMo9tAAPA=";
+    hash = "sha256-UPR8+CaQhwYlytLHx/BvMuw0KxckeM8fxI/zQ4RL5d4=";
   };
 
   nativeBuildInputs =
