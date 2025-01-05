@@ -291,6 +291,7 @@
           daemon = {
             enabled = true;
             systemd_socket = true;
+            socket_path = "/home/${userLogin}/.local/share/atuin/atuin.sock";
           };
         };
       };
