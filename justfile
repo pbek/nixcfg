@@ -73,7 +73,7 @@ nix-build:
 [group('build')]
 build-host hostname:
     nh os build -H {{ hostname }} .
-    just _notify "build finished on {{ hostname }}"
+    just _notify "build of host {{ hostname }} finished"
 
 # Build the current host with nh
 [group('build')]
