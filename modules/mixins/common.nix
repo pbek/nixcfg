@@ -271,7 +271,7 @@
       atuin = {
         enable = true;
         enableFishIntegration = true;
-        # Writing to the atuin history work with bash
+        # Writing to the atuin history doesn't work with bash
         # See https://github.com/nix-community/home-manager/issues/5958
         enableBashIntegration = false;
         # https://docs.atuin.sh/configuration/config/
