@@ -81,7 +81,7 @@
     (pkgs.callPackage ../../apps/cura5/package.nix { })
     wowup-cf
     #    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
-    stable.heroic # Epic Games Store
+    heroic # Epic Games Store
     amdgpu_top # AMD GPU monitoring
     lact # AMD GPU monitoring
   ];
