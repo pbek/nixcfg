@@ -141,5 +141,5 @@
 
   # Try to prevent popping of loudspeakers when audio starts again
   # See https://nixos.wiki/wiki/PulseAudio#Disabling_unwanted_modules
-  hardware.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
+  services.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
 }
