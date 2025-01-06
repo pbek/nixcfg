@@ -290,7 +290,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            waylandSupport = false;
             useStableJetbrains = true;
           };
         };
