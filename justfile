@@ -55,6 +55,7 @@ switch-simple:
 switch args='':
     #!/usr/bin/env bash
     echo "❄️ Running switch for {{ hostname }}..."
+    sudo true
     start_time=$(date +%s)
     nh os switch -H {{ hostname }} . -- {{ args }}
     end_time=$(date +%s)
