@@ -246,11 +246,13 @@ cleanup:
     sudo nix-collect-garbage -d && \
     nix-collect-garbage -d && \
     duf
+    just _notify "Cleanup finished on {{ hostname }}"
 
 # Repair the nix store
 [group('maintenance')]
 repair-store:
     sudo nix-store --verify --check-contents --repair
+    just _notify "Store repaired on {{ hostname }}"
 
 # List the generations
 [group('maintenance')]
@@ -263,6 +265,7 @@ optimize-store:
     duf && \
     nix store optimise && \
     duf
+    just _notify "Store optimized on {{ hostname }}"
 
 # Do firmware updates
 [group('maintenance')]
