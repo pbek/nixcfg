@@ -270,6 +270,7 @@
       # https://docs.atuin.sh
       atuin = {
         enable = true;
+        daemon.enable = true;
         enableFishIntegration = true;
         # Writing to the atuin history doesn't work with bash
         # See https://github.com/nix-community/home-manager/issues/5958
@@ -291,39 +292,10 @@
           daemon = {
             enabled = true;
             systemd_socket = true;
-            socket_path = "/home/${userLogin}/.local/share/atuin/atuin.sock";
           };
         };
       };
     };
-
-    # Systemd user services for Atuin
-    # See https://forum.atuin.sh/t/getting-the-daemon-working-on-nixos/334/5
-    systemd.user =
-      let
-        atuinSockDir = "/home/${userLogin}/.local/share/atuin";
-        atuinSock = "${atuinSockDir}/atuin.sock";
-        unitConfig = {
-          Description = "Atuin Magical Shell History Daemon";
-          ConditionPathIsDirectory = atuinSockDir;
-          ConditionPathExists = "/home/${userLogin}/.config/atuin/config.toml";
-        };
-      in
-      {
-        sockets.atuin-daemon = {
-          Unit = unitConfig;
-          Install.WantedBy = [ "default.target" ];
-          Socket = {
-            ListenStream = atuinSock;
-            Accept = false;
-            SocketMode = "0600";
-          };
-        };
-        services.atuin-daemon = {
-          Unit = unitConfig;
-          Service.ExecStart = "${pkgs.atuin}/bin/atuin daemon";
-        };
-      };
   };
 
   # Enable ZRAM swap to get more memory
