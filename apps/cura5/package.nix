@@ -17,14 +17,20 @@ let
   appimageBinName = "cura-appimage-tools-output";
   wrapperScriptName = "${pname}-wrapper-script";
 
+  src = fetchurl {
+    url = "https://github.com/Ultimaker/Cura/releases/download/${version}/Ultimaker-Cura-${version}-linux-X64.AppImage";
+    hash = "sha256-STtVeM4Zs+PVSRO3cI0LxnjRDhOxSlttZF+2RIXnAp4=";
+  };
+
+  appimageContents = appimageTools.extract {
+    inherit pname version src;
+  };
+
   curaAppimageToolsWrapped = appimageTools.wrapType2 {
+    inherit src;
     # For `appimageTools.wrapType2`, `pname` determines the binary's name in `bin/`.
     pname = appimageBinName;
     inherit version;
-    src = fetchurl {
-      url = "https://github.com/Ultimaker/Cura/releases/download/${version}/Ultimaker-Cura-${version}-linux-X64.AppImage";
-      hash = "sha256-STtVeM4Zs+PVSRO3cI0LxnjRDhOxSlttZF+2RIXnAp4=";
-    };
     extraPkgs = _: [ ];
   };
 
@@ -88,12 +94,14 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  # TODO: Extract cura-icon from AppImage source.
   installPhase = ''
     runHook preInstall
 
     mkdir -p $out/bin
     cp ${script}/bin/${wrapperScriptName} $out/bin/cura
+
+    mkdir -p $out/share/applications $out/share/icons/hicolor/128x128/apps
+    install -Dm644 ${appimageContents}/usr/share/icons/hicolor/128x128/apps/cura-icon.png $out/share/icons/hicolor/128x128/apps/cura-icon.png
 
     runHook postInstall
   '';
@@ -107,8 +115,10 @@ stdenv.mkDerivation rec {
     license = lib.licenses.lgpl3;
     platforms = [ "x86_64-linux" ];
     maintainers = with lib.maintainers; [
-      nh2
       pbek
+      nh2
+      FliegendeWurst
+      bct
     ];
   };
 }
