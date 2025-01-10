@@ -1,6 +1,7 @@
 {
   lib,
   stdenv,
+  stdenvNoCC,
   fetchurl,
   writeScriptBin,
   appimageTools,
@@ -52,7 +53,7 @@ let
     QT_QPA_PLATFORM=xcb exec "${curaAppimageToolsWrapped}/bin/${appimageBinName}" "''${args[@]}"
   '';
 in
-stdenv.mkDerivation rec {
+stdenvNoCC.mkDerivation rec {
   inherit pname version;
   dontUnpack = true;
 
@@ -112,12 +113,12 @@ stdenv.mkDerivation rec {
     longDescription = ''
       Cura converts 3D models into paths for a 3D printer. It prepares your print for maximum accuracy, minimum printing time and good reliability with many extra features that make your print come out great.
     '';
-    license = lib.licenses.lgpl3;
+    license = lib.licenses.lgpl3Plus;
     platforms = [ "x86_64-linux" ];
     maintainers = with lib.maintainers; [
       pbek
       nh2
-      FliegendeWurst
+      fliegendewurst
       bct
     ];
   };
