@@ -73,6 +73,7 @@
     uutils-coreutils # GNU coreutils replacement
     inkscape
     nil # Nix language server for kate
+    # marksman # Markdown language server for kate
 
     # TU Graz
     vpnc
