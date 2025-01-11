@@ -7,9 +7,10 @@
   appimageTools,
   copyDesktopItems,
   makeDesktopItem,
+  nix-update-script,
 }:
 
-let
+stdenvNoCC.mkDerivation rec {
   pname = "cura-appimage";
   version = "5.9.0";
 
@@ -52,9 +53,7 @@ let
     done
     QT_QPA_PLATFORM=xcb exec "${curaAppimageToolsWrapped}/bin/${appimageBinName}" "''${args[@]}"
   '';
-in
-stdenvNoCC.mkDerivation rec {
-  inherit pname version;
+
   dontUnpack = true;
 
   nativeBuildInputs = [ copyDesktopItems ];
@@ -107,19 +106,22 @@ stdenvNoCC.mkDerivation rec {
     runHook postInstall
   '';
 
+  passthru.updateScript = nix-update-script { extraArgs = [ "--version-regex=([56789].+)" ]; };
+
   meta = {
     description = "3D printing software";
     homepage = "https://github.com/ultimaker/cura";
+    changelog = "https://github.com/Ultimaker/Cura/releases/tag/${version}";
     longDescription = ''
       Cura converts 3D models into paths for a 3D printer. It prepares your print for maximum accuracy, minimum printing time and good reliability with many extra features that make your print come out great.
     '';
     license = lib.licenses.lgpl3Plus;
     platforms = [ "x86_64-linux" ];
+    mainProgram = "cura";
     maintainers = with lib.maintainers; [
       pbek
       nh2
       fliegendewurst
-      bct
     ];
   };
 }
