@@ -36,8 +36,8 @@ stdenvNoCC.mkDerivation rec {
     extraPkgs = _: [ ];
   };
 
-  # The `QT_QPA_PLATFORM=xcb` fixes Wayland support, see
-  #     https://github.com/NixOS/nixpkgs/issues/186570#issuecomment-2526277637
+  # The `QT_QPA_PLATFORM=xcb` fixes Wayland support, see https://github.com/NixOS/nixpkgs/issues/186570#issuecomment-2526277637
+  # The `GTK_USE_PORTAL=1` fixes file dialog issues under Gnome, see https://github.com/NixOS/nixpkgs/pull/372614#issuecomment-2585663161
   script = writeScriptBin wrapperScriptName ''
     #!${stdenv.shell}
     # AppImage version of Cura loses current working directory and treats all paths relateive to $HOME.
@@ -51,7 +51,7 @@ stdenvNoCC.mkDerivation rec {
       fi
       args+=("$a")
     done
-    QT_QPA_PLATFORM=xcb exec "${curaAppimageToolsWrapped}/bin/${appimageBinName}" "''${args[@]}"
+    QT_QPA_PLATFORM=xcb GTK_USE_PORTAL=1 exec "${curaAppimageToolsWrapped}/bin/${appimageBinName}" "''${args[@]}"
   '';
 
   dontUnpack = true;
