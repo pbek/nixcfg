@@ -133,7 +133,7 @@ update:
 
 # Update the flakes and switch to the new configuration
 [group('build')]
-upgrade: update && switch
+upgrade: update build switch
 
 [group('cache')]
 upgrade-push: upgrade push
