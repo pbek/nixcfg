@@ -170,8 +170,8 @@
     ripgrep # grep replacement
     eza # ls replacement
     bat # less replacement with syntax highlighting
-    stable.bat-extras.batgrep # ripgrep with bat
-    stable.bat-extras.batman # man with bat
+    bat-extras.batgrep # ripgrep with bat
+    bat-extras.batman # man with bat
     tldr # man replacement
     fd # find replacement
     zellij # terminal multiplexer (like tmux)
