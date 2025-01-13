@@ -17,7 +17,7 @@ let
   appname = "QOwnNotes";
   version = "25.1.3";
 in
-qt6Packages.stdenv.mkDerivation {
+stdenv.mkDerivation {
   inherit pname version;
 
   src = fetchurl {
