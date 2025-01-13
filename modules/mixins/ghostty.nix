@@ -1,6 +1,7 @@
 {
   pkgs,
   userLogin,
+  termFontSize,
   ...
 }:
 
@@ -13,7 +14,8 @@
   # https://rycee.gitlab.io/home-manager/options.html
   # https://nix-community.github.io/home-manager/options.html#opt-home.file
   home-manager.users.${userLogin} = {
-    # https://ghostty.org/docs/config/reference
+    # Doc: https://ghostty.org/docs/config/reference
+    # Config generator: https://ghostty.zerebos.com
     # Theme: https://github.com/catppuccin/ghostty/blob/main/themes/catppuccin-mocha.conf
     home.file.".config/ghostty/config".text = ''
       palette = 0=#45475a
@@ -38,6 +40,9 @@
       cursor-color = f5e0dc
       selection-background = 353749
       selection-foreground = cdd6f4
+
+      window-new-tab-position = end
+      font-size = ${toString termFontSize}
     '';
   };
 }
