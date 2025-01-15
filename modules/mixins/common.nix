@@ -287,6 +287,7 @@
           prefers_reduced_motion = true; # No automatic time updates
           #          sync.records = true; # v2 sync (not working)
           workspaces = true; # Filter in directories with git repositories
+          filter_mode = "workspace"; # Filter in directories with git repositories by default
           # Fixes ZFS issues
           # See https://github.com/atuinsh/atuin/issues/952
           daemon = {
