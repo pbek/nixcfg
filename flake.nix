@@ -4,12 +4,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
-    #    nixinate.url = "github:matthewcroughan/nixinate";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
-    #    robotnix.url = "github:danielfullmer/robotnix";
     pia.url = "github:pia-foss/manual-connections";
     pia.flake = false;
     catppuccin.url = "github:catppuccin/starship";
@@ -28,7 +26,6 @@
   outputs =
     {
       self,
-      #      , nixinate
       home-manager,
       nixpkgs,
       nixpkgs-stable,
@@ -39,7 +36,6 @@
       nixos-hardware,
       plasma-manager,
       espanso-fix,
-      #      , robotnix
       ...
     }@inputs:
 
