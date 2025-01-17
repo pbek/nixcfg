@@ -79,6 +79,14 @@
               replace = "Mit freundlichen Grüßen\n${userNameLong}";
             }
             {
+              trigger = ":zb";
+              replace = "beispielsweise";
+            }
+            {
+              trigger = ":eg";
+              replace = "for example";
+            }
+            {
               trigger = ":kr";
               replace = "Kind regards\n${userNameLong}";
             }
