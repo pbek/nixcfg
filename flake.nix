@@ -350,6 +350,24 @@
             useSharedKey = false;
           };
         };
+        # TU ThinkBook Jenny
+        dp03 = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = commonDesktopModules ++ [
+            ./hosts/dp03/configuration.nix
+            ./hosts/dp03/hardware-configuration.nix
+            disko.nixosModules.disko
+          ];
+          specialArgs = self.commonArgs // {
+            inherit inputs;
+            userLogin = "jenny";
+            userNameLong = "Jenny Gasser";
+            userNameShort = "Jenny";
+            userEmail = "jennifer.gassner@tugraz.at";
+            useSecrets = false;
+            useSharedKey = false;
+          };
+        };
         #      # Home Server miniserver24 for Markus
         #      miniserver24 = nixpkgs.lib.nixosSystem {
         #        inherit system;
