@@ -8,7 +8,7 @@
   copyDesktopItems,
   makeDesktopItem,
   nix-update-script,
-  wrapGAppsHook,
+  wrapGAppsHook3,
 }:
 
 stdenvNoCC.mkDerivation rec {
@@ -57,7 +57,7 @@ stdenvNoCC.mkDerivation rec {
 
   dontUnpack = true;
 
-  nativeBuildInputs = [ copyDesktopItems wrapGAppsHook ];
+  nativeBuildInputs = [ copyDesktopItems wrapGAppsHook3 ];
   desktopItems = [
     # Based on upstream.
     # https://github.com/Ultimaker/Cura/blob/382b98e8b0c910fdf8b1509557ae8afab38f1817/packaging/AppImage/cura.desktop.jinja
