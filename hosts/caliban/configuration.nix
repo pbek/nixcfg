@@ -117,7 +117,7 @@
 
   # virtualisation.virtualbox.host.enableExtensionPack = true;
 
-  # latest: 6.11
+  # latest: 6.13
   # lts: 6.6
   #  boot.kernelPackages = pkgs.linuxPackages_latest;
 
