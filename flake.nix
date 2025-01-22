@@ -84,6 +84,7 @@
         userNameShort = "Patrizio";
         userEmail = "patrizio@bekerle.com";
         useSecrets = true;
+        useSharedKey = true;
         termFontSize = 12.0;
         waylandSupport = true; # Wayland is the default, otherwise use X11
         usePlasma6 = true; # Plasma 6 is the default, otherwise use Plasma 5
@@ -346,6 +347,7 @@
             userNameShort = "Manuel";
             userEmail = "manuel.kocher@tugraz.at";
             useSecrets = false;
+            useSharedKey = false;
           };
         };
         #      # Home Server miniserver24 for Markus

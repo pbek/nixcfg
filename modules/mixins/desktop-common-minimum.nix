@@ -1,9 +1,11 @@
 {
+  lib,
   config,
   pkgs,
   inputs,
   userLogin,
   termFontSize,
+  useSharedKey,
   ...
 }:
 {
@@ -120,7 +122,7 @@
   # Enable Netbird Wireguard VPN service
   services.netbird.enable = true;
 
-  users.users.${userLogin} = {
+  users.users.${userLogin} = lib.mkIf useSharedKey {
     openssh.authorizedKeys.keys = [
       # Yubikey public key
       "sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBFDWxqigrXdCx7mX/yvBpHJf2JIab9HIrjof+sCbn0cOr/NySAirjE7tWxkZJPBrUs/8wSgn/rFO742O+NkOXTYAAAAEc3NoOg== omega@yubikey"
