@@ -109,7 +109,7 @@
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   };
 
-  # latest: 6.12
+  # latest: 6.13
   # lts: 6.6
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
