@@ -90,6 +90,7 @@
         usePlasma6 = true; # Plasma 6 is the default, otherwise use Plasma 5
         useStableJetbrains = false; # Set this to true to use stable versions
         useEspanso = true; # Use Espanso by default
+        useInternalInfra = true; # Use internal infrastructure of omega
       };
 
       nixosConfigurations = {
@@ -331,6 +332,8 @@
             userNameShort = "Andrea";
             userEmail = "andrea.ortner@tugraz.at";
             useSecrets = false;
+            useSharedKey = false;
+            useInternalInfra = false;
           };
         };
         # TU ThinkBook Manuel
@@ -348,6 +351,7 @@
             userEmail = "manuel.kocher@tugraz.at";
             useSecrets = false;
             useSharedKey = false;
+            useInternalInfra = false;
           };
         };
         # TU ThinkBook Jenny
@@ -366,6 +370,7 @@
             userEmail = "jennifer.gassner@tugraz.at";
             useSecrets = false;
             useSharedKey = false;
+            useInternalInfra = false;
           };
         };
         #      # Home Server miniserver24 for Markus

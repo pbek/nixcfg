@@ -5,6 +5,8 @@
   userLogin,
   userNameLong,
   lib,
+  useSecrets,
+  useInternalInfra,
   ...
 }:
 {
@@ -285,9 +287,9 @@
         # https://docs.atuin.sh/configuration/config/
         # Writes ~/.config/atuin/config.toml
         settings = {
-          sync_address = "https://atuin.bekerle.com";
+          sync_address = if useInternalInfra then "https://atuin.bekerle.com" else null;
           sync_frequency = "15m";
-          key_path = "/home/${userLogin}/.secrets/atuin-key";
+          key_path = if useSecrets then "/home/${userLogin}/.secrets/atuin-key" else null;
           enter_accept = true; # Enter runs command
           style = "compact"; # No extra box around UI
           inline_height = 32; # Maximum number of lines Atuin’s interface should take up
