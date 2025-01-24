@@ -234,7 +234,14 @@
       };
 
       fish.enable = true;
-      bash.enable = true;
+      bash = {
+        enable = true;
+        # Add atuin init to bashrc, because it doesn't work with bashIntegration
+        # But it still doesn't add anything to the Atuin history
+        bashrcExtra = ''
+          eval "$(${pkgs.atuin}/bin/atuin init --disable-up-arrow bash)"
+        '';
+      };
 
       # A smarter cd command
       # https://github.com/ajeetdsouza/zoxide
