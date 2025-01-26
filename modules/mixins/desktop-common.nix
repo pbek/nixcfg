@@ -4,7 +4,6 @@
   inputs,
   termFontSize,
   useSecrets,
-  useEspanso,
   lib,
   utils,
   ...
@@ -13,7 +12,8 @@ let
   userLogin = config.services.hokage.userLogin;
 in
 {
-  imports = lib.optional (useEspanso) ./espanso.nix ++ [
+  imports = [
+    ./espanso.nix
     ./desktop-common-minimum.nix
     ./git.nix
     ./ghostty.nix

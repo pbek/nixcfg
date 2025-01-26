@@ -50,4 +50,8 @@
 
   environment.systemPackages = with pkgs; [
   ];
+
+  services.hokage = {
+    useEspanso = false; # App-specific configurations are not yet supported in Wayland on caliban!
+  };
 }

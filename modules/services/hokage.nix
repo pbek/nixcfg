@@ -20,6 +20,11 @@ in
         default = true;
         description = "Use internal infrastructure of omega";
       };
+      useEspanso = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Use Espanso to expand text";
+      };
       userLogin = mkOption {
         type = types.str;
         default = "omega";
