@@ -307,10 +307,7 @@ in
               "https://api.atuin.sh";
           sync_frequency = "15m";
           key_path =
-            if useSecrets then
-              "/home/${userLogin}/.secrets/atuin-key"
-            else
-              "~/.local/share/atuin/key";
+            if useSecrets then "/home/${userLogin}/.secrets/atuin-key" else "~/.local/share/atuin/key";
           enter_accept = true; # Enter runs command
           style = "compact"; # No extra box around UI
           inline_height = 32; # Maximum number of lines Atuin’s interface should take up
