@@ -7,12 +7,12 @@
 {
   config,
   pkgs,
-  userNameLong,
   userEmail,
   ...
 }:
 let
   userLogin = config.services.hokage.userLogin;
+  userNameLong = config.services.hokage.userNameLong;
 in
 {
   imports = [
@@ -70,6 +70,8 @@ in
   };
 
   services.hokage = {
+    # userNameLong = "dp";
+    userNameLong = "Andrea Ortner";
     useInternalInfrastructure = false;
   };
 }

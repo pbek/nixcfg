@@ -1,13 +1,13 @@
 {
   config,
   pkgs,
-  userNameLong,
   userEmail,
   lib,
   ...
 }:
 let
   userLogin = config.services.hokage.userLogin;
+  userNameLong = config.services.hokage.userNameLong;
 in
 {
   imports = [

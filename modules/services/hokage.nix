@@ -25,6 +25,11 @@ in
         default = "omega";
         description = "User login of the default user";
       };
+      userNameLong = mkOption {
+        type = types.str;
+        default = "Patrizio Bekerle";
+        description = "User full name of the default user";
+      };
       excludePackages = mkOption {
         description = "List of default packages to exclude from the configuration";
         type = types.listOf types.package;

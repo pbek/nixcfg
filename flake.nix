@@ -79,7 +79,6 @@
       #     hostname = config.networking.hostName;
       #    nixosModules = import ./modules { inherit (nixpkgs) lib; };
       commonArgs = {
-        userNameLong = "Patrizio Bekerle";
         userNameShort = "Patrizio";
         userEmail = "patrizio@bekerle.com";
         useSecrets = true;
@@ -244,7 +243,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            userNameLong = "cow";
             userNameShort = "cow";
             userEmail = "cow@cow";
             useSecrets = false;
@@ -320,11 +318,9 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            #          userNameLong = "dp";
             #          userNameShort = "dp";
             #          userEmail = "dp@dp";
             # Temporary "owner" of this machine
-            userNameLong = "Andrea Ortner";
             userNameShort = "Andrea";
             userEmail = "andrea.ortner@tugraz.at";
             useSecrets = false;
@@ -340,7 +336,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            userNameLong = "Manuel Kocher";
             userNameShort = "Manuel";
             userEmail = "manuel.kocher@tugraz.at";
             useSecrets = false;
@@ -357,7 +352,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            userNameLong = "Jenny Gasser";
             userNameShort = "Jenny";
             userEmail = "jennifer.gassner@tugraz.at";
             useSecrets = false;

@@ -60,6 +60,7 @@
 
   services.hokage = {
     userLogin = "cow";
+    userNameLong = "cow";
     useInternalInfrastructure = false;
   };
 }

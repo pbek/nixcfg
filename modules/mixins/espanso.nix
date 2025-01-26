@@ -2,13 +2,13 @@
   config,
   pkgs,
   userNameShort,
-  userNameLong,
   userEmail,
   lib,
   ...
 }:
 let
   userLogin = config.services.hokage.userLogin;
+  userNameLong = config.services.hokage.userNameLong;
 in
 {
   home-manager.users.${userLogin} = {

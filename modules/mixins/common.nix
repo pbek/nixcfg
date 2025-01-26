@@ -2,7 +2,6 @@
   config,
   pkgs,
   inputs,
-  userNameLong,
   lib,
   useSecrets,
   utils,
@@ -11,6 +10,7 @@
 }:
 let
   userLogin = config.services.hokage.userLogin;
+  userNameLong = config.services.hokage.userNameLong;
 in
 {
   imports = [
