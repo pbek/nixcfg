@@ -57,4 +57,9 @@
 
   environment.systemPackages = with pkgs; [
   ];
+
+  services.hokage = {
+    userLogin = "cow";
+    useInternalInfrastructure = false;
+  };
 }

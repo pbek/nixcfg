@@ -15,9 +15,11 @@
 {
   lib,
   config,
-  userLogin,
   ...
 }:
+let
+  userLogin = config.services.hokage.userLogin;
+in
 {
   imports = [
     ../../modules/mixins/users.nix

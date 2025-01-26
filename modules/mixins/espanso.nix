@@ -1,14 +1,15 @@
 {
   config,
   pkgs,
-  userLogin,
   userNameShort,
   userNameLong,
   userEmail,
   lib,
   ...
 }:
-
+let
+  userLogin = config.services.hokage.userLogin;
+in
 {
   home-manager.users.${userLogin} = {
     # https://mynixos.com/home-manager/options/services.espanso

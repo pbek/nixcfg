@@ -2,10 +2,12 @@
   config,
   pkgs,
   inputs,
-  userLogin,
   waylandSupport,
   ...
 }:
+let
+  userLogin = config.services.hokage.userLogin;
+in
 {
   # Get around: [ERROR] Error: could not open uinput device
   boot.kernelModules = [ "uinput" ];

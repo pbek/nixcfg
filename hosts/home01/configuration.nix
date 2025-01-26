@@ -3,7 +3,6 @@
   modulesPath,
   config,
   pkgs,
-  userLogin,
   ...
 }:
 

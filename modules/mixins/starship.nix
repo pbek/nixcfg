@@ -2,9 +2,11 @@
   config,
   pkgs,
   inputs,
-  userLogin,
   ...
 }:
+let
+  userLogin = config.services.hokage.userLogin;
+in
 {
   # https://rycee.gitlab.io/home-manager/options.html
   home-manager.users.${userLogin} = {

@@ -2,13 +2,15 @@
   config,
   pkgs,
   inputs,
-  userLogin,
   termFontSize,
   useSecrets,
   useEspanso,
   lib,
   ...
 }:
+let
+  userLogin = config.services.hokage.userLogin;
+in
 {
   imports = lib.optional (useEspanso) ./espanso.nix ++ [
     ./desktop-common-minimum.nix

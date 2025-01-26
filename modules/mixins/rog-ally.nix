@@ -1,13 +1,14 @@
 {
   config,
   pkgs,
-  userLogin,
   userNameLong,
   userEmail,
   lib,
   ...
 }:
-
+let
+  userLogin = config.services.hokage.userLogin;
+in
 {
   imports = [
     ./users.nix

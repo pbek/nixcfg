@@ -79,7 +79,6 @@
       #     hostname = config.networking.hostName;
       #    nixosModules = import ./modules { inherit (nixpkgs) lib; };
       commonArgs = {
-        userLogin = "omega";
         userNameLong = "Patrizio Bekerle";
         userNameShort = "Patrizio";
         userEmail = "patrizio@bekerle.com";
@@ -90,10 +89,10 @@
         usePlasma6 = true; # Plasma 6 is the default, otherwise use Plasma 5
         useStableJetbrains = false; # Set this to true to use stable versions
         useEspanso = true; # Use Espanso by default
-#        systemPackages = [];
+        #        systemPackages = [];
         cfg = {
-#          someOtherConfig = "value";
-#          excludePackages = [];
+          #          someOtherConfig = "value";
+          #          excludePackages = [];
         };
       };
 
@@ -108,10 +107,10 @@
           specialArgs = self.commonArgs // {
             inherit inputs;
             waylandSupport = true;
-#            cfg.someOtherConfig = "otherValue";
-#            cfg.excludePackages = with pkgs; [
-#              htop
-#            ];
+            #            cfg.someOtherConfig = "otherValue";
+            #            cfg.excludePackages = with pkgs; [
+            #              htop
+            #            ];
           };
         };
         # Livingroom PC
@@ -254,7 +253,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            userLogin = "cow";
             userNameLong = "cow";
             userNameShort = "cow";
             userEmail = "cow@cow";
@@ -331,7 +329,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            userLogin = "dp";
             #          userNameLong = "dp";
             #          userNameShort = "dp";
             #          userEmail = "dp@dp";
@@ -352,7 +349,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            userLogin = "mkocher";
             userNameLong = "Manuel Kocher";
             userNameShort = "Manuel";
             userEmail = "manuel.kocher@tugraz.at";
@@ -370,7 +366,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            userLogin = "jenny";
             userNameLong = "Jenny Gasser";
             userNameShort = "Jenny";
             userEmail = "jennifer.gassner@tugraz.at";

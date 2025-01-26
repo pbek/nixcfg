@@ -11,9 +11,11 @@
 {
   lib,
   config,
-  userLogin,
   ...
 }:
+let
+  userLogin = config.services.hokage.userLogin;
+in
 {
   imports = [
     ./configuration.nix

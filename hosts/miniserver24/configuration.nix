@@ -3,10 +3,11 @@
   modulesPath,
   config,
   pkgs,
-  userLogin,
   ...
 }:
-
+let
+  userLogin = config.services.hokage.userLogin;
+in
 {
   imports = [
     ./hardware-configuration.nix

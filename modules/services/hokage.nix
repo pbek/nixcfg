@@ -19,6 +19,11 @@ in
         default = true;
         description = "Use internal infrastructure of omega";
       };
+      userLogin = mkOption {
+        type = types.str;
+        default = "omega";
+        description = "User login of the default user";
+      };
     };
   };
 }

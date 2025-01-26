@@ -3,11 +3,13 @@
   config,
   pkgs,
   inputs,
-  userLogin,
   termFontSize,
   useSharedKey,
   ...
 }:
+let
+  userLogin = config.services.hokage.userLogin;
+in
 {
   imports = [
     ./common.nix

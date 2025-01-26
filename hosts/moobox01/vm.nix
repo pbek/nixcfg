@@ -9,6 +9,9 @@
 # > nixos-rebuild --flake .#vm-moobox01 build-vm
 #
 { lib, config, ... }:
+let
+  userLogin = config.services.hokage.userLogin;
+in
 {
   imports = [
     ./configuration.nix

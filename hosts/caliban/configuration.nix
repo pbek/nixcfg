@@ -8,10 +8,11 @@
   lib,
   config,
   pkgs,
-  userLogin,
   ...
 }:
-
+let
+  userLogin = config.services.hokage.userLogin;
+in
 {
   imports = [
     # Include the results of the hardware scan.

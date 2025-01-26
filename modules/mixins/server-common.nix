@@ -3,11 +3,13 @@
   pkgs,
   inputs,
   lib,
-  userLogin,
   userNameLong,
   userEmail,
   ...
 }:
+let
+  userLogin = config.services.hokage.userLogin;
+in
 {
   imports = [
     ./common.nix

@@ -7,7 +7,7 @@
 {
   config,
   pkgs,
-  userLogin,
+
   userNameLong,
   userEmail,
   ...
@@ -65,6 +65,7 @@
   zramSwap.enable = false;
 
   services.hokage = {
+    userLogin = "mkocher";
     useInternalInfrastructure = false;
   };
 }

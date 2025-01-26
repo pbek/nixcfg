@@ -3,11 +3,12 @@
   config,
   pkgs,
   inputs,
-  userLogin,
   useSecrets,
   ...
 }:
-
+let
+  userLogin = config.services.hokage.userLogin;
+in
 {
   # Set some fish config
   programs.fish = {

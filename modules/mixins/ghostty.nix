@@ -1,10 +1,12 @@
 {
   pkgs,
-  userLogin,
+  config,
   termFontSize,
   ...
 }:
-
+let
+  userLogin = config.services.hokage.userLogin;
+in
 {
   environment.systemPackages = with pkgs; [
     ghostty

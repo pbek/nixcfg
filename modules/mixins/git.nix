@@ -2,12 +2,14 @@
   config,
   pkgs,
   inputs,
-  userLogin,
   userNameLong,
   userEmail,
   lib,
   ...
 }:
+let
+  userLogin = config.services.hokage.userLogin;
+in
 {
   # https://home-manager-options.extranix.com
   home-manager.users.${userLogin} = {

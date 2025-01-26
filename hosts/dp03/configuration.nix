@@ -111,6 +111,7 @@
   zramSwap.enable = false;
 
   services.hokage = {
+    userLogin = "jenny";
     useInternalInfrastructure = false;
   };
 }
