@@ -168,4 +168,7 @@ in
 
   # We have enough RAM
   zramSwap.enable = false;
+
+  services.hokage = {
+  };
 }

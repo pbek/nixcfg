@@ -6,6 +6,7 @@
   useSecrets,
   useEspanso,
   lib,
+  utils,
   ...
 }:
 let
@@ -29,60 +30,68 @@ in
     "qtwebkit-5.212.0-alpha4"
   ];
 
-  environment.systemPackages = with pkgs; [
-    #    smartgithg
-    #    (pkgs.callPackage ../../apps/smartgithg/default.nix { })
-    #    gittyup
-    #    (pkgs.libsForQt5.callPackage ../../apps/gittyup/default.nix { })
-    kdiff3
-    chromium
-    qtcreator
-    hub
+  environment.systemPackages =
+    with pkgs;
+    let
+      requiredPackages = [
+      ];
+      optionalPackages = [
+        #    smartgithg
+        #    (pkgs.callPackage ../../apps/smartgithg/default.nix { })
+        #    gittyup
+        #    (pkgs.libsForQt5.callPackage ../../apps/gittyup/default.nix { })
+        kdiff3
+        chromium
+        qtcreator
+        hub
 
-    loganalyzer
-    #    (pkgs.libsForQt5.callPackage ../../apps/loganalyzer/default.nix { })
-    #    noseyparker
-    #    (pkgs.callPackage ../../apps/noseyparker/default.nix { })
+        loganalyzer
+        #    (pkgs.libsForQt5.callPackage ../../apps/loganalyzer/default.nix { })
+        #    noseyparker
+        #    (pkgs.callPackage ../../apps/noseyparker/default.nix { })
 
-    keepassxc
-    gcc
-    gdb
-    cmake
-    chromium
-    google-chrome
-    vscode
-    yubikey-manager
-    pam_u2f
-    yubico-pam
-    #    scdaemon
-    #    pcscd
-    exfatprogs
-    f2fs-tools
-    ferdium
-    wireguard-tools
-    nixpkgs-review
-    nix-search-cli
-    kitty # Terminal with OSC 52 support
+        keepassxc
+        gcc
+        gdb
+        cmake
+        chromium
+        google-chrome
+        vscode
+        yubikey-manager
+        pam_u2f
+        yubico-pam
+        #    scdaemon
+        #    pcscd
+        exfatprogs
+        f2fs-tools
+        ferdium
+        wireguard-tools
+        nixpkgs-review
+        nix-search-cli
+        kitty # Terminal with OSC 52 support
 
-    #    pinentry-curses
-    pinentry-qt # For some reason this wasn't installed by the gpg settings
-    cryfs
-    onlyoffice-bin
-    gh
-    git-town # Git extension
-    smartmontools
-    lazydocker
-    uutils-coreutils # GNU coreutils replacement
-    inkscape
-    nil # Nix language server for kate
-    # marksman # Markdown language server for kate
+        #    pinentry-curses
+        pinentry-qt # For some reason this wasn't installed by the gpg settings
+        cryfs
+        onlyoffice-bin
+        gh
+        git-town # Git extension
+        smartmontools
+        lazydocker
+        uutils-coreutils # GNU coreutils replacement
+        inkscape
+        nil # Nix language server for kate
+        # marksman # Markdown language server for kate
 
-    # TU Graz
-    vpnc
-    networkmanager-vpnc
-    openconnect
-    networkmanager-openconnect
-  ];
+        # TU Graz
+        vpnc
+        networkmanager-vpnc
+        openconnect
+        networkmanager-openconnect
+      ];
+    in
+    requiredPackages
+    ++ utils.removePackagesByName optionalPackages config.services.hokage.excludePackages;
 
   programs.fish.shellAliases = {
     lzd = "lazydocker";

@@ -67,5 +67,6 @@
   services.hokage = {
     userLogin = "mkocher";
     useInternalInfrastructure = false;
+    excludePackages = with pkgs; [ htop ];
   };
 }

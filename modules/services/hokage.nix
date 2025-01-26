@@ -9,6 +9,7 @@ let
   inherit (lib)
     mkOption
     types
+    literalExpression
     ;
 in
 {
@@ -23,6 +24,12 @@ in
         type = types.str;
         default = "omega";
         description = "User login of the default user";
+      };
+      excludePackages = mkOption {
+        description = "List of default packages to exclude from the configuration";
+        type = types.listOf types.package;
+        default = [ ];
+        example = literalExpression "[ pkgs.qownnotes ]";
       };
     };
   };

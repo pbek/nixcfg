@@ -3,6 +3,7 @@
   config,
   pkgs,
   inputs,
+  utils,
   termFontSize,
   useSharedKey,
   ...
@@ -88,23 +89,31 @@ in
     nerd-fonts.droid-sans-mono
   ];
 
-  environment.systemPackages = with pkgs; [
-    attic-client
-    inputs.agenix.packages.x86_64-linux.default
-    firefox
-    magic-wormhole
-    xclip
-    fzf
-    fishPlugins.fzf-fish
-    usbutils # lsusb
+  environment.systemPackages =
+    with pkgs;
+    let
+      requiredPackages = [
+      ];
+      optionalPackages = [
+        attic-client
+        inputs.agenix.packages.x86_64-linux.default
+        firefox
+        magic-wormhole
+        xclip
+        fzf
+        fishPlugins.fzf-fish
+        usbutils # lsusb
 
-    #    qownnotes
-    (callPackage ../../apps/qownnotes/package.nix { })
-    qc
-    #    (pkgs.callPackage ../../apps/qc/default.nix { })
-    bluez
-    nextcloud-client
-  ];
+        #    qownnotes
+        (callPackage ../../apps/qownnotes/package.nix { })
+        qc
+        #    (pkgs.callPackage ../../apps/qc/default.nix { })
+        bluez
+        nextcloud-client
+      ];
+    in
+    requiredPackages
+    ++ utils.removePackagesByName optionalPackages config.services.hokage.excludePackages;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

@@ -2,6 +2,7 @@
   config,
   pkgs,
   inputs,
+  utils,
   ...
 }:
 let
@@ -27,31 +28,39 @@ in
     kontact = true;
   };
 
-  environment.systemPackages = with pkgs.kdePackages; [
-    kwalletmanager
-    plasma-systemmonitor
-    kfind
-    kleopatra
-    yakuake
-    spectacle
-    ark
-    bluedevil
-    dolphin
-    dolphin-plugins
-    gwenview
-    kaccounts-integration
-    kaccounts-providers
-    ksshaskpass
-    okular
-    plasma-browser-integration
-    plasma-disks
-    plasma-nm
-    plasma-pa
-    plasma-vault
-    kate
-    filelight
-    kcolorchooser
-  ];
+  environment.systemPackages =
+    with pkgs.kdePackages;
+    let
+      requiredPackages = [
+      ];
+      optionalPackages = [
+        kwalletmanager
+        plasma-systemmonitor
+        kfind
+        kleopatra
+        yakuake
+        spectacle
+        ark
+        bluedevil
+        dolphin
+        dolphin-plugins
+        gwenview
+        kaccounts-integration
+        kaccounts-providers
+        ksshaskpass
+        okular
+        plasma-browser-integration
+        plasma-disks
+        plasma-nm
+        plasma-pa
+        plasma-vault
+        kate
+        filelight
+        kcolorchooser
+      ];
+    in
+    requiredPackages
+    ++ utils.removePackagesByName optionalPackages config.services.hokage.excludePackages;
 
   home-manager.users.${userLogin} = {
     # https://github.com/nix-community/plasma-manager/blob/trunk/examples/home.nix

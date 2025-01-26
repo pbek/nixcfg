@@ -89,11 +89,6 @@
         usePlasma6 = true; # Plasma 6 is the default, otherwise use Plasma 5
         useStableJetbrains = false; # Set this to true to use stable versions
         useEspanso = true; # Use Espanso by default
-        #        systemPackages = [];
-        cfg = {
-          #          someOtherConfig = "value";
-          #          excludePackages = [];
-        };
       };
 
       nixosConfigurations = {
@@ -107,10 +102,6 @@
           specialArgs = self.commonArgs // {
             inherit inputs;
             waylandSupport = true;
-            #            cfg.someOtherConfig = "otherValue";
-            #            cfg.excludePackages = with pkgs; [
-            #              htop
-            #            ];
           };
         };
         # Livingroom PC

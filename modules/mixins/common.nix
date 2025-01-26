@@ -151,52 +151,58 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
 
-  #  environment.systemPackages = lib.subtractLists cfg.excludePackages (with pkgs; [
-  environment.systemPackages = with pkgs; [
-    neovim
-    wget
-    fish
-    tmux
-    git
-    gitflow
-    jq
-    less
-    mc
-    htop
-    atop
-    btop
-    inetutils
-    dig
-    gnumake
-    restic
-    nix-tree # look into the nix store
-    erdtree # tree replacement
-    dust # disk usage (du) replacement
-    duf # disk free (df) replacement
-    dua # disk usage (du) replacement
-    ranger # midnight commander replacement (not really)
-    ripgrep # grep replacement
-    eza # ls replacement
-    bat # less replacement with syntax highlighting
-    bat-extras.batgrep # ripgrep with bat
-    bat-extras.batman # man with bat
-    tldr # man replacement
-    fd # find replacement
-    zellij # terminal multiplexer (like tmux)
-    netcat-gnu
-    nmap
-    lazygit
-    dogdns # dig replacement
-    broot # fast directory switcher (has "br" alias for changing into directories)
-    difftastic # Structural diff tool that compares files based on their syntax
-    pingu # ping, but more colorful
-    sysz # fzf terminal UI for systemctl
-    ouch # compress and decompress files
-    procs # ps "replacement"
-    just # command runner like make
-    neosay # send messages to matrix room
-  ];
-  #  ]);
+  environment.systemPackages =
+    with pkgs;
+    let
+      requiredPackages = [
+      ];
+      optionalPackages = [
+        neovim
+        wget
+        fish
+        tmux
+        git
+        gitflow
+        jq
+        less
+        mc
+        htop
+        atop
+        btop
+        inetutils
+        dig
+        gnumake
+        restic
+        nix-tree # look into the nix store
+        erdtree # tree replacement
+        dust # disk usage (du) replacement
+        duf # disk free (df) replacement
+        dua # disk usage (du) replacement
+        ranger # midnight commander replacement (not really)
+        ripgrep # grep replacement
+        eza # ls replacement
+        bat # less replacement with syntax highlighting
+        bat-extras.batgrep # ripgrep with bat
+        bat-extras.batman # man with bat
+        tldr # man replacement
+        fd # find replacement
+        zellij # terminal multiplexer (like tmux)
+        netcat-gnu
+        nmap
+        lazygit
+        dogdns # dig replacement
+        broot # fast directory switcher (has "br" alias for changing into directories)
+        difftastic # Structural diff tool that compares files based on their syntax
+        pingu # ping, but more colorful
+        sysz # fzf terminal UI for systemctl
+        ouch # compress and decompress files
+        procs # ps "replacement"
+        just # command runner like make
+        neosay # send messages to matrix room
+      ];
+    in
+    requiredPackages
+    ++ utils.removePackagesByName optionalPackages config.services.hokage.excludePackages;
 
   # Do garbage collection
   # Disabled for "programs.nh.clean.enable"
