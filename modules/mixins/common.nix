@@ -6,7 +6,7 @@
   userNameLong,
   lib,
   useSecrets,
-  useInternalInfra,
+  cfg,
   ...
 }:
 {
@@ -287,7 +287,7 @@
         # https://docs.atuin.sh/configuration/config/
         # Writes ~/.config/atuin/config.toml
         settings = {
-          sync_address = if useInternalInfra then "https://atuin.bekerle.com" else "https://api.atuin.sh";
+          sync_address = if cfg.useInternalInfra then "https://atuin.bekerle.com" else "https://api.atuin.sh";
           sync_frequency = "15m";
           key_path = if useSecrets then "/home/${userLogin}/.secrets/atuin-key" else "~/.local/share/atuin/key";
           enter_accept = true; # Enter runs command
