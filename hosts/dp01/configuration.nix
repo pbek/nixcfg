@@ -67,4 +67,8 @@
         defaultBranch = main
     '';
   };
+
+  services.hokage = {
+    useInternalInfrastructure = false;
+  };
 }

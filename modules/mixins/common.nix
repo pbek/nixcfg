@@ -6,12 +6,14 @@
   userNameLong,
   lib,
   useSecrets,
+  utils,
   cfg,
   ...
 }:
 {
   imports = [
     ./starship.nix
+    ../services/hokage.nix
   ];
 
   # Set some fish config
@@ -146,6 +148,8 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+
+#  environment.systemPackages = lib.subtractLists cfg.excludePackages (with pkgs; [
   environment.systemPackages = with pkgs; [
     neovim
     wget
@@ -190,6 +194,7 @@
     just # command runner like make
     neosay # send messages to matrix room
   ];
+#  ]);
 
   # Do garbage collection
   # Disabled for "programs.nh.clean.enable"
@@ -287,7 +292,7 @@
         # https://docs.atuin.sh/configuration/config/
         # Writes ~/.config/atuin/config.toml
         settings = {
-          sync_address = if cfg.useInternalInfra then "https://atuin.bekerle.com" else "https://api.atuin.sh";
+          sync_address = if config.services.hokage.useInternalInfrastructure then "https://atuin.bekerle.com" else "https://api.atuin.sh";
           sync_frequency = "15m";
           key_path = if useSecrets then "/home/${userLogin}/.secrets/atuin-key" else "~/.local/share/atuin/key";
           enter_accept = true; # Enter runs command
