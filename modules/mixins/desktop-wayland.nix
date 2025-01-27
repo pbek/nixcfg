@@ -9,9 +9,8 @@ let
 in
 {
   imports = [
-    ./desktop-common.nix
     ./desktop-common-plasma6.nix
-    ./espanso-latest.nix
+#    ./espanso-latest.nix
   ];
 
   services.displayManager.defaultSession = "plasma";

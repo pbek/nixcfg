@@ -6,17 +6,21 @@
   ...
 }:
 let
-#  waylandSupport = config.services.hokage.waylandSupport;
-#  usePlasma6 = config.services.hokage.usePlasma6;
-  waylandSupport = true;
-  usePlasma6 = true;
+#  cfg = config.services.hokage;
+  waylandSupport = config.services.hokage.waylandSupport;
+  usePlasma6 = config.services.hokage.usePlasma6;
+#  waylandSupport = true;
+#  usePlasma6 = true;
 in
 {
-  imports =
+  imports = []
     lib.optional (!waylandSupport && usePlasma6) ./desktop-x11.nix
     ++ lib.optional (waylandSupport && usePlasma6) ./desktop-wayland.nix
     ++ lib.optional (!waylandSupport && !usePlasma6) ./desktop-x11-plasma5.nix
+#    ++ lib.optional (cfg.usePlasma6) ./espanso-latest.nix { inherit config; }
+    ++ lib.optional (usePlasma6) ./espanso-latest.nix
     ++ [
       # Other imports here
+      ./desktop-common.nix
     ];
 }
