@@ -57,6 +57,12 @@ in
         chromium
         google-chrome
         vscode
+        (vscode-with-extensions.override {
+          vscodeExtensions = with vscode-extensions; [
+            github.copilot
+            github.copilot-chat
+          ];
+        })
         yubikey-manager
         pam_u2f
         yubico-pam
