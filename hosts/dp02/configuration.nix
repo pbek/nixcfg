@@ -67,6 +67,7 @@ in
   services.hokage = {
     userLogin = "mkocher";
     userNameLong = "Manuel Kocher";
+    userNameShort = "Manuel";
     useInternalInfrastructure = false;
     excludePackages = with pkgs; [ htop ];
   };

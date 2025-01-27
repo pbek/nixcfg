@@ -35,6 +35,11 @@ in
         default = "Patrizio Bekerle";
         description = "User full name of the default user";
       };
+      userNameShort = mkOption {
+        type = types.str;
+        default = "Patrizio";
+        description = "User short name of the default user";
+      };
       excludePackages = mkOption {
         description = "List of default packages to exclude from the configuration";
         type = types.listOf types.package;

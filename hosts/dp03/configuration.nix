@@ -117,6 +117,7 @@
   services.hokage = {
     userLogin = "jenny";
     userNameLong = "Jenny Gasser";
+    userNameShort = "Jenny";
     useInternalInfrastructure = false;
   };
 }

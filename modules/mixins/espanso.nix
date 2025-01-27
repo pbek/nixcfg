@@ -9,6 +9,7 @@
 let
   userLogin = config.services.hokage.userLogin;
   userNameLong = config.services.hokage.userNameLong;
+  userNameShort = config.services.hokage.userNameShort;
   useEspanso = config.services.hokage.useEspanso;
 in
 {
