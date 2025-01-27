@@ -125,4 +125,10 @@ in
     package = (pkgs.callPackage ../../apps/handheld-daemon/package.nix { }).override {
     };
   };
+
+  services.hokage = {
+    usePlasma6 = false;
+    waylandSupport = false;
+    termFontSize = 15.0;
+  };
 }

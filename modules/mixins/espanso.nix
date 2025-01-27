@@ -11,13 +11,26 @@ let
   userNameShort = config.services.hokage.userNameShort;
   userEmail = config.services.hokage.userEmail;
   useEspanso = config.services.hokage.useEspanso;
+  waylandSupport = config.services.hokage.waylandSupport;
 in
 {
+  # Get around: [ERROR] Error: could not open uinput device
+  boot.kernelModules = if (waylandSupport && useEspanso) then [ "uinput" ] else [];
+
+  # Get around permission denied error on /dev/uinput
+  services.udev.extraRules = if (waylandSupport && useEspanso) then ''
+    KERNEL=="uinput", SUBSYSTEM=="misc", TAG+="uaccess", OPTIONS+="static_node=uinput", GROUP="input", MODE="0660"
+  '' else "";
+
   home-manager.users.${userLogin} = lib.mkMerge [
     (lib.mkIf useEspanso {
       # https://mynixos.com/home-manager/options/services.espanso
       services.espanso = {
         enable = true;
+        package = if waylandSupport then pkgs.espanso-wayland else pkgs.espanso;
+        #      package = (pkgs.callPackage ../../apps/espanso/espanso.nix { }).override {
+        #        inherit waylandSupport;
+        #      };
         configs = {
           default = {
             search_shortcut = "ALT+SHIFT+SPACE";
