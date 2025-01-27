@@ -122,9 +122,9 @@ in
   # lts: 6.6
   #  boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # ZFS (even unstable) is marked broken in kernel 6.12, so we stick to 6.11 and the unstable ZFS package
+  # ZFS (even unstable) is marked broken in kernel 6.13, so we stick to 6.12 and the unstable ZFS package
   boot.zfs.package = pkgs.zfs_unstable;
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_11;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_12;
 
   # Enable hardware accelerated graphics drivers
   hardware.graphics.enable = true;

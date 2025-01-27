@@ -85,6 +85,10 @@
     go-passbolt-cli
   ];
 
+  # ZFS (even unstable) is marked broken in kernel 6.13, so we stick to 6.12 and the unstable ZFS package
+  boot.zfs.package = pkgs.zfs_unstable;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_12;
+
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
