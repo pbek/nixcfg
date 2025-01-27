@@ -2,7 +2,6 @@
   config,
   pkgs,
   userNameShort,
-  userEmail,
   lib,
   ...
 }:
@@ -10,6 +9,7 @@ let
   userLogin = config.services.hokage.userLogin;
   userNameLong = config.services.hokage.userNameLong;
   userNameShort = config.services.hokage.userNameShort;
+  userEmail = config.services.hokage.userEmail;
   useEspanso = config.services.hokage.useEspanso;
 in
 {

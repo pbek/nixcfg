@@ -3,11 +3,11 @@
   config,
   pkgs,
   inputs,
-  useSecrets,
   ...
 }:
 let
   userLogin = config.services.hokage.userLogin;
+  useSecrets = config.services.hokage.useSecrets;
 in
 {
   # Set some fish config

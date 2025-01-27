@@ -7,12 +7,12 @@
 {
   config,
   pkgs,
-  userEmail,
   ...
 }:
 let
   userLogin = config.services.hokage.userLogin;
   userNameLong = config.services.hokage.userNameLong;
+  userEmail = config.services.hokage.userEmail;
 in
 {
   imports = [
@@ -75,5 +75,10 @@ in
     useInternalInfrastructure = false;
     # userNameShort = "dp";
     userNameShort = "Andrea";
+    # userEmail = "dp@dp";
+    # Temporary "owner" of this machine
+    userEmail = "andrea.ortner@tugraz.at";
+    useSecrets = false;
+    useSharedKey = false;
   };
 }

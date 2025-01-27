@@ -22,4 +22,8 @@
   # To setup ally2 with nfs
   boot.supportedFilesystems = [ "zfs" ];
   networking.hostId = "3f2e973f";
+
+  services.hokage = {
+    useSecrets = false;
+  };
 }

@@ -62,6 +62,8 @@
     userLogin = "cow";
     userNameLong = "cow";
     userNameShort = "cow";
+    userEmail = "cow@cow";
+    useSecrets = false;
     useInternalInfrastructure = false;
   };
 }

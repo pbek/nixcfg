@@ -5,11 +5,11 @@
   inputs,
   utils,
   termFontSize,
-  useSharedKey,
   ...
 }:
 let
   userLogin = config.services.hokage.userLogin;
+  useSharedKey = config.services.hokage.useSharedKey;
 in
 {
   imports = [

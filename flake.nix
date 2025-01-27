@@ -80,8 +80,6 @@
       #    nixosModules = import ./modules { inherit (nixpkgs) lib; };
       commonArgs = {
         userEmail = "patrizio@bekerle.com";
-        useSecrets = true;
-        useSharedKey = true;
         termFontSize = 12.0;
         waylandSupport = true; # Wayland is the default, otherwise use X11
         usePlasma6 = true; # Plasma 6 is the default, otherwise use Plasma 5
@@ -204,7 +202,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            useSecrets = false;
           };
         };
         # Netcup Server netcup02
@@ -216,7 +213,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            useSecrets = false;
           };
         };
         # Home Server home01
@@ -228,7 +224,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            useSecrets = false;
           };
         };
         # Server moobox01 for Alex
@@ -240,8 +235,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            userEmail = "cow@cow";
-            useSecrets = false;
           };
         };
         # Asus Laptop
@@ -267,7 +260,6 @@
           specialArgs = self.commonArgs // {
             inherit inputs;
             termFontSize = 15.0;
-            useSecrets = false;
           };
         };
         # PC Garage
@@ -314,11 +306,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            #          userEmail = "dp@dp";
-            # Temporary "owner" of this machine
-            userEmail = "andrea.ortner@tugraz.at";
-            useSecrets = false;
-            useSharedKey = false;
           };
         };
         # TU ThinkBook Manuel
@@ -330,9 +317,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            userEmail = "manuel.kocher@tugraz.at";
-            useSecrets = false;
-            useSharedKey = false;
           };
         };
         # TU ThinkBook Jenny
@@ -345,9 +329,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            userEmail = "jennifer.gassner@tugraz.at";
-            useSecrets = false;
-            useSharedKey = false;
           };
         };
         #      # Home Server miniserver24 for Markus

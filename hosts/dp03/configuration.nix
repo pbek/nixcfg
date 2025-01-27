@@ -118,6 +118,9 @@
     userLogin = "jenny";
     userNameLong = "Jenny Gasser";
     userNameShort = "Jenny";
+    userEmail = "jennifer.gassner@tugraz.at";
+    useSecrets = false;
+    useSharedKey = false;
     useInternalInfrastructure = false;
   };
 }

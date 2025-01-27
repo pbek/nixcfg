@@ -7,7 +7,6 @@
 {
   config,
   pkgs,
-  userEmail,
   ...
 }:
 let
@@ -69,6 +68,9 @@ in
     userNameLong = "Manuel Kocher";
     userNameShort = "Manuel";
     useInternalInfrastructure = false;
-    excludePackages = with pkgs; [ htop ];
+    excludePackages = with pkgs; [ qownnotes qc ];
+    userEmail = "manuel.kocher@tugraz.at";
+    useSecrets = false;
+    useSharedKey = false;
   };
 }

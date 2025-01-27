@@ -1,12 +1,12 @@
 {
   lib,
   config,
-  useSecrets,
-  useSharedKey,
   ...
 }:
 let
   userLogin = config.services.hokage.userLogin;
+  useSecrets = config.services.hokage.useSecrets;
+  useSharedKey = config.services.hokage.useSharedKey;
 in
 {
   # https://mynixos.com/options/services.openssh

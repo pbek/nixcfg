@@ -90,4 +90,8 @@ in
       Persistent = true;
     };
   };
+
+  services.hokage = {
+    useSecrets = false;
+  };
 }

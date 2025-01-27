@@ -147,4 +147,8 @@
 
   environment.systemPackages = with pkgs; [
   ];
+
+  services.hokage = {
+    useSecrets = false;
+  };
 }

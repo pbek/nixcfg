@@ -3,13 +3,13 @@
   pkgs,
   inputs,
   termFontSize,
-  useSecrets,
   lib,
   utils,
   ...
 }:
 let
   userLogin = config.services.hokage.userLogin;
+  useSecrets = config.services.hokage.useSecrets;
 in
 {
   imports = [
