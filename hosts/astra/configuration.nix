@@ -53,5 +53,8 @@
 
   services.hokage = {
     useEspanso = false; # App-specific configurations are not yet supported in Wayland on caliban!
+    waylandSupport = false;
+    termFontSize = 16.0;
+    usePlasma6 = true;
   };
 }

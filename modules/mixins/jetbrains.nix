@@ -3,13 +3,12 @@
   pkgs,
   inputs,
   xdg,
-  useStableJetbrains,
   ...
 }:
 #{ config, inputs, xdg, ... }:
-
 let
   userLogin = config.services.hokage.userLogin;
+  useStableJetbrains = config.services.hokage.useStableJetbrains;
   #  jetbrainsPackages = if useStableJetbrains then pkgs.stable.jetbrains else pkgs.jetbrains;
   # Wait until 24.11 jetbrains work again
   # https://github.com/NixOS/nixpkgs/issues/358171

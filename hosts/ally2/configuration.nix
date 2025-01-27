@@ -67,4 +67,8 @@
   # Enable Tailscale VPN
   # Use `sudo tailscale up --accept-routes` to connect to the VPN
   services.tailscale.enable = true;
+
+  services.hokage = {
+    termFontSize = 15.0;
+  };
 }

@@ -1,11 +1,11 @@
 {
   pkgs,
   config,
-  termFontSize,
   ...
 }:
 let
   userLogin = config.services.hokage.userLogin;
+  termFontSize = config.services.hokage.termFontSize;
 in
 {
   environment.systemPackages = with pkgs; [

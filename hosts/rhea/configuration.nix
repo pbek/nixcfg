@@ -46,4 +46,8 @@
     nmcli n on
     systemctl restart docker
   '';
+
+  services.hokage = {
+    useStableJetbrains = true;
+  };
 }

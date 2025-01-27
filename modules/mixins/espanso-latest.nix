@@ -2,11 +2,11 @@
   config,
   pkgs,
   inputs,
-  waylandSupport,
   ...
 }:
 let
   userLogin = config.services.hokage.userLogin;
+  waylandSupport = config.services.hokage.waylandSupport;
 in
 {
   # Get around: [ERROR] Error: could not open uinput device

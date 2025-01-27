@@ -2,7 +2,6 @@
   config,
   pkgs,
   inputs,
-  termFontSize,
   lib,
   utils,
   ...
@@ -10,6 +9,7 @@
 let
   userLogin = config.services.hokage.userLogin;
   useSecrets = config.services.hokage.useSecrets;
+  termFontSize = config.services.hokage.termFontSize;
 in
 {
   imports = [

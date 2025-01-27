@@ -79,11 +79,6 @@
       #     hostname = config.networking.hostName;
       #    nixosModules = import ./modules { inherit (nixpkgs) lib; };
       commonArgs = {
-        userEmail = "patrizio@bekerle.com";
-        termFontSize = 12.0;
-        waylandSupport = true; # Wayland is the default, otherwise use X11
-        usePlasma6 = true; # Plasma 6 is the default, otherwise use Plasma 5
-        useStableJetbrains = false; # Set this to true to use stable versions
       };
 
       nixosConfigurations = {
@@ -96,7 +91,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            waylandSupport = true;
           };
         };
         # Livingroom PC
@@ -108,7 +102,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            waylandSupport = true;
           };
         };
         # Asus Vivobook Laptop
@@ -120,7 +113,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            useStableJetbrains = true;
           };
         };
         # Acer Aspire 5 Laptop
@@ -133,7 +125,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            useStableJetbrains = true;
           };
         };
         # Asus ROG Ally (using NixOS)
@@ -147,7 +138,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            termFontSize = 15.0;
           };
         };
 
@@ -160,9 +150,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            waylandSupport = false;
-            termFontSize = 16.0;
-            usePlasma6 = true;
           };
         };
         # TU Work PC
@@ -178,8 +165,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            waylandSupport = true;
-            usePlasma6 = true;
           };
         };
         # TU HP EliteBook Laptop 840 G5
@@ -246,7 +231,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            useStableJetbrains = true;
           };
         };
         # Asus ROG Ally (usually using Windows)
@@ -259,7 +243,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            termFontSize = 15.0;
           };
         };
         # PC Garage
@@ -271,7 +254,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            useStableJetbrains = true;
           };
         };
         # macBook
@@ -283,7 +265,6 @@
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
-            useStableJetbrains = true;
           };
         };
         # TU HP EliteBook Laptop 820 G4

@@ -81,4 +81,8 @@ in
   #     }
   #   );
   # };
+
+  services.hokage = {
+    useStableJetbrains = true;
+  };
 }

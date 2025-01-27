@@ -25,5 +25,6 @@
 
   services.hokage = {
     useSecrets = false;
+    termFontSize = 15.0;
   };
 }

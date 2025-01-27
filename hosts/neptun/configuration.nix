@@ -45,4 +45,8 @@
   environment.systemPackages = with pkgs; [
     powertop
   ];
+
+  services.hokage = {
+    useStableJetbrains = true;
+  };
 }

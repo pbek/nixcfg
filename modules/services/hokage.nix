@@ -35,6 +35,26 @@ in
         default = true;
         description = "Use Espanso to expand text";
       };
+      waylandSupport = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Wayland is the default, otherwise use X11";
+      };
+      usePlasma6 = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Plasma 6 is the default, otherwise use Plasma 5";
+      };
+      useStableJetbrains = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Set this to true to use stable versions of the Jetbrains tools";
+      };
+      termFontSize = mkOption {
+        type = types.float;
+        default = 12.0;
+        description = "Terminal font size";
+      };
       userLogin = mkOption {
         type = types.str;
         default = "omega";

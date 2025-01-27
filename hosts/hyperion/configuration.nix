@@ -55,4 +55,8 @@
     hostName = "hyperion";
     networkmanager.enable = true;
   };
+
+  services.hokage = {
+    useStableJetbrains = true;
+  };
 }
