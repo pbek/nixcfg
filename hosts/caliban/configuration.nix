@@ -126,6 +126,10 @@ in
   boot.zfs.package = pkgs.zfs_unstable;
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_12;
 
+  # Workaround for broken VirtualBox with kernel 6.12
+  # https://github.com/NixOS/nixpkgs/issues/363887
+  boot.kernelParams = [ "kvm.enable_virt_at_load=0" ];
+
   # Enable hardware accelerated graphics drivers
   hardware.graphics.enable = true;
 

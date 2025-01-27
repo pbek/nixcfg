@@ -118,6 +118,10 @@ in
   # Fall back to 6.12 because of broken NVIDIA package https://github.com/NixOS/nixpkgs/issues/376331
   boot.kernelPackages = pkgs.linuxPackages_6_12;
 
+  # Workaround for broken VirtualBox with kernel 6.12
+  # https://github.com/NixOS/nixpkgs/issues/363887
+  boot.kernelParams = [ "kvm.enable_virt_at_load=0" ];
+
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
