@@ -42,6 +42,10 @@ check:
     nix flake check --no-build --keep-going
 
 [group('build')]
+check-trace:
+    nix flake check --no-build --show-trace
+
+[group('build')]
 nix-switch:
     sudo nixos-rebuild switch --flake .#{{ hostname }} -L
 
