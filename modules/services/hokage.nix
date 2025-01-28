@@ -42,6 +42,11 @@ in
         default = true;
         description = "Wayland is the default, otherwise use X11";
       };
+      useGraphicalSystem = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Use graphical system by default, otherwise use text-based system";
+      };
       usePlasma6 = mkOption {
         type = types.bool;
         default = true;
@@ -87,7 +92,10 @@ in
   };
 
   config = lib.mkMerge [
-    (lib.mkIf cfg.usePlasma6 {
+    #
+    # General configs for Plasma 6
+    #
+    (lib.mkIf (cfg.useGraphicalSystem && cfg.usePlasma6) {
       services.desktopManager.plasma6.enable = true;
       environment.plasma6.excludePackages = with pkgs.kdePackages; [
         baloo
@@ -167,17 +175,26 @@ in
       };
     })
 
-    (lib.mkIf (!cfg.waylandSupport) {
+    #
+    # General configs for X11
+    #
+    (lib.mkIf (cfg.useGraphicalSystem && !cfg.waylandSupport) {
       environment.systemPackages = with pkgs; [
         xorg.xkill
       ];
     })
 
-    (lib.mkIf (!cfg.waylandSupport && cfg.usePlasma6) {
+    #
+    # General configs for X11 with Plasma 6
+    #
+    (lib.mkIf (cfg.useGraphicalSystem && !cfg.waylandSupport && cfg.usePlasma6) {
       services.displayManager.defaultSession = "plasmax11";
     })
 
-    (lib.mkIf (!cfg.waylandSupport && !cfg.usePlasma6) {
+    #
+    # General configs for X11 with Plasma 5
+    #
+    (lib.mkIf (cfg.useGraphicalSystem && !cfg.waylandSupport && !cfg.usePlasma6) {
       services.xserver.desktopManager.plasma5.enable = true;
       environment.plasma5.excludePackages = with pkgs.libsForQt5; [
         baloo
@@ -226,7 +243,10 @@ in
         ++ utils.removePackagesByName optionalPackages config.services.hokage.excludePackages;
     })
 
-    (lib.mkIf (cfg.waylandSupport && cfg.usePlasma6) {
+    #
+    # General configs for Plasma 6 with Wayland
+    #
+    (lib.mkIf (cfg.useGraphicalSystem && cfg.waylandSupport && cfg.usePlasma6) {
       services.displayManager.defaultSession = "plasma";
 
       # Launch SDDM in Wayland too

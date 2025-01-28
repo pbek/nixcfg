@@ -73,4 +73,8 @@ in
   programs.fish.shellAliases = {
     lzd = "lazydocker";
   };
+
+  services.hokage = {
+    useGraphicalSystem = false;
+  };
 }
