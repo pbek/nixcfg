@@ -77,10 +77,6 @@
     useDHCP = lib.mkDefault true;
   };
 
-  # ZFS (even unstable) is marked broken in kernel 6.12, so we stick to 6.11 and the unstable ZFS package
-  boot.zfs.package = pkgs.zfs_unstable;
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_11;
-
   environment.systemPackages = with pkgs; [
     go-passbolt-cli
   ];
