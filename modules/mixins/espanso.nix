@@ -15,12 +15,16 @@ let
 in
 {
   # Get around: [ERROR] Error: could not open uinput device
-  boot.kernelModules = if (waylandSupport && useEspanso) then [ "uinput" ] else [];
+  boot.kernelModules = if (waylandSupport && useEspanso) then [ "uinput" ] else [ ];
 
   # Get around permission denied error on /dev/uinput
-  services.udev.extraRules = if (waylandSupport && useEspanso) then ''
-    KERNEL=="uinput", SUBSYSTEM=="misc", TAG+="uaccess", OPTIONS+="static_node=uinput", GROUP="input", MODE="0660"
-  '' else "";
+  services.udev.extraRules =
+    if (waylandSupport && useEspanso) then
+      ''
+        KERNEL=="uinput", SUBSYSTEM=="misc", TAG+="uaccess", OPTIONS+="static_node=uinput", GROUP="input", MODE="0660"
+      ''
+    else
+      "";
 
   home-manager.users.${userLogin} = lib.mkMerge [
     (lib.mkIf useEspanso {

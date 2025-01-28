@@ -69,8 +69,8 @@
   services.tailscale.enable = true;
 
   services.hokage = {
-#    usePlasma6 = false;
-#    useWayland = false;
-#    termFontSize = 15.0;
+    #    usePlasma6 = false;
+    #    useWayland = false;
+    #    termFontSize = 15.0;
   };
 }

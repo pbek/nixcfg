@@ -68,7 +68,10 @@ in
     userNameLong = "Manuel Kocher";
     userNameShort = "Manuel";
     useInternalInfrastructure = false;
-    excludePackages = with pkgs; [ qownnotes qc ];
+    excludePackages = with pkgs; [
+      qownnotes
+      qc
+    ];
     userEmail = "manuel.kocher@tugraz.at";
     useSecrets = false;
     useSharedKey = false;

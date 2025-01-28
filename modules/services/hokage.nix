@@ -144,8 +144,7 @@ in
             kcolorchooser
           ];
         in
-        requiredPackages
-        ++ utils.removePackagesByName optionalPackages cfg.excludePackages;
+        requiredPackages ++ utils.removePackagesByName optionalPackages cfg.excludePackages;
 
       home-manager.users.${cfg.userLogin} = {
         # https://github.com/nix-community/plasma-manager/blob/trunk/examples/home.nix
