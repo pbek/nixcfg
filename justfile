@@ -27,6 +27,7 @@ alias p := push
 alias sp := switch-push
 alias fix-command-not-found-error := update-channels
 alias nixfmt := nix-format
+alias options := hokage-options
 
 # Notify the user with neosay
 @_notify text:
@@ -355,6 +356,38 @@ qownnotes-hash:
 [group('qownnotes')]
 qownnotes-update-release:
     ./scripts/update-qownnotes-release.sh
+
+# Process hokage service options interactively
+hokage-options:
+    #!/usr/bin/env bash
+
+    # Store options globally so we don't need to fetch them multiple times
+    options=$(nixos-option services.hokage | tail -n +2)
+
+    while true; do
+        # Use fzf to select an option
+        selected=$(echo "$options" | fzf --prompt="Select hokage option > ")
+
+        # Check if user cancelled with ESC
+        if [ -z "$selected" ]; then
+            break
+        fi
+
+        # Clear screen for better readability
+        clear
+
+        echo "Showing details for: services.hokage.$selected"
+        echo "----------------------------------------"
+        nixos-option "services.hokage.$selected"
+        echo "----------------------------------------"
+        echo "Press any key to select another option, or Ctrl+C to exit"
+
+        # Wait for keypress
+        read -n 1
+
+        # Clear screen before showing fzf again
+        clear
+    done
 
 # Get the reverse dependencies of a nix store path
 [group('maintenance')]
