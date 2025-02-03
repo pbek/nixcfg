@@ -285,6 +285,12 @@ in
                   > $|$
                 '';
               }
+              {
+                triggers = [
+                  ":ghnixmerge"
+                ];
+                replace = "@NixOS/nixpkgs-merge-bot merge";
+              }
             ];
           };
           mail = {
