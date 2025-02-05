@@ -88,6 +88,7 @@ in
         inkscape
         nil # Nix language server for kate
         # marksman # Markdown language server for kate
+        act # Run GitHub Actions locally
 
         # TU Graz
         vpnc
