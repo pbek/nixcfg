@@ -70,6 +70,7 @@ in
   };
 
   services.hokage = {
+    userLogin = "dp";
     # userNameLong = "dp";
     userNameLong = "Andrea Ortner";
     useInternalInfrastructure = false;
