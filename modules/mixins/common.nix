@@ -195,7 +195,7 @@ in
         difftastic # Structural diff tool that compares files based on their syntax
         pingu # ping, but more colorful
         sysz # fzf terminal UI for systemctl
-        isd # a better way to work with systemd units
+#        isd # a better way to work with systemd units
         ouch # compress and decompress files
         procs # ps "replacement"
         just # command runner like make
