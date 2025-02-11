@@ -85,6 +85,7 @@ in
     heroic # Epic Games Store
     amdgpu_top # AMD GPU monitoring
     lact # AMD GPU monitoring
+    ryubing # Nintendo Switch emulator
   ];
 
   # https://nixos.wiki/wiki/steam
