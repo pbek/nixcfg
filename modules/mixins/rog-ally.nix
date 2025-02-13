@@ -67,6 +67,7 @@ in
 
     wowup-cf
     #    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
+    ryubing # Nintendo Switch emulator
   ];
 
   # https://nixos.wiki/wiki/steam
@@ -124,6 +125,11 @@ in
     user = userLogin;
     package = (pkgs.callPackage ../../apps/handheld-daemon/package.nix { }).override {
     };
+  };
+
+  environment.sessionVariables = {
+    # High DPI for ryubing
+    AVALONIA_GLOBAL_SCALE_FACTOR = 2;
   };
 
   services.hokage = {
