@@ -68,6 +68,7 @@ in
     wowup-cf
     #    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
     ryubing # Nintendo Switch emulator
+    qjoypad # Joystick mapper
   ];
 
   # https://nixos.wiki/wiki/steam
