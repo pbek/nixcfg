@@ -223,6 +223,12 @@ in
   # Enable resoved to let wireguard set a DNS
   services.resolved.enable = true;
 
+  # https://github.com/Aetf/kmscon
+  services.kmscon = {
+    enable = lib.mkDefault true;
+    fonts = [ { name = "Source Code Pro"; package = pkgs.source-code-pro; } ];
+  };
+
   # https://rycee.gitlab.io/home-manager/options.html
   # https://nix-community.github.io/home-manager/options.html#opt-home.file
   home-manager.users.${userLogin} = {
