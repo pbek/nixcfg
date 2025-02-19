@@ -227,6 +227,7 @@ in
   services.kmscon = {
     enable = lib.mkDefault true;
     fonts = [ { name = "Source Code Pro"; package = pkgs.source-code-pro; } ];
+    extraOptions = "--xkb-layout de";
   };
 
   # https://rycee.gitlab.io/home-manager/options.html
