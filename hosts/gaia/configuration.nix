@@ -149,4 +149,7 @@ in
   # Try to prevent popping of loudspeakers when audio starts again
   # See https://nixos.wiki/wiki/PulseAudio#Disabling_unwanted_modules
   services.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
+
+  # Increase the console font size for kmscon
+  services.kmscon.extraConfig = "font-size = 26";
 }

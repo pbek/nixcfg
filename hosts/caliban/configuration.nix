@@ -189,4 +189,7 @@ in
 
   # We have enough RAM
   zramSwap.enable = false;
+
+  # Increase the console font size for kmscon
+  services.kmscon.extraConfig = "font-size = 26";
 }

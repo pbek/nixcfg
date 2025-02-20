@@ -161,9 +161,8 @@ in
   # Make the console font bigger
   console.font = "${pkgs.terminus_font}/share/consolefonts/ter-u20n.psf.gz";
 
-  services.kmscon.extraConfig = ''
-    font-size = 26
-  '';
+  # Increase the console font size for kmscon
+  services.kmscon.extraConfig = "font-size = 26";
 
   # https://nixos.wiki/wiki/VirtualBox
   virtualisation.virtualbox.host.enable = true;
