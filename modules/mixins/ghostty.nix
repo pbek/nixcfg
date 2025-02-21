@@ -21,7 +21,8 @@ in
     # Theme: https://github.com/catppuccin/ghostty/blob/main/themes/catppuccin-mocha.conf
     home.file.".config/ghostty/config".text = ''
       palette = 0=#45475a
-      palette = 1=#f38ba8
+      #palette = 1=#f38ba8  # this red doesn't work well as background color for error messages
+      palette = 1=#b11818
       palette = 2=#a6e3a1
       palette = 3=#f9e2af
       palette = 4=#89b4fa
