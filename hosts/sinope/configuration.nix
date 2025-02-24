@@ -46,4 +46,7 @@
   environment.systemPackages = with pkgs; [
     (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
   ];
+
+  # Increase the console font size for kmscon
+  services.kmscon.extraConfig = "font-size = 18";
 }
