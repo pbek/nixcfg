@@ -40,6 +40,8 @@ in
 
   environment.systemPackages = with pkgs; [
     go-passbolt-cli
+    thunderbird
+    spotify
   ];
 
   home-manager.users.${userLogin} = {
