@@ -8,6 +8,14 @@ let
   userLogin = config.services.hokage.userLogin;
   userNameLong = config.services.hokage.userNameLong;
   userEmail = config.services.hokage.userEmail;
+  kwin = lib.concatStringsSep " " [
+      "${lib.getBin pkgs.kdePackages.kwin}/bin/kwin_wayland"
+      "--no-global-shortcuts"
+      "--no-kactivities"
+      "--no-lockscreen"
+      "--locale1"
+      "--inputmethod maliit-keyboard"
+    ];
 in
 {
   imports = [
@@ -22,14 +30,18 @@ in
     networkmanager.enable = true;
   };
 
-  # Virtual keyboard at lock screen does not work in plasma6!
-  #  services.desktopManager.plasma6.enable = true;
-  #  services.displayManager.defaultSession = "plasmax11";
-  #  environment.plasma6.excludePackages = with pkgs.kdePackages; [
-  #    baloo
-  #  ];
+  services.desktopManager.plasma6.enable = true;
+  services.displayManager.defaultSession = "plasma";
 
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+    settings = {
+      Wayland = {
+        CompositorCommand = kwin;
+      };
+    };
+  };
 
   # GTK themes are not applied in Wayland applications / Window Decorations missing / Cursor looks different
   # https://nixos.wiki/wiki/KDE#GTK_themes_are_not_applied_in_Wayland_applications_.2F_Window_Decorations_missing_.2F_Cursor_looks_different
@@ -37,20 +49,20 @@ in
 
   #  environment.systemPackages = with pkgs.kdePackages; [
   environment.systemPackages = with pkgs; [
-    libsForQt5.kwalletmanager
-    libsForQt5.plasma-systemmonitor
-    libsForQt5.spectacle
-    libsForQt5.ark
-    libsForQt5.bluedevil
-    libsForQt5.dolphin
-    libsForQt5.dolphin-plugins
-    libsForQt5.gwenview
-    libsForQt5.okular
-    libsForQt5.plasma-browser-integration
-    libsForQt5.plasma-disks
-    libsForQt5.plasma-nm
-    libsForQt5.plasma-pa
-    libsForQt5.kate
+    kdePackages.kwalletmanager
+    kdePackages.plasma-systemmonitor
+    kdePackages.spectacle
+    kdePackages.ark
+    kdePackages.bluedevil
+    kdePackages.dolphin
+    kdePackages.dolphin-plugins
+    kdePackages.gwenview
+    kdePackages.okular
+    kdePackages.plasma-browser-integration
+    kdePackages.plasma-disks
+    kdePackages.plasma-nm
+    kdePackages.plasma-pa
+    kdePackages.kate
 
     onboard # On-screen keyboard
     google-chrome # Touch scrolling in Chrome
@@ -69,6 +81,7 @@ in
     #    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
     ryubing # Nintendo Switch emulator
     qjoypad # Joystick mapper
+    maliit-keyboard # Virtual keyboard
   ];
 
   # https://nixos.wiki/wiki/steam
@@ -134,8 +147,8 @@ in
   };
 
   services.hokage = {
-    usePlasma6 = false;
-    waylandSupport = false;
+    # Turn off default graphical system, we want to use our own configuration
+    useGraphicalSystem = false;
     termFontSize = 15.0;
   };
 }
