@@ -8,14 +8,6 @@ let
   userLogin = config.services.hokage.userLogin;
   userNameLong = config.services.hokage.userNameLong;
   userEmail = config.services.hokage.userEmail;
-  kwin = lib.concatStringsSep " " [
-      "${lib.getBin pkgs.kdePackages.kwin}/bin/kwin_wayland"
-      "--no-global-shortcuts"
-      "--no-kactivities"
-      "--no-lockscreen"
-      "--locale1"
-      "--inputmethod maliit-keyboard"
-    ];
 in
 {
   imports = [
@@ -30,17 +22,14 @@ in
     networkmanager.enable = true;
   };
 
+  # You need to set`maliit` in the Virtual Keyboard settings in the System Settings to use the virtual keyboard
+  # See https://github.com/NixOS/nixpkgs/issues/303526#issuecomment-2692831998
   services.desktopManager.plasma6.enable = true;
   services.displayManager.defaultSession = "plasma";
 
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
-    settings = {
-      Wayland = {
-        CompositorCommand = kwin;
-      };
-    };
   };
 
   # GTK themes are not applied in Wayland applications / Window Decorations missing / Cursor looks different
