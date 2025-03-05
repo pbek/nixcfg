@@ -89,6 +89,7 @@ in
         nil # Nix language server for kate
         # marksman # Markdown language server for kate
         act # Run GitHub Actions locally
+        # (callPackage ../../apps/zen-browser/package.nix {})
 
         # TU Graz
         vpnc
