@@ -227,7 +227,12 @@ in
   # https://github.com/Aetf/kmscon
   services.kmscon = {
     enable = lib.mkDefault true;
-    fonts = [ { name = "Source Code Pro"; package = pkgs.source-code-pro; } ];
+    fonts = [
+      {
+        name = "Source Code Pro";
+        package = pkgs.source-code-pro;
+      }
+    ];
     # https://github.com/Aetf/kmscon/blob/develop/src/kmscon_conf.c
     extraOptions = "--xkb-layout de";
   };
