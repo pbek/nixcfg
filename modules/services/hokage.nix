@@ -59,7 +59,7 @@ in
       };
       useGhosttyGtkFix = mkOption {
         type = types.bool;
-        default = false;
+        default = true;
         description = "Build Ghostty with GTK 4.17.6";
       };
       termFontSize = mkOption {

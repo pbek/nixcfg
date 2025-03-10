@@ -192,8 +192,4 @@ in
 
   # Increase the console font size for kmscon
   services.kmscon.extraConfig = "font-size = 26";
-
-  services.hokage = {
-    useGhosttyGtkFix = true;
-  };
 }

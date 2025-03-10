@@ -49,5 +49,6 @@
 
   services.hokage = {
     useStableJetbrains = true;
+    useGhosttyGtkFix = false;
   };
 }

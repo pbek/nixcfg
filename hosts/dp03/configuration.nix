@@ -118,6 +118,5 @@
     useSecrets = false;
     useSharedKey = false;
     useInternalInfrastructure = false;
-    useGhosttyGtkFix = true;
   };
 }

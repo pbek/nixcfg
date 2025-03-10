@@ -58,5 +58,6 @@
     waylandSupport = false;
     termFontSize = 16.0;
     usePlasma6 = true;
+    useGhosttyGtkFix = false;
   };
 }

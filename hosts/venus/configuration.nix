@@ -178,8 +178,4 @@ in
     # High DPI for ryubing
     AVALONIA_GLOBAL_SCALE_FACTOR = 2;
   };
-
-  services.hokage = {
-    useGhosttyGtkFix = true;
-  };
 }
