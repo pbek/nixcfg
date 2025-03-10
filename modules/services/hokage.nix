@@ -57,6 +57,11 @@ in
         default = false;
         description = "Set this to true to use stable versions of the Jetbrains tools";
       };
+      useGhosttyGtkFix = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Build Ghostty with GTK 4.17.6";
+      };
       termFontSize = mkOption {
         type = types.float;
         default = 12.0;

@@ -180,5 +180,6 @@ in
   };
 
   services.hokage = {
+    useGhosttyGtkFix = true;
   };
 }

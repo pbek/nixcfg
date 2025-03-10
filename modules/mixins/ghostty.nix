@@ -1,17 +1,16 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }:
 let
   userLogin = config.services.hokage.userLogin;
   termFontSize = config.services.hokage.termFontSize;
-in
-{
-  environment.systemPackages = with pkgs; [
-    # ghostty
-    # (pkgs.callPackage ../../apps/ghostty/package.nix { })
-    (pkgs.ghostty.override {
+  useGhosttyGtkFix = config.services.hokage.useGhosttyGtkFix;
+  ghosttyPackage =
+    if useGhosttyGtkFix then
+      (pkgs.ghostty.override {
         wrapGAppsHook4 = pkgs.wrapGAppsNoGuiHook.override {
           isGraphical = true;
           gtk3 =
@@ -44,6 +43,13 @@ in
               });
         };
       })
+    else
+      pkgs.ghostty;
+in
+{
+  environment.systemPackages = with pkgs; [
+    ghosttyPackage
+    # (callPackage ../../apps/ghostty/package.nix { })
   ];
 
   # https://rycee.gitlab.io/home-manager/options.html
