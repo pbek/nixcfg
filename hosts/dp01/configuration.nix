@@ -83,5 +83,6 @@ in
     userEmail = "andrea.ortner@tugraz.at";
     useSecrets = false;
     useSharedKey = false;
+    useGhosttyGtkFix = true;
   };
 }
