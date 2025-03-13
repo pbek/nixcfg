@@ -74,13 +74,15 @@ in
   services.hokage = {
     userLogin = "dp";
     # userNameLong = "dp";
-    userNameLong = "Andrea Ortner";
-    useInternalInfrastructure = false;
     # userNameShort = "dp";
-    userNameShort = "Andrea";
     # userEmail = "dp@dp";
+
     # Temporary "owner" of this machine
+    userNameLong = "Andrea Ortner";
+    userNameShort = "Andrea";
     userEmail = "andrea.ortner@tugraz.at";
+
+    useInternalInfrastructure = false;
     useSecrets = false;
     useSharedKey = false;
   };
