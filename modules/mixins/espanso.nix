@@ -100,14 +100,6 @@ in
                 replace = "Mit freundlichen Grüßen\n${userNameLong}";
               }
               {
-                trigger = ":zb";
-                replace = "beispielsweise";
-              }
-              {
-                trigger = ":eg";
-                replace = "for example";
-              }
-              {
                 trigger = ":kr";
                 replace = "Kind regards\n${userNameLong}";
               }
@@ -341,6 +333,22 @@ in
               {
                 triggers = [ ":mast" ];
                 replace = "social.qownnotes.org";
+              }
+              {
+                trigger = ":zb";
+                replace = "beispielsweise";
+              }
+              {
+                trigger = ":eg";
+                replace = "for example";
+              }
+              {
+                trigger = ":imo";
+                replace = "in my opinion";
+              }
+              {
+                trigger = ":imho";
+                replace = "in my humble opinion";
               }
             ];
           };
