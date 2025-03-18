@@ -56,6 +56,7 @@ in
         ping = "pingu";
         tar = "ouch";
         ps = "procs";
+        whois = "rdap";
       };
     };
 
@@ -200,6 +201,7 @@ in
         procs # ps "replacement"
         just # command runner like make
         neosay # send messages to matrix room
+        rdap # whois replacement
       ];
     in
     requiredPackages
