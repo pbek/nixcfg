@@ -30,44 +30,41 @@ in
         key = lib.mkDefault "948530F2497017761DFCACC075960E6926556207";
       };
       extraConfig = {
-          gc = {
-            autoDetach = false;
+        gc = {
+          autoDetach = false;
+        };
+        url = {
+          "ssh://git@github.com/" = {
+            insteadOf = "https://github.com/";
           };
-          url = {
-            "ssh://git@github.com/" = {
-              insteadOf = "https://github.com/";
-            };
-            "ssh://git@gitlab.com/" = {
-              insteadOf = "https://gitlab.com/";
-            };
-            "ssh://git@bitbucket.org/" = {
-              insteadOf = "https://bitbucket.org/";
-            };
-            "ssh://git@gitlab.tugraz.at/" = {
-              insteadOf = "https://gitlab.tugraz.at/";
-            };
+          "ssh://git@gitlab.com/" = {
+            insteadOf = "https://gitlab.com/";
           };
-#          gpg = {
-#            program = "gpg";
-#          };
-          pull = {
-            rebase = true;
+          "ssh://git@bitbucket.org/" = {
+            insteadOf = "https://bitbucket.org/";
           };
-          gui = {
-            pruneduringfetch = true;
-          };
-          smartgit.submodule = {
-            fetchalways = false;
-            update = true;
-            initializenew = true;
-          };
-          push = {
-            recurseSubmodules = "check";
-          };
-          init = {
-            defaultBranch = "main";
+          "ssh://git@gitlab.tugraz.at/" = {
+            insteadOf = "https://gitlab.tugraz.at/";
           };
         };
+        pull = {
+          rebase = true;
+        };
+        gui = {
+          pruneduringfetch = true;
+        };
+        smartgit.submodule = {
+          fetchalways = false;
+          update = true;
+          initializenew = true;
+        };
+        push = {
+          recurseSubmodules = "check";
+        };
+        init = {
+          defaultBranch = "main";
+        };
+      };
     };
 
     # Turn on signing off for git commits in lazygit
