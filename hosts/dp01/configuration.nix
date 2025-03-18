@@ -44,33 +44,6 @@ in
     spotify
   ];
 
-  home-manager.users.${userLogin} = {
-    # Allow https fetching for now
-    home.file.".gitconfig".text = ''
-      [user]
-        name = ${userNameLong}
-        email = ${userEmail}
-      [core]
-        excludesfile = /home/${userLogin}/.gitignore
-      [commit]
-        gpgsign = false
-      [gpg]
-        program = gpg
-      [pull]
-        rebase = true
-      [gui]
-        pruneduringfetch = true
-      [smartgit "submodule"]
-        fetchalways = false
-        update = true
-        initializenew = true
-      [push]
-        recurseSubmodules = check
-      [init]
-        defaultBranch = main
-    '';
-  };
-
   services.hokage = {
     userLogin = "dp";
     # userNameLong = "dp";

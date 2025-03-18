@@ -312,6 +312,17 @@
             inherit inputs;
           };
         };
+        dp04 = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = commonDesktopModules ++ [
+            ./hosts/dp04/configuration.nix
+            ./hosts/dp04/hardware-configuration.nix
+            disko.nixosModules.disko
+          ];
+          specialArgs = self.commonArgs // {
+            inherit inputs;
+          };
+        };
         #      # Home Server miniserver24 for Markus
         #      miniserver24 = nixpkgs.lib.nixosSystem {
         #        inherit system;
