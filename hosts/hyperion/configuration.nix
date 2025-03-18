@@ -57,7 +57,7 @@
   };
 
   services.hokage = {
-    useStableJetbrains = true;
+    useStableJetbrains = false;
     useGhosttyGtkFix = false;
   };
 }
