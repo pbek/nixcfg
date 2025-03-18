@@ -9,6 +9,7 @@ let
   userLogin = config.services.hokage.userLogin;
   userNameLong = config.services.hokage.userNameLong;
   userEmail = config.services.hokage.userEmail;
+  useInternalInfrastructure = config.services.hokage.useInternalInfrastructure;
 in
 {
   # https://home-manager-options.extranix.com
@@ -25,8 +26,9 @@ in
         "result"
       ];
       signing = {
-        signByDefault = false;
-        key = "E00548D5D6AC812CAAD2AFFA9C42B05E591360DC";
+        # signByDefault = lib.mkDefault useInternalInfrastructure;
+        signByDefault = lib.mkDefault false;
+        key = lib.mkDefault "E00548D5D6AC812CAAD2AFFA9C42B05E591360DC";
       };
       extraConfig = {
           gc = {
