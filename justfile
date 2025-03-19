@@ -28,6 +28,7 @@ alias sp := switch-push
 alias fix-command-not-found-error := update-channels
 alias nixfmt := nix-format
 alias options := hokage-options
+alias fmt := format
 
 # Notify the user with neosay
 @_notify text:
