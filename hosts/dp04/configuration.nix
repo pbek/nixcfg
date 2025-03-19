@@ -97,39 +97,11 @@ in
     spotify
   ];
 
-  home-manager.users.${userLogin} = {
-    # Allow https fetching for now
-    home.file.".gitconfig".text = ''
-      [user]
-        name = ${userNameLong}
-        email = ${userEmail}
-      [core]
-        excludesfile = /home/${userLogin}/.gitignore
-      [commit]
-        gpgsign = false
-      [gpg]
-        program = gpg
-      [pull]
-        rebase = true
-      [gui]
-        pruneduringfetch = true
-      [smartgit "submodule"]
-        fetchalways = false
-        update = true
-        initializenew = true
-      [push]
-        recurseSubmodules = check
-      [init]
-        defaultBranch = main
-    '';
-  };
-
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.graphics.enable = true;
   hardware.nvidia = {
-    # GeForce RTX 2070 SUPER should support open source driver
     # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
     open = true;
 
