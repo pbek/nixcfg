@@ -144,13 +144,14 @@ sudo nix --experimental-features nix-command --extra-experimental-features flake
 sudo nixos-install --flake .#${HOST}
 ```
 
-## Todo after server setup
+## Todo after system installation
 
 ```bash
 # Set password
 passwd
 
 # Clone nixcfg repository via https (read-only)
+# If you are overriding https urls with ssh, you need to remove ~/.config/git/config first
 cd ~ && git clone https://github.com/pbek/nixcfg.git && cd nixcfg
 # or via ssh (read-write)
 cd ~ && git clone git@github.com:pbek/nixcfg.git && cd nixcfg

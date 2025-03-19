@@ -33,8 +33,7 @@ in
         gc = {
           autoDetach = false;
         };
-        # You can bypass whose rules with for example:
-        # git -c "url.*.insteadOf=" pull
+        # You can't bypass whose rules, you rather need to remove ~/.config/git/config
         url = {
           "ssh://git@github.com/" = {
             insteadOf = "https://github.com/";
