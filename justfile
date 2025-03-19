@@ -397,8 +397,13 @@ nix-store-reverse-dependencies:
     nixStorePath=$(gum input --placeholder "Nix store path (e.g. /nix/store/hbldxn007k0y5qidna6fg0x168gnsmkj-botan-2.19.5.drv)")
     nix-store --query --referrers "$nixStorePath"
 
+# Format all files
+[group('linter')]
+format:
+    treefmt
+
 # Format the nix files
-[group('maintenance')]
+[group('linter')]
 nix-format:
     nix-shell -p fd nixfmt-rfc-style --run "fd -e nix --exec-batch nixfmt"
 

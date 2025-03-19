@@ -1,0 +1,22 @@
+on-unmatched = "info"
+
+[formatter.prettier]
+command = "prettier"
+options = ["--write"]
+includes = [
+    "*.md",
+    "*.yaml",
+    "*.yml",
+]
+
+[formatter.shfmt]
+command = "shfmt"
+excludes = []
+includes = ["*.sh", "*.bash", "*.envrc", "*.envrc.*"]
+options = ["-s", "-w", "-i", "2"]
+
+[formatter.nixfmt-rfc-style]
+command = "nixfmt"
+excludes = []
+includes = ["*.nix"]
+options = []
