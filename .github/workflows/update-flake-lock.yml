@@ -2,7 +2,7 @@ name: ⤴️ Update flake.lock
 on:
   workflow_dispatch: # Allows manual triggering
   schedule:
-    - cron: '0 3 * * 0' # Runs every Sunday at 3am UTC
+    - cron: "0 3 * * 0" # Runs every Sunday at 3am UTC
 
 jobs:
   create-pr:
@@ -23,9 +23,9 @@ jobs:
           # Token needed so it can trigger the check workflow
           # Also see https://github.com/orgs/community/discussions/65321
           token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
-          commit-msg: "flake: update"   # Commit message to be used
+          commit-msg: "flake: update" # Commit message to be used
           pr-title: "Update flake.lock" # Title of PR to be created
-          pr-labels: |                  # Labels to be set on the PR
+          pr-labels: | # Labels to be set on the PR
             dependencies
             automated
           # git-author-name: 'Patrizio Bekerle'

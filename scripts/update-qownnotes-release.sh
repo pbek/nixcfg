@@ -6,7 +6,7 @@ set -euo pipefail
 version=$(gum input --placeholder "QOwnNotes version (empty for latest)")
 
 if [ -z "$version" ]; then
-    version=$(curl -s https://api.qownnotes.org/latest_releases/linux | jq -r '.version')
+  version=$(curl -s https://api.qownnotes.org/latest_releases/linux | jq -r '.version')
 fi
 
 echo "Using version $version..."

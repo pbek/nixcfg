@@ -5,23 +5,23 @@ set -e
 NIXOS_DIR_NAME=nixcfg
 
 # Check if HOSTNAME is set
-if [[ -z "$HOSTNAME" ]]; then
-    echo "HOSTNAME is not set!"
-    exit 1
+if [[ -z $HOSTNAME ]]; then
+  echo "HOSTNAME is not set!"
+  exit 1
 fi
 
 echo "HOSTNAME is set to $HOSTNAME."
 
 # Create directory ~/Code, if it doesn't exist
 if [ ! -d ~/Code ]; then
-    mkdir ~/Code
+  mkdir ~/Code
 fi
 
 cd ~/Code
 
 if [ -d ${NIXOS_DIR_NAME} ]; then
-    echo "Directory ~/Code/${NIXOS_DIR_NAME} already exists!"
-    exit 1
+  echo "Directory ~/Code/${NIXOS_DIR_NAME} already exists!"
+  exit 1
 fi
 
 echo ""
@@ -43,4 +43,3 @@ nix-shell -p git --run 'git remote set-url origin git@github.com:pbek/nixcfg.git
 
 echo ""
 echo "Now edit 'flakes.nix' and add your host and 'hosts/${HOSTNAME}/configuration.nix' to style it like the rest of the hosts."
-

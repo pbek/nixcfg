@@ -7,10 +7,10 @@ on:
       - main
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-including-paths
     paths:
-      - '.github/workflows/build-publish-nix-store.yml'
-      - 'docker/nix-store/**'
-      - 'modules/**'
-      - 'flake.*'
+      - ".github/workflows/build-publish-nix-store.yml"
+      - "docker/nix-store/**"
+      - "modules/**"
+      - "flake.*"
 
 env:
   REGISTRY: ghcr.io

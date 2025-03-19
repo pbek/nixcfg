@@ -6,11 +6,11 @@ on:
       # Ignore changes to the flake update workflow, it is handled by the pull_request event
       - update_flake_lock_action
     paths-ignore:
-      - 'docker/**'
+      - "docker/**"
   workflow_dispatch:
   pull_request:
     paths-ignore:
-      - 'docker/**'
+      - "docker/**"
 
 jobs:
   check:
