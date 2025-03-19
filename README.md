@@ -123,7 +123,7 @@ nix run github:nix-community/nixos-anywhere -- --flake .#netcup02 root@server-ho
 
 ```bash
 # First boot into minimal nixos and set root password
-# Then create a /tmp/secret.key with the disk-password
+# Then create a /tmp/secret.key with the disk-password locally (at least 8 characters for ZFS)
 # Set `services.openssh.settings.PermitRootLogin = "yes";`
 # Set `services.openssh.settings.PasswordAuthentication = true;`
 # Then use nixos-anywhere remotely
