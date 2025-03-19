@@ -103,7 +103,8 @@ in
   hardware.graphics.enable = true;
   hardware.nvidia = {
     # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
-    open = true;
+    # NVIDIA Quadro P620 didn't work properly with open = true
+    open = false;
 
     # production: version 550
     # latest: version 565
