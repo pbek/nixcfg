@@ -298,12 +298,12 @@ fish-replace:
 # Use statix to check the nix files
 [group('linter')]
 linter-check:
-    statix check
+    nix-shell -p statix --run "statix check"
 
 # Use statix to fix the nix files
 [group('linter')]
 linter-fix:
-    statix fix
+    nix-shell -p statix --run "statix fix"
 
 # Fix "command not found" error
 [group('maintenance')]
