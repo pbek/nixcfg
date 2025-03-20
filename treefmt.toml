@@ -9,7 +9,6 @@ includes = ["*.md", "*.yaml", "*.yml"]
 
 [formatter.shfmt]
 command = "shfmt"
-excludes = []
 includes = ["*.sh", "*.bash", "*.envrc", "*.envrc.*"]
 options = ["-s", "-w", "-i", "2"]
 
@@ -24,6 +23,11 @@ options = ["format"]
 
 [formatter.nixfmt-rfc-style]
 command = "nixfmt"
-excludes = []
 includes = ["*.nix"]
-options = []
+
+# Statix doesn't support formatting single files, see https://github.com/oppiliappan/statix/issues/69
+# Workaround: https://github.com/numtide/treefmt/issues/241#issuecomment-1614563462
+[formatter.statix]
+command = "bash"
+options = ["-euc", "for file in \"$@\"; do statix fix \"$file\"; done"]
+includes = ["*.nix"]
