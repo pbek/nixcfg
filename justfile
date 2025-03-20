@@ -401,7 +401,7 @@ nix-store-reverse-dependencies:
 # Format all files
 [group('linter')]
 format:
-    treefmt
+    nix-shell -p treefmt nodePackages.prettier shfmt nixfmt-rfc-style taplo --run treefmt
 
 # Format the nix files
 [group('linter')]

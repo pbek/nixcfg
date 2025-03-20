@@ -8,9 +8,5 @@ pkgs.mkShell {
     nh
     gum
     just
-    treefmt # formatting tool
-    nodePackages.prettier # for webpage formatting
-    shfmt # for shell formatting
-    nixfmt-rfc-style # for nix formatting
   ];
 }
