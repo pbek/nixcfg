@@ -5,9 +5,9 @@
   ...
 }:
 let
-  userLogin = config.services.hokage.userLogin;
-  termFontSize = config.services.hokage.termFontSize;
-  useGhosttyGtkFix = config.services.hokage.useGhosttyGtkFix;
+  inherit (config.services.hokage) userLogin;
+  inherit (config.services.hokage) termFontSize;
+  inherit (config.services.hokage) useGhosttyGtkFix;
   ghosttyPackage =
     if useGhosttyGtkFix then
       (pkgs.ghostty.override {

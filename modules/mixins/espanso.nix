@@ -6,12 +6,12 @@
   ...
 }:
 let
-  userLogin = config.services.hokage.userLogin;
-  userNameLong = config.services.hokage.userNameLong;
-  userNameShort = config.services.hokage.userNameShort;
-  userEmail = config.services.hokage.userEmail;
-  useEspanso = config.services.hokage.useEspanso;
-  waylandSupport = config.services.hokage.waylandSupport;
+  inherit (config.services.hokage) userLogin;
+  inherit (config.services.hokage) userNameLong;
+  inherit (config.services.hokage) userNameShort;
+  inherit (config.services.hokage) userEmail;
+  inherit (config.services.hokage) useEspanso;
+  inherit (config.services.hokage) waylandSupport;
 in
 {
   # Get around: [ERROR] Error: could not open uinput device

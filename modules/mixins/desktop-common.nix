@@ -7,9 +7,9 @@
   ...
 }:
 let
-  userLogin = config.services.hokage.userLogin;
-  useSecrets = config.services.hokage.useSecrets;
-  termFontSize = config.services.hokage.termFontSize;
+  inherit (config.services.hokage) userLogin;
+  inherit (config.services.hokage) useSecrets;
+  inherit (config.services.hokage) termFontSize;
 in
 {
   imports = [

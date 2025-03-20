@@ -10,7 +10,7 @@
   ...
 }:
 let
-  userNameLong = config.services.hokage.userNameLong;
+  inherit (config.services.hokage) userNameLong;
 in
 {
   imports = [

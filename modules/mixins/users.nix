@@ -6,8 +6,8 @@
   ...
 }:
 let
-  userLogin = config.services.hokage.userLogin;
-  useSecrets = config.services.hokage.useSecrets;
+  inherit (config.services.hokage) userLogin;
+  inherit (config.services.hokage) useSecrets;
 in
 {
   # Set some fish config

@@ -54,22 +54,16 @@
       commonServerModules = [
         home-manager.nixosModules.home-manager
         { }
-        (
-          { ... }:
-          {
-            nixpkgs.overlays = [ overlays-nixpkgs ];
-          }
-        )
+        (_: {
+          nixpkgs.overlays = [ overlays-nixpkgs ];
+        })
       ];
       commonDesktopModules = [
         home-manager.nixosModules.home-manager
         { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
-        (
-          { ... }:
-          {
-            nixpkgs.overlays = [ overlays-nixpkgs ];
-          }
-        )
+        (_: {
+          nixpkgs.overlays = [ overlays-nixpkgs ];
+        })
         agenix.nixosModules.age
         espanso-fix.nixosModules.espanso-capdacoverride
       ];

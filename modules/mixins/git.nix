@@ -6,10 +6,10 @@
   ...
 }:
 let
-  hokage = config.services.hokage;
-  userLogin = hokage.userLogin;
-  userNameLong = hokage.userNameLong;
-  userEmail = hokage.userEmail;
+  inherit (config.services) hokage;
+  inherit (hokage) userLogin;
+  inherit (hokage) userNameLong;
+  inherit (hokage) userEmail;
 in
 {
   # https://home-manager-options.extranix.com

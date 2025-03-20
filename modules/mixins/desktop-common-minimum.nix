@@ -7,8 +7,8 @@
   ...
 }:
 let
-  userLogin = config.services.hokage.userLogin;
-  useSharedKey = config.services.hokage.useSharedKey;
+  inherit (config.services.hokage) userLogin;
+  inherit (config.services.hokage) useSharedKey;
 in
 {
   imports = [

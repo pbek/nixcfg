@@ -7,8 +7,8 @@
 }:
 #{ config, inputs, xdg, ... }:
 let
-  userLogin = config.services.hokage.userLogin;
-  useStableJetbrains = config.services.hokage.useStableJetbrains;
+  inherit (config.services.hokage) userLogin;
+  inherit (config.services.hokage) useStableJetbrains;
   jetbrainsPackages = if useStableJetbrains then pkgs.stable.jetbrains else pkgs.jetbrains;
 in
 ## https://github.com/NixOS/nixpkgs/pull/309011

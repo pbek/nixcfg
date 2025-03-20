@@ -4,7 +4,7 @@
   ...
 }:
 let
-  userLogin = config.services.hokage.userLogin;
+  inherit (config.services.hokage) userLogin;
 in
 {
   imports = [

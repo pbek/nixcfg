@@ -8,9 +8,9 @@
   ...
 }:
 let
-  userLogin = config.services.hokage.userLogin;
-  userNameLong = config.services.hokage.userNameLong;
-  useSecrets = config.services.hokage.useSecrets;
+  inherit (config.services.hokage) userLogin;
+  inherit (config.services.hokage) userNameLong;
+  inherit (config.services.hokage) useSecrets;
 in
 {
   imports = [
