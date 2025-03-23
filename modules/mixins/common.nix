@@ -11,6 +11,8 @@ let
   inherit (config.services.hokage) userLogin;
   inherit (config.services.hokage) userNameLong;
   inherit (config.services.hokage) useSecrets;
+  inherit (config.services.hokage) useInternalInfrastructure;
+  inherit (config.services.hokage) excludePackages;
 in
 {
   imports = [
@@ -204,8 +206,7 @@ in
         rdap # whois replacement
       ];
     in
-    requiredPackages
-    ++ utils.removePackagesByName optionalPackages config.services.hokage.excludePackages;
+    requiredPackages ++ utils.removePackagesByName optionalPackages excludePackages;
 
   # Do garbage collection
   # Disabled for "programs.nh.clean.enable"
@@ -311,10 +312,7 @@ in
         # Writes ~/.config/atuin/config.toml
         settings = {
           sync_address =
-            if config.services.hokage.useInternalInfrastructure then
-              "https://atuin.bekerle.com"
-            else
-              "https://api.atuin.sh";
+            if useInternalInfrastructure then "https://atuin.bekerle.com" else "https://api.atuin.sh";
           sync_frequency = "15m";
           key_path =
             if useSecrets then "/home/${userLogin}/.secrets/atuin-key" else "~/.local/share/atuin/key";
