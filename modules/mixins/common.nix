@@ -295,7 +295,11 @@ in
       # https://docs.atuin.sh
       atuin = {
         package = pkgs.atuin.overrideAttrs (oldAttrs: rec {
-          patches = oldAttrs.patches ++ [ ../../apps/atuin/2616.patch ];
+          patches = oldAttrs.patches ++ [
+            # Fix for up binding key for fish 4.0
+            # https://github.com/atuinsh/atuin/pull/2616
+            ../../apps/atuin/2616.patch
+          ];
         });
         enable = true;
         daemon.enable = true;
