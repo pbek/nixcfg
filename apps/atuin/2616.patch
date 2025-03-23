@@ -1,0 +1,30 @@
+From e4495a5c27325e71c9ae1857bd5e16420e73de1d Mon Sep 17 00:00:00 2001
+From: slamp <slaamp@gmail.com>
+Date: Sun, 9 Mar 2025 15:21:02 +0100
+Subject: [PATCH] fix: up binding with fish 4.0 (#2613)
+
+Signed-off-by: slamp <slaamp@gmail.com>
+---
+ crates/atuin/src/command/client/init/fish.rs | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/crates/atuin/src/command/client/init/fish.rs b/crates/atuin/src/command/client/init/fish.rs
+index fe58dbed..979388a2 100644
+--- a/crates/atuin/src/command/client/init/fish.rs
++++ b/crates/atuin/src/command/client/init/fish.rs
+@@ -6,9 +6,12 @@ pub fn init_static(disable_up_arrow: bool, disable_ctrl_r: bool) {
+ 
+     println!("{base}");
+ 
++    // In fish 4.0 and above the option bind -k doesn't exist anymore.
++    // We keep it for compatibility with fish 3.x
+     if std::env::var("ATUIN_NOBIND").is_err() {
+         const BIND_CTRL_R: &str = r"bind \cr _atuin_search";
+         const BIND_UP_ARROW: &str = r"bind -k up _atuin_bind_up
++bind up _atuin_bind_up
+ bind \eOA _atuin_bind_up
+ bind \e\[A _atuin_bind_up";
+         const BIND_CTRL_R_INS: &str = r"bind -M insert \cr _atuin_search";
+-- 
+2.48.1
+

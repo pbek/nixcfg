@@ -149,6 +149,7 @@ upgrade-push-all: upgrade push-all push
 
 [group('cache')]
 push:
+    -attic push main `which atuin` --no-closure
     -attic push main `which espanso` --no-closure
     -attic push main `which cura` --no-closure
     -attic push main `which ghostty` --no-closure

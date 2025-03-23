@@ -294,6 +294,9 @@ in
       # Sync your shell history across all your devices
       # https://docs.atuin.sh
       atuin = {
+        package = pkgs.atuin.overrideAttrs (oldAttrs: rec {
+          patches = oldAttrs.patches ++ [ ../../apps/atuin/2616.patch ];
+        });
         enable = true;
         daemon.enable = true;
         enableFishIntegration = true;
