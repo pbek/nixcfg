@@ -97,6 +97,16 @@ in
     spotify
   ];
 
+  # env variables to prevent lagging in wayland
+  # TODO remove after the bug has been fixed
+  environment.variables = {
+    GBM_BACKEND = "nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    ENABLE_VKBASALT = "1";
+    LIBVA_DRIVER_NAME = "nvidia";
+    KWIN_DRM_USE_MODIFIERS = "0";
+  };
+
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
@@ -108,6 +118,8 @@ in
 
     # production: version 550
     # latest: version 565
+    # set to beta to fix wayland lagging issues
+    # TODO remove after bug has been fixed
     package = config.boot.kernelPackages.nvidiaPackages.beta;
 
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
@@ -117,8 +129,14 @@ in
     powerManagement.enable = true;
 
     #    # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
-    #    modesetting.enable = true;
+    modesetting.enable = true;
   };
+
+  # disable GSP firmware to fix wayland lagging bug
+  # TODO remove after bug has been fixed
+  boot.kernelParams = [
+    "nvidia.NVreg_EnableGpuFirmware=0"
+  ];
 
   services.hokage = {
     userLogin = "dp";
