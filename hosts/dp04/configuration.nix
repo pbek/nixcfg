@@ -134,5 +134,6 @@ in
     useInternalInfrastructure = false;
     useSecrets = false;
     useSharedKey = false;
+    waylandSupport = false;
   };
 }
