@@ -137,5 +137,6 @@ in
     useSecrets = false;
     useSharedKey = false;
     waylandSupport = false;
+    useEspanso = false;
   };
 }
