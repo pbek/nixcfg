@@ -95,6 +95,8 @@ in
     go-passbolt-cli
     thunderbird
     spotify
+    evolution
+    evolution-ews
   ];
 
   # https://nixos.wiki/wiki/nvidia
