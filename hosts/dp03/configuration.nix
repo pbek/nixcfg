@@ -95,9 +95,12 @@ in
     go-passbolt-cli
     thunderbird
     spotify
-    evolution
-    evolution-ews
   ];
+
+  programs.evolution = {
+    enable = true;
+    plugins = [ pkgs.evolution-ews ];
+  };
 
   services.hokage = {
     userLogin = "krautfleckerl";
