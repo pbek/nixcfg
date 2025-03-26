@@ -103,7 +103,7 @@ in
   };
 
   services.hokage = {
-    userLogin = "krautfleckerl";
+    userLogin = "dp";
     userNameLong = "Andrea Ortner";
     userNameShort = "Andrea";
     userEmail = "andrea.ortner@tugraz.at";
