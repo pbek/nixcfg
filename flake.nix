@@ -294,7 +294,7 @@
             inherit inputs;
           };
         };
-        # TU ThinkBook Jenny
+        # TU ThinkBook Andrea
         dp03 = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = commonDesktopModules ++ [

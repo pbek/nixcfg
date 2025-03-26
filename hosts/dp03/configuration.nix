@@ -1,4 +1,4 @@
-# TU ThinkBook Jenny
+# TU Thinkbook Andrea
 
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
@@ -10,7 +10,11 @@
   pkgs,
   ...
 }:
-
+let
+  inherit (config.services.hokage) userLogin;
+  inherit (config.services.hokage) userNameLong;
+  inherit (config.services.hokage) userEmail;
+in
 {
   imports = [
     # Include the results of the hardware scan.
@@ -18,7 +22,6 @@
     ./disk-config.zfs.nix
     ../../modules/mixins/users.nix
     ../../modules/mixins/desktop.nix
-    ../../modules/mixins/git.nix
     ../../modules/mixins/audio.nix
     ../../modules/mixins/jetbrains.nix
     ../../modules/mixins/openssh.nix
@@ -75,48 +78,37 @@
     hostName = "dp03";
     networkmanager.enable = true;
     useDHCP = lib.mkDefault true;
-  };
 
-  environment.systemPackages = with pkgs; [
-    go-passbolt-cli
-  ];
+    firewall = {
+      allowedTCPPorts = [
+        9000
+        9003
+      ]; # xdebug
+    };
+  };
 
   # ZFS (even unstable) is marked broken in kernel 6.13, so we stick to 6.12 and the unstable ZFS package
   boot.zfs.package = pkgs.zfs_unstable;
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_12;
 
-  # https://nixos.wiki/wiki/nvidia
-  services.xserver.videoDrivers = [ "nvidia" ];
-  nixpkgs.config.nvidia.acceptLicense = true;
-  hardware.graphics.enable = true;
-  hardware.nvidia = {
-    # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
-    open = true;
-
-    # production: version 550
-    # latest: version 560
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
-
-    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    # Enable this if you have graphical corruption issues or application crashes after waking
-    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
-    # of just the bare essentials.
-    powerManagement.enable = true;
-
-    #    # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
-    #    modesetting.enable = true;
-  };
-
-  # We have enough RAM
-  zramSwap.enable = false;
+  environment.systemPackages = with pkgs; [
+    go-passbolt-cli
+    thunderbird
+    spotify
+    evolution
+    evolution-ews
+  ];
 
   services.hokage = {
-    userLogin = "jenny";
-    userNameLong = "Jenny Gasser";
-    userNameShort = "Jenny";
-    userEmail = "jennifer.gassner@tugraz.at";
+    userLogin = "krautfleckerl";
+    userNameLong = "Andrea Ortner";
+    userNameShort = "Andrea";
+    userEmail = "andrea.ortner@tugraz.at";
+
+    useInternalInfrastructure = false;
     useSecrets = false;
     useSharedKey = false;
-    useInternalInfrastructure = false;
+    waylandSupport = true;
+    useEspanso = false;
   };
 }
