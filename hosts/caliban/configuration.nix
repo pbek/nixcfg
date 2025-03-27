@@ -122,9 +122,8 @@ in
   # lts: 6.6
   #  boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # ZFS (even unstable) is marked broken in kernel 6.13, so we stick to 6.12 and the unstable ZFS package
   boot.zfs.package = pkgs.zfs_unstable;
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_12;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_13;
 
   # Workaround for broken VirtualBox with kernel 6.12
   # https://github.com/NixOS/nixpkgs/issues/363887
