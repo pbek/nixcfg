@@ -7,6 +7,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
 let
@@ -16,6 +17,7 @@ in
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./disk-config.zfs.nix
     ../../modules/mixins/users.nix
     #      ../../modules/mixins/desktop-x11.nix
     ../../modules/mixins/desktop.nix
@@ -27,13 +29,7 @@ in
     #      ../../modules/mixins/remote-store-cache.nix
   ];
 
-  # Bootloader
   # Getting the bootloader to detect Windows didn't work, use F12 at boot for a boot manager
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.memtest86.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
-
   # boot.loader.grub.enable = true;
   # boot.loader.grub.version = 2;
   # boot.loader.grub.device = "nodev";
@@ -44,30 +40,70 @@ in
   #   }
   # '';
 
-  # Setup keyfile
-  boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
-  };
+  # Bootloader.
+  boot.supportedFilesystems = [ "zfs" ];
+  services.zfs.autoScrub.enable = true;
+  boot.zfs.requestEncryptionCredentials = true;
 
-  networking.hostName = "venus"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Enable networking
-  networking.networkmanager.enable = true;
-
-  networking.hosts = {
-    "192.168.1.110" = [
-      "cicinas"
-      "cicinas.lan"
-    ];
-    "192.168.1.111" = [
-      "cicinas2"
-      "cicinas2.lan"
+  boot.loader.grub = {
+    enable = true;
+    zfsSupport = true;
+    efiSupport = true;
+    efiInstallAsRemovable = true;
+    mirroredBoots = [
+      {
+        devices = [ "nodev" ];
+        path = "/boot";
+      }
     ];
   };
 
-  networking.firewall = {
-    allowedTCPPorts = [ 3389 ]; # RDP
+  boot.initrd.network = {
+    enable = true;
+    postCommands = ''
+      sleep 2
+      zpool import -a;
+    '';
+  };
+
+  # Add the sanoid service to take snapshots of the ZFS datasets
+  services.sanoid = {
+    enable = true;
+    templates = {
+      hourly = {
+        autoprune = true;
+        autosnap = true;
+        daily = 7;
+        hourly = 24;
+        monthly = 0;
+      };
+    };
+    datasets = {
+      "zroot/encrypted/home" = {
+        useTemplate = [ "hourly" ];
+      };
+    };
+  };
+
+  networking = {
+    hostId = "dcdaca04"; # needed for ZFS
+    hostName = "venus";
+    networkmanager.enable = true;
+    useDHCP = lib.mkDefault true;
+    hosts = {
+      "192.168.1.110" = [
+        "cicinas"
+        "cicinas.lan"
+      ];
+      "192.168.1.111" = [
+        "cicinas2"
+        "cicinas2.lan"
+      ];
+    };
+
+    firewall = {
+      allowedTCPPorts = [ 3389 ]; # RDP
+    };
   };
 
   environment.systemPackages = with pkgs; [

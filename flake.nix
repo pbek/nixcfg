@@ -93,6 +93,7 @@
           modules = commonDesktopModules ++ [
             ./hosts/venus/configuration.nix
             ./hosts/venus/hardware-configuration.nix
+            disko.nixosModules.disko
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
