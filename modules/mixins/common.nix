@@ -13,6 +13,7 @@ let
   inherit (config.services.hokage) useSecrets;
   inherit (config.services.hokage) useInternalInfrastructure;
   inherit (config.services.hokage) excludePackages;
+  inherit (config.services.hokage) useAtuin;
 in
 {
   imports = [
@@ -257,7 +258,7 @@ in
         enable = true;
         # Add atuin init to bashrc, because it doesn't work with bashIntegration
         # But it still doesn't add anything to the Atuin history
-        bashrcExtra = ''
+        bashrcExtra = lib.mkIf useAtuin ''
           eval "$(${pkgs.atuin}/bin/atuin init --disable-up-arrow bash)"
         '';
       };
@@ -294,7 +295,7 @@ in
 
       # Sync your shell history across all your devices
       # https://docs.atuin.sh
-      atuin = {
+      atuin = lib.mkIf useAtuin {
         package = pkgs.atuin.overrideAttrs (oldAttrs: rec {
           patches = oldAttrs.patches ++ [
             # Fix for up binding key for fish 4.0
