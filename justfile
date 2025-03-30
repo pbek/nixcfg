@@ -247,12 +247,13 @@ flake-update:
 [confirm("Are you sure you want to clean up the system?")]
 [group('maintenance')]
 cleanup:
-    duf && \
-    sudo journalctl --vacuum-time=3d && \
-    docker system prune -f && \
-    rm -rf ~/.local/share/Trash/* && \
-    sudo nix-collect-garbage -d && \
-    nix-collect-garbage -d && \
+    duf
+    sudo journalctl --vacuum-time=3d
+    docker system prune -f
+    rm -rf ~/.local/share/Trash/*
+    sudo nix-collect-garbage -d
+    nix-collect-garbage -d
+    nix-store --optimise
     duf
     just _notify "Cleanup finished on {{ hostname }}"
 
