@@ -60,6 +60,7 @@ in
         tar = "ouch";
         ps = "procs";
         whois = "rdap";
+        vim = "hx";
       };
     };
 
@@ -161,7 +162,7 @@ in
       requiredPackages = [
       ];
       optionalPackages = [
-        neovim
+        # neovim # replaced by helix
         wget
         fish
         tmux
@@ -292,6 +293,9 @@ in
           rm -f -- "$tmp"
         '';
       };
+
+      # Post-modern editor (like vim)
+      helix.enable = true;
 
       # Sync your shell history across all your devices
       # https://docs.atuin.sh
