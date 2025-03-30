@@ -132,8 +132,8 @@ in
     protontricks.enable = true; # Protontricks is a simple wrapper that does winetricks things for Proton enabled games
   };
 
-  # Try to use the latest kernel
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.zfs.package = pkgs.zfs_unstable;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_13;
 
   # Enable hardware accelerated graphics drivers
   hardware.graphics.enable = true;
