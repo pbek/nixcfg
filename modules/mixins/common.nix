@@ -295,7 +295,13 @@ in
       };
 
       # Post-modern editor (like vim)
-      helix.enable = true;
+      helix = {
+        enable = true;
+        settings = {
+          # https://helix-editor.vercel.app/reference/list-of-themes#catppuccin_mocha
+          theme = "catppuccin_mocha";
+        };
+      };
 
       # Sync your shell history across all your devices
       # https://docs.atuin.sh
