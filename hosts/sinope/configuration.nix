@@ -44,7 +44,8 @@
   virtualisation.multipass.enable = true;
 
   environment.systemPackages = with pkgs; [
-    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
+    go-passbolt-cli
+    # (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
   ];
 
   # Increase the console font size for kmscon
