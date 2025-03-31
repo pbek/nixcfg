@@ -77,7 +77,6 @@ in
         wireguard-tools
         nixpkgs-review
         nix-search-cli
-        kitty # Terminal with OSC 52 support
 
         #    pinentry-curses
         pinentry-qt # For some reason this wasn't installed by the gpg settings
@@ -273,6 +272,7 @@ in
     };
 
     programs = {
+      # Terminal with OSC 52 support
       kitty = {
         enable = true;
         font = {
