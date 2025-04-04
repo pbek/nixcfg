@@ -14,6 +14,7 @@ in
 {
   # https://home-manager-options.extranix.com
   home-manager.users.${userLogin} = {
+    # https://searchix.alanpearce.eu/options/home-manager/search?query=git
     programs.git = {
       enable = true;
       # use "git diff --no-ext-diff" for creating patches!
@@ -64,6 +65,9 @@ in
         };
         init = {
           defaultBranch = "main";
+        };
+        blame = {
+          ignoreRevsFile = ".git-blame-ignore-revs";
         };
       };
     };
