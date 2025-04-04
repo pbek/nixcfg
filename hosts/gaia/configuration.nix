@@ -19,7 +19,8 @@ in
     ../../modules/mixins/users.nix
     ../../modules/mixins/desktop.nix
     ../../modules/mixins/audio.nix
-    ../../modules/mixins/platformio.nix
+    # https://github.com/NixOS/nixpkgs/issues/395681
+    # ../../modules/mixins/platformio.nix
     ../../modules/mixins/jetbrains.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/virt-manager.nix
