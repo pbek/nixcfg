@@ -57,6 +57,7 @@ in
         dig = "dog";
         diff = "difft";
         # ping = "pingu";
+        ping = "gping";
         tar = "ouch";
         ps = "procs";
         whois = "rdap";
@@ -199,6 +200,7 @@ in
         broot # fast directory switcher (has "br" alias for changing into directories)
         difftastic # Structural diff tool that compares files based on their syntax
         # pingu # ping, but more colorful
+        gping # graphical ping
         sysz # fzf terminal UI for systemctl
         isd # a better way to work with systemd units
         ouch # compress and decompress files
