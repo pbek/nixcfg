@@ -47,6 +47,6 @@
   ];
 
   services.hokage = {
-    useStableJetbrains = false;
+    useStableJetbrains = true;
   };
 }
