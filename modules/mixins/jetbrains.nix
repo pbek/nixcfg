@@ -10,22 +10,19 @@ let
   inherit (config.services.hokage) useStableJetbrains;
   jetbrainsPackages =
     if useStableJetbrains then
-      if useStableJetbrains then
-        (import
-          (fetchTarball {
-            # Date: 20250404
-            url = "https://github.com/NixOS/nixpkgs/tarball/2c8d3f48d33929642c1c12cd243df4cc7d2ce434";
-            sha256 = "sha256-F7n4+KOIfWrwoQjXrL2wD9RhFYLs2/GGe/MQY1sSdlE=";
-          })
-          {
-            config = config.nixpkgs.config;
-            localSystem = {
-              system = "x86_64-linux";
-            };
-          }
-        ).jetbrains
-      else
-        pkgs.jetbrains
+      (import
+        (fetchTarball {
+          # Date: 20250404
+          url = "https://github.com/NixOS/nixpkgs/tarball/2c8d3f48d33929642c1c12cd243df4cc7d2ce434";
+          sha256 = "sha256-F7n4+KOIfWrwoQjXrL2wD9RhFYLs2/GGe/MQY1sSdlE=";
+        })
+        {
+          config = config.nixpkgs.config;
+          localSystem = {
+            system = "x86_64-linux";
+          };
+        }
+      ).jetbrains
     else
       pkgs.jetbrains;
 in
