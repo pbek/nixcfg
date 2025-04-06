@@ -17,7 +17,7 @@ let
           sha256 = "sha256-F7n4+KOIfWrwoQjXrL2wD9RhFYLs2/GGe/MQY1sSdlE=";
         })
         {
-          config = config.nixpkgs.config;
+          inherit (config.nixpkgs) config;
           localSystem = {
             system = "x86_64-linux";
           };
