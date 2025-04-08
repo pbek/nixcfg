@@ -19,9 +19,6 @@ in
     ./ghostty.nix
   ];
 
-  # Use latest kernel by default
-  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
   # Disable avahi to avoid security issues

@@ -40,53 +40,7 @@ in
   #   }
   # '';
 
-  # Bootloader.
-  boot.supportedFilesystems = [ "zfs" ];
-  services.zfs.autoScrub.enable = true;
-  boot.zfs.requestEncryptionCredentials = true;
-
-  boot.loader.grub = {
-    enable = true;
-    zfsSupport = true;
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-    mirroredBoots = [
-      {
-        devices = [ "nodev" ];
-        path = "/boot";
-      }
-    ];
-  };
-
-  boot.initrd.network = {
-    enable = true;
-    postCommands = ''
-      sleep 2
-      zpool import -a;
-    '';
-  };
-
-  # Add the sanoid service to take snapshots of the ZFS datasets
-  services.sanoid = {
-    enable = true;
-    templates = {
-      hourly = {
-        autoprune = true;
-        autosnap = true;
-        daily = 7;
-        hourly = 24;
-        monthly = 0;
-      };
-    };
-    datasets = {
-      "zroot/encrypted/home" = {
-        useTemplate = [ "hourly" ];
-      };
-    };
-  };
-
   networking = {
-    hostId = "dcdaca04"; # needed for ZFS
     hostName = "venus";
     networkmanager.enable = true;
     useDHCP = lib.mkDefault true;
@@ -131,9 +85,6 @@ in
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
     protontricks.enable = true; # Protontricks is a simple wrapper that does winetricks things for Proton enabled games
   };
-
-  # boot.zfs.package = pkgs.zfs_unstable;
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_13;
 
   # Enable hardware accelerated graphics drivers
   hardware.graphics.enable = true;
@@ -213,5 +164,12 @@ in
   environment.sessionVariables = {
     # High DPI for ryubing
     AVALONIA_GLOBAL_SCALE_FACTOR = 2;
+  };
+
+  services.hokage = {
+    zfs = {
+      enable = true;
+      hostId = "dcdaca04";
+    };
   };
 }

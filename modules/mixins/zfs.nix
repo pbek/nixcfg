@@ -5,6 +5,7 @@
   ...
 }:
 let
+  inherit (config.services.hokage) kernelPackage;
   inherit (config.services.hokage) zfs;
   encryptedPart = if zfs.encrypted then "/encrypted" else "";
   homeDataset = "${zfs.poolName}${encryptedPart}/home";
@@ -15,9 +16,12 @@ in
   services.zfs.autoScrub.enable = lib.mkIf zfs.enable true;
   boot.zfs.requestEncryptionCredentials = lib.mkIf (zfs.enable && zfs.encrypted) true;
 
-  boot.zfs.package = lib.mkIf zfs.enable pkgs.zfs_unstable;
-  # Use the latest kernel version for ZFS
-  boot.kernelPackages = lib.mkIf zfs.enable pkgs.linuxKernel.packages.linux_6_13;
+  # boot.zfs.package = lib.mkIf zfs.enable pkgs.zfs_unstable;
+
+  # Use the latest kernel version possible for ZFS or the latest kernel
+  boot.kernelPackages = lib.mkDefault (
+    if zfs.enable then pkgs.linuxKernel.packages.linux_6_13 else kernelPackage
+  );
   networking.hostId = lib.mkIf (zfs.enable && zfs.hostId != "") zfs.hostId;
 
   boot.initrd.network = lib.mkIf zfs.enable {
