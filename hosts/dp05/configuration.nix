@@ -84,7 +84,6 @@ in
     zfs = {
       enable = true;
       hostId = "dccada05";
-      poolName = "calroot";
       encrypted = true;
     };
   };
