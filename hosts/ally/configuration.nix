@@ -13,17 +13,14 @@
     ../../modules/mixins/rog-ally.nix
   ];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
   networking.hostName = "ally";
-
-  # To setup ally2 with nfs
-  boot.supportedFilesystems = [ "zfs" ];
-  networking.hostId = "3f2e973f";
 
   services.hokage = {
     useSecrets = false;
+    zfs = {
+      enable = true;
+      hostId = "3f2e973f";
+      encrypted = false;
+    };
   };
 }

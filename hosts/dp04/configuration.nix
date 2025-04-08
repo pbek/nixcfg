@@ -28,53 +28,7 @@ in
     ../../modules/mixins/remote-store-cache.nix
   ];
 
-  # Bootloader.
-  boot.supportedFilesystems = [ "zfs" ];
-  services.zfs.autoScrub.enable = true;
-  boot.zfs.requestEncryptionCredentials = true;
-
-  boot.loader.grub = {
-    enable = true;
-    zfsSupport = true;
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-    mirroredBoots = [
-      {
-        devices = [ "nodev" ];
-        path = "/boot";
-      }
-    ];
-  };
-
-  boot.initrd.network = {
-    enable = true;
-    postCommands = ''
-      sleep 2
-      zpool import -a;
-    '';
-  };
-
-  # Add the sanoid service to take snapshots of the ZFS datasets
-  services.sanoid = {
-    enable = true;
-    templates = {
-      hourly = {
-        autoprune = true;
-        autosnap = true;
-        daily = 7;
-        hourly = 24;
-        monthly = 0;
-      };
-    };
-    datasets = {
-      "calroot/encrypted/home" = {
-        useTemplate = [ "hourly" ];
-      };
-    };
-  };
-
   networking = {
-    hostId = "dccada04"; # needed for ZFS
     hostName = "dp04";
     networkmanager.enable = true;
     useDHCP = lib.mkDefault true;
@@ -86,9 +40,6 @@ in
       ]; # xdebug
     };
   };
-
-  boot.zfs.package = pkgs.zfs_unstable;
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_13;
 
   environment.systemPackages = with pkgs; [
     go-passbolt-cli
@@ -137,5 +88,11 @@ in
     useSharedKey = false;
     waylandSupport = false;
     useEspanso = false;
+
+    zfs = {
+      enable = true;
+      hostId = "dccada04";
+      poolName = "calroot";
+    };
   };
 }

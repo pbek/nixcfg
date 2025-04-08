@@ -24,43 +24,18 @@
     ../../modules/mixins/local-store-cache.nix
   ];
 
-  # Bootloader.
-  boot.supportedFilesystems = [ "zfs" ];
-  services.zfs.autoScrub.enable = true;
-  boot.zfs.requestEncryptionCredentials = true;
-
-  boot.loader.grub = {
-    enable = true;
-    zfsSupport = true;
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-    mirroredBoots = [
-      {
-        devices = [ "nodev" ];
-        path = "/boot";
-      }
-    ];
-  };
-
-  boot.initrd.network = {
-    enable = true;
-    postCommands = ''
-      sleep 2
-      zpool import -a;
-    '';
-  };
-
   networking = {
-    hostId = "dbbfda01"; # needed for ZFS
     hostName = "hyperion";
     networkmanager.enable = true;
   };
 
-  #boot.zfs.package = pkgs.zfs_unstable;
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_13;
-
   services.hokage = {
     useStableJetbrains = true;
     useGhosttyGtkFix = false;
+
+    zfs = {
+      enable = true;
+      hostId = "dbbfda01";
+    };
   };
 }

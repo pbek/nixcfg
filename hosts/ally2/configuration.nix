@@ -14,54 +14,9 @@
     ../../modules/mixins/rog-ally.nix
   ];
 
-  boot.supportedFilesystems = [ "zfs" ];
-  services.zfs.autoScrub.enable = true;
-  boot.zfs.requestEncryptionCredentials = true;
-
-  boot.loader.grub = {
-    enable = true;
-    zfsSupport = true;
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-    mirroredBoots = [
-      {
-        devices = [ "nodev" ];
-        path = "/boot";
-      }
-    ];
-  };
-
-  boot.initrd.network = {
-    enable = true;
-    postCommands = ''
-      sleep 2
-      zpool import -a;
-    '';
-  };
-
   networking = {
-    hostId = "decfda01"; # needed for ZFS, use: head -c4 /dev/urandom | od -A none -t x4
     hostName = "ally2";
     networkmanager.enable = true;
-  };
-
-  # Add the sanoid service to take snapshots of the ZFS datasets
-  services.sanoid = {
-    enable = true;
-    templates = {
-      hourly = {
-        autoprune = true;
-        autosnap = true;
-        daily = 7;
-        hourly = 24;
-        monthly = 0;
-      };
-    };
-    datasets = {
-      "zroot/encrypted/home" = {
-        useTemplate = [ "hourly" ];
-      };
-    };
   };
 
   # Enable Tailscale VPN
@@ -72,5 +27,9 @@
     #    usePlasma6 = false;
     #    useWayland = false;
     #    termFontSize = 15.0;
+    zfs = {
+      enable = true;
+      hostId = "decfda01";
+    };
   };
 }
