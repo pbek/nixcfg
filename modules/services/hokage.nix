@@ -17,11 +17,6 @@ in
 {
   options = {
     services.hokage = {
-      kernelPackage = mkOption {
-        type = types.package;
-        default = pkgs.linuxPackages_latest;
-        description = "Kernel package to use";
-      };
       useInternalInfrastructure = mkOption {
         type = types.bool;
         default = true;

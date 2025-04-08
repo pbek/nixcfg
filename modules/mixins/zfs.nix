@@ -5,7 +5,6 @@
   ...
 }:
 let
-  inherit (config.services.hokage) kernelPackage;
   inherit (config.services.hokage) zfs;
   encryptedPart = if zfs.encrypted then "/encrypted" else "";
   homeDataset = "${zfs.poolName}${encryptedPart}/home";
@@ -20,7 +19,7 @@ in
 
   # Use the latest kernel version possible for ZFS or the latest kernel
   boot.kernelPackages = lib.mkDefault (
-    if zfs.enable then pkgs.linuxKernel.packages.linux_6_13 else kernelPackage
+    if zfs.enable then pkgs.linuxKernel.packages.linux_6_13 else pkgs.linuxPackages_latest
   );
   networking.hostId = lib.mkIf (zfs.enable && zfs.hostId != "") zfs.hostId;
 
