@@ -13,33 +13,7 @@
     ./disk-config.zfs.nix
   ];
 
-  # Bootloader.
-  boot.supportedFilesystems = [ "zfs" ];
-  services.zfs.autoScrub.enable = true;
-
-  boot.loader.grub = {
-    enable = true;
-    zfsSupport = true;
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-    mirroredBoots = [
-      {
-        devices = [ "nodev" ];
-        path = "/boot";
-      }
-    ];
-  };
-
-  boot.initrd.network = {
-    enable = true;
-    postCommands = ''
-      sleep 2
-      zpool import -a;
-    '';
-  };
-
   networking = {
-    hostId = "dafdad02"; # needed for ZFS
     hostName = "netcup02";
     networkmanager.enable = true;
 
@@ -54,10 +28,7 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
-  ];
-
   services.hokage = {
-    useSecrets = false;
+    zfs.hostId = "dafdad02";
   };
 }

@@ -13,8 +13,24 @@ in
 {
   imports = [
     ./common.nix
-    ./server-snapshots.nix
   ];
+
+  services.hokage = {
+    useSecrets = lib.mkDefault false;
+    zfs = {
+      enable = true;
+      encrypted = lib.mkDefault false;
+    };
+  };
+
+  # Also make snapshots of the docker dataset (not only home)
+  services.sanoid = {
+    datasets = {
+      "zroot/docker" = {
+        useTemplate = [ "hourly" ];
+      };
+    };
+  };
 
   # https://mynixos.com/options/services.openssh
   services.openssh = {
