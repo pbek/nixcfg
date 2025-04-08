@@ -400,6 +400,11 @@ nix-store-reverse-dependencies:
     nixStorePath=$(gum input --placeholder "Nix store path (e.g. /nix/store/hbldxn007k0y5qidna6fg0x168gnsmkj-botan-2.19.5.drv)")
     nix-store --query --referrers "$nixStorePath"
 
+# Generate a random host ID for ZFS
+[group('maintenance')]
+zfs-generate-host-id:
+    head -c4 /dev/urandom | od -A none -t x4
+
 # Format all files
 [group('linter')]
 format args='':

@@ -98,6 +98,27 @@ in
         default = [ ];
         example = literalExpression "[ pkgs.qownnotes ]";
       };
+      zfs = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Enable ZFS support";
+        };
+        hostId = mkOption {
+          type = types.str;
+          description = "Host ID for ZFS, generate with 'just zfs-generate-host-id'";
+        };
+        poolName = mkOption {
+          type = types.str;
+          default = "zroot";
+          description = "Name of your ZFS pool";
+        };
+        encrypted = mkOption {
+          type = types.bool;
+          default = true;
+          description = "Define if the ZFS datasets are encrypted";
+        };
+      };
     };
   };
 

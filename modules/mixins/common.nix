@@ -18,6 +18,7 @@ in
 {
   imports = [
     ./starship.nix
+    ./zfs.nix
     ../services/hokage.nix
   ];
 

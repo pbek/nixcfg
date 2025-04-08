@@ -27,53 +27,7 @@ in
     ../../modules/mixins/remote-store-cache.nix
   ];
 
-  # Bootloader.
-  boot.supportedFilesystems = [ "zfs" ];
-  services.zfs.autoScrub.enable = true;
-  boot.zfs.requestEncryptionCredentials = true;
-
-  boot.loader.grub = {
-    enable = true;
-    zfsSupport = true;
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-    mirroredBoots = [
-      {
-        devices = [ "nodev" ];
-        path = "/boot";
-      }
-    ];
-  };
-
-  boot.initrd.network = {
-    enable = true;
-    postCommands = ''
-      sleep 2
-      zpool import -a;
-    '';
-  };
-
-  # Add the sanoid service to take snapshots of the ZFS datasets
-  services.sanoid = {
-    enable = true;
-    templates = {
-      hourly = {
-        autoprune = true;
-        autosnap = true;
-        daily = 7;
-        hourly = 24;
-        monthly = 0;
-      };
-    };
-    datasets = {
-      "calroot/encrypted/home" = {
-        useTemplate = [ "hourly" ];
-      };
-    };
-  };
-
   networking = {
-    hostId = "dccada02"; # needed for ZFS
     hostName = "caliban";
     networkmanager.enable = true;
     useDHCP = lib.mkDefault true;
@@ -121,9 +75,6 @@ in
   # latest: 6.13
   # lts: 6.6
   #  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  boot.zfs.package = pkgs.zfs_unstable;
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_13;
 
   # Workaround for broken VirtualBox with kernel 6.12
   # https://github.com/NixOS/nixpkgs/issues/363887
@@ -191,4 +142,13 @@ in
 
   # Increase the console font size for kmscon
   services.kmscon.extraConfig = "font-size = 26";
+
+  services.hokage = {
+    zfs = {
+      enable = true;
+      hostId = "dccada02";
+      poolName = "calroot";
+      encrypted = true;
+    };
+  };
 }
