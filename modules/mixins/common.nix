@@ -197,6 +197,7 @@ in
         bat-extras.batman # man with bat
         tldr # man replacement
         fd # find replacement
+        television # fuzzy finder TUI
         zellij # terminal multiplexer (like tmux)
         netcat-gnu
         nmap
