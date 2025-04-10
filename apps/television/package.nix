@@ -2,6 +2,8 @@
   lib,
   rustPlatform,
   fetchFromGitHub,
+  stdenv,
+  installShellFiles,
   testers,
   television,
   nix-update-script,
@@ -17,6 +19,10 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-wfIzmk4mCSdfSAJP2DcnpuQAg62m6CfynmxoH580k9A=";
   };
 
+  nativeBuildInputs = [
+    installShellFiles
+  ];
+
   useFetchCargoVendor = true;
   cargoHash = "sha256-C/umcbD/wb+Bz9Qbp7gx70Cr5blcXgEqsIfLKefZrrY=";
 
@@ -27,6 +33,32 @@ rustPlatform.buildRustPackage rec {
     };
     updateScript = nix-update-script { };
   };
+
+  #  postInstall = lib.optionalString (stdenv.buildPlatform.canExecute stdenv.hostPlatform) ''
+  #    if [[ -f $out/bin/tv ]]; then
+  #      export HOME=$(mktemp -d)
+  #      installShellCompletion --cmd tv \
+  #        --bash --name tv.bash <($out/bin/tv init bash) \
+  #        --fish --name tv.fish <($out/bin/tv init fish) \
+  #        --zsh --name tv.zsh <($out/bin/tv init zsh)
+  #    fi
+  #  '';
+
+  postInstall = ''
+    export HOME=$(mktemp -d)
+    installShellCompletion --cmd tv \
+      --bash --name tv.bash <($out/bin/tv init bash) \
+      --fish --name tv.fish <($out/bin/tv init fish) \
+      --zsh --name tv.zsh <($out/bin/tv init zsh)
+  '';
+
+  #  postInstall = ''
+  #    export HOME=$(mktemp -d)
+  #    installShellCompletion --cmd tv \
+  #      --bash <($out/bin/tv init bash) \
+  #      --fish <($out/bin/tv init fish) \
+  #      --zsh <($out/bin/tv init zsh)
+  #  '';
 
   meta = {
     description = "Blazingly fast general purpose fuzzy finder TUI";
