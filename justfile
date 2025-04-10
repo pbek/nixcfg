@@ -78,13 +78,13 @@ nix-build:
 
 # Build a host with nh
 [group('build')]
-build-host hostname:
-    nh os build -H {{ hostname }} .
+build-host hostname args='':
+    nh os build -H {{ hostname }} . -- {{ args }}
     just _notify "build of host {{ hostname }} finished"
 
 # Build the current host with nh
 [group('build')]
-build: (build-host hostname)
+build args='': (build-host hostname args)
 
 # Build the current host on the Caliban host
 [group('build')]
