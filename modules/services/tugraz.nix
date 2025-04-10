@@ -21,6 +21,7 @@ in
       openconnect
       networkmanager-openconnect
       go-passbolt-cli
+      # (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
     ];
 
     # xdebug

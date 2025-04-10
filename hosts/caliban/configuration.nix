@@ -46,7 +46,6 @@ in
     gimp
     inkscape
     krename
-    #    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
     docker-slim # Docker image size optimizer and analysis tool
     amdgpu_top # AMD GPU monitoring
     lact # AMD GPU monitoring
