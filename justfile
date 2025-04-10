@@ -153,6 +153,7 @@ push:
     -attic push main `which espanso` --no-closure
     -attic push main `which cura` --no-closure
     -attic push main `which ghostty` --no-closure
+    -attic push main `which tv` --no-closure
     -attic push qownnotes `which qownnotes` --no-closure
     -attic push qownnotes `which qc` --no-closure
 
