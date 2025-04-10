@@ -11,6 +11,7 @@ let
   homeDataset = "${cfg.poolName}${encryptedPart}/home";
 
   inherit (lib)
+    mkDefault
     mkEnableOption
     mkOption
     types
@@ -41,7 +42,7 @@ in
 
     boot = {
       # Use the latest kernel version possible for ZFS or the latest kernel
-      kernelPackages = pkgs.linuxKernel.packages.linux_6_13;
+      kernelPackages = mkDefault pkgs.linuxKernel.packages.linux_6_13;
 
       supportedFilesystems = [ "zfs" ];
       zfs.requestEncryptionCredentials = lib.mkIf cfg.encrypted true;

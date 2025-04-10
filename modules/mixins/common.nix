@@ -24,7 +24,7 @@ in
     ../services/zfs.nix
   ];
 
-  boot.kernelPackages = lib.mkIf (!zfs.enable) pkgs.linuxPackages_latest;
+  boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);
 
   # Set some fish config
   programs = {

@@ -113,7 +113,7 @@ in
   # https://nixos.wiki/wiki/Linux_kernel
   # linuxPackages_latest: 6.13
   # linuxPackages_lts: 6.6
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Workaround for broken VirtualBox with kernel 6.12
   # https://github.com/NixOS/nixpkgs/issues/363887
