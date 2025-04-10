@@ -41,9 +41,11 @@ in
     };
   };
 
+  # Search on https://search.nixos.org/packages?channel=unstable
   environment.systemPackages = with pkgs; [
     go-passbolt-cli
     thunderbird
+    digikam
   ];
 
   # https://nixos.wiki/wiki/nvidia
