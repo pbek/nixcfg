@@ -32,18 +32,10 @@ in
     hostName = "dp05";
     networkmanager.enable = true;
     useDHCP = lib.mkDefault true;
-
-    firewall = {
-      allowedTCPPorts = [
-        9000
-        9003
-      ]; # xdebug
-    };
   };
 
   # Search on https://search.nixos.org/packages?channel=unstable
   environment.systemPackages = with pkgs; [
-    go-passbolt-cli
     thunderbird
     digikam
   ];
@@ -82,6 +74,7 @@ in
     useSharedKey = false;
     waylandSupport = true;
     useEspanso = false;
+    tugraz.enable = true;
 
     zfs = {
       enable = true;

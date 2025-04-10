@@ -64,7 +64,6 @@ in
     # Taken from https://github.com/nix-community/nur-combined/blob/master/repos/xeals/pkgs/by-name/cu/cura5/package.nix
     #    (pkgs.callPackage ../../apps/cura5/package.nix { })
     cura-appimage
-    go-passbolt-cli
     #    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
     #    (pkgs.callPackage ../../apps/lact/package.nix { })
     lact
@@ -152,4 +151,8 @@ in
 
   # Increase the console font size for kmscon
   services.kmscon.extraConfig = "font-size = 26";
+
+  services.hokage = {
+    tugraz.enable = true;
+  };
 }

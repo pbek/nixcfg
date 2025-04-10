@@ -38,13 +38,6 @@ in
     #      useDHCP = true;
     #      ipv4.addresses = [{ address = "192.168.1.100"; prefixLength = 24; }];
     #    };
-
-    firewall = {
-      allowedTCPPorts = [
-        9000
-        9003
-      ]; # xdebug
-    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -53,7 +46,6 @@ in
     gimp
     inkscape
     krename
-    go-passbolt-cli
     #    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
     docker-slim # Docker image size optimizer and analysis tool
     amdgpu_top # AMD GPU monitoring
@@ -144,6 +136,7 @@ in
   services.kmscon.extraConfig = "font-size = 26";
 
   services.hokage = {
+    tugraz.enable = true;
     zfs = {
       enable = true;
       hostId = "dccada02";

@@ -34,10 +34,6 @@ in
   # Enable networking
   networking.networkmanager.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    go-passbolt-cli
-  ];
-
   # https://nixos.wiki/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
@@ -68,6 +64,7 @@ in
     userNameLong = "Manuel Kocher";
     userNameShort = "Manuel";
     useInternalInfrastructure = false;
+    tugraz.enable = true;
     excludePackages = with pkgs; [
       qownnotes
       qc

@@ -50,4 +50,8 @@
 
   # Increase the console font size for kmscon
   services.kmscon.extraConfig = "font-size = 18";
+
+  services.hokage = {
+    tugraz.enable = true;
+  };
 }

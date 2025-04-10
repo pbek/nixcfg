@@ -16,6 +16,7 @@ in
     ./espanso.nix
     ./desktop-common-minimum.nix
     ./git.nix
+    ../services/tugraz.nix
     ./ghostty.nix
   ];
 
@@ -89,12 +90,6 @@ in
         # marksman # Markdown language server for kate
         act # Run GitHub Actions locally
         # (callPackage ../../apps/zen-browser/package.nix {})
-
-        # TU Graz
-        vpnc
-        networkmanager-vpnc
-        openconnect
-        networkmanager-openconnect
       ];
     in
     requiredPackages

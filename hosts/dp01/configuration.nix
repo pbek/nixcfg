@@ -39,7 +39,6 @@ in
   networking.networkmanager.enable = true;
 
   environment.systemPackages = with pkgs; [
-    go-passbolt-cli
     thunderbird
     spotify
   ];
@@ -58,5 +57,6 @@ in
     useInternalInfrastructure = false;
     useSecrets = false;
     useSharedKey = false;
+    tugraz.enable = true;
   };
 }

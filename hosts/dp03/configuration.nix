@@ -32,17 +32,9 @@ in
     hostName = "dp03";
     networkmanager.enable = true;
     useDHCP = lib.mkDefault true;
-
-    firewall = {
-      allowedTCPPorts = [
-        9000
-        9003
-      ]; # xdebug
-    };
   };
 
   environment.systemPackages = with pkgs; [
-    go-passbolt-cli
     thunderbird
     spotify
   ];
@@ -63,6 +55,7 @@ in
     useSharedKey = false;
     waylandSupport = true;
     useEspanso = false;
+    tugraz.enable = true;
 
     zfs = {
       enable = true;

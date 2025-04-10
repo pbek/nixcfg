@@ -45,11 +45,8 @@ in
           "ssh://git@bitbucket.org/" = {
             insteadOf = "https://bitbucket.org/";
           };
-          "ssh://git@gitlab.tugraz.at/" = {
-            insteadOf = "https://gitlab.tugraz.at/";
-          };
         };
-        pull = {
+        pull = lib.mkDefault {
           rebase = true;
         };
         gui = {
@@ -66,7 +63,7 @@ in
         init = {
           defaultBranch = "main";
         };
-        blame = {
+        blame = lib.mkDefault {
           ignoreRevsFile = ".git-blame-ignore-revs";
         };
       };
