@@ -8,19 +8,23 @@
   ...
 }:
 let
-  inherit (config.services.hokage) userLogin;
-  inherit (config.services.hokage) userNameLong;
-  inherit (config.services.hokage) useSecrets;
-  inherit (config.services.hokage) useInternalInfrastructure;
-  inherit (config.services.hokage) excludePackages;
-  inherit (config.services.hokage) useAtuin;
+  inherit (config.services) hokage;
+  inherit (hokage) userLogin;
+  inherit (hokage) userNameLong;
+  inherit (hokage) useSecrets;
+  inherit (hokage) useInternalInfrastructure;
+  inherit (hokage) excludePackages;
+  inherit (hokage) useAtuin;
+  inherit (hokage) zfs;
 in
 {
   imports = [
     ./starship.nix
-    ./zfs.nix
     ../services/hokage.nix
+    ../services/zfs.nix
   ];
+
+  boot.kernelPackages = lib.mkIf (!zfs.enable) pkgs.linuxPackages_latest;
 
   # Set some fish config
   programs = {
