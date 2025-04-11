@@ -49,7 +49,7 @@ in
 {
   environment.systemPackages = with pkgs; [
     ghosttyPackage
-    # (callPackage ../../apps/ghostty/package.nix { })
+    # (callPackage ../../pkgs/ghostty/package.nix { })
   ];
 
   # https://rycee.gitlab.io/home-manager/options.html

@@ -104,9 +104,9 @@ in
         usbutils # lsusb
 
         #    qownnotes
-        (callPackage ../../apps/qownnotes/package.nix { })
+        (callPackage ../../pkgs/qownnotes/package.nix { })
         qc
-        #    (pkgs.callPackage ../../apps/qc/default.nix { })
+        #    (pkgs.callPackage ../../pkgs/qc/default.nix { })
         bluez
         nextcloud-client
       ];

@@ -38,18 +38,18 @@ in
       ];
       optionalPackages = [
         #    smartgithg
-        #    (pkgs.callPackage ../../apps/smartgithg/default.nix { })
+        #    (pkgs.callPackage ../../pkgs/smartgithg/default.nix { })
         #    gittyup
-        #    (pkgs.libsForQt5.callPackage ../../apps/gittyup/default.nix { })
+        #    (pkgs.libsForQt5.callPackage ../../pkgs/gittyup/default.nix { })
         kdiff3
         chromium
         qtcreator
         hub
 
         loganalyzer
-        #    (pkgs.libsForQt5.callPackage ../../apps/loganalyzer/default.nix { })
+        #    (pkgs.libsForQt5.callPackage ../../pkgs/loganalyzer/default.nix { })
         #    noseyparker
-        #    (pkgs.callPackage ../../apps/noseyparker/default.nix { })
+        #    (pkgs.callPackage ../../pkgs/noseyparker/default.nix { })
 
         keepassxc
         gcc
@@ -89,7 +89,7 @@ in
         nil # Nix language server for kate
         # marksman # Markdown language server for kate
         act # Run GitHub Actions locally
-        # (callPackage ../../apps/zen-browser/package.nix {})
+        # (callPackage ../../pkgs/zen-browser/package.nix {})
       ];
     in
     requiredPackages

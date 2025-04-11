@@ -45,7 +45,7 @@
 
   environment.systemPackages = with pkgs; [
     go-passbolt-cli
-    # (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
+    # (pkgs.callPackage ../../pkgs/go-passbolt-cli/default.nix { })
   ];
 
   # Increase the console font size for kmscon

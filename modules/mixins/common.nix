@@ -198,7 +198,7 @@ in
         tldr # man replacement
         fd # find replacement
         # television # fuzzy finder TUI
-        (callPackage ../../apps/television/package.nix { })
+        (callPackage ../../pkgs/television/package.nix { })
         zellij # terminal multiplexer (like tmux)
         netcat-gnu
         nmap
@@ -319,7 +319,7 @@ in
           patches = oldAttrs.patches ++ [
             # Fix for up binding key for fish 4.0
             # https://github.com/atuinsh/atuin/pull/2616
-            ../../apps/atuin/2616.patch
+            ../../pkgs/atuin/2616.patch
           ];
         });
         enable = true;

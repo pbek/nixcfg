@@ -61,13 +61,13 @@ in
 
     ferdium
     #    qownnotes
-    (pkgs.qt6Packages.callPackage ../../apps/qownnotes/package.nix { })
+    (pkgs.qt6Packages.callPackage ../../pkgs/qownnotes/package.nix { })
     qc
-    #    (pkgs.callPackage ../../apps/qc/default.nix { })
+    #    (pkgs.callPackage ../../pkgs/qc/default.nix { })
     nextcloud-client
 
     wowup-cf
-    #    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
+    #    (pkgs.callPackage ../../pkgs/wowup-cf/default.nix { })
     ryubing # Nintendo Switch emulator
     qjoypad # Joystick mapper
     maliit-keyboard # Virtual keyboard
@@ -126,7 +126,7 @@ in
   services.handheld-daemon = {
     enable = true;
     user = userLogin;
-    package = (pkgs.callPackage ../../apps/handheld-daemon/package.nix { }).override {
+    package = (pkgs.callPackage ../../pkgs/handheld-daemon/package.nix { }).override {
     };
   };
 

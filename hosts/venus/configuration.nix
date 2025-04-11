@@ -68,10 +68,10 @@ in
     # Using stable.blender-hip doesn't work because of: Cannot mix incompatible Qt library (5.15.15) with this library (5.15.14)
     #     cura
     # Taken from https://github.com/nix-community/nur-combined/blob/master/repos/xeals/pkgs/by-name/cu/cura5/package.nix
-    #    (pkgs.callPackage ../../apps/cura5/package.nix { })
+    #    (pkgs.callPackage ../../pkgs/cura5/package.nix { })
     cura-appimage
     wowup-cf
-    #    (pkgs.callPackage ../../apps/wowup-cf/default.nix { })
+    #    (pkgs.callPackage ../../pkgs/wowup-cf/default.nix { })
     heroic # Epic Games Store
     amdgpu_top # AMD GPU monitoring
     lact # AMD GPU monitoring

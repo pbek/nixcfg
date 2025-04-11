@@ -32,7 +32,7 @@ in
       services.espanso = {
         enable = true;
         package = if waylandSupport then pkgs.espanso-wayland else pkgs.espanso;
-        #      package = (pkgs.callPackage ../../apps/espanso/espanso.nix { }).override {
+        #      package = (pkgs.callPackage ../../pkgs/espanso/espanso.nix { }).override {
         #        inherit waylandSupport;
         #      };
         configs = {

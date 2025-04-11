@@ -54,18 +54,18 @@ in
     bitscope.meter
     bitscope.dso
     bitscope.logic
-    #    (pkgs.callPackage ../../apps/bitscope/packages.nix { }).meter
-    #    (pkgs.callPackage ../../apps/bitscope/packages.nix { }).dso
-    #    (pkgs.callPackage ../../apps/bitscope/packages.nix { }).logic
+    #    (pkgs.callPackage ../../pkgs/bitscope/packages.nix { }).meter
+    #    (pkgs.callPackage ../../pkgs/bitscope/packages.nix { }).dso
+    #    (pkgs.callPackage ../../pkgs/bitscope/packages.nix { }).logic
     blender
     # Temporarily disabled for: sip-4.19.25 not supported for interpreter python3.12
     # Using stable.blender-hip doesn't work because of: Cannot mix incompatible Qt library (5.15.15) with this library (5.15.14)
     #    cura
     # Taken from https://github.com/nix-community/nur-combined/blob/master/repos/xeals/pkgs/by-name/cu/cura5/package.nix
-    #    (pkgs.callPackage ../../apps/cura5/package.nix { })
+    #    (pkgs.callPackage ../../pkgs/cura5/package.nix { })
     cura-appimage
-    #    (pkgs.callPackage ../../apps/go-passbolt-cli/default.nix { })
-    #    (pkgs.callPackage ../../apps/lact/package.nix { })
+    #    (pkgs.callPackage ../../pkgs/go-passbolt-cli/default.nix { })
+    #    (pkgs.callPackage ../../pkgs/lact/package.nix { })
     lact
   ];
 
