@@ -12,16 +12,14 @@ let
   cfg = hokage.atuin;
 
   inherit (lib)
-    mkOption
+    mkEnableOption
     types
     ;
 in
 {
   options.services.hokage.atuin = {
-    enable = mkOption {
-      type = types.bool;
+    enable = mkEnableOption "Enable Atuin shell history" // {
       default = true;
-      description = "Enable Atuin shell history";
     };
   };
 
