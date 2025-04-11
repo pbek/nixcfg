@@ -16,7 +16,7 @@ in
     ./espanso.nix
     ./desktop-common-minimum.nix
     ./git.nix
-    ../services/tugraz.nix
+    ../services/hokage/tugraz.nix
     ./ghostty.nix
   ];
 

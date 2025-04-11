@@ -20,8 +20,8 @@ in
   imports = [
     ./starship.nix
     ../services/hokage.nix
-    ../services/zfs.nix
-    ../services/atuin.nix
+    ../services/hokage/zfs.nix
+    ../services/hokage/atuin.nix
     ../services/television.nix
   ];
 
