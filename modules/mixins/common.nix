@@ -22,6 +22,7 @@ in
     ../services/hokage.nix
     ../services/zfs.nix
     ../services/atuin.nix
+    ../services/television.nix
   ];
 
   boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);
@@ -78,6 +79,13 @@ in
       enable = true;
       clean.enable = true;
       clean.extraArgs = "--keep-since 14d --keep 4";
+    };
+
+    # fuzzy finder TUI
+    television = {
+      enable = true;
+      enableFishIntegration = true;
+      enableBashIntegration = true;
     };
   };
 
@@ -198,7 +206,7 @@ in
         tldr # man replacement
         fd # find replacement
         # television # fuzzy finder TUI
-        (callPackage ../../pkgs/television/package.nix { })
+        # (callPackage ../../pkgs/television/package.nix { })
         zellij # terminal multiplexer (like tmux)
         netcat-gnu
         nmap
