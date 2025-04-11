@@ -14,7 +14,6 @@ let
   inherit (hokage) useSecrets;
   inherit (hokage) useInternalInfrastructure;
   inherit (hokage) excludePackages;
-  inherit (hokage) useAtuin;
   inherit (hokage) zfs;
 in
 {
@@ -22,6 +21,7 @@ in
     ./starship.nix
     ../services/hokage.nix
     ../services/zfs.nix
+    ../services/atuin.nix
   ];
 
   boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);
@@ -264,14 +264,7 @@ in
       };
 
       fish.enable = true;
-      bash = {
-        enable = true;
-        # Add atuin init to bashrc, because it doesn't work with bashIntegration
-        # But it still doesn't add anything to the Atuin history
-        bashrcExtra = lib.mkIf useAtuin ''
-          eval "$(${pkgs.atuin}/bin/atuin init --disable-up-arrow bash)"
-        '';
-      };
+      bash.enable = true;
 
       # A smarter cd command
       # https://github.com/ajeetdsouza/zoxide
@@ -309,47 +302,6 @@ in
         settings = {
           # https://helix-editor.vercel.app/reference/list-of-themes#catppuccin_mocha
           theme = "catppuccin_mocha";
-        };
-      };
-
-      # Sync your shell history across all your devices
-      # https://docs.atuin.sh
-      atuin = lib.mkIf useAtuin {
-        package = pkgs.atuin.overrideAttrs (oldAttrs: rec {
-          patches = oldAttrs.patches ++ [
-            # Fix for up binding key for fish 4.0
-            # https://github.com/atuinsh/atuin/pull/2616
-            ../../pkgs/atuin/2616.patch
-          ];
-        });
-        enable = true;
-        daemon.enable = true;
-        enableFishIntegration = true;
-        # Writing to the atuin history doesn't work with bash
-        # See https://github.com/nix-community/home-manager/issues/5958
-        enableBashIntegration = false;
-        # https://docs.atuin.sh/configuration/config/
-        # Writes ~/.config/atuin/config.toml
-        settings = {
-          sync_address =
-            if useInternalInfrastructure then "https://atuin.bekerle.com" else "https://api.atuin.sh";
-          sync_frequency = "15m";
-          key_path =
-            if useSecrets then "/home/${userLogin}/.secrets/atuin-key" else "~/.local/share/atuin/key";
-          enter_accept = true; # Enter runs command
-          style = "compact"; # No extra box around UI
-          inline_height = 32; # Maximum number of lines Atuin’s interface should take up
-          prefers_reduced_motion = true; # No automatic time updates
-          #          sync.records = true; # v2 sync (not working)
-          workspaces = true; # Filter in directories with git repositories
-          filter_mode = "workspace"; # Filter in directories with git repositories by default
-          ctrl_n_shortcuts = true; # Use Ctrl, because Alt is taken by Ghostty
-          # Fixes ZFS issues
-          # See https://github.com/atuinsh/atuin/issues/952
-          daemon = {
-            enabled = true;
-            systemd_socket = true;
-          };
         };
       };
     };

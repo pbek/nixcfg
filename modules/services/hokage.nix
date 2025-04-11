@@ -62,11 +62,6 @@ in
         default = false;
         description = "Build Ghostty with GTK 4.17.6";
       };
-      useAtuin = mkOption {
-        type = types.bool;
-        default = true;
-        description = "Enable Atuin shell history";
-      };
       termFontSize = mkOption {
         type = types.float;
         default = 12.0;
