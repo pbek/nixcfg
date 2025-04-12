@@ -36,6 +36,7 @@ in
         gitps = "git push";
         gitplr = "git pull --rec";
         gitpl = "git pull && git submodule update --init";
+        gitsub = "git submodule update --init";
         gitpls = "git pull";
         gita = "git add -A";
         gitst = "git status";
