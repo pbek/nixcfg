@@ -28,6 +28,9 @@
     };
   };
 
+  # Enable Netbird Wireguard VPN service
+  services.netbird.enable = true;
+
   services.hokage = {
     zfs.hostId = "dafdad02";
   };
