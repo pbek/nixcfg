@@ -91,6 +91,7 @@ in
         act # Run GitHub Actions locally
         # (callPackage ../../pkgs/zen-browser/package.nix {})
         gptcommit # Git commit message generator
+        devenv # DevEnv CLI
       ];
     in
     requiredPackages
