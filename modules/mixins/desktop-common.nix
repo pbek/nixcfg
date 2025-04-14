@@ -90,6 +90,7 @@ in
         # marksman # Markdown language server for kate
         act # Run GitHub Actions locally
         # (callPackage ../../pkgs/zen-browser/package.nix {})
+        gptcommit # Git commit message generator
       ];
     in
     requiredPackages
