@@ -308,6 +308,7 @@ in
       # Post-modern editor (like vim)
       helix = {
         enable = true;
+        defaultEditor = useInternalInfrastructure;
         settings = {
           # https://helix-editor.vercel.app/reference/list-of-themes#catppuccin_mocha
           theme = "catppuccin_mocha";
