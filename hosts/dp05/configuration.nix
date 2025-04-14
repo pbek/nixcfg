@@ -38,6 +38,7 @@ in
   environment.systemPackages = with pkgs; [
     thunderbird
     digikam
+    gimp
   ];
 
   # https://nixos.wiki/wiki/nvidia
