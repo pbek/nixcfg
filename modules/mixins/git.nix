@@ -30,6 +30,7 @@ in
         signByDefault = lib.mkDefault (hokage.useInternalInfrastructure && hokage.useGraphicalSystem);
         key = lib.mkDefault "948530F2497017761DFCACC075960E6926556207";
       };
+      # https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration
       extraConfig = {
         gc = {
           autoDetach = false;
@@ -63,6 +64,7 @@ in
         init = {
           defaultBranch = "main";
         };
+        # https://git-scm.com/docs/git-blame#_configuration
         blame = lib.mkDefault {
           ignoreRevsFile = ".git-blame-ignore-revs";
         };
