@@ -26,7 +26,6 @@ alias bc := build-on-caliban
 alias p := push
 alias sp := switch-push
 alias fix-command-not-found-error := update-channels
-alias nixfmt := nix-format
 alias options := hokage-options
 alias fmt := format
 
@@ -409,19 +408,4 @@ zfs-generate-host-id:
 # Format all files
 [group('linter')]
 format args='':
-    nix-shell -p treefmt nodePackages.prettier shfmt nixfmt-rfc-style statix taplo --run "treefmt {{ args }}"
-
-# Format the nix files
-[group('linter')]
-nix-format:
-    nix-shell -p fd nixfmt-rfc-style --run "fd -e nix --exec-batch nixfmt"
-
-# Format all justfiles
-[group('linter')]
-just-format:
-    #!/usr/bin/env bash
-    # Find all files named "justfile" recursively and run just --fmt --unstable on them
-    find . -type f -name "justfile" -print0 | while IFS= read -r -d '' file; do
-        echo "Formatting $file"
-        just --fmt --unstable -f "$file"
-    done
+    treefmt {{ args }}
