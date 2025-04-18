@@ -30,13 +30,13 @@ in
         # Sync your shell history across all your devices
         # https://docs.atuin.sh
         atuin = {
-          package = pkgs.atuin.overrideAttrs (oldAttrs: rec {
-            patches = oldAttrs.patches ++ [
-              # Fix for up binding key for fish 4.0
-              # https://github.com/atuinsh/atuin/pull/2616
-              ../../../pkgs/atuin/2616.patch
-            ];
-          });
+          #          package = pkgs.atuin.overrideAttrs (oldAttrs: rec {
+          #            patches = oldAttrs.patches ++ [
+          #              # Fix for up binding key for fish 4.0
+          #              # https://github.com/atuinsh/atuin/pull/2616
+          #              ../../../pkgs/atuin/2616.patch
+          #            ];
+          #          });
           enable = true;
           daemon.enable = true;
           enableFishIntegration = true;
