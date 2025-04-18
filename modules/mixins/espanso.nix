@@ -221,14 +221,18 @@ in
                   ":ghdet"
                   ":ghexp"
                 ];
+                # The newlines are needed, because of a weird espanso issue with backticks
                 replace = ''
                   <details><summary>Expand</summary>
 
                   ```
-                  <!-- Replace this with the output -->
+                  $|$<!-- Replace this with the output -->
                   ```
+
                   </details>
                 '';
+                # Also the force_clipboard is needed to get the backticks
+                force_clipboard = true;
               }
               # Option to highlight a "Note" and "Warning" using blockquote
               # See https://github.com/orgs/community/discussions/16925
