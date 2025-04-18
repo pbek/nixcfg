@@ -24,7 +24,21 @@ let
         }
       ).jetbrains
     else
-      pkgs.jetbrains;
+      # GitHub copilot seems broken with JetBrains 2025.1
+      (import
+        (fetchTarball {
+          # Date: 20250412
+          url = "https://github.com/NixOS/nixpkgs/tarball/2631b0b7abcea6e640ce31cd78ea58910d31e650";
+          sha256 = "sha256-LWqduOgLHCFxiTNYi3Uj5Lgz0SR+Xhw3kr/3Xd0GPTM=";
+        })
+        {
+          inherit (config.nixpkgs) config;
+          localSystem = {
+            system = "x86_64-linux";
+          };
+        }
+      ).jetbrains;
+      # pkgs.jetbrains;
 in
 {
   environment.systemPackages = with pkgs; [
