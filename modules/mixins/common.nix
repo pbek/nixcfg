@@ -224,6 +224,7 @@ in
         just # command runner like make
         neosay # send messages to matrix room
         rdap # whois replacement
+        lsof # list open files
       ];
     in
     requiredPackages ++ utils.removePackagesByName optionalPackages excludePackages;
