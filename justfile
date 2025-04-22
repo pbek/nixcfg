@@ -81,6 +81,12 @@ build-host hostname args='':
     nh os build -H {{ hostname }} . -- {{ args }}
     just _notify "build of host {{ hostname }} finished"
 
+# Build a host with nh
+[group('build')]
+build-host-on buildHost hostname:
+    nixos-rebuild --build-host omega@{{ buildHost }} --flake .#{{ hostname }} build
+    just _notify "build of host {{ hostname }} on {{ buildHost }} finished"
+
 # Build the current host with nh
 [group('build')]
 build args='': (build-host hostname args)
