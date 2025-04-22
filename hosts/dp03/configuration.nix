@@ -23,7 +23,6 @@ in
     ../../modules/mixins/users.nix
     ../../modules/mixins/desktop.nix
     ../../modules/mixins/audio.nix
-    ../../modules/mixins/jetbrains.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/remote-store-cache.nix
   ];
@@ -56,6 +55,7 @@ in
     waylandSupport = true;
     useEspanso = false;
     tugraz.enable = true;
+    jetbrains.phpstorm.enable = true;
 
     zfs = {
       enable = true;

@@ -52,11 +52,6 @@ in
         default = true;
         description = "Plasma 6 is the default, otherwise use Plasma 5";
       };
-      useStableJetbrains = mkOption {
-        type = types.bool;
-        default = false;
-        description = "Set this to true to use stable versions of the Jetbrains tools";
-      };
       useGhosttyGtkFix = mkOption {
         type = types.bool;
         default = false;

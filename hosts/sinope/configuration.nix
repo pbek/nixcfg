@@ -18,7 +18,6 @@
     ../../modules/mixins/users.nix
     ../../modules/mixins/desktop.nix
     ../../modules/mixins/audio.nix
-    ../../modules/mixins/jetbrains.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/virt-manager.nix
     ../../modules/mixins/caliban-store-cache.nix
@@ -53,5 +52,9 @@
 
   services.hokage = {
     tugraz.enable = true;
+    jetbrains = {
+      clion.enable = false;
+      goland.enable = false;
+    };
   };
 }

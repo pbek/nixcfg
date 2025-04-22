@@ -18,7 +18,6 @@
     ../../modules/mixins/users.nix
     ../../modules/mixins/desktop.nix
     ../../modules/mixins/audio.nix
-    ../../modules/mixins/jetbrains.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/virt-manager.nix
     ../../modules/mixins/local-store-cache.nix
@@ -30,7 +29,7 @@
   };
 
   services.hokage = {
-    useStableJetbrains = true;
+    jetbrains.useStable = true;
     useGhosttyGtkFix = false;
 
     zfs = {

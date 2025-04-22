@@ -23,7 +23,6 @@ in
     ../../modules/mixins/users.nix
     ../../modules/mixins/desktop.nix
     ../../modules/mixins/audio.nix
-    ../../modules/mixins/jetbrains.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/remote-store-cache.nix
   ];
@@ -81,6 +80,14 @@ in
       enable = true;
       hostId = "dccada05";
       encrypted = true;
+    };
+    jetbrains = {
+      enable = true;
+      plugins = [ ];
+      phpstorm = {
+        enable = true;
+        package = pkgs.jetbrains.phpstorm;
+      };
     };
   };
 }

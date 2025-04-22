@@ -17,7 +17,7 @@
     ../../modules/mixins/users.nix
     ../../modules/mixins/audio.nix
     ../../modules/mixins/desktop.nix
-    #      ../../modules/mixins/jetbrains.nix
+    #      ../../modules/mixins/openssh.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/local-store-cache.nix
   ];
@@ -66,6 +66,6 @@
   };
 
   services.hokage = {
-    useStableJetbrains = true;
+    jetbrains.useStable = true;
   };
 }

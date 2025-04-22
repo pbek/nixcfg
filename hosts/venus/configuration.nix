@@ -22,7 +22,6 @@ in
     #      ../../modules/mixins/desktop-x11.nix
     ../../modules/mixins/desktop.nix
     ../../modules/mixins/audio.nix
-    ../../modules/mixins/jetbrains.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/virt-manager.nix
     ../../modules/mixins/local-store-cache.nix

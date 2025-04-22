@@ -20,7 +20,6 @@ in
     ../../modules/mixins/desktop.nix
     ../../modules/mixins/git.nix
     ../../modules/mixins/audio.nix
-    ../../modules/mixins/jetbrains.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/remote-store-cache.nix
   ];
@@ -72,5 +71,6 @@ in
     userEmail = "manuel.kocher@tugraz.at";
     useSecrets = false;
     useSharedKey = false;
+    jetbrains.phpstorm.enable = true;
   };
 }
