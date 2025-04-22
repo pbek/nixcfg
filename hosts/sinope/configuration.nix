@@ -42,11 +42,6 @@
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/
   virtualisation.multipass.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    go-passbolt-cli
-    # (pkgs.callPackage ../../pkgs/go-passbolt-cli/default.nix { })
-  ];
-
   # Increase the console font size for kmscon
   services.kmscon.extraConfig = "font-size = 18";
 

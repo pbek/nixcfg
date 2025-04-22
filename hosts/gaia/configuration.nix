@@ -63,7 +63,6 @@ in
     # Taken from https://github.com/nix-community/nur-combined/blob/master/repos/xeals/pkgs/by-name/cu/cura5/package.nix
     #    (pkgs.callPackage ../../pkgs/cura5/package.nix { })
     cura-appimage
-    #    (pkgs.callPackage ../../pkgs/go-passbolt-cli/default.nix { })
     #    (pkgs.callPackage ../../pkgs/lact/package.nix { })
     lact
   ];
