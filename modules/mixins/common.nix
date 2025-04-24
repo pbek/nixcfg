@@ -22,7 +22,6 @@ in
     ../services/hokage.nix
     ../services/hokage/zfs.nix
     ../services/hokage/atuin.nix
-    ../services/television.nix
   ];
 
   boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);
@@ -83,8 +82,10 @@ in
     };
 
     # fuzzy finder TUI
+    # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/programs/television.nix
     television = {
       enable = true;
+      # https://github.com/alexpasmantier/television/wiki/Shell-Autocompletion
       enableFishIntegration = true;
       enableBashIntegration = true;
     };
