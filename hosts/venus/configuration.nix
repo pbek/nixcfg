@@ -170,5 +170,11 @@ in
       enable = true;
       hostId = "dcdaca04";
     };
+    jetbrains = {
+      plugins = [ ];
+      clion.package = pkgs.jetbrains.clion;
+      phpstorm.package = pkgs.jetbrains.phpstorm;
+      goland.package = pkgs.jetbrains.goland;
+    };
   };
 }
