@@ -152,5 +152,11 @@ in
 
   services.hokage = {
     tugraz.enable = true;
+    jetbrains = {
+      plugins = [ ];
+      clion.package = pkgs.jetbrains.clion;
+      phpstorm.package = pkgs.jetbrains.phpstorm;
+      goland.package = pkgs.jetbrains.goland;
+    };
   };
 }
