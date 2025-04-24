@@ -96,16 +96,26 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    # Unfortunately, we can't have per-application plugin settings
     environment.systemPackages =
       with pkgs;
       lib.optional cfg.phpstorm.enable (
-        jetbrainsPackages.plugins.addPlugins cfg.phpstorm.package cfg.plugins
+        if builtins.isNull cfg.plugins || builtins.length cfg.plugins == 0 then
+          cfg.phpstorm.package
+        else
+          jetbrainsPackages.plugins.addPlugins cfg.phpstorm.package cfg.plugins
       )
       ++ lib.optional cfg.clion.enable (
-        jetbrainsPackages.plugins.addPlugins cfg.clion.package cfg.plugins
+        if builtins.isNull cfg.plugins || builtins.length cfg.plugins == 0 then
+          cfg.clion.package
+        else
+          jetbrainsPackages.plugins.addPlugins cfg.clion.package cfg.plugins
       )
       ++ lib.optional cfg.goland.enable (
-        jetbrainsPackages.plugins.addPlugins cfg.goland.package cfg.plugins
+        if builtins.isNull cfg.plugins || builtins.length cfg.plugins == 0 then
+          cfg.goland.package
+        else
+          jetbrainsPackages.plugins.addPlugins cfg.goland.package cfg.plugins
       );
     home-manager.users.${userLogin} = {
       xdg.desktopEntries = lib.mkMerge [
