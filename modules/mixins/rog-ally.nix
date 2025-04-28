@@ -22,7 +22,8 @@ in
     networkmanager.enable = true;
   };
 
-  # You need to set`maliit` in the Virtual Keyboard settings in the System Settings to use the virtual keyboard
+  # You need to set `maliit` in the Virtual Keyboard settings in the System Settings to use the virtual keyboard
+  # And in the lock screen, you need to click the "Enter" button once so the virtual keyboard appears
   # See https://github.com/NixOS/nixpkgs/issues/303526#issuecomment-2692831998
   services.desktopManager.plasma6.enable = true;
   services.displayManager.defaultSession = "plasma";
