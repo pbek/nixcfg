@@ -169,6 +169,11 @@ in
     home.file.".config/zellij" = {
       source = ../../files/zellij;
     };
+
+    # Add color schema for konsole
+    home.file.".local/share/konsole/Catppuccin-Mocha-pbek.colorscheme" = {
+      source = ../../files/konsole/Catppuccin-Mocha-pbek.colorscheme;
+    };
   };
 
   # Disable wakeup from USB devices
