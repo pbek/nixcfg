@@ -226,6 +226,7 @@ in
         neosay # send messages to matrix room
         rdap # whois replacement
         lsof # list open files
+        devenv # DevEnv CLI
       ];
     in
     requiredPackages ++ utils.removePackagesByName optionalPackages excludePackages;
