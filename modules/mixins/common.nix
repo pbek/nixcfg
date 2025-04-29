@@ -68,6 +68,7 @@ in
         ps = "procs";
         whois = "rdap";
         vim = "hx";
+        nano = "micro";
       };
     };
 
@@ -227,6 +228,7 @@ in
         rdap # whois replacement
         lsof # list open files
         devenv # DevEnv CLI
+        micro # Nano replacement
       ];
     in
     requiredPackages ++ utils.removePackagesByName optionalPackages excludePackages;
