@@ -82,15 +82,17 @@ in
         example = "goland";
       };
     };
-    # https://plugins.jetbrains.com/plugin/17718-github-copilot
+    # Documentation: https://github.com/NixOS/nixpkgs/tree/nixos-unstable/pkgs/applications/editors/jetbrains
+    # Plugin list: https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/applications/editors/jetbrains/plugins/plugins.json
     plugins = mkOption {
       type = types.listOf types.str;
-      default = [ "17718" ];
-      example = [ "17718" ];
+      # https://plugins.jetbrains.com/plugin/17718-github-copilot
+      default = [ "github-copilot" ];
+      example = [ "github-copilot" ];
       description = ''
-        List of JetBrains plugin IDs to install. See
-        https://plugins.jetbrains.com/plugin/17718-github-copilot
-        for the plugin ID.
+        List of JetBrains plugin IDs or names to install. See
+        https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/applications/editors/jetbrains/plugins/plugins.json
+        for a list of plugins.
       '';
     };
   };
