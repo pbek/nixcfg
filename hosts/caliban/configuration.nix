@@ -142,6 +142,8 @@ in
       encrypted = true;
     };
     jetbrains = {
+      plugins = [ ];
+      phpstorm.package = pkgs.jetbrains.phpstorm;
       clion.enable = false;
       goland.enable = false;
     };
