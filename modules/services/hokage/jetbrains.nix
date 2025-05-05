@@ -24,9 +24,9 @@ let
     if cfg.useStable then
       (import
         (fetchTarball {
-          # Date: 20250412
-          url = "https://github.com/NixOS/nixpkgs/tarball/2631b0b7abcea6e640ce31cd78ea58910d31e650";
-          sha256 = "sha256-LWqduOgLHCFxiTNYi3Uj5Lgz0SR+Xhw3kr/3Xd0GPTM=";
+          # Date: 20250503
+          url = "https://github.com/NixOS/nixpkgs/tarball/7a2622e2c0dbad5c4493cb268aba12896e28b008";
+          sha256 = "sha256-MHmBH2rS8KkRRdoU/feC/dKbdlMkcNkB5mwkuipVHeQ=";
         })
         {
           inherit (config.nixpkgs) config;
@@ -36,21 +36,20 @@ let
         }
       ).jetbrains
     else
-      # GitHub copilot seems broken with JetBrains 2025.1
-      (import
-        (fetchTarball {
-          # Date: 20250412
-          url = "https://github.com/NixOS/nixpkgs/tarball/2631b0b7abcea6e640ce31cd78ea58910d31e650";
-          sha256 = "sha256-LWqduOgLHCFxiTNYi3Uj5Lgz0SR+Xhw3kr/3Xd0GPTM=";
-        })
-        {
-          inherit (config.nixpkgs) config;
-          localSystem = {
-            system = "x86_64-linux";
-          };
-        }
-      ).jetbrains;
-  # pkgs.jetbrains;
+      #      (import
+      #        (fetchTarball {
+      #          # Date: 20250503
+      #          url = "https://github.com/NixOS/nixpkgs/tarball/7a2622e2c0dbad5c4493cb268aba12896e28b008";
+      #          sha256 = "sha256-MHmBH2rS8KkRRdoU/feC/dKbdlMkcNkB5mwkuipVHeQ=";
+      #        })
+      #        {
+      #          inherit (config.nixpkgs) config;
+      #          localSystem = {
+      #            system = "x86_64-linux";
+      #          };
+      #        }
+      #      ).jetbrains;
+      pkgs.jetbrains;
 in
 {
   options.services.hokage.jetbrains = {
@@ -86,8 +85,9 @@ in
     # Plugin list: https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/applications/editors/jetbrains/plugins/plugins.json
     plugins = mkOption {
       type = types.listOf types.str;
+      # GitHub copilot is broken with JetBrains 2025.1
       # https://plugins.jetbrains.com/plugin/17718-github-copilot
-      default = [ "github-copilot" ];
+      default = [ ];
       example = [ "github-copilot" ];
       description = ''
         List of JetBrains plugin IDs or names to install. See
