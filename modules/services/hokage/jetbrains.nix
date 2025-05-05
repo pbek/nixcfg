@@ -24,9 +24,9 @@ let
     if cfg.useStable then
       (import
         (fetchTarball {
-          # Date: 20250404
-          url = "https://github.com/NixOS/nixpkgs/tarball/2c8d3f48d33929642c1c12cd243df4cc7d2ce434";
-          sha256 = "sha256-F7n4+KOIfWrwoQjXrL2wD9RhFYLs2/GGe/MQY1sSdlE=";
+          # Date: 20250412
+          url = "https://github.com/NixOS/nixpkgs/tarball/2631b0b7abcea6e640ce31cd78ea58910d31e650";
+          sha256 = "sha256-LWqduOgLHCFxiTNYi3Uj5Lgz0SR+Xhw3kr/3Xd0GPTM=";
         })
         {
           inherit (config.nixpkgs) config;
