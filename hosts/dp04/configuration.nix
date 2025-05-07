@@ -22,7 +22,6 @@ in
     ./disk-config.zfs.nix
     ../../modules/mixins/users.nix
     ../../modules/mixins/desktop.nix
-    ../../modules/mixins/audio.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/remote-store-cache.nix
   ];

@@ -13,7 +13,6 @@ in
   imports = [
     ./users.nix
     ./desktop-common-minimum.nix
-    ./audio.nix
     ./openssh.nix
     ./local-store-cache.nix
   ];

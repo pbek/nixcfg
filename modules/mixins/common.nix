@@ -23,6 +23,7 @@ in
     ../services/hokage/zfs.nix
     ../services/hokage/atuin.nix
     ../services/hokage/git.nix
+    ../services/hokage/audio.nix
   ];
 
   boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);
