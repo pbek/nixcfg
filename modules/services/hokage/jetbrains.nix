@@ -7,7 +7,7 @@
   ...
 }:
 let
-  inherit (config.services) hokage;
+  inherit (config) hokage;
   inherit (hokage) userLogin;
   inherit (hokage) useInternalInfrastructure;
   cfg = hokage.jetbrains;
@@ -52,7 +52,7 @@ let
       pkgs.jetbrains;
 in
 {
-  options.services.hokage.jetbrains = {
+  options.hokage.jetbrains = {
     enable = mkEnableOption "Enable JetBrains IDEs support" // {
       default = true; # Enable JetBrains IDEs support by default
     };

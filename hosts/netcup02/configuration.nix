@@ -31,7 +31,7 @@
   # Enable Netbird Wireguard VPN service
   services.netbird.enable = true;
 
-  services.hokage = {
+  hokage = {
     zfs.hostId = "dafdad02";
   };
 }

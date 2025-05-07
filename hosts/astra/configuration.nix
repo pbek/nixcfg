@@ -55,7 +55,7 @@
 
   services.kmscon.enable = false;
 
-  services.hokage = {
+  hokage = {
     useEspanso = false; # App-specific configurations are not yet supported in Wayland on caliban for VirtualBox!
     waylandSupport = false;
     termFontSize = 16.0;

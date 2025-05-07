@@ -32,7 +32,7 @@
   environment.systemPackages = with pkgs; [
   ];
 
-  services.hokage = {
+  hokage = {
     userLogin = "cow";
     userNameLong = "cow";
     userNameShort = "cow";
@@ -41,7 +41,7 @@
     useInternalInfrastructure = false;
   };
 
-  services.hokage = {
+  hokage = {
     zfs.hostId = "dacdad01";
   };
 }

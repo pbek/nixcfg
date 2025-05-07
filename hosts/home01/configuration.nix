@@ -122,7 +122,7 @@
   environment.systemPackages = with pkgs; [
   ];
 
-  services.hokage = {
+  hokage = {
     zfs.hostId = "daafda01";
   };
 }

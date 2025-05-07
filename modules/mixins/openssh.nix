@@ -4,9 +4,9 @@
   ...
 }:
 let
-  inherit (config.services.hokage) userLogin;
-  inherit (config.services.hokage) useSecrets;
-  inherit (config.services.hokage) useSharedKey;
+  inherit (config.hokage) userLogin;
+  inherit (config.hokage) useSecrets;
+  inherit (config.hokage) useSharedKey;
 in
 {
   # https://mynixos.com/options/services.openssh

@@ -7,8 +7,8 @@
   ...
 }:
 let
-  inherit (config.services.hokage) userLogin;
-  inherit (config.services.hokage) useSharedKey;
+  inherit (config.hokage) userLogin;
+  inherit (config.hokage) useSharedKey;
 in
 {
   imports = [
@@ -111,8 +111,7 @@ in
         nextcloud-client
       ];
     in
-    requiredPackages
-    ++ utils.removePackagesByName optionalPackages config.services.hokage.excludePackages;
+    requiredPackages ++ utils.removePackagesByName optionalPackages config.hokage.excludePackages;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

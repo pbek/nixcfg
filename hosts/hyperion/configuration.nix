@@ -28,7 +28,7 @@
     networkmanager.enable = true;
   };
 
-  services.hokage = {
+  hokage = {
     jetbrains.useStable = true;
     useGhosttyGtkFix = false;
 

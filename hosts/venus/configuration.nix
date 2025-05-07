@@ -11,7 +11,7 @@
   ...
 }:
 let
-  inherit (config.services.hokage) userLogin;
+  inherit (config.hokage) userLogin;
 in
 {
   imports = [
@@ -165,7 +165,7 @@ in
     AVALONIA_GLOBAL_SCALE_FACTOR = 2;
   };
 
-  services.hokage = {
+  hokage = {
     zfs = {
       enable = true;
       hostId = "dcdaca04";

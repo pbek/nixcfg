@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (config.services) hokage;
+  inherit (config) hokage;
   cfg = hokage.zfs;
   encryptedPart = if cfg.encrypted then "/encrypted" else "";
   homeDataset = "${cfg.poolName}${encryptedPart}/home";
@@ -18,7 +18,7 @@ let
     ;
 in
 {
-  options.services.hokage.zfs = {
+  options.hokage.zfs = {
     enable = mkEnableOption "Enable ZFS support";
     hostId = mkOption {
       type = types.str;

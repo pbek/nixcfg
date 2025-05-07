@@ -10,7 +10,7 @@
 #
 { lib, config, ... }:
 let
-  inherit (config.services.hokage) userLogin;
+  inherit (config.hokage) userLogin;
 in
 {
   imports = [

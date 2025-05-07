@@ -7,9 +7,9 @@
   ...
 }:
 let
-  inherit (config.services.hokage) userLogin;
-  inherit (config.services.hokage) useSecrets;
-  inherit (config.services.hokage) termFontSize;
+  inherit (config.hokage) userLogin;
+  inherit (config.hokage) useSecrets;
+  inherit (config.hokage) termFontSize;
 in
 {
   imports = [
@@ -94,8 +94,7 @@ in
         gptcommit # Git commit message generator
       ];
     in
-    requiredPackages
-    ++ utils.removePackagesByName optionalPackages config.services.hokage.excludePackages;
+    requiredPackages ++ utils.removePackagesByName optionalPackages config.hokage.excludePackages;
 
   programs.fish.shellAliases = {
     lzd = "lazydocker";

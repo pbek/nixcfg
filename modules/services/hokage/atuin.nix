@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (config.services) hokage;
+  inherit (config) hokage;
   inherit (hokage) userLogin;
   inherit (hokage) useInternalInfrastructure;
   inherit (hokage) useSecrets;
@@ -17,7 +17,7 @@ let
     ;
 in
 {
-  options.services.hokage.atuin = {
+  options.hokage.atuin = {
     enable = mkEnableOption "Enable Atuin shell history" // {
       default = true;
     };

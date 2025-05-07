@@ -23,7 +23,7 @@
   # Use `sudo tailscale up --accept-routes` to connect to the VPN
   services.tailscale.enable = true;
 
-  services.hokage = {
+  hokage = {
     #    usePlasma6 = false;
     #    useWayland = false;
     #    termFontSize = 15.0;

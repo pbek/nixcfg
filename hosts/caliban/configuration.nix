@@ -11,7 +11,7 @@
   ...
 }:
 let
-  inherit (config.services.hokage) userLogin;
+  inherit (config.hokage) userLogin;
 in
 {
   imports = [
@@ -133,7 +133,7 @@ in
   # Increase the console font size for kmscon
   services.kmscon.extraConfig = "font-size = 26";
 
-  services.hokage = {
+  hokage = {
     tugraz.enable = true;
     zfs = {
       enable = true;

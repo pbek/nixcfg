@@ -10,7 +10,7 @@
   ...
 }:
 let
-  inherit (config.services.hokage) userNameLong;
+  inherit (config.hokage) userNameLong;
 in
 {
   imports = [
@@ -58,7 +58,7 @@ in
   # We have enough RAM
   zramSwap.enable = false;
 
-  services.hokage = {
+  hokage = {
     userLogin = "mkocher";
     userNameLong = "Manuel Kocher";
     userNameShort = "Manuel";

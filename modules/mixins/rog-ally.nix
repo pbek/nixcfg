@@ -5,9 +5,9 @@
   ...
 }:
 let
-  inherit (config.services.hokage) userLogin;
-  inherit (config.services.hokage) userNameLong;
-  inherit (config.services.hokage) userEmail;
+  inherit (config.hokage) userLogin;
+  inherit (config.hokage) userNameLong;
+  inherit (config.hokage) userEmail;
 in
 {
   imports = [
@@ -136,7 +136,7 @@ in
     AVALONIA_GLOBAL_SCALE_FACTOR = 2;
   };
 
-  services.hokage = {
+  hokage = {
     # Turn off default graphical system, we want to use our own configuration
     useGraphicalSystem = false;
     termFontSize = 15.0;

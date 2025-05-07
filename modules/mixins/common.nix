@@ -8,7 +8,7 @@
   ...
 }:
 let
-  inherit (config.services) hokage;
+  inherit (config) hokage;
   inherit (hokage) userLogin;
   inherit (hokage) userNameLong;
   inherit (hokage) useSecrets;

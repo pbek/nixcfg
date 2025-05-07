@@ -5,12 +5,12 @@
   ...
 }:
 let
-  inherit (config.services) hokage;
+  inherit (config) hokage;
   inherit (hokage) userLogin;
   cfg = hokage.tugraz;
 in
 {
-  options.services.hokage.tugraz = {
+  options.hokage.tugraz = {
     enable = lib.mkEnableOption "Enable TU Graz infrastructure";
   };
 

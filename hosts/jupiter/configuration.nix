@@ -65,7 +65,7 @@
     intelBusId = "PCI:0:2:0";
   };
 
-  services.hokage = {
+  hokage = {
     jetbrains.useStable = true;
   };
 }

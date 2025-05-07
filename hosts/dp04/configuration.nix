@@ -11,9 +11,9 @@
   ...
 }:
 let
-  inherit (config.services.hokage) userLogin;
-  inherit (config.services.hokage) userNameLong;
-  inherit (config.services.hokage) userEmail;
+  inherit (config.hokage) userLogin;
+  inherit (config.hokage) userNameLong;
+  inherit (config.hokage) userEmail;
 in
 {
   imports = [
@@ -63,7 +63,7 @@ in
     #    modesetting.enable = true;
   };
 
-  services.hokage = {
+  hokage = {
     userLogin = "dp";
     # userNameLong = "dp";
     # userNameShort = "dp";

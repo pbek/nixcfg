@@ -45,7 +45,7 @@
     powertop
   ];
 
-  services.hokage = {
+  hokage = {
     jetbrains.useStable = true;
   };
 }

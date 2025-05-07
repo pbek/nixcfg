@@ -371,7 +371,7 @@ hokage-options:
     #!/usr/bin/env bash
 
     # Store options globally so we don't need to fetch them multiple times
-    options=$(nixos-option services.hokage | tail -n +2)
+    options=$(nixos-option hokage | tail -n +2)
 
     while true; do
         # Use fzf to select an option
@@ -385,9 +385,9 @@ hokage-options:
         # Clear screen for better readability
         clear
 
-        echo "Showing details for: services.hokage.$selected"
+        echo "Showing details for: hokage.$selected"
         echo "----------------------------------------"
-        nixos-option "services.hokage.$selected"
+        nixos-option "hokage.$selected"
         echo "----------------------------------------"
         echo "Press any key to select another option, or Ctrl+C to exit"
 

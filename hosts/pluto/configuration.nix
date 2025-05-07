@@ -10,7 +10,7 @@
   ...
 }:
 let
-  inherit (config.services.hokage) userLogin;
+  inherit (config.hokage) userLogin;
 in
 {
   imports = [
@@ -81,7 +81,7 @@ in
   #   );
   # };
 
-  services.hokage = {
+  hokage = {
     jetbrains.useStable = true;
     useGhosttyGtkFix = false;
   };

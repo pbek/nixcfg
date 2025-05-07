@@ -11,9 +11,9 @@
   ...
 }:
 let
-  inherit (config.services.hokage) userLogin;
-  inherit (config.services.hokage) userNameLong;
-  inherit (config.services.hokage) userEmail;
+  inherit (config.hokage) userLogin;
+  inherit (config.hokage) userNameLong;
+  inherit (config.hokage) userEmail;
 in
 {
   imports = [
@@ -43,7 +43,7 @@ in
     plugins = [ pkgs.evolution-ews ];
   };
 
-  services.hokage = {
+  hokage = {
     userLogin = "dp";
     userNameLong = "Andrea Ortner";
     userNameShort = "Andrea";

@@ -46,7 +46,7 @@
     systemctl restart docker
   '';
 
-  services.hokage = {
+  hokage = {
     jetbrains.useStable = true;
     useGhosttyGtkFix = false;
   };

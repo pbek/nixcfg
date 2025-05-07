@@ -6,7 +6,7 @@
   ...
 }:
 let
-  cfg = config.services.hokage;
+  cfg = config.hokage;
 
   inherit (lib)
     mkOption
@@ -16,7 +16,7 @@ let
 in
 {
   options = {
-    services.hokage = {
+    hokage = {
       useInternalInfrastructure = mkOption {
         type = types.bool;
         default = true;
@@ -238,8 +238,7 @@ in
             kcolorchooser
           ];
         in
-        requiredPackages
-        ++ utils.removePackagesByName optionalPackages config.services.hokage.excludePackages;
+        requiredPackages ++ utils.removePackagesByName optionalPackages config.hokage.excludePackages;
     })
 
     #

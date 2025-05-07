@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (config.services.hokage) userLogin;
+  inherit (config.hokage) userLogin;
 in
 {
   # https://rycee.gitlab.io/home-manager/options.html

@@ -6,16 +6,16 @@
   ...
 }:
 let
-  inherit (config.services.hokage) userLogin;
-  inherit (config.services.hokage) userNameLong;
-  inherit (config.services.hokage) userEmail;
+  inherit (config.hokage) userLogin;
+  inherit (config.hokage) userNameLong;
+  inherit (config.hokage) userEmail;
 in
 {
   imports = [
     ./common.nix
   ];
 
-  services.hokage = {
+  hokage = {
     useSecrets = lib.mkDefault false;
     zfs = {
       enable = true;
@@ -90,7 +90,7 @@ in
     lzd = "lazydocker";
   };
 
-  services.hokage = {
+  hokage = {
     useGraphicalSystem = false;
   };
 }

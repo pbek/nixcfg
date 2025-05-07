@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (config.services.hokage) userLogin;
+  inherit (config.hokage) userLogin;
 in
 {
   imports = [
@@ -65,7 +65,7 @@ in
     };
   };
 
-  services.hokage = {
+  hokage = {
     zfs.hostId = "dafdad01";
   };
 }
