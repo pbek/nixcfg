@@ -81,7 +81,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/gaia/configuration.nix
-            ./hosts/gaia/hardware-configuration.nix
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
@@ -92,7 +91,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/venus/configuration.nix
-            ./hosts/venus/hardware-configuration.nix
             disko.nixosModules.disko
           ];
           specialArgs = self.commonArgs // {
@@ -104,7 +102,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/rhea/configuration.nix
-            ./hosts/rhea/hardware-configuration.nix
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
@@ -115,7 +112,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/hyperion/configuration.nix
-            ./hosts/hyperion/hardware-configuration.nix
             disko.nixosModules.disko
           ];
           specialArgs = self.commonArgs // {
@@ -127,7 +123,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/ally2/configuration.nix
-            ./hosts/ally2/hardware-configuration.nix
             nixos-hardware.nixosModules.asus-ally-rc71l
             disko.nixosModules.disko
           ];
@@ -141,7 +136,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/astra/configuration.nix
-            ./hosts/astra/hardware-configuration.nix
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
@@ -152,7 +146,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/caliban/configuration.nix
-            ./hosts/caliban/hardware-configuration.nix
             home-manager.nixosModules.home-manager
             { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
             agenix.nixosModules.age
@@ -167,7 +160,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/sinope/configuration.nix
-            ./hosts/sinope/hardware-configuration.nix
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
@@ -222,7 +214,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/jupiter/configuration.nix
-            ./hosts/jupiter/hardware-configuration.nix
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
@@ -233,7 +224,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/ally/configuration.nix
-            ./hosts/ally/hardware-configuration.nix
             nixos-hardware.nixosModules.asus-ally-rc71l
           ];
           specialArgs = self.commonArgs // {
@@ -245,7 +235,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/pluto/configuration.nix
-            ./hosts/pluto/hardware-configuration.nix
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
@@ -256,7 +245,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/neptun/configuration.nix
-            ./hosts/neptun/hardware-configuration.nix
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
@@ -267,7 +255,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/eris/configuration.nix
-            ./hosts/eris/hardware-configuration.nix
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
@@ -278,7 +265,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/dp01/configuration.nix
-            ./hosts/dp01/hardware-configuration.nix
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
@@ -289,7 +275,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/dp02/configuration.nix
-            ./hosts/dp02/hardware-configuration.nix
           ];
           specialArgs = self.commonArgs // {
             inherit inputs;
@@ -300,7 +285,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/dp03/configuration.nix
-            ./hosts/dp03/hardware-configuration.nix
             disko.nixosModules.disko
           ];
           specialArgs = self.commonArgs // {
@@ -311,7 +295,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/dp04/configuration.nix
-            ./hosts/dp04/hardware-configuration.nix
             disko.nixosModules.disko
           ];
           specialArgs = self.commonArgs // {
@@ -323,7 +306,6 @@
           inherit system;
           modules = commonDesktopModules ++ [
             ./hosts/dp05/configuration.nix
-            ./hosts/dp05/hardware-configuration.nix
             disko.nixosModules.disko
           ];
           specialArgs = self.commonArgs // {
