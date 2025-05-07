@@ -6,28 +6,39 @@
   ...
 }:
 let
-  inherit (config.hokage) userLogin;
-  inherit (config.hokage) userNameLong;
-  inherit (config.hokage) userNameShort;
-  inherit (config.hokage) userEmail;
-  inherit (config.hokage) useEspanso;
-  inherit (config.hokage) waylandSupport;
+  inherit (config) hokage;
+  inherit (hokage) userLogin;
+  inherit (hokage) userNameLong;
+  inherit (hokage) userNameShort;
+  inherit (hokage) userEmail;
+  inherit (hokage) waylandSupport;
+  cfg = hokage.espanso;
+
+  inherit (lib)
+    mkEnableOption
+    ;
 in
 {
-  # Get around: [ERROR] Error: could not open uinput device
-  boot.kernelModules = if (waylandSupport && useEspanso) then [ "uinput" ] else [ ];
+  options.hokage.espanso = {
+    enable = mkEnableOption "Enable Espanso to expand text" // {
+      default = hokage.role == "desktop";
+    };
+  };
 
-  # Get around permission denied error on /dev/uinput
-  services.udev.extraRules =
-    if (waylandSupport && useEspanso) then
-      ''
-        KERNEL=="uinput", SUBSYSTEM=="misc", TAG+="uaccess", OPTIONS+="static_node=uinput", GROUP="input", MODE="0660"
-      ''
-    else
-      "";
+  config = lib.mkIf cfg.enable {
+    # Get around: [ERROR] Error: could not open uinput device
+    boot.kernelModules = if waylandSupport then [ "uinput" ] else [ ];
 
-  home-manager.users.${userLogin} = lib.mkMerge [
-    (lib.mkIf useEspanso {
+    # Get around permission denied error on /dev/uinput
+    services.udev.extraRules =
+      if waylandSupport then
+        ''
+          KERNEL=="uinput", SUBSYSTEM=="misc", TAG+="uaccess", OPTIONS+="static_node=uinput", GROUP="input", MODE="0660"
+        ''
+      else
+        "";
+
+    home-manager.users.${userLogin} = {
       # https://mynixos.com/home-manager/options/services.espanso
       services.espanso = {
         enable = true;
@@ -621,6 +632,6 @@ in
           };
         };
       };
-    })
-  ];
+    };
+  };
 }

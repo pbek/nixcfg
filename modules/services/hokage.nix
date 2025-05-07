@@ -41,11 +41,6 @@ in
         default = true;
         description = "Use shared keys of omega";
       };
-      useEspanso = mkOption {
-        type = types.bool;
-        default = true;
-        description = "Use Espanso to expand text";
-      };
       waylandSupport = mkOption {
         type = types.bool;
         default = true;

@@ -52,7 +52,7 @@ in
     useSecrets = false;
     useSharedKey = false;
     waylandSupport = true;
-    useEspanso = false;
+    espanso.enable = false;
     tugraz.enable = true;
     jetbrains.phpstorm.enable = true;
 

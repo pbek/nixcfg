@@ -24,6 +24,7 @@ in
     ../services/hokage/atuin.nix
     ../services/hokage/git.nix
     ../services/hokage/audio.nix
+    ../services/hokage/espanso.nix
   ];
 
   boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);

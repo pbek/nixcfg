@@ -13,7 +13,6 @@ let
 in
 {
   imports = [
-    ./espanso.nix
     ./desktop-common-minimum.nix
     ../services/hokage/tugraz.nix
     ../services/hokage/jetbrains.nix
