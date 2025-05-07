@@ -24,6 +24,7 @@
   services.tailscale.enable = true;
 
   hokage = {
+    role = "ally";
     #    usePlasma6 = false;
     #    useWayland = false;
     #    termFontSize = 15.0;

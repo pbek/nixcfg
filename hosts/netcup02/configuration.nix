@@ -32,6 +32,7 @@
   services.netbird.enable = true;
 
   hokage = {
+    role = "server";
     zfs.hostId = "dafdad02";
   };
 }

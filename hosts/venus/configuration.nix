@@ -166,6 +166,7 @@ in
   };
 
   hokage = {
+    role = "desktop";
     zfs = {
       enable = true;
       hostId = "dcdaca04";

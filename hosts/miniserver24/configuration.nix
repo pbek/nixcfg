@@ -132,4 +132,8 @@ in
 
   environment.variables.EDITOR = "nano";
   programs.fish.interactiveShellInit = "export EDITOR=nano";
+
+  hokage = {
+    role = "server";
+  };
 }

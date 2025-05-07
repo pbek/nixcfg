@@ -17,6 +17,15 @@ in
 {
   options = {
     hokage = {
+      role = mkOption {
+        type = types.enum [
+          "desktop"
+          "server"
+          "ally"
+        ];
+        default = "desktop";
+        description = "Role of the system";
+      };
       useInternalInfrastructure = mkOption {
         type = types.bool;
         default = true;

@@ -66,6 +66,7 @@ in
   };
 
   hokage = {
+    role = "server";
     zfs.hostId = "dafdad01";
   };
 }

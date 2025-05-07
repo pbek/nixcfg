@@ -33,15 +33,13 @@
   ];
 
   hokage = {
+    role = "server";
     userLogin = "cow";
     userNameLong = "cow";
     userNameShort = "cow";
     userEmail = "cow@cow";
     useSecrets = false;
     useInternalInfrastructure = false;
-  };
-
-  hokage = {
     zfs.hostId = "dacdad01";
   };
 }

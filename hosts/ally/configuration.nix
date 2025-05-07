@@ -16,6 +16,7 @@
   networking.hostName = "ally";
 
   hokage = {
+    role = "ally";
     useSecrets = false;
     zfs = {
       enable = true;
