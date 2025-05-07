@@ -54,7 +54,7 @@ in
 {
   options.hokage.jetbrains = {
     enable = mkEnableOption "Enable JetBrains IDEs support" // {
-      default = true; # Enable JetBrains IDEs support by default
+      default = hokage.role == "desktop"; # Enable JetBrains IDEs support by default for desktops
     };
     useStable = mkEnableOption "Use stable JetBrains packages";
     phpstorm = {

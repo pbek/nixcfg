@@ -23,7 +23,7 @@ in
 {
   imports = [
     ../../modules/mixins/users.nix
-    ../../modules/mixins/desktop.nix
+    ../../modules/mixins/common.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/local-store-cache.nix
   ];

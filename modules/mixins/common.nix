@@ -1,17 +1,14 @@
 {
   config,
   pkgs,
-  inputs,
   lib,
   utils,
-  cfg,
   ...
 }:
 let
   inherit (config) hokage;
   inherit (hokage) userLogin;
   inherit (hokage) userNameLong;
-  inherit (hokage) useSecrets;
   inherit (hokage) useInternalInfrastructure;
   inherit (hokage) excludePackages;
   inherit (hokage) zfs;
@@ -25,6 +22,11 @@ in
     ../services/hokage/git.nix
     ../services/hokage/audio.nix
     ../services/hokage/espanso.nix
+    ../services/hokage/desktop.nix
+    ../services/hokage/desktop-minimum.nix
+    ../services/hokage/tugraz.nix
+    ../services/hokage/jetbrains.nix
+    ../services/hokage/ghostty.nix
   ];
 
   boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);

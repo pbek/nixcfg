@@ -12,7 +12,7 @@ in
 {
   imports = [
     ./users.nix
-    ./desktop-common-minimum.nix
+    ./common.nix
     ./openssh.nix
     ./local-store-cache.nix
   ];

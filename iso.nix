@@ -16,7 +16,7 @@
     <nixpkgs/nixos/modules/installer/cd-dvd/channel.nix>
 
     ./modules/mixins/users.nix
-    ./modules/mixins/desktop-common.nix
+    ./modules/mixins/common.nix
     # ./modules/mixins/jetbrains.nix
     ./modules/mixins/openssh.nix
     # ./modules/mixins/virt-manager.nix
