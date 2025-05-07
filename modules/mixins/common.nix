@@ -22,6 +22,7 @@ in
     ../services/hokage.nix
     ../services/hokage/zfs.nix
     ../services/hokage/atuin.nix
+    ../services/hokage/git.nix
   ];
 
   boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);

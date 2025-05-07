@@ -15,7 +15,6 @@ in
   imports = [
     ./espanso.nix
     ./desktop-common-minimum.nix
-    ./git.nix
     ../services/hokage/tugraz.nix
     ../services/hokage/jetbrains.nix
     ./ghostty.nix
