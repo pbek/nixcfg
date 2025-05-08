@@ -21,7 +21,6 @@ in
     ./hardware-configuration.nix
     ./disk-config.zfs.nix
     ../../modules/mixins/common.nix
-    ../../modules/mixins/openssh.nix
   ];
 
   networking = {

@@ -23,7 +23,6 @@ in
 {
   imports = [
     ../../modules/mixins/common.nix
-    ../../modules/mixins/openssh.nix
   ];
 
   users.users.root.initialPassword = "root";

@@ -17,7 +17,6 @@
 
     ./modules/mixins/common.nix
     # ./modules/mixins/jetbrains.nix
-    ./modules/mixins/openssh.nix
     # ./modules/mixins/virt-manager.nix
   ];
 

@@ -16,7 +16,6 @@
     ./hardware-configuration.nix
     ./disk-config.zfs.nix
     ../../modules/mixins/common.nix
-    ../../modules/mixins/openssh.nix
     ../../modules/mixins/virt-manager.nix
   ];
 

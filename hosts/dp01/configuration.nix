@@ -19,7 +19,6 @@ in
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../modules/mixins/common.nix
-    ../../modules/mixins/openssh.nix
   ];
 
   # Bootloader.
