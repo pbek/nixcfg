@@ -21,8 +21,6 @@ in
     ../../modules/mixins/common.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/virt-manager.nix
-    ../../modules/mixins/local-store-cache.nix
-    #      ../../modules/mixins/remote-store-cache.nix
   ];
 
   # Getting the bootloader to detect Windows didn't work, use F12 at boot for a boot manager
@@ -174,5 +172,6 @@ in
       phpstorm.package = pkgs.jetbrains.phpstorm;
       goland.package = pkgs.jetbrains.goland;
     };
+    cache.sources = [ "home" ];
   };
 }

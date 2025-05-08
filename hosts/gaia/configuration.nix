@@ -20,7 +20,6 @@ in
     ../../modules/mixins/platformio.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/virt-manager.nix
-    ../../modules/mixins/local-store-cache.nix
   ];
 
   # Bootloader.
@@ -150,6 +149,7 @@ in
 
   hokage = {
     tugraz.enable = true;
+    cache.sources = [ "home" ];
     jetbrains = {
       plugins = [ ];
       clion.package = pkgs.jetbrains.clion;

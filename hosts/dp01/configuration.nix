@@ -20,7 +20,6 @@ in
     ./hardware-configuration.nix
     ../../modules/mixins/common.nix
     ../../modules/mixins/openssh.nix
-    ../../modules/mixins/remote-store-cache.nix
   ];
 
   # Bootloader.

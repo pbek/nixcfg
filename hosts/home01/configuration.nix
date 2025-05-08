@@ -10,7 +10,6 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/mixins/server-local.nix
-    ../../modules/mixins/local-store-cache.nix
     ./disk-config.zfs.nix
   ];
 
@@ -125,5 +124,6 @@
   hokage = {
     role = "server";
     zfs.hostId = "daafda01";
+    cache.sources = [ "home" ];
   };
 }

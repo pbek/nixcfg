@@ -17,7 +17,6 @@
     ../../modules/mixins/common.nix
     #      ../../modules/mixins/openssh.nix
     ../../modules/mixins/openssh.nix
-    ../../modules/mixins/local-store-cache.nix
   ];
 
   # Bootloader.
@@ -64,6 +63,7 @@
   };
 
   hokage = {
+    cache.sources = [ "home" ];
     jetbrains.useStable = true;
   };
 }

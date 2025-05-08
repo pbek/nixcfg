@@ -12,7 +12,6 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../modules/mixins/server-local.nix
-    ../../modules/mixins/remote-store-cache.nix
     ./disk-config.zfs.nix
   ];
 

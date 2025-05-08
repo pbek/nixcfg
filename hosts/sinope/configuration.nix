@@ -18,7 +18,6 @@
     ../../modules/mixins/common.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/virt-manager.nix
-    ../../modules/mixins/caliban-store-cache.nix
   ];
 
   # Bootloader.
@@ -49,5 +48,6 @@
       clion.enable = false;
       goland.enable = false;
     };
+    cache.sources = [ "caliban" ];
   };
 }

@@ -24,9 +24,12 @@ in
   imports = [
     ../../modules/mixins/common.nix
     ../../modules/mixins/openssh.nix
-    ../../modules/mixins/local-store-cache.nix
   ];
 
   users.users.root.initialPassword = "root";
   users.users.${userLogin}.initialPassword = userLogin;
+
+  hokage = {
+    cache.sources = [ "home" ];
+  };
 }

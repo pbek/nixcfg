@@ -27,6 +27,7 @@ in
     ../services/hokage/tugraz.nix
     ../services/hokage/jetbrains.nix
     ../services/hokage/ghostty.nix
+    ../services/hokage/cache.nix
   ];
 
   boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);

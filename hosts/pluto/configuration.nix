@@ -19,7 +19,6 @@ in
     ../../modules/mixins/common.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/virt-manager.nix
-    ../../modules/mixins/local-store-cache.nix
   ];
 
   # Bootloader.
@@ -82,5 +81,6 @@ in
   hokage = {
     jetbrains.useStable = true;
     useGhosttyGtkFix = false;
+    cache.sources = [ "home" ];
   };
 }

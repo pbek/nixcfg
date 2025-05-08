@@ -13,7 +13,6 @@ in
   imports = [
     ./common.nix
     ./openssh.nix
-    ./local-store-cache.nix
   ];
 
   networking = {
@@ -138,5 +137,6 @@ in
     # Turn off default graphical system, we want to use our own configuration
     useGraphicalSystem = false;
     termFontSize = 15.0;
+    cache.sources = [ "home" ];
   };
 }

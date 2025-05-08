@@ -17,7 +17,6 @@
     ../../modules/mixins/common.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/virt-manager.nix
-    ../../modules/mixins/remote-store-cache.nix
   ];
 
   # Bootloader.
@@ -35,4 +34,8 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+
+  hokage = {
+    cache.sources = [ "caliban" ];
+  };
 }

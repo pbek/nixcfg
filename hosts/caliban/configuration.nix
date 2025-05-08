@@ -21,7 +21,6 @@ in
     ../../modules/mixins/common.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/virt-manager.nix
-    ../../modules/mixins/remote-store-cache.nix
   ];
 
   networking = {

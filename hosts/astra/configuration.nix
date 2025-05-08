@@ -17,7 +17,6 @@
     ../../modules/mixins/common.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/virt-manager.nix
-    ../../modules/mixins/caliban-store-cache.nix
   ];
 
   # Bootloader.
@@ -59,5 +58,6 @@
     termFontSize = 16.0;
     usePlasma6 = true;
     useGhosttyGtkFix = false;
+    cache.sources = [ "caliban" ];
   };
 }
