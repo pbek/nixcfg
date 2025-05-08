@@ -366,8 +366,16 @@ qownnotes-hash:
 qownnotes-update-release:
     ./scripts/update-qownnotes-release.sh
 
+# Evaluate a config for a hostname (default current host)
+eval-config configPath host=hostname:
+    nix eval .#nixosConfigurations.{{ host }}.config.{{ configPath }}
+
+# Show all config options of the hokage service
+hokage-options host=hostname:
+    nix eval .#nixosConfigurations.{{ host }}.options.hokage --json | jq
+
 # Process hokage service options interactively
-hokage-options:
+_hokage-options-defunc:
     #!/usr/bin/env bash
 
     # Store options globally so we don't need to fetch them multiple times
