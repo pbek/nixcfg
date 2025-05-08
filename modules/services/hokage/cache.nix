@@ -24,23 +24,27 @@ in
   config = lib.mkIf cfg.enable {
     nix = {
       settings = {
-        substituters = lib.concatLists [
-          (lib.optionals (builtins.elem "home" cfg.sources) [
-            # Local home01 nix binary cache
-            "http://home01.lan:5000"
-            # Local attic
-            "http://cicinas2.lan:8050/nix-store"
-            # Local nginx cache
-            "http://cicinas2.lan:8282"
-          ])
-          (lib.optionals (builtins.elem "remote" cfg.sources) [
-            "https://cache.nixos.org/"
-          ])
-          (lib.optionals (builtins.elem "caliban" cfg.sources) [
-            # Local caliban nix binary cache
-            "http://caliban-1.netbird.cloud:5000"
-          ])
-        ];
+        # Use those substituters with the highest priority
+        # Check with for example: nix eval .#nixosConfigurations.venus.config.nix.settings.substituters
+        substituters = lib.mkBefore (
+          lib.concatLists [
+            (lib.optionals (builtins.elem "home" cfg.sources) [
+              # Local home01 nix binary cache
+              "http://home01.lan:5000"
+              # Local attic
+              "http://cicinas2.lan:8050/nix-store"
+              # Local nginx cache
+              "http://cicinas2.lan:8282"
+            ])
+            (lib.optionals (builtins.elem "remote" cfg.sources) [
+              "https://cache.nixos.org/"
+            ])
+            (lib.optionals (builtins.elem "caliban" cfg.sources) [
+              # Local caliban nix binary cache
+              "http://caliban-1.netbird.cloud:5000"
+            ])
+          ]
+        );
         trusted-public-keys = lib.concatLists [
           (lib.optionals (builtins.elem "home" cfg.sources) [
             "home01.lan:/9arPyImijmvlBXeb8vVyOe67KH8Q7AeihW6MKtLDLQ="
