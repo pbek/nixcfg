@@ -16,7 +16,6 @@ in
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ../../modules/mixins/users.nix
     ../../modules/mixins/common.nix
     ../../modules/mixins/openssh.nix
     ../../modules/mixins/remote-store-cache.nix

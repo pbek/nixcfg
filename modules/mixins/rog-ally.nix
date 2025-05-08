@@ -11,7 +11,6 @@ let
 in
 {
   imports = [
-    ./users.nix
     ./common.nix
     ./openssh.nix
     ./local-store-cache.nix
