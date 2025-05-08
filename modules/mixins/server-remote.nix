@@ -8,7 +8,7 @@ let
 in
 {
   imports = [
-    ./server-common.nix
+    ./common.nix
   ];
 
   # Enable QEMU guest services (qemu-guest-agent) for Netcup
