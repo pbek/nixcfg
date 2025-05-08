@@ -33,6 +33,10 @@
 
   hokage = {
     role = "server";
-    zfs.hostId = "dafdad02";
+    zfs = {
+      hostId = "dafdad02";
+      # Reduce memory usage
+      arcMax = 300 * 1024 * 1024;
+    };
   };
 }

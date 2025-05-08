@@ -34,6 +34,11 @@ in
       default = true;
       description = "Define if the ZFS datasets are encrypted";
     };
+    arcMax = mkOption {
+      type = types.int;
+      default = 1536 * 1024 * 1024; # 1.5GB
+      description = "Maximum size of ARC (Adaptive Replacement Cache) in bytes";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -43,6 +48,10 @@ in
     boot = {
       # Use the latest kernel version possible for ZFS or the latest kernel
       kernelPackages = mkDefault pkgs.linuxKernel.packages.linux_6_13;
+
+      # Set maximum ARC size to prevent the Early OOM from killing processes
+      # https://nixos.wiki/wiki/ZFS#Tuning_Adaptive_Replacement_Cache_size
+      kernelParams = [ "zfs.zfs_arc_max=${builtins.toString cfg.arcMax}" ];
 
       supportedFilesystems = [ "zfs" ];
       zfs.requestEncryptionCredentials = lib.mkIf cfg.encrypted true;
