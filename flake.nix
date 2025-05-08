@@ -57,6 +57,8 @@
         (_: {
           nixpkgs.overlays = [ overlays-nixpkgs ];
         })
+        # We still need the age module for servers, because it needs to evaluate "age" in the services
+        agenix.nixosModules.age
       ];
       commonDesktopModules = [
         home-manager.nixosModules.home-manager
