@@ -11,7 +11,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./disk-config.zfs.nix
-    ../../modules/mixins/rog-ally.nix
+    ../../modules/mixins/common.nix
   ];
 
   networking = {

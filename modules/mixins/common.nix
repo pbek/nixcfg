@@ -29,6 +29,7 @@ in
     ../services/hokage/ghostty.nix
     ../services/hokage/cache.nix
     ../services/hokage/openssh.nix
+    ../services/hokage/rog-ally.nix
   ];
 
   boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);
