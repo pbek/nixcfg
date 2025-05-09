@@ -368,7 +368,7 @@ qownnotes-update-release:
 
 # Evaluate a config for a hostname (default current host)
 eval-config configPath host=hostname *args:
-    nix eval .#nixosConfigurations.{{ host }}.config.{{ configPath }} "{{ args }}"
+    nix eval .#nixosConfigurations.{{ host }}.config.{{ configPath }} {{ args }}
 
 # Evaluate a config for a hostname (default current host) as json
 eval-config-json configPath host=hostname *args:
