@@ -95,5 +95,9 @@ in
         };
       };
     };
+
+    environment.systemPackages = with pkgs; [
+      httm # CLI Time Machine
+    ];
   };
 }
