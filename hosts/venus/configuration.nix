@@ -69,6 +69,7 @@ in
     amdgpu_top # AMD GPU monitoring
     lact # AMD GPU monitoring
     ryubing # Nintendo Switch emulator
+    jellyfin-media-player
   ];
 
   # https://nixos.wiki/wiki/steam
