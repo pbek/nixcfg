@@ -164,6 +164,7 @@ in
     zfs = {
       enable = true;
       hostId = "dcdaca04";
+      datasetRootName = "root";
     };
     jetbrains = {
       plugins = [ ];

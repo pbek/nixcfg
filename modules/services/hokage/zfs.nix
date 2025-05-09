@@ -7,8 +7,12 @@
 let
   inherit (config) hokage;
   cfg = hokage.zfs;
-  encryptedPart = if cfg.encrypted then "/encrypted" else "";
-  homeDataset = "${cfg.poolName}${encryptedPart}/home";
+  datasetRootPart =
+    if cfg.datasetRootName != "" then
+      "/${cfg.datasetRootName}"
+    else
+      (if cfg.encrypted then "/encrypted" else "");
+  homeDataset = "${cfg.poolName}${datasetRootPart}/home";
 
   inherit (lib)
     mkDefault
@@ -28,6 +32,12 @@ in
       type = types.str;
       default = "zroot";
       description = "Name of your ZFS pool";
+    };
+    datasetRootName = mkOption {
+      type = types.str;
+      default = "";
+      example = "root";
+      description = "Name of the root dataset of the ZFS pool";
     };
     encrypted = mkOption {
       type = types.bool;
