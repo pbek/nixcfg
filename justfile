@@ -367,8 +367,12 @@ qownnotes-update-release:
     ./scripts/update-qownnotes-release.sh
 
 # Evaluate a config for a hostname (default current host)
-eval-config configPath host=hostname:
-    nix eval .#nixosConfigurations.{{ host }}.config.{{ configPath }}
+eval-config configPath host=hostname *args:
+    nix eval .#nixosConfigurations.{{ host }}.config.{{ configPath }} "{{ args }}"
+
+# Evaluate a config for a hostname (default current host) as json
+eval-config-json configPath host=hostname *args:
+    nix eval .#nixosConfigurations.{{ host }}.config.{{ configPath }} --json {{ args }} | jq | bat -l json
 
 # Show all config options of the hokage service
 hokage-options host=hostname:
