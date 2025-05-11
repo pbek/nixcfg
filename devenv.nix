@@ -7,9 +7,6 @@
 }:
 
 {
-  # Try to disable cachix to get served from local cache
-  cachix.enable = false;
-
   # https://devenv.sh/packages/
   packages = with pkgs; [
     git
