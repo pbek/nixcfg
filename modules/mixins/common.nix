@@ -15,7 +15,6 @@ let
 in
 {
   imports = [
-    ./starship.nix
     ../services/hokage.nix
     ../services/hokage/zfs.nix
     ../services/hokage/atuin.nix
@@ -35,6 +34,7 @@ in
     ../services/hokage/server-remote.nix
     ../services/hokage/virt-manager.nix
     ../services/hokage/platformio.nix
+    ../services/hokage/starship.nix
   ];
 
   boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);
