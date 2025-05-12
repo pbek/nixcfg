@@ -32,7 +32,7 @@ in
   # Search on https://search.nixos.org/packages?channel=unstable
   environment.systemPackages = with pkgs; [
     thunderbird
-    stable.digikam
+    digikam
     gimp
   ];
 
