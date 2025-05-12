@@ -34,6 +34,7 @@ in
     ../services/hokage/server-home.nix
     ../services/hokage/server-remote.nix
     ../services/hokage/virt-manager.nix
+    ../services/hokage/platformio.nix
   ];
 
   boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);

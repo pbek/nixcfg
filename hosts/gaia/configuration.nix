@@ -17,7 +17,6 @@ in
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../modules/mixins/common.nix
-    ../../modules/mixins/platformio.nix
   ];
 
   # Bootloader.
@@ -148,6 +147,7 @@ in
   hokage = {
     tugraz.enable = true;
     cache.sources = [ "home" ];
+    platformio.enable = true;
     jetbrains = {
       plugins = [ ];
       clion.package = pkgs.jetbrains.clion;
