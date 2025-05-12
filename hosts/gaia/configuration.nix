@@ -18,7 +18,6 @@ in
     ./hardware-configuration.nix
     ../../modules/mixins/common.nix
     ../../modules/mixins/platformio.nix
-    ../../modules/mixins/virt-manager.nix
   ];
 
   # Bootloader.

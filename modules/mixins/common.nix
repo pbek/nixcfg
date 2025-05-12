@@ -33,6 +33,7 @@ in
     ../services/hokage/server.nix
     ../services/hokage/server-home.nix
     ../services/hokage/server-remote.nix
+    ../services/hokage/virt-manager.nix
   ];
 
   boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);

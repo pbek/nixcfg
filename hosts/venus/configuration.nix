@@ -19,7 +19,6 @@ in
     ./hardware-configuration.nix
     ./disk-config.zfs.nix
     ../../modules/mixins/common.nix
-    ../../modules/mixins/virt-manager.nix
   ];
 
   # Getting the bootloader to detect Windows didn't work, use F12 at boot for a boot manager
