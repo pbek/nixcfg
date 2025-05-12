@@ -20,7 +20,8 @@ in
       role = mkOption {
         type = types.enum [
           "desktop"
-          "server"
+          "server-home"
+          "server-remote"
           "ally"
         ];
         default = "desktop";

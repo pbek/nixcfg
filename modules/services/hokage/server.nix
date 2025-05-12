@@ -11,7 +11,7 @@ let
   inherit (hokage) userEmail;
 in
 {
-  config = lib.mkIf (hokage.role == "server") {
+  config = lib.mkIf (hokage.role == "server-home" || hokage.role == "server-remote") {
     # Also make snapshots of the docker dataset (not only home)
     services.sanoid = {
       datasets = {

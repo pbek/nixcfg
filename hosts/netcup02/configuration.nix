@@ -9,7 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/mixins/server-remote.nix
+    ../../modules/mixins/common.nix
     ./disk-config.zfs.nix
   ];
 
@@ -32,7 +32,7 @@
   services.netbird.enable = true;
 
   hokage = {
-    role = "server";
+    role = "server-remote";
     zfs = {
       hostId = "dafdad02";
       # Reduce memory usage

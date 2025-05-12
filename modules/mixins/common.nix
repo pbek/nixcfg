@@ -31,6 +31,8 @@ in
     ../services/hokage/openssh.nix
     ../services/hokage/rog-ally.nix
     ../services/hokage/server.nix
+    ../services/hokage/server-home.nix
+    ../services/hokage/server-remote.nix
   ];
 
   boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);

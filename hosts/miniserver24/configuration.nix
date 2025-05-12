@@ -11,7 +11,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/mixins/server-local.nix
+    ../../modules/mixins/common.nix
     ./disk-config.zfs.nix
   ];
 
@@ -133,6 +133,6 @@ in
   programs.fish.interactiveShellInit = "export EDITOR=nano";
 
   hokage = {
-    role = "server";
+    role = "server-home";
   };
 }

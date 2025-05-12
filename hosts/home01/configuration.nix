@@ -9,7 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/mixins/server-local.nix
+    ../../modules/mixins/common.nix
     ./disk-config.zfs.nix
   ];
 
@@ -122,7 +122,7 @@
   ];
 
   hokage = {
-    role = "server";
+    role = "server-home";
     zfs.hostId = "daafda01";
     cache.sources = [ "home" ];
   };

@@ -22,9 +22,13 @@ let
 in
 {
   imports = [
-    ../../modules/mixins/server-remote.nix
+    ../../modules/mixins/common.nix
   ];
 
   users.users.root.initialPassword = "root";
   users.users.${userLogin}.initialPassword = userLogin;
+
+  hokage = {
+    role = "server-local";
+  };
 }

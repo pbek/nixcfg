@@ -9,7 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/mixins/server-remote.nix
+    ../../modules/mixins/common.nix
     ./disk-config.zfs.nix
   ];
 
@@ -33,7 +33,7 @@
   ];
 
   hokage = {
-    role = "server";
+    role = "server-remote";
     userLogin = "cow";
     userNameLong = "cow";
     userNameShort = "cow";

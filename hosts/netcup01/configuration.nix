@@ -11,7 +11,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/mixins/server-remote.nix
+    ../../modules/mixins/common.nix
     ./disk-config.zfs.nix
   ];
 
@@ -66,7 +66,7 @@ in
   };
 
   hokage = {
-    role = "server";
+    role = "server-remote";
     zfs.hostId = "dafdad01";
   };
 }
