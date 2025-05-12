@@ -14,7 +14,9 @@ let
 in
 {
   options.hokage.virtManager = {
-    enable = mkEnableOption "Enable VirtManager support";
+    enable = mkEnableOption "Enable VirtManager support" // {
+      default = hokage.role == "desktop";
+    };
   };
 
   config = lib.mkIf cfg.enable {
