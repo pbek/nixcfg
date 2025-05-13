@@ -136,6 +136,7 @@ in
       poolName = "calroot";
       encrypted = true;
     };
+    qtcreator.enable = false;
     jetbrains = {
       plugins = [ ];
       phpstorm.package = pkgs.jetbrains.phpstorm;

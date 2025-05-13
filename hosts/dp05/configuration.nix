@@ -71,6 +71,7 @@ in
     waylandSupport = true;
     espanso.enable = false;
     tugraz.enable = true;
+    qtcreator.enable = false;
 
     zfs = {
       enable = true;
