@@ -609,11 +609,11 @@ in
                 replace = "🧗🏼‍♂️";
               }
               {
-                triggers = [ ":ner" ];
+                triggers = [ ":nerd" ];
                 replace = "🤓";
               }
               {
-                triggers = [ ":gam" ];
+                triggers = [ ":game" ];
                 replace = "🎮️";
               }
               {
