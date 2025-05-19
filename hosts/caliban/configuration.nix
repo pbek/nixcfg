@@ -45,25 +45,9 @@ in
     lact # AMD GPU monitoring
   ];
 
-  # https://wiki.nixos.org/wiki/VirtualBox
-  virtualisation.virtualbox = {
-    host.enable = true;
-    guest = {
-      enable = true;
-      dragAndDrop = true;
-    };
-  };
-  users.extraGroups.vboxusers.members = [ userLogin ];
-
-  # virtualisation.virtualbox.host.enableExtensionPack = true;
-
   # latest: 6.13
   # lts: 6.6
   #  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  # Workaround for broken VirtualBox with kernel 6.12+
-  # https://github.com/NixOS/nixpkgs/issues/363887
-  boot.kernelParams = [ "kvm.enable_virt_at_load=0" ];
 
   # Enable hardware accelerated graphics drivers
   hardware.graphics.enable = true;

@@ -144,10 +144,6 @@ in
   # Increase the console font size for kmscon
   services.kmscon.extraConfig = "font-size = 26";
 
-  # https://wiki.nixos.org/wiki/VirtualBox
-  virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = [ userLogin ];
-
   programs.alvr.enable = true;
   programs.alvr.openFirewall = true;
 
@@ -161,6 +157,7 @@ in
 
   hokage = {
     role = "desktop";
+    virtualbox.enable = true;
     zfs = {
       enable = true;
       hostId = "dcdaca04";

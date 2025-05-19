@@ -84,11 +84,6 @@ in
   #   ];
   # };
 
-  # https://wiki.nixos.org/wiki/VirtualBox
-  virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = [ userLogin ];
-  # virtualisation.virtualbox.host.enableExtensionPack = true;
-
   # Try to get get around: /nix/store/lx50avim6rzf20b69q4zwak07c479qwp-udev-rules/60-openocd.rules:188 Unknown group 'plugdev', ignoring.
   # https://github.com/NixOS/nixpkgs/issues/81326#issuecomment-592790668
   users.users.${userLogin} = {
@@ -106,10 +101,6 @@ in
   # linuxPackages_latest: 6.13
   # linuxPackages_lts: 6.6
   # boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  # Workaround for broken VirtualBox with kernel 6.12+
-  # https://github.com/NixOS/nixpkgs/issues/363887
-  boot.kernelParams = [ "kvm.enable_virt_at_load=0" ];
 
   # https://wiki.nixos.org/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -148,6 +139,7 @@ in
     tugraz.enable = true;
     cache.sources = [ "home" ];
     platformio.enable = true;
+    virtualbox.enable = true;
     jetbrains = {
       plugins = [ ];
       clion.package = pkgs.jetbrains.clion;

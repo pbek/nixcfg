@@ -36,6 +36,7 @@ in
     ../services/hokage/platformio.nix
     ../services/hokage/starship.nix
     ../services/hokage/qtcreator.nix
+    ../services/hokage/virtualbox.nix
   ];
 
   boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);

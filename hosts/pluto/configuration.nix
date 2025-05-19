@@ -30,10 +30,6 @@ in
   # Enable networking
   networking.networkmanager.enable = true;
 
-  # https://wiki.nixos.org/wiki/VirtualBox
-  virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = [ userLogin ];
-
   # https://wiki.nixos.org/wiki/steam
   #  programs.steam = {
   #    enable = true;
@@ -79,6 +75,7 @@ in
   hokage = {
     jetbrains.useStable = true;
     useGhosttyGtkFix = false;
+    virtualbox.enable = true;
     cache.sources = [ "home" ];
   };
 }
