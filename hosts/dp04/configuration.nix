@@ -36,7 +36,7 @@ in
     evolution-ews
   ];
 
-  # https://nixos.wiki/wiki/nvidia
+  # https://wiki.nixos.org/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.graphics.enable = true;

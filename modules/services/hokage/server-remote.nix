@@ -23,7 +23,7 @@ in
     };
 
     # Firewall
-    # https://nixos.wiki/wiki/Firewall
+    # https://wiki.nixos.org/wiki/Firewall
     networking.firewall = {
       allowedTCPPorts = [ 2222 ]; # SSH
     };

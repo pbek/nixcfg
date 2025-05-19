@@ -107,7 +107,7 @@ in
       ];
 
       # GTK themes are not applied in Wayland applications / Window Decorations missing / Cursor looks different
-      # https://nixos.wiki/wiki/KDE#GTK_themes_are_not_applied_in_Wayland_applications_.2F_Window_Decorations_missing_.2F_Cursor_looks_different
+      # https://wiki.nixos.org/wiki/KDE#GTK_themes_are_not_applied_in_Wayland_applications_.2F_Window_Decorations_missing_.2F_Cursor_looks_different
       programs.dconf.enable = true;
 
       # KDE PIM
@@ -253,11 +253,11 @@ in
       services.displayManager.defaultSession = "plasma";
 
       # Launch SDDM in Wayland too
-      # https://nixos.wiki/wiki/KDE#Launch_SDDM_in_Wayland_too
+      # https://wiki.nixos.org/wiki/KDE#Launch_SDDM_in_Wayland_too
       services.displayManager.sddm.wayland.enable = true;
 
       # KMail Renders Blank Messages
-      # https://nixos.wiki/wiki/KDE#KMail_Renders_Blank_Messages
+      # https://wiki.nixos.org/wiki/KDE#KMail_Renders_Blank_Messages
       environment.sessionVariables = {
         NIX_PROFILES = "${pkgs.lib.concatStringsSep " " (
           pkgs.lib.reverseList config.environment.profiles

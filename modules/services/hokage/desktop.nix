@@ -197,7 +197,7 @@ in
     };
 
     # Docker
-    # https://nixos.wiki/wiki/Docker
+    # https://wiki.nixos.org/wiki/Docker
     virtualisation.docker.enable = true;
     # Disable logging on desktop to prevent disk space issues and spamming the journal (but this causes no logging at all!)
     # https://docs.docker.com/engine/logging/configure/

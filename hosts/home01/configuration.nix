@@ -81,7 +81,7 @@
   ];
 
   # Enable Fwupd
-  # https://nixos.wiki/wiki/Fwupd
+  # https://wiki.nixos.org/wiki/Fwupd
   services.fwupd.enable = true;
 
   # Enable Netbird Wireguard VPN service

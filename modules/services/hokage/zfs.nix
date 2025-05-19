@@ -60,7 +60,7 @@ in
       kernelPackages = mkDefault pkgs.linuxKernel.packages.linux_6_13;
 
       # Set maximum ARC size to prevent the Early OOM from killing processes
-      # https://nixos.wiki/wiki/ZFS#Tuning_Adaptive_Replacement_Cache_size
+      # https://wiki.nixos.org/wiki/ZFS#Tuning_Adaptive_Replacement_Cache_size
       kernelParams = [ "zfs.zfs_arc_max=${builtins.toString cfg.arcMax}" ];
 
       supportedFilesystems = [ "zfs" ];

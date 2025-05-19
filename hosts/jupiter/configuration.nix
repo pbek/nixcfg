@@ -42,7 +42,7 @@
   environment.systemPackages = with pkgs; [
   ];
 
-  # https://nixos.wiki/wiki/nvidia
+  # https://wiki.nixos.org/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.graphics.enable = true;

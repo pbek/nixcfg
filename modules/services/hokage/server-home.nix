@@ -10,12 +10,12 @@ in
 {
   config = lib.mkIf (hokage.role == "server-home") {
     # Firewall
-    # https://nixos.wiki/wiki/Firewall
+    # https://wiki.nixos.org/wiki/Firewall
     networking.firewall = {
       allowedTCPPorts = [ 22 ]; # SSH
     };
 
-    # https://nixos.wiki/wiki/Fail2ban
+    # https://wiki.nixos.org/wiki/Fail2ban
     # Allow local IPs to connect even if they fail to login
     services.fail2ban.ignoreIP = [ "192.168.1.0/16" ];
 

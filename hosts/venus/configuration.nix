@@ -71,7 +71,7 @@ in
     jellyfin-media-player
   ];
 
-  # https://nixos.wiki/wiki/steam
+  # https://wiki.nixos.org/wiki/steam
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
@@ -82,7 +82,7 @@ in
   # Enable hardware accelerated graphics drivers
   hardware.graphics.enable = true;
 
-  # https://nixos.wiki/wiki/AMD_GPU
+  # https://wiki.nixos.org/wiki/AMD_GPU
   services.xserver.videoDrivers = [ "amdgpu" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
 
@@ -93,7 +93,7 @@ in
   #    support32Bit.enable = true;
   #  };
 
-  # https://nixos.wiki/wiki/AMD_GPU#AMDVLK
+  # https://wiki.nixos.org/wiki/AMD_GPU#AMDVLK
   #  hardware.opengl.extraPackages = with pkgs; [
   #    amdvlk
   #  ];
@@ -133,7 +133,7 @@ in
   # Sleep is hindered by a compontent on the motherboard
   # Problem with "00:01.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge"
   # Disabling wakeup triggers for all PCIe devices
-  # https://nixos.wiki/wiki/Power_Management#Solution_1:_Disabling_wakeup_triggers_for_all_PCIe_devices
+  # https://wiki.nixos.org/wiki/Power_Management#Solution_1:_Disabling_wakeup_triggers_for_all_PCIe_devices
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="pci", DRIVER=="pcieport", ATTR{power/wakeup}="disabled"
   '';
@@ -144,7 +144,7 @@ in
   # Increase the console font size for kmscon
   services.kmscon.extraConfig = "font-size = 26";
 
-  # https://nixos.wiki/wiki/VirtualBox
+  # https://wiki.nixos.org/wiki/VirtualBox
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ userLogin ];
 

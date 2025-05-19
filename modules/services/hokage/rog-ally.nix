@@ -28,7 +28,7 @@ in
     };
 
     # GTK themes are not applied in Wayland applications / Window Decorations missing / Cursor looks different
-    # https://nixos.wiki/wiki/KDE#GTK_themes_are_not_applied_in_Wayland_applications_.2F_Window_Decorations_missing_.2F_Cursor_looks_different
+    # https://wiki.nixos.org/wiki/KDE#GTK_themes_are_not_applied_in_Wayland_applications_.2F_Window_Decorations_missing_.2F_Cursor_looks_different
     programs.dconf.enable = true;
 
     #  environment.systemPackages = with pkgs.kdePackages; [
@@ -68,7 +68,7 @@ in
       maliit-keyboard # Virtual keyboard
     ];
 
-    # https://nixos.wiki/wiki/steam
+    # https://wiki.nixos.org/wiki/steam
     programs.steam = {
       enable = true;
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
@@ -105,7 +105,7 @@ in
     #    };
     #  };
 
-    # https://nixos.wiki/wiki/PipeWire#Low-latency_setup
+    # https://wiki.nixos.org/wiki/PipeWire#Low-latency_setup
     services.pipewire.extraConfig.pipewire."92-low-latency" = {
       context.properties = {
         default.clock.rate = 48000;

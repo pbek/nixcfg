@@ -84,7 +84,7 @@ in
   #   ];
   # };
 
-  # https://nixos.wiki/wiki/VirtualBox
+  # https://wiki.nixos.org/wiki/VirtualBox
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ userLogin ];
   # virtualisation.virtualbox.host.enableExtensionPack = true;
@@ -95,23 +95,23 @@ in
     extraGroups = [ "plugdev" ];
   };
 
-  # https://nixos.wiki/wiki/steam
+  # https://wiki.nixos.org/wiki/steam
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   };
 
-  # https://nixos.wiki/wiki/Linux_kernel
+  # https://wiki.nixos.org/wiki/Linux_kernel
   # linuxPackages_latest: 6.13
   # linuxPackages_lts: 6.6
   # boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # Workaround for broken VirtualBox with kernel 6.12
+  # Workaround for broken VirtualBox with kernel 6.12+
   # https://github.com/NixOS/nixpkgs/issues/363887
   boot.kernelParams = [ "kvm.enable_virt_at_load=0" ];
 
-  # https://nixos.wiki/wiki/nvidia
+  # https://wiki.nixos.org/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
   hardware.graphics.enable = true;
@@ -138,7 +138,7 @@ in
   zramSwap.enable = false;
 
   # Try to prevent popping of loudspeakers when audio starts again
-  # See https://nixos.wiki/wiki/PulseAudio#Disabling_unwanted_modules
+  # See https://wiki.nixos.org/wiki/PulseAudio#Disabling_unwanted_modules
   services.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
 
   # Increase the console font size for kmscon

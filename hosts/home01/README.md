@@ -2,7 +2,7 @@
 
 ## Binary Cache
 
-Also see [Binary Cache](https://nixos.wiki/wiki/Binary_Cache).
+Also see [Binary Cache](https://wiki.nixos.org/wiki/Binary_Cache).
 
 ### Setup
 

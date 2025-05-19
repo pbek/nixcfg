@@ -45,7 +45,7 @@ in
     lact # AMD GPU monitoring
   ];
 
-  # https://nixos.wiki/wiki/VirtualBox
+  # https://wiki.nixos.org/wiki/VirtualBox
   virtualisation.virtualbox = {
     host.enable = true;
     guest = {
@@ -61,18 +61,18 @@ in
   # lts: 6.6
   #  boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # Workaround for broken VirtualBox with kernel 6.12
+  # Workaround for broken VirtualBox with kernel 6.12+
   # https://github.com/NixOS/nixpkgs/issues/363887
   boot.kernelParams = [ "kvm.enable_virt_at_load=0" ];
 
   # Enable hardware accelerated graphics drivers
   hardware.graphics.enable = true;
 
-  # https://nixos.wiki/wiki/AMD_GPU
+  # https://wiki.nixos.org/wiki/AMD_GPU
   services.xserver.videoDrivers = [ "amdgpu" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
 
-  #  # https://nixos.wiki/wiki/nvidia
+  #  # https://wiki.nixos.org/wiki/nvidia
   #  services.xserver.videoDrivers = [ "nvidia" ];
   #  nixpkgs.config.nvidia.acceptLicense = true;
   #  hardware.nvidia = {

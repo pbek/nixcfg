@@ -158,7 +158,7 @@ in
 
       # To do a "nix-build --repair" without sudo
       # We still need that to not get a "lacks a signature by a trusted key" error when building on a remote machine
-      # https://nixos.wiki/wiki/Nixos-rebuild
+      # https://wiki.nixos.org/wiki/Nixos-rebuild
       trusted-users = [
         "root"
         "@wheel"
@@ -256,7 +256,7 @@ in
   #  };
 
   # Add Restic Security Wrapper
-  # https://nixos.wiki/wiki/Restic
+  # https://wiki.nixos.org/wiki/Restic
   security.wrappers.restic = {
     source = "${pkgs.restic.out}/bin/restic";
     owner = userLogin;
@@ -272,7 +272,7 @@ in
       ln -sv ${pkgs.path} $out/nixpkgs
     '';
 
-    # Careful with this, see https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+    # Careful with this, see https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
     # Also see https://mynixos.com/nixpkgs/option/system.stateVersion
     stateVersion = "24.11";
   };

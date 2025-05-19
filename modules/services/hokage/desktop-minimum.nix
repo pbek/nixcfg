@@ -25,7 +25,7 @@ in
     services.xserver.enable = true;
 
     # Enable the KDE Plasma Desktop Environment.
-    # https://nixos.wiki/wiki/KDE
+    # https://wiki.nixos.org/wiki/KDE
     services.displayManager.sddm.enable = true;
     programs.kdeconnect.enable = true;
 
@@ -33,7 +33,7 @@ in
     hardware.bluetooth.enable = true;
 
     # Firewall
-    # https://nixos.wiki/wiki/Firewall
+    # https://wiki.nixos.org/wiki/Firewall
     networking.firewall = {
       enable = true;
       allowedTCPPortRanges = [
@@ -78,7 +78,7 @@ in
       };
     };
 
-    # https://nixos.wiki/wiki/Fonts
+    # https://wiki.nixos.org/wiki/Fonts
     # fonts for starship
     fonts.packages = with pkgs; [
       fira-code
@@ -124,7 +124,7 @@ in
     };
 
     # Enable Fwupd
-    # https://nixos.wiki/wiki/Fwupd
+    # https://wiki.nixos.org/wiki/Fwupd
     services.fwupd.enable = true;
 
     # Enable Netbird Wireguard VPN service
