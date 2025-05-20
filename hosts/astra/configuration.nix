@@ -36,7 +36,7 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Use kernel 6.13, because of the VirtualBox guest additions
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_13;
+  # boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_13;
 
   # Enable networking
   networking.networkmanager.enable = true;
