@@ -16,27 +16,6 @@ in
 {
   imports = [
     ../services/hokage.nix
-    ../services/hokage/zfs.nix
-    ../services/hokage/atuin.nix
-    ../services/hokage/git.nix
-    ../services/hokage/audio.nix
-    ../services/hokage/espanso.nix
-    ../services/hokage/desktop.nix
-    ../services/hokage/desktop-minimum.nix
-    ../services/hokage/tugraz.nix
-    ../services/hokage/jetbrains.nix
-    ../services/hokage/ghostty.nix
-    ../services/hokage/cache.nix
-    ../services/hokage/openssh.nix
-    ../services/hokage/rog-ally.nix
-    ../services/hokage/server.nix
-    ../services/hokage/server-home.nix
-    ../services/hokage/server-remote.nix
-    ../services/hokage/virt-manager.nix
-    ../services/hokage/platformio.nix
-    ../services/hokage/starship.nix
-    ../services/hokage/qtcreator.nix
-    ../services/hokage/virtualbox.nix
   ];
 
   boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);
