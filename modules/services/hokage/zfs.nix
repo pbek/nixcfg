@@ -57,7 +57,7 @@ in
 
     boot = {
       # Use the latest kernel version possible for ZFS or the latest kernel
-      kernelPackages = mkDefault pkgs.linuxKernel.packages.linux_6_13;
+      kernelPackages = mkDefault pkgs.linuxKernel.packages.linux_6_14;
 
       # Set maximum ARC size to prevent the Early OOM from killing processes
       # https://wiki.nixos.org/wiki/ZFS#Tuning_Adaptive_Replacement_Cache_size
