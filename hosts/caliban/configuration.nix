@@ -121,6 +121,7 @@ in
       encrypted = true;
     };
     qtcreator.enable = false;
+    virtualbox.enable = true;
     jetbrains = {
       plugins = [ ];
       phpstorm.package = pkgs.jetbrains.phpstorm;
