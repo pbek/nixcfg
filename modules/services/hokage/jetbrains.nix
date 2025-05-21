@@ -100,7 +100,6 @@ in
   config = lib.mkIf cfg.enable {
     # Unfortunately, we can't have per-application plugin settings
     environment.systemPackages =
-      with pkgs;
       lib.optional cfg.phpstorm.enable (
         if builtins.isNull cfg.plugins || builtins.length cfg.plugins == 0 then
           cfg.phpstorm.package

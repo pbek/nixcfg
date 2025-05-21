@@ -163,12 +163,6 @@ in
       hostId = "dcdaca04";
       datasetRootName = "root";
     };
-    jetbrains = {
-      plugins = [ ];
-      clion.package = pkgs.jetbrains.clion;
-      phpstorm.package = pkgs.jetbrains.phpstorm;
-      goland.package = pkgs.jetbrains.goland;
-    };
     cache.sources = [ "home" ];
   };
 }

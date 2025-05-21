@@ -123,8 +123,6 @@ in
     qtcreator.enable = false;
     virtualbox.enable = true;
     jetbrains = {
-      plugins = [ ];
-      phpstorm.package = pkgs.jetbrains.phpstorm;
       clion.enable = false;
       goland.enable = false;
     };

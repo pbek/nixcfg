@@ -140,11 +140,5 @@ in
     cache.sources = [ "home" ];
     platformio.enable = true;
     virtualbox.enable = true;
-    jetbrains = {
-      plugins = [ ];
-      clion.package = pkgs.jetbrains.clion;
-      phpstorm.package = pkgs.jetbrains.phpstorm;
-      goland.package = pkgs.jetbrains.goland;
-    };
   };
 }
