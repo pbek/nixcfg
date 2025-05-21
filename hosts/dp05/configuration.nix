@@ -72,19 +72,12 @@ in
     espanso.enable = false;
     tugraz.enable = true;
     qtcreator.enable = false;
+    jetbrains.phpstorm.enable = true;
 
     zfs = {
       enable = true;
       hostId = "dccada05";
       encrypted = true;
-    };
-    jetbrains = {
-      enable = true;
-      plugins = [ ];
-      phpstorm = {
-        enable = true;
-        package = pkgs.jetbrains.phpstorm;
-      };
     };
   };
 }
