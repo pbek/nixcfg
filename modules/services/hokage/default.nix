@@ -16,27 +16,27 @@ let
 in
 {
   imports = [
-    ./hokage/zfs.nix
-    ./hokage/atuin.nix
-    ./hokage/git.nix
-    ./hokage/audio.nix
-    ./hokage/espanso.nix
-    ./hokage/desktop.nix
-    ./hokage/desktop-minimum.nix
-    ./hokage/tugraz.nix
-    ./hokage/jetbrains.nix
-    ./hokage/ghostty.nix
-    ./hokage/cache.nix
-    ./hokage/openssh.nix
-    ./hokage/rog-ally.nix
-    ./hokage/server.nix
-    ./hokage/server-home.nix
-    ./hokage/server-remote.nix
-    ./hokage/virt-manager.nix
-    ./hokage/platformio.nix
-    ./hokage/starship.nix
-    ./hokage/qtcreator.nix
-    ./hokage/virtualbox.nix
+    ./atuin.nix
+    ./audio.nix
+    ./cache.nix
+    ./desktop-minimum.nix
+    ./desktop.nix
+    ./espanso.nix
+    ./ghostty.nix
+    ./git.nix
+    ./jetbrains.nix
+    ./openssh.nix
+    ./platformio.nix
+    ./qtcreator.nix
+    ./rog-ally.nix
+    ./server-home.nix
+    ./server-remote.nix
+    ./server.nix
+    ./starship.nix
+    ./tugraz.nix
+    ./virt-manager.nix
+    ./virtualbox.nix
+    ./zfs.nix
   ];
 
   options = {

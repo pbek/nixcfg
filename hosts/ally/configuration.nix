@@ -10,7 +10,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ../../modules/mixins/common.nix
+    ../../modules/common.nix
   ];
 
   networking.hostName = "ally";

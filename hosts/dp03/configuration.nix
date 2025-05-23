@@ -20,7 +20,7 @@ in
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./disk-config.zfs.nix
-    ../../modules/mixins/common.nix
+    ../../modules/common.nix
   ];
 
   networking = {

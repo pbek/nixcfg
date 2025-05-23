@@ -22,7 +22,7 @@ let
 in
 {
   imports = [
-    ../../modules/mixins/common.nix
+    ../../modules/common.nix
   ];
 
   users.users.root.initialPassword = "root";

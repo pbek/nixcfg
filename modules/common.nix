@@ -15,7 +15,7 @@ let
 in
 {
   imports = [
-    ../services/hokage.nix
+    ./services/hokage
   ];
 
   boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);

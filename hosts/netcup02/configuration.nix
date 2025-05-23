@@ -9,7 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/mixins/common.nix
+    ../../modules/common.nix
     ./disk-config.zfs.nix
   ];
 
