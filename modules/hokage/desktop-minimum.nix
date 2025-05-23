@@ -103,9 +103,9 @@ in
           usbutils # lsusb
 
           #    qownnotes
-          (callPackage ../../../pkgs/qownnotes/package.nix { })
+          (callPackage ../../pkgs/qownnotes/package.nix { })
           qc
-          #    (pkgs.callPackage ../../../pkgs/qc/default.nix { })
+          #    (pkgs.callPackage ../../pkgs/qc/default.nix { })
           bluez
           nextcloud-client
         ];
@@ -150,27 +150,27 @@ in
 
       # Set up "shells" directory (e.g. for JetBrains IDEs and QtCreator)
       home.file.".shells" = {
-        source = ../../../files/shells;
+        source = ../../files/shells;
       };
 
       # KDE Plasma 5
       home.file.".local/share/kservices5" = {
-        source = ../../../files/kservices5;
+        source = ../../files/kservices5;
       };
 
       # KDE Plasma 6
       home.file.".local/share/kio/servicemenus" = {
-        source = ../../../files/kservices5;
+        source = ../../files/kservices5;
       };
 
       # Add config for zellij
       home.file.".config/zellij" = {
-        source = ../../../files/zellij;
+        source = ../../files/zellij;
       };
 
       # Add color schema for konsole
       home.file.".local/share/konsole/Catppuccin-Mocha-pbek.colorscheme" = {
-        source = ../../../files/konsole/Catppuccin-Mocha-pbek.colorscheme;
+        source = ../../files/konsole/Catppuccin-Mocha-pbek.colorscheme;
       };
     };
 
@@ -223,7 +223,7 @@ in
         {
           # Add nixpkgs-review environment
           nixpkgs-review = {
-            file = ../../../secrets/nixpkgs-review.age;
+            file = ../../secrets/nixpkgs-review.age;
             path = "/home/${userLogin}/.secrets/nixpkgs-review.env";
             owner = userLogin;
             group = "users";
@@ -231,7 +231,7 @@ in
           };
 
           pia-user = {
-            file = ../../../secrets/pia-user.age;
+            file = ../../secrets/pia-user.age;
             path = "/home/${userLogin}/.secrets/pia-user";
             owner = userLogin;
             group = "users";
@@ -239,7 +239,7 @@ in
           };
 
           pia-pass = {
-            file = ../../../secrets/pia-pass.age;
+            file = ../../secrets/pia-pass.age;
             path = "/home/${userLogin}/.secrets/pia-pass";
             owner = userLogin;
             group = "users";
@@ -247,7 +247,7 @@ in
           };
 
           github-token = {
-            file = ../../../secrets/github-token.age;
+            file = ../../secrets/github-token.age;
             path = "/home/${userLogin}/.secrets/github-token";
             owner = userLogin;
             group = "users";
@@ -255,7 +255,7 @@ in
           };
 
           neosay = {
-            file = ../../../secrets/neosay.age;
+            file = ../../secrets/neosay.age;
             path = "/home/${userLogin}/.config/neosay/config.json";
             owner = userLogin;
             group = "users";
@@ -263,7 +263,7 @@ in
           };
 
           atuin = {
-            file = ../../../secrets/atuin.age;
+            file = ../../secrets/atuin.age;
             path = "/home/${userLogin}/.secrets/atuin-key";
             owner = userLogin;
             group = "users";
@@ -271,7 +271,7 @@ in
           };
 
           qc-config = {
-            file = ../../../secrets/qc-config.age;
+            file = ../../secrets/qc-config.age;
             path = "/home/${userLogin}/.config/qc/config.toml";
             owner = userLogin;
             group = "users";

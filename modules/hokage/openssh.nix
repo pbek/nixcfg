@@ -40,7 +40,7 @@ in
       if useSecrets then
         {
           id_ecdsa_sk = {
-            file = ../../../secrets/id_ecdsa_sk.age;
+            file = ../../secrets/id_ecdsa_sk.age;
             path = "/home/${userLogin}/.ssh/id_ecdsa_sk";
             owner = userLogin;
             group = "users";
