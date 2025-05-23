@@ -374,6 +374,9 @@ eval-config configPath host=hostname *args:
 eval-config-json configPath host=hostname *args:
     nix eval .#nixosConfigurations.{{ host }}.config.{{ configPath }} --json {{ args }} | jq | bat -l json
 
+whereis-pkg package:
+    whereis $(which ${package})
+
 # Show all config options of the hokage service
 hokage-options host=hostname:
     nix eval .#nixosConfigurations.{{ host }}.options.hokage --json | jq
