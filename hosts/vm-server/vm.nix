@@ -22,7 +22,7 @@ let
 in
 {
   imports = [
-    ../../modules/common.nix
+    ../../modules/hokage
   ];
 
   users.users.root.initialPassword = "root";

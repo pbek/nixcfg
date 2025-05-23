@@ -14,10 +14,6 @@ let
   inherit (hokage) zfs;
 in
 {
-  imports = [
-    ./hokage
-  ];
-
   boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);
 
   # Set some fish config

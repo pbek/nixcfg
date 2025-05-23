@@ -16,6 +16,7 @@ let
 in
 {
   imports = [
+    ../common.nix
     ./atuin.nix
     ./audio.nix
     ./cache.nix

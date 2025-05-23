@@ -15,7 +15,7 @@
     # doesn't need to run "nix-channel --update" first.
     <nixpkgs/nixos/modules/installer/cd-dvd/channel.nix>
 
-    ./modules/common.nix
+    ./modules/hokage
     # ./modules/mixins/jetbrains.nix
     # ./modules/mixins/virt-manager.nix
   ];
