@@ -69,6 +69,9 @@ in
       enable = mkEnableOption "Enable CLion support" // {
         default = useInternalInfrastructure;
       };
+      enableQt6 = mkEnableOption "Enable Qt6 for CLion" // {
+        default = true;
+      };
       package = mkPackageOption jetbrainsPackages "clion" {
         example = "clion";
       };
@@ -121,15 +124,23 @@ in
     home-manager.users.${userLogin} = {
       xdg.desktopEntries = lib.mkMerge [
         (lib.mkIf cfg.clion.enable {
-          clion-nix-shell = {
-            name = "CLion with dev packages";
-            genericName = "C/C++ IDE. New. Intelligent. Cross-platform";
-            comment = "Test Enhancing productivity for every C and C++ developer on Linux, macOS and Windows.";
-            icon = "${jetbrainsPackages.clion}/share/pixmaps/clion.svg";
-            exec = "nix-shell /home/${userLogin}/.shells/qt5.nix --run clion";
-            terminal = false;
-            categories = [ "Development" ];
-          };
+          clion-nix-shell =
+            let
+              shellPath =
+                if cfg.clion.enableQt6 then
+                  "/home/${userLogin}/.shells/qt6.nix"
+                else
+                  "/home/${userLogin}/.shells/qt5.nix";
+            in
+            {
+              name = "CLion with dev packages";
+              genericName = "C/C++ IDE. New. Intelligent. Cross-platform";
+              comment = "Test Enhancing productivity for every C and C++ developer on Linux, macOS and Windows.";
+              icon = "${jetbrainsPackages.clion}/share/pixmaps/clion.svg";
+              exec = "nix-shell ${shellPath} --run clion";
+              terminal = false;
+              categories = [ "Development" ];
+            };
         })
         (lib.mkIf cfg.phpstorm.enable {
           phpstorm-nix-shell = {
