@@ -13,5 +13,12 @@ pkgs.mkShell {
     qt6.qtdeclarative
     qt6.qtsvg
     qt6.qt5compat
+    kdePackages.kwidgetsaddons
+    kdePackages.kcoreaddons
+    kdePackages.kconfig
+    kdePackages.kio
+    kdePackages.kxmlgui
+    kdePackages.kiconthemes
+    kdePackages.knotifications
   ];
 }
