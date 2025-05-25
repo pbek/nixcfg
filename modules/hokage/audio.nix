@@ -27,9 +27,10 @@ in
 
     # Try turning timer-based scheduling off for pulseaudio to prevent clicking and garbled audio
     # See https://wiki.nixos.org/wiki/PulseAudio#Clicking_and_Garbled_Audio
-    services.pulseaudio.configFile = pkgs.runCommand "default.pa" { } ''
-      sed 's/module-udev-detect$/module-udev-detect tsched=0/' \
-        ${pkgs.pulseaudio}/etc/pulse/default.pa > $out
-    '';
+    # But this resulted in gaps in audio playback for me, so I left it commented out.
+    #    services.pulseaudio.configFile = pkgs.runCommand "default.pa" { } ''
+    #      sed 's/module-udev-detect$/module-udev-detect tsched=0/' \
+    #        ${pkgs.pulseaudio}/etc/pulse/default.pa > $out
+    #    '';
   };
 }
