@@ -124,11 +124,12 @@ in
 
   # Restart network and docker after suspend
   # I had issues with KDE Plasma detecting that there is network after suspend
-  powerManagement.resumeCommands = ''
-    nmcli n off
-    nmcli n on
-    systemctl restart docker
-  '';
+  # But trying to restart it after resume didn't helkp, so I disabled it
+  # powerManagement.resumeCommands = ''
+  #   nmcli n off
+  #   nmcli n on
+  #   systemctl restart docker
+  # '';
 
   # Sleep is hindered by a compontent on the motherboard
   # Problem with "00:01.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge"
