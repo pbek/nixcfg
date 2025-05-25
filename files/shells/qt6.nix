@@ -14,6 +14,7 @@ pkgs.mkShell {
     qt6.qtsvg
     qt6.qt5compat
     kdePackages.kwidgetsaddons
+    kdePackages.kcompletion
     kdePackages.kcoreaddons
     kdePackages.kconfig
     kdePackages.kio
