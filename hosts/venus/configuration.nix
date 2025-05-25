@@ -113,7 +113,7 @@ in
   };
 
   #  # Enable suspend to RAM
-  #  # Sleep is hindered by a compontent on the motherboard
+  #  # Sleep is hindered by a component on the motherboard
   #  # Problem with "00:01.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge"
   #  powerManagement.powerUpCommands = ''
   #    echo GPP0 > /proc/acpi/wakeup
@@ -124,16 +124,16 @@ in
 
   # Restart network and docker after suspend
   # I had issues with KDE Plasma detecting that there is network after suspend
-  # But trying to restart it after resume didn't helkp, so I disabled it
+  # But trying to restart it after resume didn't help, so I disabled it
   # powerManagement.resumeCommands = ''
   #   nmcli n off
   #   nmcli n on
   #   systemctl restart docker
   # '';
 
-  # Sleep is hindered by a compontent on the motherboard
+  # Sleep is hindered by a component on the motherboard
   # Problem with "00:01.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge"
-  # Disabling wakeup triggers for all PCIe devices
+  # Disabling wake-up triggers for all PCIe devices
   # https://wiki.nixos.org/wiki/Power_Management#Solution_1:_Disabling_wakeup_triggers_for_all_PCIe_devices
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="pci", DRIVER=="pcieport", ATTR{power/wakeup}="disabled"
