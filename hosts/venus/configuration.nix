@@ -69,6 +69,8 @@ in
     lact # AMD GPU monitoring
     ryubing # Nintendo Switch emulator
     jellyfin-media-player
+
+    mangohud # Overlay for monitoring performance of games
   ];
 
   # https://wiki.nixos.org/wiki/steam
@@ -155,6 +157,8 @@ in
     # High DPI for ryubing
     AVALONIA_GLOBAL_SCALE_FACTOR = 2;
   };
+
+  programs.gamemode.enable = true;
 
   hokage = {
     role = "desktop";
