@@ -351,7 +351,7 @@ in
                 replace = "beispielsweise";
               }
               {
-                trigger = ":eg";
+                trigger = ":fe";
                 replace = "for example";
               }
               {
