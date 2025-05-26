@@ -112,6 +112,13 @@ in
   # Increase the console font size for kmscon
   services.kmscon.extraConfig = "font-size = 26";
 
+  users.users.${userLogin} = {
+    openssh.authorizedKeys.keys = [
+      # For letting astra build on caliban
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC50qr12/4ZU+xv2U20/kd6UPvX0Cgkc3XbslhFMlSde omega@astra"
+    ];
+  };
+
   hokage = {
     tugraz.enable = true;
     zfs = {
