@@ -333,7 +333,52 @@ in
             ];
           };
           abbreviations = {
+            global_vars = [
+              {
+                name = "metaphorpsum";
+                type = "shell";
+                params = {
+                  cmd = "${lib.getExe pkgs.curl} -s http://metaphorpsum.com/sentences/7";
+                };
+              }
+            ];
             matches = [
+              {
+                triggers = [ ":li1" ];
+                replace = "{{ metaphorpsum }}";
+              }
+              {
+                triggers = [ ":li2" ];
+                replace = ''
+                  {{ metaphorpsum }}
+
+                  {{ metaphorpsum }}
+                '';
+              }
+              {
+                triggers = [ ":li3" ];
+                replace = ''
+                  {{ metaphorpsum }}
+
+                  {{ metaphorpsum }}
+
+                  {{ metaphorpsum }}
+                '';
+              }
+              {
+                triggers = [ ":li5" ];
+                replace = ''
+                  {{ metaphorpsum }}
+
+                  {{ metaphorpsum }}
+
+                  {{ metaphorpsum }}
+
+                  {{ metaphorpsum }}
+
+                  {{ metaphorpsum }}
+                '';
+              }
               {
                 triggers = [ ":afair" ];
                 replace = "As far as I remember";
