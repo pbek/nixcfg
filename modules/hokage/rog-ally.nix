@@ -51,29 +51,16 @@ in
       onboard # On-screen keyboard
       google-chrome # Touch scrolling in Chrome
       #    heroic-unwrapped # Epic Games Store
-      heroic # Epic Games Store
       lutris-unwrapped # Game manager
-
       ferdium
       #    qownnotes
       (pkgs.qt6Packages.callPackage ../../pkgs/qownnotes/package.nix { })
       qc
       #    (pkgs.callPackage ../../pkgs/qc/default.nix { })
       nextcloud-client
-
-      wowup-cf
-      #    (pkgs.callPackage ../../pkgs/wowup-cf/default.nix { })
-      ryubing # Nintendo Switch emulator
       qjoypad # Joystick mapper
       maliit-keyboard # Virtual keyboard
     ];
-
-    # https://wiki.nixos.org/wiki/steam
-    programs.steam = {
-      enable = true;
-      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    };
 
     # https://rycee.gitlab.io/home-manager/options.html
     home-manager.users.${userLogin} = {
@@ -134,6 +121,7 @@ in
       # Turn off default graphical system, we want to use our own configuration
       useGraphicalSystem = false;
       termFontSize = 15.0;
+      gaming.enable = true;
       cache.sources = [ "home" ];
     };
   };

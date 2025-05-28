@@ -62,24 +62,10 @@ in
     # Taken from https://github.com/nix-community/nur-combined/blob/master/repos/xeals/pkgs/by-name/cu/cura5/package.nix
     #    (pkgs.callPackage ../../pkgs/cura5/package.nix { })
     cura-appimage
-    wowup-cf
-    #    (pkgs.callPackage ../../pkgs/wowup-cf/default.nix { })
-    heroic # Epic Games Store
     amdgpu_top # AMD GPU monitoring
     lact # AMD GPU monitoring
-    ryubing # Nintendo Switch emulator
     jellyfin-media-player
-
-    mangohud # Overlay for monitoring performance of games
   ];
-
-  # https://wiki.nixos.org/wiki/steam
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    protontricks.enable = true; # Protontricks is a simple wrapper that does winetricks things for Proton enabled games
-  };
 
   # Enable hardware accelerated graphics drivers
   hardware.graphics.enable = true;
@@ -153,29 +139,13 @@ in
   # We have enough RAM
   zramSwap.enable = false;
 
-  environment.sessionVariables = {
-    # High DPI for ryubing
-    AVALONIA_GLOBAL_SCALE_FACTOR = 2;
-  };
-
-  programs.gamemode = {
-    enable = true; # Enable gamemode for games
-    enableRenice = true; # Enable renice for gamemode
-
-    settings = {
-      general = {
-        renice = 10;
-      };
-
-      custom = {
-        start = "${pkgs.libnotify}/bin/notify-send 'GameMode started'";
-        end = "${pkgs.libnotify}/bin/notify-send 'GameMode ended'";
-      };
-    };
-  };
   hokage = {
     role = "desktop";
     virtualbox.enable = true;
+    gaming = {
+      enable = true;
+      ryubing.highDpi = true;
+    };
     zfs = {
       enable = true;
       hostId = "dcdaca04";

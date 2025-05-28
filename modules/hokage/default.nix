@@ -23,6 +23,7 @@ in
     ./desktop-minimum.nix
     ./desktop.nix
     ./espanso.nix
+    ./gaming.nix
     ./ghostty.nix
     ./git.nix
     ./jetbrains.nix
