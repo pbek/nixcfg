@@ -139,6 +139,12 @@ in
   # We have enough RAM
   zramSwap.enable = false;
 
+  programs.gamescope = {
+    enable = true;
+    capSysNice = true;
+  };
+  programs.steam.gamescopeSession.enable = true; # Integrates with programs.steam
+
   hokage = {
     role = "desktop";
     virtualbox.enable = true;
