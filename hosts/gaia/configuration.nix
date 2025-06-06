@@ -97,11 +97,6 @@ in
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   };
 
-  # https://wiki.nixos.org/wiki/Linux_kernel
-  # linuxPackages_latest: 6.13
-  # linuxPackages_lts: 6.6
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
-
   # https://wiki.nixos.org/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;

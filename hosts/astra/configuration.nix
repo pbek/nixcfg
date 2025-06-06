@@ -35,8 +35,8 @@
   networking.hostName = "astra"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  # Use kernel 6.14, because of the VirtualBox guest additions
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_14;
+  # Use maximum allowed kernel package for VirtualBox
+  boot.kernelPackages = pkgs.linuxPackagesFor config.hokage.virtualbox.maxKernelVersion;
 
   # Enable networking
   networking.networkmanager.enable = true;

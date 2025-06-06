@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -15,6 +16,12 @@ in
 {
   options.hokage.virtualbox = {
     enable = mkEnableOption "Enable VirtualBox";
+    maxKernelVersion = lib.mkOption {
+      type = lib.types.package;
+      default = pkgs.linuxKernel.packages.linux_6_14.kernel;
+      description = "Maximum allowed kernel package vor VirtualBox";
+      readOnly = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -28,6 +35,9 @@ in
     };
 
     users.extraGroups.vboxusers.members = [ userLogin ];
+
+    # Use the latest kernel version working with VirtualBox
+    hokage.kernel.requirements = [ cfg.maxKernelVersion ];
 
     # Workaround for broken VirtualBox with Kernel 6.12+
     # https://github.com/NixOS/nixpkgs/issues/363887

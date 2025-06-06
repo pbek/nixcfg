@@ -27,6 +27,7 @@ in
     ./ghostty.nix
     ./git.nix
     ./jetbrains.nix
+    ./kernel.nix
     ./openssh.nix
     ./platformio.nix
     ./qtcreator.nix

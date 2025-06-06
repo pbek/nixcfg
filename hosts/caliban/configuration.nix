@@ -45,10 +45,6 @@ in
     lact # AMD GPU monitoring
   ];
 
-  # latest: 6.13
-  # lts: 6.6
-  #  boot.kernelPackages = pkgs.linuxPackages_latest;
-
   # Enable hardware accelerated graphics drivers
   hardware.graphics.enable = true;
 

@@ -11,11 +11,8 @@ let
   inherit (hokage) userNameLong;
   inherit (hokage) useInternalInfrastructure;
   inherit (hokage) excludePackages;
-  inherit (hokage) zfs;
 in
 {
-  boot.kernelPackages = lib.mkIf (!zfs.enable) (lib.mkDefault pkgs.linuxPackages_latest);
-
   # Set some fish config
   programs = {
     fish = {

@@ -15,7 +15,6 @@ let
   homeDataset = "${cfg.poolName}${datasetRootPart}/home";
 
   inherit (lib)
-    mkDefault
     mkEnableOption
     mkOption
     types
@@ -55,10 +54,10 @@ in
     services.zfs.autoScrub.enable = true;
     networking.hostId = cfg.hostId;
 
-    boot = {
-      # Use the latest kernel version possible for ZFS or the latest kernel
-      kernelPackages = mkDefault pkgs.linuxKernel.packages.linux_6_14;
+    # Use the latest kernel version possible for ZFS or the latest kernel
+    hokage.kernel.requirements = [ pkgs.linuxKernel.packages.linux_6_14.kernel ];
 
+    boot = {
       # Set maximum ARC size to prevent the Early OOM from killing processes
       # https://wiki.nixos.org/wiki/ZFS#Tuning_Adaptive_Replacement_Cache_size
       kernelParams = [ "zfs.zfs_arc_max=${builtins.toString cfg.arcMax}" ];
