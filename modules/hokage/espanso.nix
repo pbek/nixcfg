@@ -407,6 +407,10 @@ in
                 trigger = ":imho";
                 replace = "in my humble opinion";
               }
+              {
+                trigger = ":btw";
+                replace = "by the way";
+              }
             ];
           };
           emotes = {
