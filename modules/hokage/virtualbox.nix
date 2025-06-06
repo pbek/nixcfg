@@ -11,13 +11,25 @@ let
 
   inherit (lib)
     mkEnableOption
+    mkOption
+    mkIf
+    types
     ;
 in
 {
   options.hokage.virtualbox = {
     enable = mkEnableOption "Enable VirtualBox";
+    role = mkOption {
+      type = types.enum [
+        "host"
+        "guest"
+      ];
+      default = "host";
+      description = "Role of the VirtualBox system";
+    };
     maxKernelVersion = lib.mkOption {
       type = lib.types.package;
+      # Set the currently maximum allowed kernel package for VirtualBox here
       default = pkgs.linuxKernel.packages.linux_6_14.kernel;
       description = "Maximum allowed kernel package vor VirtualBox";
       readOnly = true;
@@ -26,7 +38,7 @@ in
 
   config = lib.mkIf cfg.enable {
     # https://wiki.nixos.org/wiki/VirtualBox
-    virtualisation.virtualbox = {
+    virtualisation.virtualbox = mkIf (cfg.role == "host") {
       host.enable = true;
       guest = {
         enable = true;
@@ -34,13 +46,13 @@ in
       };
     };
 
-    users.extraGroups.vboxusers.members = [ userLogin ];
+    users.extraGroups.vboxusers.members = mkIf (cfg.role == "host") [ userLogin ];
 
     # Use the latest kernel version working with VirtualBox
     hokage.kernel.requirements = [ cfg.maxKernelVersion ];
 
     # Workaround for broken VirtualBox with Kernel 6.12+
     # https://github.com/NixOS/nixpkgs/issues/363887
-    boot.kernelParams = [ "kvm.enable_virt_at_load=0" ];
+    boot.kernelParams = mkIf (cfg.role == "host") [ "kvm.enable_virt_at_load=0" ];
   };
 }

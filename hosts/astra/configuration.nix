@@ -35,9 +35,6 @@
   networking.hostName = "astra"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  # Use maximum allowed kernel package for VirtualBox
-  boot.kernelPackages = pkgs.linuxPackagesFor config.hokage.virtualbox.maxKernelVersion;
-
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -56,6 +53,10 @@
     termFontSize = 16.0;
     usePlasma6 = true;
     useGhosttyGtkFix = false;
+    virtualbox = {
+      enable = true;
+      role = "guest";
+    };
     cache.sources = [ "caliban" ];
   };
 }

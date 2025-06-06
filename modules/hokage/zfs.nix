@@ -48,6 +48,13 @@ in
       default = 1536 * 1024 * 1024; # 1.5GB
       description = "Maximum size of ARC (Adaptive Replacement Cache) in bytes";
     };
+    maxKernelVersion = lib.mkOption {
+      type = lib.types.package;
+      # Set the currently maximum allowed kernel package for ZFS here
+      default = pkgs.linuxKernel.packages.linux_6_14.kernel;
+      description = "Maximum allowed kernel package vor ZFS";
+      readOnly = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -55,7 +62,7 @@ in
     networking.hostId = cfg.hostId;
 
     # Use the latest kernel version possible for ZFS or the latest kernel
-    hokage.kernel.requirements = [ pkgs.linuxKernel.packages.linux_6_14.kernel ];
+    hokage.kernel.requirements = [ cfg.maxKernelVersion ];
 
     boot = {
       # Set maximum ARC size to prevent the Early OOM from killing processes
