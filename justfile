@@ -386,7 +386,7 @@ _hokage-options-defunc:
     #!/usr/bin/env bash
 
     # Store options globally so we don't need to fetch them multiple times
-    options=$(nixos-option hokage | tail -n +2)
+    options=$(nixos-option -r -F . hokage | tail -n +2)
 
     while true; do
         # Use fzf to select an option
@@ -402,7 +402,7 @@ _hokage-options-defunc:
 
         echo "Showing details for: hokage.$selected"
         echo "----------------------------------------"
-        nixos-option "hokage.$selected"
+        nixos-option -r -F . $selected
         echo "----------------------------------------"
         echo "Press any key to select another option, or Ctrl+C to exit"
 
