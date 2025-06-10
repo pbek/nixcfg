@@ -89,6 +89,7 @@
       #     hostname = config.networking.hostName;
       #    nixosModules = import ./modules { inherit (nixpkgs) lib; };
       commonArgs = {
+        lib-utils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
       };
 
       nixosConfigurations = {

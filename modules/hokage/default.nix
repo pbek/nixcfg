@@ -3,6 +3,7 @@
   lib,
   pkgs,
   utils,
+  lib-utils,
   ...
 }:
 let
@@ -15,31 +16,8 @@ let
     ;
 in
 {
-  imports = [
+  imports = builtins.map import (lib-utils.listNixFiles ./.) ++ [
     ../common.nix
-    ./atuin.nix
-    ./audio.nix
-    ./cache.nix
-    ./desktop-minimum.nix
-    ./desktop.nix
-    ./espanso.nix
-    ./gaming.nix
-    ./ghostty.nix
-    ./git.nix
-    ./jetbrains.nix
-    ./kernel.nix
-    ./openssh.nix
-    ./platformio.nix
-    ./qtcreator.nix
-    ./rog-ally.nix
-    ./server-home.nix
-    ./server-remote.nix
-    ./server.nix
-    ./starship.nix
-    ./tugraz.nix
-    ./virt-manager.nix
-    ./virtualbox.nix
-    ./zfs.nix
   ];
 
   options = {
