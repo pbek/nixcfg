@@ -63,7 +63,8 @@
           config.allowUnfree = true;
         };
       };
-      allOverlays = overlaysFromDir ++ [ overlays-nixpkgs ];
+      validOverlays = builtins.filter (x: builtins.isFunction x) overlaysFromDir;
+      allOverlays = validOverlays ++ [ overlays-nixpkgs ];
       commonServerModules = [
         home-manager.nixosModules.home-manager
         { }
