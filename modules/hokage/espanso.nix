@@ -396,7 +396,8 @@ in
                 replace = "beispielsweise";
               }
               {
-                trigger = ":fe";
+                # Don't collide with ":fear" trigger
+                trigger = ":fex";
                 replace = "for example";
               }
               {
