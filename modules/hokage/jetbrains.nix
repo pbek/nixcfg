@@ -50,6 +50,25 @@ let
       #        }
       #      ).jetbrains;
       pkgs.jetbrains;
+
+  splitPlugins = plugins: {
+    stringPlugins = lib.filter builtins.isString plugins;
+    derivationPlugins = lib.filter (p: !builtins.isString p) plugins;
+  };
+
+  # Unfortunately, we can't have per-application plugin settings
+  mkJetbrainsPackage =
+    name: cfgPackage:
+    let
+      plugins = splitPlugins cfg.plugins;
+      basePackage =
+        if builtins.isNull cfg.plugins || builtins.length cfg.plugins == 0 then
+          cfgPackage
+        else
+          jetbrainsPackages.plugins.addPlugins cfgPackage plugins.stringPlugins;
+    in
+    [ (basePackage.overrideAttrs { preferLocalBuild = true; }) ] ++ plugins.derivationPlugins;
+
 in
 {
   options.hokage.jetbrains = {
@@ -87,10 +106,11 @@ in
     # Documentation: https://github.com/NixOS/nixpkgs/tree/nixos-unstable/pkgs/applications/editors/jetbrains
     # Plugin list: https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/applications/editors/jetbrains/plugins/plugins.json
     plugins = mkOption {
-      type = types.listOf types.str;
+      # type = types.listOf types.anything;
+      type = types.listOf (types.either types.str types.package);
       # GitHub copilot is broken with JetBrains 2025.1
       # https://plugins.jetbrains.com/plugin/17718-github-copilot
-      default = [ ];
+      default = [ pkgs.jetbrains.plugins.github-copilot-fixed ];
       example = [ "github-copilot" ];
       description = ''
         List of JetBrains plugin IDs or names to install. See
@@ -101,26 +121,11 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # Unfortunately, we can't have per-application plugin settings
     environment.systemPackages =
-      lib.optional cfg.phpstorm.enable (
-        if builtins.isNull cfg.plugins || builtins.length cfg.plugins == 0 then
-          cfg.phpstorm.package
-        else
-          jetbrainsPackages.plugins.addPlugins cfg.phpstorm.package cfg.plugins
-      )
-      ++ lib.optional cfg.clion.enable (
-        if builtins.isNull cfg.plugins || builtins.length cfg.plugins == 0 then
-          cfg.clion.package
-        else
-          jetbrainsPackages.plugins.addPlugins cfg.clion.package cfg.plugins
-      )
-      ++ lib.optional cfg.goland.enable (
-        if builtins.isNull cfg.plugins || builtins.length cfg.plugins == 0 then
-          cfg.goland.package
-        else
-          jetbrainsPackages.plugins.addPlugins cfg.goland.package cfg.plugins
-      );
+      lib.optionals cfg.phpstorm.enable (mkJetbrainsPackage "phpstorm" cfg.phpstorm.package)
+      ++ lib.optionals cfg.clion.enable (mkJetbrainsPackage "clion" cfg.clion.package)
+      ++ lib.optionals cfg.goland.enable (mkJetbrainsPackage "goland" cfg.goland.package);
+
     home-manager.users.${userLogin} = {
       xdg.desktopEntries = lib.mkMerge [
         (lib.mkIf cfg.clion.enable {
