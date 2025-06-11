@@ -1,16 +1,26 @@
 # Borrowed from https://github.com/SamueleFacenda/nixos-config/blob/c3df35b40b7e501398ebf7cb53ed0115d65733d9/overlays/jetbrains-plugins.nix
 # Fixes https://github.com/NixOS/nixpkgs/issues/400317
 self: super:
-builtins.trace ">>> Loading GitHub Copilot overlay" (
+
+let
+  lib = super.lib; # or `self.lib` if you're building your own lib
+in
+
+builtins.trace "Loading GitHub Copilot overlay..." (
   let
     id = "17718";
     url = "https://plugins.jetbrains.com/files/17718/743191/github-copilot-intellij-1.5.45-243.zip";
     hash = "sha256-wSIGsDmgZV8o6F9ekf84b06Ul16rw+wXdQx/X4D/rCI=";
+
+    # Combine URL and hash to create a unique identifier for the plugin
+    combined = "${url}-${hash}";
+    fullHash = builtins.hashString "sha256" combined;
+    shortHash = builtins.substring 0 8 fullHash;
   in
   {
     jetbrains = super.lib.recursiveUpdate super.jetbrains {
       plugins.github-copilot-fixed = super.stdenv.mkDerivation {
-        name = "jetbrains-plugin-${id}";
+        name = "jetbrains-plugin-${id}-github-copilot-fixed-${shortHash}";
         installPhase = ''
           runHook preInstall
           mkdir -p $out && cp -r . $out
