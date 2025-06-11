@@ -110,7 +110,10 @@ in
       type = types.listOf (types.either types.str types.package);
       # GitHub copilot is broken with JetBrains 2025.1
       # https://plugins.jetbrains.com/plugin/17718-github-copilot
-      default = [ pkgs.jetbrains.plugins.github-copilot-fixed ];
+      default = [
+        pkgs.jetbrains.plugins.github-copilot-fixed
+        "nixidea"
+      ];
       example = [ "github-copilot" ];
       description = ''
         List of JetBrains plugin IDs or names to install. See
