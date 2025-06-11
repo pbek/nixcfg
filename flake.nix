@@ -41,6 +41,18 @@
 
     let
       system = "x86_64-linux";
+      overlaysDir = ./overlays;
+      overlaysFromDir = builtins.filter (x: x != null) (
+        builtins.attrValues (
+          builtins.mapAttrs (
+            name: type:
+            if type == "regular" && builtins.match ".*\\.nix$" name != null then
+              import (overlaysDir + "/${name}")
+            else
+              null
+          ) (builtins.readDir overlaysDir)
+        )
+      );
       overlays-nixpkgs = final: prev: {
         stable = import nixpkgs-stable {
           inherit system;
@@ -51,11 +63,12 @@
           config.allowUnfree = true;
         };
       };
+      allOverlays = overlaysFromDir ++ [ overlays-nixpkgs ];
       commonServerModules = [
         home-manager.nixosModules.home-manager
         { }
         (_: {
-          nixpkgs.overlays = [ overlays-nixpkgs ];
+          nixpkgs.overlays = allOverlays;
         })
         # We still need the age module for servers, because it needs to evaluate "age" in the services
         agenix.nixosModules.age
@@ -64,7 +77,7 @@
         home-manager.nixosModules.home-manager
         { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
         (_: {
-          nixpkgs.overlays = [ overlays-nixpkgs ];
+          nixpkgs.overlays = allOverlays;
         })
         agenix.nixosModules.age
         espanso-fix.nixosModules.espanso-capdacoverride
