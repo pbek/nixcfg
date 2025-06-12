@@ -14,15 +14,37 @@ on:
 
 jobs:
   check:
-    name: 🔎️ Check flake
+    name: 🔎️ Eval flake
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        host:
+          - gaia
+          - venus
+          - rhea
+          - hyperion
+          - ally2
+          - astra
+          - caliban
+          - sinope
+          - netcup01
+          - netcup02
+          - home01
+          - moobox01
+          - jupiter
+          - ally
+          - pluto
+          - dp01
+          - dp02
+          - dp03
+          - dp04
+          - dp05
     steps:
-      - name: Install Nix
-        uses: cachix/install-nix-action@v20
+      - uses: actions/checkout@v4
+
+      - uses: cachix/install-nix-action@v24
         with:
           nix_path: nixpkgs=channel:nixos-unstable
-      - name: Checkout code
-        uses: actions/checkout@v3
-      # https://nix.dev/manual/nix/2.18/command-ref/new-cli/nix3-flake-check.html
-      - name: Check flake for all systems
-        run: nix flake check --no-build
+
+      - name: Run nix eval for ${{ matrix.host }}
+        run: nix eval .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel.drvPath
