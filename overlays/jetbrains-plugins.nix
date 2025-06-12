@@ -7,6 +7,7 @@ self: super:
 
 let
   id = "17718";
+  # Check version and update URL from https://plugins.jetbrains.com/plugin/17718-github-copilot/versions
   url = "https://plugins.jetbrains.com/files/17718/765945/github-copilot-intellij-1.5.46-243.zip";
   hash = "sha256-GKCOuZJerzhkhbl4zXWukonkygCT/Dm/tV4zRxFAP+g=";
 
