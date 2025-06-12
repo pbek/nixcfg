@@ -10,8 +10,8 @@ in
 builtins.trace "Loading GitHub Copilot overlay..." (
   let
     id = "17718";
-    url = "https://plugins.jetbrains.com/files/17718/743191/github-copilot-intellij-1.5.45-243.zip";
-    hash = "sha256-wSIGsDmgZV8o6F9ekf84b06Ul16rw+wXdQx/X4D/rCI=";
+    url = "https://plugins.jetbrains.com/files/17718/765945/github-copilot-intellij-1.5.46-243.zip";
+    hash = "sha256-GKCOuZJerzhkhbl4zXWukonkygCT/Dm/tV4zRxFAP+g=";
 
     # Combine URL and hash to create a unique identifier for the plugin
     combined = "${url}-${hash}";
