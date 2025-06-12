@@ -51,23 +51,18 @@ let
       #      ).jetbrains;
       pkgs.jetbrains;
 
-  splitPlugins = plugins: {
-    stringPlugins = lib.filter builtins.isString plugins;
-    derivationPlugins = lib.filter (p: !builtins.isString p) plugins;
-  };
-
   # Unfortunately, we can't have per-application plugin settings
   mkJetbrainsPackage =
     name: cfgPackage:
     let
-      plugins = splitPlugins cfg.plugins;
+      plugins = cfg.plugins;
       basePackage =
-        if builtins.isNull cfg.plugins || builtins.length cfg.plugins == 0 then
+        if builtins.isNull plugins || builtins.length plugins == 0 then
           cfgPackage
         else
-          jetbrainsPackages.plugins.addPlugins cfgPackage plugins.stringPlugins;
+          jetbrainsPackages.plugins.addPlugins cfgPackage plugins;
     in
-    [ (basePackage.overrideAttrs { preferLocalBuild = true; }) ] ++ plugins.derivationPlugins;
+    [ (basePackage.overrideAttrs { preferLocalBuild = true; }) ];
 
 in
 {
