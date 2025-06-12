@@ -1,5 +1,6 @@
 # Borrowed from https://github.com/SamueleFacenda/nixos-config/blob/c3df35b40b7e501398ebf7cb53ed0115d65733d9/overlays/jetbrains-plugins.nix
 # Fixes https://github.com/NixOS/nixpkgs/issues/400317
+# Original plugin handling on https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/applications/editors/jetbrains/plugins/specialPlugins.nix#L47
 self: super:
 
 let
