@@ -1,11 +1,9 @@
+# This overlay provides a fixed version of the GitHub Copilot plugin for JetBrains IDEs.
 # Borrowed from https://github.com/SamueleFacenda/nixos-config/blob/c3df35b40b7e501398ebf7cb53ed0115d65733d9/overlays/jetbrains-plugins.nix
 # Fixes https://github.com/NixOS/nixpkgs/issues/400317
 # Original plugin handling on https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/applications/editors/jetbrains/plugins/specialPlugins.nix#L47
-self: super:
 
-let
-  lib = super.lib; # or `self.lib` if you're building your own lib
-in
+self: super:
 
 builtins.trace "Loading GitHub Copilot overlay..." (
   let
@@ -13,7 +11,7 @@ builtins.trace "Loading GitHub Copilot overlay..." (
     url = "https://plugins.jetbrains.com/files/17718/765945/github-copilot-intellij-1.5.46-243.zip";
     hash = "sha256-GKCOuZJerzhkhbl4zXWukonkygCT/Dm/tV4zRxFAP+g=";
 
-    # Combine URL and hash to create a unique identifier for the plugin
+    # Combine URL and hash to create a unique identifier for the plugin to fix re-evaluation issues
     combined = "${url}-${hash}";
     fullHash = builtins.hashString "sha256" combined;
     shortHash = builtins.substring 0 8 fullHash;
