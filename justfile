@@ -381,7 +381,7 @@ whereis-pkg package:
 hokage-options host=hostname:
     nix eval .#nixosConfigurations.{{ host }}.options.hokage --json | jq
 
-# Process hokage service options interactively (still not working)
+# Show all config options of the hokage service to get more information about one (still not working)
 hokage-options-interactive:
     #!/usr/bin/env bash
 
