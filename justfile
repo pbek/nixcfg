@@ -381,16 +381,17 @@ whereis-pkg package:
 hokage-options host=hostname:
     nix eval .#nixosConfigurations.{{ host }}.options.hokage --json | jq
 
-# Process hokage service options interactively
-_hokage-options-defunc:
+# Process hokage service options interactively (still not working)
+hokage-options-interactive:
     #!/usr/bin/env bash
 
-    # Store options globally so we don't need to fetch them multiple times
-    options=$(nixos-option -r -F . hokage | tail -n +2)
+    # Get all hokage options using nix eval
+    echo "Loading hokage module options..."
+    options=$(nix eval .#nixosConfigurations.{{ hostname }}.options.hokage --json | jq -r 'to_entries | .[] | .key' | sort)
 
     while true; do
         # Use fzf to select an option
-        selected=$(echo "$options" | fzf --prompt="Select hokage option > ")
+        selected=$(echo "$options" | fzf --prompt="Select hokage option > " --height=20)
 
         # Check if user cancelled with ESC
         if [ -z "$selected" ]; then
@@ -400,10 +401,18 @@ _hokage-options-defunc:
         # Clear screen for better readability
         clear
 
-        echo "Showing details for: hokage.$selected"
-        echo "----------------------------------------"
-        nixos-option -r -F . $selected
-        echo "----------------------------------------"
+        echo "Option: hokage.$selected"
+        echo "========================================"
+
+        # Show detailed information about the selected option
+        nix eval .#nixosConfigurations.{{ hostname }}.options.hokage.$selected --json | jq -r '
+        if .description.text then "Description: " + .description.text else "Description: No description available" end,
+        if .type.description then "Type: " + .type.description else "Type: Unknown" end,
+        if .default.text then "Default: " + .default.text else "Default: No default value" end,
+        if .example.text then "Example: " + .example.text else "Example: No example provided" end
+        '
+
+        echo "========================================"
         echo "Press any key to select another option, or Ctrl+C to exit"
 
         # Wait for keypress
