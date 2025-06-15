@@ -65,6 +65,7 @@ in
     amdgpu_top # AMD GPU monitoring
     lact # AMD GPU monitoring
     jellyfin-media-player
+    aider-chat # AI assistant for Linux
   ];
 
   # Enable hardware accelerated graphics drivers
