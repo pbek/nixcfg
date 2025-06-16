@@ -37,26 +37,29 @@ let
         }
       ).jetbrains
     else
-      #      (import
-      #        (fetchTarball {
-      #          # Date: 20250503
-      #          url = "https://github.com/NixOS/nixpkgs/tarball/7a2622e2c0dbad5c4493cb268aba12896e28b008";
-      #          sha256 = "sha256-MHmBH2rS8KkRRdoU/feC/dKbdlMkcNkB5mwkuipVHeQ=";
-      #        })
-      #        {
-      #          inherit (config.nixpkgs) config;
-      #          localSystem = {
-      #            system = "x86_64-linux";
-      #          };
-      #        }
-      #      ).jetbrains;
-      pkgs.jetbrains;
+      # Pinning because of build error on nixpkgs-unstable with plugins: https://github.com/NixOS/nixpkgs/issues/400317#issuecomment-2975269192
+      # Issue: https://github.com/NixOS/nixpkgs/issues/417137
+      (import
+        (fetchTarball {
+          # Date: 20250608
+          # https://github.com/NixOS/nixpkgs/commits/nixpkgs-unstable
+          url = "https://github.com/NixOS/nixpkgs/tarball/d3d2d80a2191a73d1e86456a751b83aa13085d7d";
+          sha256 = "sha256-QuUtALJpVrPnPeozlUG/y+oIMSLdptHxb3GK6cpSVhA=";
+        })
+        {
+          inherit (config.nixpkgs) config;
+          localSystem = {
+            system = "x86_64-linux";
+          };
+        }
+      ).jetbrains;
+  #      pkgs.jetbrains;
 
   # Unfortunately, we can't have per-application plugin settings
   mkJetbrainsPackage =
     name: cfgPackage:
     let
-      plugins = cfg.plugins;
+      inherit (cfg) plugins;
       basePackage =
         if builtins.isNull plugins || builtins.length plugins == 0 then
           cfgPackage
