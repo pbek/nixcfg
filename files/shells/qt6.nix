@@ -21,5 +21,7 @@ pkgs.mkShell {
     kdePackages.kxmlgui
     kdePackages.kiconthemes
     kdePackages.knotifications
+    pkg-config
+    libgit2
   ];
 }
