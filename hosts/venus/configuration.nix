@@ -55,7 +55,7 @@ in
   environment.systemPackages = with pkgs; [
     calibre
     zoom-us
-    stable.blender-hip # Blender with HIP support for AMD GPUs
+    blender-hip # Blender with HIP support for AMD GPUs
     # Temporarily disabled for: sip-4.19.25 not supported for interpreter python3.12
     # Using stable.blender-hip doesn't work because of: Cannot mix incompatible Qt library (5.15.15) with this library (5.15.14)
     #     cura
@@ -92,7 +92,7 @@ in
   #  ];
 
   services.ollama = {
-    # enable = true;
+    enable = true;
     acceleration = "rocm";
     package = pkgs.ollama;
     #    environmentVariables = {
