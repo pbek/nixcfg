@@ -272,7 +272,7 @@ repair-store:
 # List the generations
 [group('maintenance')]
 list-generations:
-    nix profile history --profile /nix/var/nix/profiles/system
+    nh os info
 
 # Garbage collect the nix store to free up space
 [group('maintenance')]
