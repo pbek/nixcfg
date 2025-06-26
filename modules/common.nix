@@ -238,6 +238,9 @@ in
     capabilities = "cap_dac_read_search=+ep";
   };
 
+  # Enable memory-safe implementation of the sudo command
+  security.sudo-rs.enable = true;
+
   system = {
     # Create a symlink to the latest nixpkgs of the flake
     # See: https://discourse.nixos.org/t/do-flakes-also-set-the-system-channel/19798/18
