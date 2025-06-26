@@ -100,19 +100,19 @@ nix-build-on-caliban:
 # Build and deploy the astra host
 [group('build')]
 build-deploy-astra:
-    nixos-rebuild --target-host omega@astra.netbird.cloud --flake .#astra build
+    nh os build -H astra --target-host omega@astra.netbird.cloud .
     just _notify "build-deploy-astra finished on {{ hostname }}"
 
 # Build and deploy the ally2 host
 [group('build')]
 build-deploy-ally2:
-    nixos-rebuild --target-host omega@ally2.lan --flake .#ally2 build
+    nh os build -H ally2 --target-host omega@ally2.lan .
     just _notify "build-deploy-ally2 finished on {{ hostname }}"
 
 # Build the current host on the Sinope host
 [group('build')]
 build-on-sinope:
-    nixos-rebuild --build-host omega@sinope.netbird.cloud --flake .#{{ hostname }} build
+    nh os build -H {{ hostname }} --build-host omega@sinope.netbird.cloud .
     just _notify "build-on-sinope finished on {{ hostname }}"
 
 # Build with nh on caliban
@@ -244,7 +244,7 @@ build-vm-netcup02:
 # Rebuild the current host
 [group('build')]
 flake-rebuild-current:
-    sudo nixos-rebuild switch --flake .#{{ hostname }}
+    nh os switch -H {{ hostname }} .
 
 # Update the flakes
 [group('build')]
