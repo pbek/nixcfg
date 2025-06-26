@@ -170,7 +170,7 @@ in
         wget
         fish
         tmux
-        git
+        gitFull # git and gitk
         gitflow
         jq
         less
