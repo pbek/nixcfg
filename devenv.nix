@@ -1,27 +1,36 @@
 {
   pkgs,
+  nixpkgs-unstable,
   lib,
   config,
   inputs,
   ...
 }:
 
+let
+  unstablePkgs = nixpkgs-unstable.legacyPackages.${pkgs.system};
+in
 {
   # https://devenv.sh/packages/
-  packages = with pkgs; [
-    git
-    nh
-    gum
-    just
+  packages =
+    with pkgs;
+    [
+      git
+      gum
+      just
 
-    # For treefmt
-    treefmt
-    nodePackages.prettier
-    shfmt
-    nixfmt-rfc-style
-    statix
-    taplo
-  ];
+      # For treefmt
+      treefmt
+      nodePackages.prettier
+      shfmt
+      nixfmt-rfc-style
+      statix
+      taplo
+    ]
+    ++ [
+      unstablePkgs.nh
+      # Add more unstable packages here if needed, e.g. unstablePkgs.bat
+    ];
 
   enterShell = ''
     echo "🛠️ pbek nixcfg dev shell"

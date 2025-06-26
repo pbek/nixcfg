@@ -81,10 +81,10 @@ build-host hostname args='':
     nh os build -H {{ hostname }} . -- {{ args }}
     just _notify "build of host {{ hostname }} finished"
 
-# Build a host with nh
+# Build a host with nh on another host
 [group('build')]
-build-host-on buildHost hostname:
-    nixos-rebuild --build-host omega@{{ buildHost }} --flake .#{{ hostname }} build
+build-host-on buildHost hostname args='':
+    nh os build -H {{ hostname }} . -- --build-host omega@{{ buildHost }} {{ args }}
     just _notify "build of host {{ hostname }} on {{ buildHost }} finished"
 
 # Build the current host with nh
@@ -93,7 +93,7 @@ build args='': (build-host hostname args)
 
 # Build the current host on the Caliban host
 [group('build')]
-build-on-caliban:
+nix-build-on-caliban:
     nixos-rebuild --build-host omega@caliban-1.netbird.cloud --flake .#{{ hostname }} build
     just _notify "build-on-caliban finished on {{ hostname }}"
 
@@ -115,21 +115,23 @@ build-on-sinope:
     nixos-rebuild --build-host omega@sinope.netbird.cloud --flake .#{{ hostname }} build
     just _notify "build-on-sinope finished on {{ hostname }}"
 
-# Build with nh on caliban (--build-host" not found)
+# Build with nh on caliban
 [group('build')]
-nh-build-on-caliban:
-    nh os build -H {{ hostname }} . -- --build-host omega@caliban-1.netbird.cloud
+build-on-caliban args='':
+    nh os build -H {{ hostname }} --build-host omega@caliban-1.netbird.cloud . -- {{ args }}
+    just _notify "build-on-caliban finished on {{ hostname }}"
 
 # Build the current host on the Home01 host (use "--max-jobs 1" to restict downloads)
 [group('build')]
-build-on-home01 args='':
+nix-build-on-home01 args='':
     nixos-rebuild --build-host omega@home01.lan --flake .#{{ hostname }} build {{ args }}
     just _notify "build-on-home01 finished on {{ hostname }}"
 
-# Build with nh on homew01 (--build-host" not found)
+# Build with nh on home01
 [group('build')]
-nh-build-on-home01:
-    nh os build -H {{ hostname }} . -- --build-host omega@home01.lan
+build-on-home01 args='':
+    nh os build -H {{ hostname }} --build-host omega@home01.lan . -- {{ args }}
+    just _notify "build-on-home01 finished on {{ hostname }}"
 
 [group('cache')]
 switch-push: switch && push
