@@ -6,15 +6,19 @@
 }:
 
 let
-  cfg = config.hokage.uutils;
+  inherit (config) hokage;
+  cfg = hokage.uutils;
 in
 {
   options.hokage.uutils = {
-    enable = lib.mkEnableOption "uutils service";
+    enable =
+      lib.mkEnableOption "Turn on uutils replacements for GNU utils, changes seems to need reboot"
+      // {
+        default = hokage.role == "desktop" || hokage.role == "ally";
+      };
   };
 
   config = lib.mkIf cfg.enable {
-    # TODO: Doesn't seem to work yet, all the coreutils commands are still using GNU coreutils
     environment.systemPackages = with pkgs; [
       # Rust replacements for coreutils, findutils, and diffutils
       # https://discourse.nixos.org/t/how-to-use-uutils-coreutils-instead-of-the-builtin-coreutils/8904/24

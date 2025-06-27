@@ -135,6 +135,5 @@ in
     cache.sources = [ "home" ];
     platformio.enable = true;
     virtualbox.enable = true;
-    # uutils.enable = true;
   };
 }
