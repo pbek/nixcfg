@@ -56,7 +56,7 @@ let
   mkJetbrainsPackage =
     name: cfgPackage:
     let
-      plugins = cfg.plugins;
+      inherit (cfg) plugins;
       basePackage =
         if builtins.isNull plugins || builtins.length plugins == 0 then
           cfgPackage
