@@ -46,6 +46,24 @@ in
 
   programs.steam.gamescopeSession.enable = true; # Integrates with programs.steam
 
+  users.users.omega = {
+    isNormalUser = true;
+    description = "Patrizio Bekerle";
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "dialout"
+      "input"
+    ];
+    shell = pkgs.fish;
+    # Set empty password initially. Don't forget to set a password with "passwd".
+    initialHashedPassword = "";
+  };
+
+  # TODO: Enable home-manager for "omega" user
+  # home-manager.users.omega = config.home-manager.users.mba;
+
   hokage = {
     hostName = "mba-gaming-pc";
     userLogin = "mba";
