@@ -62,7 +62,6 @@ in
   networking = {
     hostId = "dabfdb01"; # needed for ZFS
     hostName = "miniserver24";
-    networkmanager.enable = true;
 
     nameservers = [ "192.168.1.100" ];
     defaultGateway = "192.168.1.5";

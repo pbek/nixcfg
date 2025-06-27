@@ -25,9 +25,6 @@ in
 
   networking.hostName = "dp02"; # Define your hostname.
 
-  # Enable networking
-  networking.networkmanager.enable = true;
-
   # https://wiki.nixos.org/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;

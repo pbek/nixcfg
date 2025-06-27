@@ -11,6 +11,10 @@ let
   inherit (hokage) userNameLong;
   inherit (hokage) useInternalInfrastructure;
   inherit (hokage) excludePackages;
+
+  inherit (lib)
+    mkDefault
+    ;
 in
 {
   # Set some fish config
@@ -82,7 +86,7 @@ in
   # Define a user account. Don't forget to set a password with "passwd".
   users.users.${userLogin} = {
     isNormalUser = true;
-    description = lib.mkDefault userNameLong;
+    description = mkDefault userNameLong;
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -120,6 +124,10 @@ in
 
   # Configure console keymap
   console.keyMap = "de-latin1-nodeadkeys";
+
+  networking = {
+    networkmanager.enable = mkDefault true;
+  };
 
   nix = {
     settings = {
@@ -315,6 +323,6 @@ in
   # Enable ZRAM swap to get more memory
   # https://search.nixos.org/options?channel=23.11&from=0&size=50&sort=relevance&type=packages&query=zram
   zramSwap = {
-    enable = lib.mkDefault true;
+    enable = mkDefault true;
   };
 }

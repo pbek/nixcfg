@@ -15,7 +15,6 @@
 
   networking = {
     hostName = "moobox01";
-    networkmanager.enable = true;
 
     # SSH is already enabled by the server-common mixin
     firewall = {

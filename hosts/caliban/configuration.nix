@@ -23,8 +23,6 @@ in
 
   networking = {
     hostName = "caliban";
-    networkmanager.enable = true;
-    useDHCP = lib.mkDefault true;
 
     # Adding a 2nd IP address temporarily to the interface didn't work out, best use the ip command
     # `sudo ip addr add 192.168.1.100/255.255.255.0 dev eno1`

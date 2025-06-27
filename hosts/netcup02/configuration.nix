@@ -15,7 +15,6 @@
 
   networking = {
     hostName = "netcup02";
-    networkmanager.enable = true;
 
     # ssh is already enabled by the server-common mixin
     firewall = {

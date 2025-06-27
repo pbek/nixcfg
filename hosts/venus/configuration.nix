@@ -33,9 +33,6 @@ in
   # '';
 
   networking = {
-    hostName = "venus";
-    networkmanager.enable = true;
-    useDHCP = lib.mkDefault true;
     hosts = {
       "192.168.1.110" = [
         "cicinas"
@@ -147,6 +144,7 @@ in
   programs.steam.gamescopeSession.enable = true; # Integrates with programs.steam
 
   hokage = {
+    hostName = "venus";
     role = "desktop";
     virtualbox.enable = true;
     gaming = {

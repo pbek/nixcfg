@@ -14,16 +14,12 @@
     ../../modules/hokage
   ];
 
-  networking = {
-    hostName = "ally2";
-    networkmanager.enable = true;
-  };
-
   # Enable Tailscale VPN
   # Use `sudo tailscale up --accept-routes` to connect to the VPN
   services.tailscale.enable = true;
 
   hokage = {
+    hostName = "ally2";
     role = "ally";
     #    usePlasma6 = false;
     #    useWayland = false;

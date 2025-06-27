@@ -20,7 +20,6 @@
 
   networking = {
     hostName = "hyperion";
-    networkmanager.enable = true;
   };
 
   hokage = {

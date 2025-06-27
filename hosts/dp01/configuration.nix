@@ -30,9 +30,6 @@ in
 
   networking.hostName = "dp01"; # Define your hostname.
 
-  # Enable networking
-  networking.networkmanager.enable = true;
-
   environment.systemPackages = with pkgs; [
     thunderbird
     spotify

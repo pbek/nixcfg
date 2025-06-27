@@ -35,9 +35,6 @@
   networking.hostName = "astra"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  # Enable networking
-  networking.networkmanager.enable = true;
-
   # Enable Tailscale VPN
   # Use `sudo tailscale up --accept-routes` to connect to the VPN
   services.tailscale.enable = true;

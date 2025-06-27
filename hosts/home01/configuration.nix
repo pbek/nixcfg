@@ -15,8 +15,6 @@
 
   networking = {
     hostName = "home01";
-    networkmanager.enable = true;
-
     nameservers = [ "192.168.1.1" ];
     defaultGateway = "192.168.1.1";
 

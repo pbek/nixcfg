@@ -28,10 +28,6 @@
   };
 
   networking.hostName = "neptun"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Enable networking
-  networking.networkmanager.enable = true;
 
   # Don't sleep when lid is closed
   # services.logind.lidSwitch = "ignore";

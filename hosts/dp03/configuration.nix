@@ -25,8 +25,6 @@ in
 
   networking = {
     hostName = "dp03";
-    networkmanager.enable = true;
-    useDHCP = lib.mkDefault true;
   };
 
   environment.systemPackages = with pkgs; [

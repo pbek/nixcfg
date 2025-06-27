@@ -32,9 +32,6 @@ in
   networking.hostName = "gaia"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  # Enable networking
-  networking.networkmanager.enable = true;
-
   services.avahi.nssmdns4 = true;
   # Samsung printer driver for ML-1710
   services.printing.drivers = [ pkgs.splix ];

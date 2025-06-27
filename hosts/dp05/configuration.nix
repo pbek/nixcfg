@@ -25,8 +25,6 @@ in
 
   networking = {
     hostName = "dp05";
-    networkmanager.enable = true;
-    useDHCP = lib.mkDefault true;
   };
 
   # Search on https://search.nixos.org/packages?channel=unstable

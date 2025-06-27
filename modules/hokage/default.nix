@@ -10,6 +10,7 @@ let
   cfg = config.hokage;
 
   inherit (lib)
+    mkIf
     mkOption
     types
     literalExpression
@@ -92,6 +93,11 @@ in
         default = "patrizio@bekerle.com";
         description = "Email of the default user";
       };
+      hostName = mkOption {
+        type = types.str;
+        default = "";
+        description = "Hostname of the system";
+      };
       excludePackages = mkOption {
         description = "List of default packages to exclude from the configuration";
         type = types.listOf types.package;
@@ -102,6 +108,10 @@ in
   };
 
   config = lib.mkMerge [
+    (mkIf (cfg.hostName != "") {
+      networking.hostName = cfg.hostName;
+    })
+
     #
     # General configs for Plasma 6
     #

@@ -25,9 +25,6 @@ in
 
   networking.hostName = "pluto"; # Define your hostname.
 
-  # Enable networking
-  networking.networkmanager.enable = true;
-
   # https://wiki.nixos.org/wiki/steam
   #  programs.steam = {
   #    enable = true;

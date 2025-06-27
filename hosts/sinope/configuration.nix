@@ -28,11 +28,6 @@
   };
 
   networking.hostName = "sinope"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Enable networking
-  # Use something like `sudo ip addr add 192.168.1.101/255.255.255.0 dev enp0s31f6` to add a 2nd ip address temporarily
-  networking.networkmanager.enable = true;
 
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/
   virtualisation.multipass.enable = true;
