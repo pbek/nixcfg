@@ -329,6 +329,17 @@
             inherit inputs;
           };
         };
+        # MBA Gaming PC
+        mba-gaming-pc = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = commonDesktopModules ++ [
+            ./hosts/mba-gaming-pc/configuration.nix
+            disko.nixosModules.disko
+          ];
+          specialArgs = self.commonArgs // {
+            inherit inputs;
+          };
+        };
         #      # Home Server miniserver24 for Markus
         #      miniserver24 = nixpkgs.lib.nixosSystem {
         #        inherit system;
