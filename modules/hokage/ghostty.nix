@@ -56,7 +56,7 @@ in
 
     # https://rycee.gitlab.io/home-manager/options.html
     # https://nix-community.github.io/home-manager/options.html#opt-home.file
-    home-manager.users.${userLogin} = {
+    hokage.sharedConfig.homeManager = {
       # Doc: https://ghostty.org/docs/config/reference
       # Config generator: https://ghostty.zerebos.com
       # Theme: https://github.com/catppuccin/ghostty/blob/main/themes/catppuccin-mocha.conf

@@ -130,7 +130,7 @@ in
     # Enable Netbird Wireguard VPN service
     services.netbird.enable = true;
 
-    users.users.${userLogin} = lib.mkIf useSharedKey {
+    hokage.sharedConfig.users = lib.mkIf useSharedKey {
       openssh.authorizedKeys.keys = [
         # Yubikey public key
         "sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBFDWxqigrXdCx7mX/yvBpHJf2JIab9HIrjof+sCbn0cOr/NySAirjE7tWxkZJPBrUs/8wSgn/rFO742O+NkOXTYAAAAEc3NoOg== omega@yubikey"
@@ -140,7 +140,7 @@ in
 
     # https://rycee.gitlab.io/home-manager/options.html
     # https://nix-community.github.io/home-manager/options.html#opt-home.file
-    home-manager.users.${userLogin} = {
+    hokage.sharedConfig.homeManager = {
       # allow unfree packages in nix-shell
       home.file.".config/nixpkgs/config.nix".text = ''
         {

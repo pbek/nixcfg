@@ -25,7 +25,7 @@ in
       qtcreator
     ];
 
-    home-manager.users.${userLogin} = {
+    hokage.sharedConfig.homeManager = {
       xdg.desktopEntries = {
         qtcreator-nix-shell = {
           name = "Qt Creator with dev packages";

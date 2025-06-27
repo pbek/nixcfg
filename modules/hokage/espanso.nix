@@ -37,7 +37,7 @@ in
       else
         "";
 
-    home-manager.users.${userLogin} = {
+    hokage.sharedConfig.homeManager = {
       # https://mynixos.com/home-manager/options/services.espanso
       services.espanso = {
         enable = true;

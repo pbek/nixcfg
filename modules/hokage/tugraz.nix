@@ -31,7 +31,7 @@ in
     ];
 
     # https://home-manager-options.extranix.com
-    home-manager.users.${userLogin} = {
+    hokage.sharedConfig.homeManager = {
       # https://searchix.alanpearce.eu/options/home-manager/search?query=git
       programs.git = {
         extraConfig = {

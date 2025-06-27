@@ -8,6 +8,7 @@
 }:
 let
   cfg = config.hokage;
+  hokage = cfg;
 
   inherit (lib)
     mkIf
@@ -166,7 +167,7 @@ in
         in
         requiredPackages ++ utils.removePackagesByName optionalPackages cfg.excludePackages;
 
-      home-manager.users.${cfg.userLogin} = {
+      hokage.sharedConfig.homeManager = {
         # https://github.com/nix-community/plasma-manager/blob/trunk/examples/home.nix
         programs.plasma = {
           enable = true;
@@ -284,7 +285,7 @@ in
         wl-clipboard
       ];
 
-      home-manager.users.${cfg.userLogin} = {
+      hokage.sharedConfig.homeManager = {
         xdg.desktopEntries = {
           ferdium-wayland = {
             name = "Ferdium Wayland";

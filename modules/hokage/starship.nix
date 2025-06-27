@@ -23,7 +23,7 @@ in
 
   config = lib.mkIf cfg.enable {
     # https://rycee.gitlab.io/home-manager/options.html
-    home-manager.users.${userLogin} = {
+    hokage.sharedConfig.homeManager = {
       # enable https://starship.rs
       programs.starship =
         let

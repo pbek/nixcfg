@@ -54,7 +54,7 @@ in
     };
 
     # https://rycee.gitlab.io/home-manager/options.html
-    home-manager.users.${userLogin} = {
+    hokage.sharedConfig.homeManager = {
       programs.git = {
         enable = true;
         # use "git diff --no-ext-diff" for creating patches!

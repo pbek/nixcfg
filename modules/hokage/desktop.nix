@@ -124,7 +124,7 @@ in
 
     # https://rycee.gitlab.io/home-manager/options.html
     # https://nix-community.github.io/home-manager/options.html#opt-home.file
-    home-manager.users.${userLogin} = {
+    hokage.sharedConfig.homeManager = {
       # Set the path to the pia-manual repository and the userLogin and password for the PIA VPN script
       home.file."Scripts/pia.sh" = {
         text =

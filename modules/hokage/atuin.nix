@@ -25,7 +25,7 @@ in
 
   config = lib.mkIf cfg.enable {
     # https://home-manager-options.extranix.com
-    home-manager.users.${userLogin} = {
+    hokage.sharedConfig.homeManager = {
       programs = {
         # Sync your shell history across all your devices
         # https://docs.atuin.sh

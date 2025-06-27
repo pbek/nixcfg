@@ -12,7 +12,7 @@ in
 {
   config = lib.mkIf (hokage.role == "desktop") {
     # https://home-manager-options.extranix.com
-    home-manager.users.${userLogin} = {
+    hokage.sharedConfig.homeManager = {
       # https://searchix.alanpearce.eu/options/home-manager/search?query=git
       programs.git = {
         enable = true;

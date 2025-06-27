@@ -84,7 +84,7 @@ in
   };
 
   # Define a user account. Don't forget to set a password with "passwd".
-  users.users.${userLogin} = {
+  hokage.sharedConfig.users = {
     isNormalUser = true;
     description = mkDefault userNameLong;
     extraGroups = [
@@ -263,7 +263,7 @@ in
 
   # https://rycee.gitlab.io/home-manager/options.html
   # https://nix-community.github.io/home-manager/options.html#opt-home.file
-  home-manager.users.${userLogin} = {
+  hokage.sharedConfig.homeManager = {
     # The home.stateVersion option does not have a default and must be set
     home.stateVersion = "24.11";
 
