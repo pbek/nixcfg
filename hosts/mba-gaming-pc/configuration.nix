@@ -47,16 +47,7 @@ in
   programs.steam.gamescopeSession.enable = true; # Integrates with programs.steam
 
   users.users.omega = {
-    isNormalUser = true;
     description = "Patrizio Bekerle";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "docker"
-      "dialout"
-      "input"
-    ];
-    shell = pkgs.fish;
     # Set empty password initially. Don't forget to set a password with "passwd".
     initialHashedPassword = "";
   };
