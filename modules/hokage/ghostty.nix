@@ -56,7 +56,7 @@ in
 
     # https://rycee.gitlab.io/home-manager/options.html
     # https://nix-community.github.io/home-manager/options.html#opt-home.file
-    hokage.sharedConfig.homeManager = {
+    home-manager.users = lib.genAttrs hokage.users (userName: {
       # Doc: https://ghostty.org/docs/config/reference
       # Config generator: https://ghostty.zerebos.com
       # Theme: https://github.com/catppuccin/ghostty/blob/main/themes/catppuccin-mocha.conf
@@ -88,6 +88,6 @@ in
         window-new-tab-position = end
         font-size = ${toString termFontSize}
       '';
-    };
+    });
   };
 }

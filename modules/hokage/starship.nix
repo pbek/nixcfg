@@ -23,7 +23,7 @@ in
 
   config = lib.mkIf cfg.enable {
     # https://rycee.gitlab.io/home-manager/options.html
-    hokage.sharedConfig.homeManager = {
+    home-manager.users = lib.genAttrs hokage.users (userName: {
       # enable https://starship.rs
       programs.starship =
         let
@@ -92,6 +92,6 @@ in
             palette = "catppuccin_${flavour}";
           } // builtins.fromTOML (builtins.readFile "${inputs.catppuccin}/themes/${flavour}.toml");
         };
-    };
+    });
   };
 }

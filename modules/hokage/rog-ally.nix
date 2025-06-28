@@ -63,7 +63,7 @@ in
     ];
 
     # https://rycee.gitlab.io/home-manager/options.html
-    hokage.sharedConfig.homeManager = {
+    home-manager.users = lib.genAttrs hokage.users (userName: {
       programs.git = {
         enable = true;
         # use "git diff --no-ext-diff" for creating patches!
@@ -75,7 +75,7 @@ in
           ".direnv"
         ];
       };
-    };
+    });
 
     # Touch screen gestures
     services.touchegg.enable = true;

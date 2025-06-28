@@ -31,7 +31,7 @@ in
     ];
 
     # https://home-manager-options.extranix.com
-    hokage.sharedConfig.homeManager = {
+    home-manager.users = lib.genAttrs hokage.users (userName: {
       # https://searchix.alanpearce.eu/options/home-manager/search?query=git
       programs.git = {
         extraConfig = {
@@ -48,6 +48,6 @@ in
           };
         };
       };
-    };
+    });
   };
 }

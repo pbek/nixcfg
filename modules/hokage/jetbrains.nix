@@ -125,7 +125,7 @@ in
       ++ lib.optionals cfg.clion.enable (mkJetbrainsPackage "clion" cfg.clion.package)
       ++ lib.optionals cfg.goland.enable (mkJetbrainsPackage "goland" cfg.goland.package);
 
-    hokage.sharedConfig.homeManager = {
+    home-manager.users = lib.genAttrs hokage.users (userName: {
       xdg.desktopEntries = lib.mkMerge [
         (lib.mkIf cfg.clion.enable {
           clion-nix-shell =
@@ -169,6 +169,6 @@ in
           };
         })
       ];
-    };
+    });
   };
 }

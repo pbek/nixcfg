@@ -12,7 +12,7 @@ in
 {
   config = lib.mkIf (hokage.role == "desktop") {
     # https://home-manager-options.extranix.com
-    hokage.sharedConfig.homeManager = {
+    home-manager.users = lib.genAttrs hokage.users (userName: {
       # https://searchix.alanpearce.eu/options/home-manager/search?query=git
       programs.git = {
         enable = true;
@@ -76,6 +76,6 @@ in
           commit:
             signOff: true
       '';
-    };
+    });
   };
 }

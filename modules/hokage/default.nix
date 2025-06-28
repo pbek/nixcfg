@@ -24,6 +24,11 @@ in
 
   options = {
     hokage = {
+      users = mkOption {
+        type = types.listOf types.str;
+        default = [ cfg.userLogin ];
+        description = "List of users that should be created by hokage";
+      };
       role = mkOption {
         type = types.enum [
           "desktop"
@@ -167,7 +172,7 @@ in
         in
         requiredPackages ++ utils.removePackagesByName optionalPackages cfg.excludePackages;
 
-      hokage.sharedConfig.homeManager = {
+      home-manager.users = lib.genAttrs hokage.users (userName: {
         # https://github.com/nix-community/plasma-manager/blob/trunk/examples/home.nix
         programs.plasma = {
           enable = true;
@@ -192,7 +197,7 @@ in
             };
           };
         };
-      };
+      });
     })
 
     #
@@ -285,7 +290,7 @@ in
         wl-clipboard
       ];
 
-      hokage.sharedConfig.homeManager = {
+      home-manager.users = lib.genAttrs hokage.users (userName: {
         xdg.desktopEntries = {
           ferdium-wayland = {
             name = "Ferdium Wayland";
@@ -301,7 +306,7 @@ in
             ];
           };
         };
-      };
+      });
     })
   ];
 }

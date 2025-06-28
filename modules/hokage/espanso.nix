@@ -37,7 +37,7 @@ in
       else
         "";
 
-    hokage.sharedConfig.homeManager = {
+    home-manager.users = lib.genAttrs hokage.users (userName: {
       # https://mynixos.com/home-manager/options/services.espanso
       services.espanso = {
         enable = true;
@@ -679,6 +679,6 @@ in
           };
         };
       };
-    };
+    });
   };
 }

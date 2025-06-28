@@ -84,7 +84,7 @@ in
   };
 
   # Define a user account. Don't forget to set a password with "passwd".
-  hokage.sharedConfig.users = {
+  users.users = lib.genAttrs hokage.users (userName: {
     isNormalUser = true;
     description = mkDefault userNameLong;
     extraGroups = [
@@ -99,7 +99,7 @@ in
     ];
     # Set empty password initially. Don't forget to set a password with "passwd".
     initialHashedPassword = "";
-  };
+  });
 
   # Set your time zone.
   time.timeZone = "Europe/Vienna";
@@ -263,7 +263,7 @@ in
 
   # https://rycee.gitlab.io/home-manager/options.html
   # https://nix-community.github.io/home-manager/options.html#opt-home.file
-  hokage.sharedConfig.homeManager = {
+  home-manager.users = lib.genAttrs hokage.users (userName: {
     # The home.stateVersion option does not have a default and must be set
     home.stateVersion = "24.11";
 
@@ -318,7 +318,7 @@ in
         };
       };
     };
-  };
+  });
 
   # Enable ZRAM swap to get more memory
   # https://search.nixos.org/options?channel=23.11&from=0&size=50&sort=relevance&type=packages&query=zram

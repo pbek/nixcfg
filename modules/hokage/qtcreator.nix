@@ -25,7 +25,7 @@ in
       qtcreator
     ];
 
-    hokage.sharedConfig.homeManager = {
+    home-manager.users = lib.genAttrs hokage.users (userName: {
       xdg.desktopEntries = {
         qtcreator-nix-shell = {
           name = "Qt Creator with dev packages";
@@ -37,6 +37,6 @@ in
           categories = [ "Development" ];
         };
       };
-    };
+    });
   };
 }

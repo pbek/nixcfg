@@ -65,14 +65,19 @@ in
   # home-manager.users.omega = config.home-manager.users.mba;
 
   hokage = {
+    users = [
+      "mba"
+      "omega"
+    ];
     hostName = "mba-gaming-pc";
     userLogin = "mba";
     userNameLong = "Markus Barta";
-    userNameShort = "Markus ";
+    userNameShort = "Markus";
     userEmail = "markus@barta.com";
     useInternalInfrastructure = false;
     useSecrets = false;
     useSharedKey = false;
+    espanso.enable = false;
     jetbrains.enable = false;
     qtcreator.enable = false;
 

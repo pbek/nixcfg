@@ -25,7 +25,7 @@ in
 
   config = lib.mkIf cfg.enable {
     # https://home-manager-options.extranix.com
-    hokage.sharedConfig.homeManager = {
+    home-manager.users = lib.genAttrs hokage.users (userName: {
       programs = {
         # Sync your shell history across all your devices
         # https://docs.atuin.sh
@@ -77,6 +77,6 @@ in
           eval "$(${pkgs.atuin}/bin/atuin init --disable-up-arrow bash)"
         '';
       };
-    };
+    });
   };
 }
