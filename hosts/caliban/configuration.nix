@@ -73,18 +73,7 @@ in
   virtualisation.multipass.enable = true;
 
   users.users.omegah = {
-    isNormalUser = true;
     description = "Patrizio Bekerle Home";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "docker"
-      "dialout"
-      "input"
-    ];
-    shell = pkgs.fish;
-    # Set empty password initially. Don't forget to set a password with "passwd".
-    initialHashedPassword = "";
   };
 
   # Try if another console fonts make the console apear
@@ -115,6 +104,10 @@ in
   };
 
   hokage = {
+    users = [
+      "omega"
+      "omegah"
+    ];
     tugraz.enable = true;
     zfs = {
       enable = true;
