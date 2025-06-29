@@ -1,28 +1,32 @@
+{ lib, ... }:
 {
   disko.devices = {
-    disk = {
-      root = {
-        type = "disk";
-        device = "/dev/nvme0n1";
-        content = {
-          type = "gpt";
-          partitions = {
-            ESP = {
-              size = "1G";
-              type = "EF00";
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-                mountOptions = [ "nofail" ];
-              };
+    disk.disk1 = {
+      device = lib.mkDefault "/dev/sdc";
+      type = "disk";
+      content = {
+        type = "gpt";
+        partitions = {
+          boot = {
+            name = "boot";
+            size = "1M";
+            type = "EF02";
+          };
+          esp = {
+            name = "ESP";
+            size = "800M";
+            type = "EF00";
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              mountpoint = "/boot";
             };
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "zroot";
-              };
+          };
+          zfs = {
+            size = "100%";
+            content = {
+              type = "zfs";
+              pool = "zroot";
             };
           };
         };
@@ -32,42 +36,39 @@
       zroot = {
         type = "zpool";
         rootFsOptions = {
-          mountpoint = "none";
           compression = "zstd";
-          acltype = "posixacl";
-          xattr = "sa";
           "com.sun:auto-snapshot" = "false";
         };
-        options.ashift = "12";
+        postCreateHook = "zfs snapshot zroot@blank";
+
         datasets = {
-          "root" = {
+          root = {
             type = "zfs_fs";
-            options = {
-              encryption = "aes-256-gcm";
-              keyformat = "passphrase";
-              keylocation = "file:///tmp/secret.key";
-              # keylocation = "prompt";
-            };
             mountpoint = "/";
-            # use this to read the key during boot
-            postCreateHook = ''
-              zfs set keylocation="prompt" "zroot/$name";
-            '';
+            options = {
+              mountpoint = "legacy";
+            };
           };
-          "root/nix" = {
+          home = {
             type = "zfs_fs";
-            options.mountpoint = "/nix";
-            mountpoint = "/nix";
-          };
-          "root/home" = {
-            type = "zfs_fs";
-            options.mountpoint = "/home";
             mountpoint = "/home";
+            options = {
+              mountpoint = "legacy";
+            };
           };
-          "root/docker" = {
+          nix = {
             type = "zfs_fs";
-            options.mountpoint = "/var/lib/docker/volumes";
+            mountpoint = "/nix";
+            options = {
+              mountpoint = "legacy";
+            };
+          };
+          docker = {
+            type = "zfs_fs";
             mountpoint = "/var/lib/docker/volumes";
+            options = {
+              mountpoint = "legacy";
+            };
           };
         };
       };

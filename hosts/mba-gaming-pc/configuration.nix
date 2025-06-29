@@ -83,7 +83,6 @@ in
     zfs = {
       enable = true;
       hostId = "96cb2b23";
-      datasetRootName = "root";
     };
   };
 }
