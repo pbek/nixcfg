@@ -53,8 +53,6 @@ in
 
   users.users.omega = {
     description = "Patrizio Bekerle";
-    # Set empty password initially. Don't forget to set a password with "passwd".
-    initialHashedPassword = "";
   };
 
   # TODO: Enable home-manager for "omega" user
