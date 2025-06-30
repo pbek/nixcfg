@@ -51,7 +51,7 @@ in
     maxKernelVersion = lib.mkOption {
       type = lib.types.package;
       # Set the currently maximum allowed kernel package for ZFS here
-      default = pkgs.linuxKernel.packages.linux_6_14.kernel;
+      default = pkgs.linuxKernel.packages.linux_6_15.kernel;
       description = "Maximum allowed kernel package vor ZFS";
       readOnly = true;
     };
