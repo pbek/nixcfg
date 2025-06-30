@@ -29,6 +29,7 @@ in
   environment.systemPackages = with pkgs; [
     amdgpu_top # AMD GPU monitoring
     lact # AMD GPU monitoring
+    _1password-gui # 1Password GUI client
   ];
 
   # Enable hardware accelerated graphics drivers
