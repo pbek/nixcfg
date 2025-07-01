@@ -30,6 +30,7 @@ in
   environment.systemPackages = with pkgs; [
     thunderbird
     spotify
+    inkscape
   ];
 
   programs.evolution = {
