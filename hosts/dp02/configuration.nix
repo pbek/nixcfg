@@ -64,6 +64,5 @@ in
     useSecrets = false;
     useSharedKey = false;
     jetbrains.phpstorm.enable = true;
-    qtcreator.enable = false;
   };
 }

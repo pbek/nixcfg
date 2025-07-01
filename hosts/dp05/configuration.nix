@@ -69,7 +69,6 @@ in
     waylandSupport = true;
     espanso.enable = false;
     tugraz.enable = true;
-    qtcreator.enable = false;
     jetbrains.phpstorm.enable = true;
 
     zfs = {

@@ -51,6 +51,5 @@ in
     useSharedKey = false;
     tugraz.enable = true;
     jetbrains.phpstorm.enable = true;
-    qtcreator.enable = false;
   };
 }

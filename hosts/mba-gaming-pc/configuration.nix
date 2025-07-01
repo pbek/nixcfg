@@ -73,8 +73,6 @@ in
     useSecrets = false;
     useSharedKey = false;
     espanso.enable = false;
-    jetbrains.enable = false;
-    qtcreator.enable = false;
 
     gaming = {
       enable = true;

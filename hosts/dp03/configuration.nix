@@ -51,7 +51,6 @@ in
     espanso.enable = false;
     tugraz.enable = true;
     jetbrains.phpstorm.enable = true;
-    qtcreator.enable = false;
 
     zfs = {
       enable = true;
