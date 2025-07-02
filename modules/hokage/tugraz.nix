@@ -12,6 +12,7 @@ in
 {
   options.hokage.tugraz = {
     enable = lib.mkEnableOption "Enable TU Graz infrastructure";
+    enableOrca = lib.mkEnableOption "Enable Orca screen reader support";
   };
 
   config = lib.mkIf cfg.enable {
@@ -29,6 +30,11 @@ in
       9000
       9003
     ];
+
+    # Screen reader for visually impaired users
+    services.orca.enable = cfg.enableOrca;
+    # Fix for orca not working: The name org.a11y.Bus was not provided by any .service files
+    services.gnome.at-spi2-core.enable = cfg.enableOrca;
 
     # https://home-manager-options.extranix.com
     home-manager.users = lib.genAttrs hokage.users (userName: {
