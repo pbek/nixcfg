@@ -230,16 +230,8 @@ ssh-vm:
     ssh -p 2222 omega@localhost -t "tmux new-session -A -s pbek"
 
 [group('vm')]
-build-vm-desktop:
-    nixos-rebuild --flake .#vm-desktop build-vm
-
-[group('vm')]
-build-vm-server:
-    nixos-rebuild --flake .#vm-server build-vm
-
-[group('vm')]
-build-vm-netcup02:
-    nixos-rebuild --flake .#vm-netcup02 build-vm
+build-vm host:
+    nixos-rebuild --flake .#{{ host }} build-vm
 
 # Rebuild the current host
 [group('build')]
