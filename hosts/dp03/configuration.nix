@@ -38,6 +38,11 @@ in
     plugins = [ pkgs.evolution-ews ];
   };
 
+  # Screen reader for visually impaired users
+  services.orca.enable = true;
+  # Fix for orca not working: The name org.a11y.Bus was not provided by any .service files
+  services.gnome.at-spi2-core.enable = true;
+
   hokage = {
     userLogin = "dp";
     userNameLong = "Andrea Ortner";
