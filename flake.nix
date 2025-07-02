@@ -329,6 +329,17 @@
             inherit inputs;
           };
         };
+        # TU ThinkBook Shiva
+        dp06 = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = commonDesktopModules ++ [
+            ./hosts/dp06/configuration.nix
+            disko.nixosModules.disko
+          ];
+          specialArgs = self.commonArgs // {
+            inherit inputs;
+          };
+        };
         # MBA Gaming PC
         mba-gaming-pc = nixpkgs.lib.nixosSystem {
           inherit system;
