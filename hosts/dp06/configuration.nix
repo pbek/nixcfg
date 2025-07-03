@@ -24,7 +24,7 @@
 
   hokage = {
     hostName = "dp06";
-    userLogin = "shiva";
+    userLogin = "vision";
     userNameLong = "Shiva Pouya";
     userNameShort = "Shiva";
     userEmail = "shiva.pouya@tugraz.at";
