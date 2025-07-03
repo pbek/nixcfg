@@ -53,15 +53,11 @@ in
     userLogin = "mkocher";
     userNameLong = "Manuel Kocher";
     userNameShort = "Manuel";
-    useInternalInfrastructure = false;
-    tugraz.enable = true;
+    tugraz.enableExternal = true;
     excludePackages = with pkgs; [
       qownnotes
       qc
     ];
     userEmail = "manuel.kocher@tugraz.at";
-    useSecrets = false;
-    useSharedKey = false;
-    jetbrains.phpstorm.enable = true;
   };
 }

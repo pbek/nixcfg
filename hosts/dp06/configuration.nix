@@ -28,15 +28,7 @@
     userNameLong = "Shiva Pouya";
     userNameShort = "Shiva";
     userEmail = "shiva.pouya@tugraz.at";
-
-    useInternalInfrastructure = false;
-    useSecrets = false;
-    useSharedKey = false;
-    waylandSupport = true;
-    espanso.enable = false;
-    tugraz.enable = true;
-    tugraz.enableOrca = true;
-    jetbrains.phpstorm.enable = true;
+    tugraz.enableExternal = true;
 
     zfs = {
       enable = true;

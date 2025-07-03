@@ -11,11 +11,16 @@ let
 in
 {
   options.hokage.tugraz = {
-    enable = lib.mkEnableOption "Enable TU Graz infrastructure";
-    enableOrca = lib.mkEnableOption "Enable Orca screen reader support";
+    enable = lib.mkEnableOption "Enable TU Graz infrastructure" // {
+      default = cfg.enableExternal;
+    };
+    enableOrca = lib.mkEnableOption "Enable Orca screen reader support" // {
+      default = cfg.enableExternal;
+    };
+    enableExternal = lib.mkEnableOption "Enable settings for externally managed desktop";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (cfg.enable || cfg.enableExternal) {
     environment.systemPackages = with pkgs; [
       vpnc
       networkmanager-vpnc
@@ -55,5 +60,12 @@ in
         };
       };
     });
+
+    # Add common settings when externally managed
+    hokage.useInternalInfrastructure = lib.mkIf cfg.enableExternal (lib.mkDefault false);
+    hokage.useSecrets = lib.mkIf cfg.enableExternal (lib.mkDefault false);
+    hokage.useSharedKey = lib.mkIf cfg.enableExternal (lib.mkDefault false);
+    hokage.espanso.enable = lib.mkIf cfg.enableExternal (lib.mkDefault false);
+    hokage.jetbrains.phpstorm.enable = lib.mkIf cfg.enableExternal (lib.mkDefault true);
   };
 }

@@ -59,14 +59,7 @@ in
     userNameLong = "Tobias Groß-Vogt";
     userNameShort = "Tobias";
     userEmail = "tobias.gross-vogt@tugraz.at";
-
-    useInternalInfrastructure = false;
-    useSecrets = false;
-    useSharedKey = false;
-    waylandSupport = true;
-    espanso.enable = false;
-    tugraz.enable = true;
-    jetbrains.phpstorm.enable = true;
+    tugraz.enableExternal = true;
 
     zfs = {
       enable = true;

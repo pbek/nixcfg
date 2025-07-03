@@ -65,13 +65,8 @@ in
     userNameShort = "Andrea";
     userEmail = "andrea.ortner@tugraz.at";
 
-    useInternalInfrastructure = false;
-    useSecrets = false;
-    useSharedKey = false;
+    tugraz.enableExternal = true;
     waylandSupport = false;
-    espanso.enable = false;
-    tugraz.enable = true;
-    jetbrains.phpstorm.enable = true;
 
     zfs = {
       enable = true;
