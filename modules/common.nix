@@ -21,6 +21,10 @@ in
   programs = {
     fish = {
       enable = true;
+      shellInit = ''
+        # Fix: Help messages to be shown in English, instead of German
+        set -e LANGUAGE
+      '';
       shellAliases = {
         gitc = "git commit";
         gitps = "git push";
@@ -120,6 +124,9 @@ in
     LC_PAPER = "de_AT.UTF-8";
     LC_TELEPHONE = "de_AT.UTF-8";
     LC_TIME = "de_AT.UTF-8";
+    # Use English for messages (e.g. error messages)
+    # Although LANGUAGE still needed to be unset in fish shell
+    LC_MESSAGES = "en_US.UTF-8";
   };
 
   # Configure console keymap
