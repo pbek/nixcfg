@@ -14,8 +14,6 @@
   ];
 
   networking = {
-    hostName = "moobox01";
-
     # SSH is already enabled by the server-common mixin
     firewall = {
       allowedTCPPorts = [
@@ -32,6 +30,7 @@
   ];
 
   hokage = {
+    hostName = "moobox01";
     role = "server-remote";
     userLogin = "cow";
     userNameLong = "cow";

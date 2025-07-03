@@ -27,8 +27,6 @@
     "/crypto_keyfile.bin" = null;
   };
 
-  networking.hostName = "neptun"; # Define your hostname.
-
   # Don't sleep when lid is closed
   # services.logind.lidSwitch = "ignore";
 
@@ -37,6 +35,7 @@
   ];
 
   hokage = {
+    hostName = "neptun";
     jetbrains.useStable = true;
     cache.sources = [ "home" ];
   };

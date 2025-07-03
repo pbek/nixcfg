@@ -28,14 +28,13 @@ in
   boot.initrd.luks.devices."luks-0eda41dc-43e4-4a37-92ac-b33be4c24d4f".device =
     "/dev/disk/by-uuid/0eda41dc-43e4-4a37-92ac-b33be4c24d4f";
 
-  networking.hostName = "dp01"; # Define your hostname.
-
   environment.systemPackages = with pkgs; [
     thunderbird
     spotify
   ];
 
   hokage = {
+    hostName = "dp01";
     userLogin = "dp";
     # userNameLong = "dp";
     # userNameShort = "dp";

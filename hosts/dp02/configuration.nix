@@ -23,8 +23,6 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "dp02"; # Define your hostname.
-
   # https://wiki.nixos.org/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
@@ -51,6 +49,7 @@ in
   zramSwap.enable = false;
 
   hokage = {
+    hostName = "dp02";
     userLogin = "mkocher";
     userNameLong = "Manuel Kocher";
     userNameShort = "Manuel";

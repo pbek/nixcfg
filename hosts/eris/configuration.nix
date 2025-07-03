@@ -27,10 +27,10 @@
     "/crypto_keyfile.bin" = null;
   };
 
-  networking.hostName = "eris"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   hokage = {
+    hostName = "eris";
     cache.sources = [ "caliban" ];
   };
 }

@@ -23,10 +23,6 @@ in
     ../../modules/hokage
   ];
 
-  networking = {
-    hostName = "dp05";
-  };
-
   # Search on https://search.nixos.org/packages?channel=unstable
   environment.systemPackages = with pkgs; [
     thunderbird
@@ -58,6 +54,7 @@ in
   };
 
   hokage = {
+    hostName = "dp05";
     userLogin = "tgros";
     userNameLong = "Tobias Groß-Vogt";
     userNameShort = "Tobias";

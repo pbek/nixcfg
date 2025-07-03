@@ -16,8 +16,6 @@ in
   ];
 
   networking = {
-    hostName = "netcup01";
-
     # SSH is already enabled by the server-common mixin
     firewall = {
       allowedTCPPorts = [
@@ -65,6 +63,7 @@ in
   };
 
   hokage = {
+    hostName = "netcup01";
     role = "server-remote";
     zfs.hostId = "dafdad01";
   };

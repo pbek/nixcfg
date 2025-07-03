@@ -32,7 +32,6 @@
 
   boot.initrd.luks.devices."luks-c98e1bec-9e77-4107-bbcc-2be56cceb9d4".keyFile =
     "/crypto_keyfile.bin";
-  networking.hostName = "astra"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable Tailscale VPN
@@ -45,6 +44,7 @@
   services.kmscon.enable = false;
 
   hokage = {
+    hostName = "astra";
     espanso.enable = false; # App-specific configurations are not yet supported in Wayland on caliban for VirtualBox!
     waylandSupport = false;
     termFontSize = 16.0;

@@ -14,7 +14,6 @@
   ];
 
   networking = {
-    hostName = "home01";
     nameservers = [ "192.168.1.1" ];
     defaultGateway = "192.168.1.1";
 
@@ -120,6 +119,7 @@
   ];
 
   hokage = {
+    hostName = "home01";
     role = "server-home";
     zfs.hostId = "daafda01";
     cache.sources = [ "home" ];

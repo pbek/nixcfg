@@ -27,8 +27,6 @@
     "/crypto_keyfile.bin" = null;
   };
 
-  networking.hostName = "rhea"; # Define your hostname.
-
   # Restart network and docker after suspend
   # I had issues with KDE Plasma detecting that there is network after suspend
   powerManagement.resumeCommands = ''
@@ -38,6 +36,7 @@
   '';
 
   hokage = {
+    hostName = "rhea";
     jetbrains.useStable = true;
     useGhosttyGtkFix = false;
     cache.sources = [ "home" ];

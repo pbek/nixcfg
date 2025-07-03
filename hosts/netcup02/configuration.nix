@@ -14,8 +14,6 @@
   ];
 
   networking = {
-    hostName = "netcup02";
-
     # ssh is already enabled by the server-common mixin
     firewall = {
       allowedTCPPorts = [
@@ -31,6 +29,7 @@
   services.netbird.enable = true;
 
   hokage = {
+    hostName = "netcup02";
     role = "server-remote";
     zfs = {
       hostId = "dafdad02";

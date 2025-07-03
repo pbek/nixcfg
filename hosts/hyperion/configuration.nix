@@ -18,11 +18,8 @@
     ../../modules/hokage
   ];
 
-  networking = {
-    hostName = "hyperion";
-  };
-
   hokage = {
+    hostName = "hyperion";
     jetbrains.useStable = true;
     useGhosttyGtkFix = false;
     cache.sources = [ "home" ];

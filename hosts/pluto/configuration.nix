@@ -23,8 +23,6 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "pluto"; # Define your hostname.
-
   # https://wiki.nixos.org/wiki/steam
   #  programs.steam = {
   #    enable = true;
@@ -68,6 +66,7 @@ in
   # };
 
   hokage = {
+    hostName = "pluto";
     jetbrains.useStable = true;
     useGhosttyGtkFix = false;
     virtualbox.enable = true;

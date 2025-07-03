@@ -29,7 +29,6 @@ in
     "/crypto_keyfile.bin" = null;
   };
 
-  networking.hostName = "gaia"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   services.avahi.nssmdns4 = true;
@@ -128,6 +127,7 @@ in
   services.kmscon.extraConfig = "font-size = 26";
 
   hokage = {
+    hostName = "gaia";
     tugraz.enable = true;
     cache.sources = [ "home" ];
     platformio.enable = true;

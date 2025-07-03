@@ -13,10 +13,9 @@
     ../../modules/hokage
   ];
 
-  networking.hostName = "ally";
-
   hokage = {
     role = "ally";
+    hostName = "ally";
     useSecrets = false;
     zfs = {
       enable = true;

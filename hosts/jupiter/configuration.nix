@@ -33,8 +33,6 @@
   boot.initrd.luks.devices."luks-fd774d6e-6a78-4d0b-a06e-fb759e2eb6b2".keyFile =
     "/crypto_keyfile.bin";
 
-  networking.hostName = "jupiter"; # Define your hostname.
-
   # https://wiki.nixos.org/wiki/nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.nvidia.acceptLicense = true;
@@ -54,6 +52,7 @@
   };
 
   hokage = {
+    hostName = "jupiter";
     cache.sources = [ "home" ];
     jetbrains.useStable = true;
   };

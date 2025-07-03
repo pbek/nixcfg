@@ -27,8 +27,6 @@
     "/crypto_keyfile.bin" = null;
   };
 
-  networking.hostName = "sinope"; # Define your hostname.
-
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/
   virtualisation.multipass.enable = true;
 
@@ -36,6 +34,7 @@
   services.kmscon.extraConfig = "font-size = 18";
 
   hokage = {
+    hostName = "sinope";
     tugraz.enable = true;
     jetbrains = {
       clion.enable = false;

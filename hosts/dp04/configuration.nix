@@ -23,10 +23,6 @@ in
     ../../modules/hokage
   ];
 
-  networking = {
-    hostName = "dp04";
-  };
-
   environment.systemPackages = with pkgs; [
     thunderbird
     spotify
@@ -58,6 +54,7 @@ in
   };
 
   hokage = {
+    hostName = "dp04";
     userLogin = "dp";
     # userNameLong = "dp";
     # userNameShort = "dp";
