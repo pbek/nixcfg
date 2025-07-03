@@ -285,6 +285,14 @@ in
       fish.enable = true;
       bash.enable = true;
 
+      # Tiling terminal multiplexer
+      zellij = {
+        enable = true;
+        # Shell integrations are disabled, because they would open zellij as soon as the shells start
+        enableFishIntegration = false;
+        enableBashIntegration = false;
+      };
+
       # A smarter cd command
       # https://github.com/ajeetdsouza/zoxide
       zoxide = {
