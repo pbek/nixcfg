@@ -141,8 +141,8 @@ switch-push-all: push-all push
 
 # Update the flakes
 [group('build')]
-update:
-    NIX_CONFIG="access-tokens = github.com=`cat ~/.secrets/github-token`" nix flake update
+update args='':
+    NIX_CONFIG="access-tokens = github.com=`cat ~/.secrets/github-token`" nix flake update {{ args }}
 
 # Update the flakes and switch to the new configuration
 [group('build')]
