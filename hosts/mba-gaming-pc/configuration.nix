@@ -30,6 +30,9 @@ in
     amdgpu_top # AMD GPU monitoring
     lact # AMD GPU monitoring
     _1password-gui # 1Password GUI client
+    mplayer
+    vlc
+    (callPackage ../../pkgs/zen-browser/package.nix { })
   ];
 
   # Enable hardware accelerated graphics drivers
@@ -44,6 +47,9 @@ in
 
   # Increase the console font size for kmscon
   services.kmscon.extraConfig = "font-size = 26";
+
+  # Enable flatpak support
+  services.flatpak.enable = true;
 
   programs.gamescope = {
     enable = true;
