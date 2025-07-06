@@ -34,11 +34,13 @@ jobs:
           - jupiter
           - ally
           - pluto
+          - mba-gaming-pc
           - dp01
           - dp02
           - dp03
           - dp04
           - dp05
+          - dp06
     steps:
       - uses: actions/checkout@v4
 
