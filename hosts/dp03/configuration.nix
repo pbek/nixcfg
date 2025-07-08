@@ -34,6 +34,13 @@ in
     plugins = [ pkgs.evolution-ews ];
   };
 
+  users.users.${userLogin} = {
+    openssh.authorizedKeys.keys = [
+      # Access from Andrea's Windows laptop
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBsfSls4gUUD037GUdVCETkkBBW1+MVFY2Q/vnt6AVeF tugraz\krautfleckerl@vpu-nb-99"
+    ];
+  };
+
   hokage = {
     hostName = "dp03";
     userLogin = "dp";
