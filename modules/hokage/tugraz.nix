@@ -22,12 +22,13 @@ in
 
   config = lib.mkIf (cfg.enable || cfg.enableExternal) {
     environment.systemPackages = with pkgs; [
-      vpnc
-      networkmanager-vpnc
-      openconnect
-      networkmanager-openconnect
       go-passbolt-cli
       # (pkgs.callPackage ../../pkgs/go-passbolt-cli/default.nix { })
+    ];
+
+    # Add the openconnect plugin for NetworkManager
+    networking.networkmanager.plugins = with pkgs; [
+      networkmanager-openconnect
     ];
 
     # xdebug
