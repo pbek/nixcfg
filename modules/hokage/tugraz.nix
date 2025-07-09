@@ -24,6 +24,7 @@ in
     environment.systemPackages = with pkgs; [
       go-passbolt-cli
       # (pkgs.callPackage ../../pkgs/go-passbolt-cli/default.nix { })
+      wstunnel # WebSocket tunnel for accessing local development environments
     ];
 
     # Add the openconnect plugin for NetworkManager
@@ -35,6 +36,7 @@ in
     networking.firewall.allowedTCPPorts = [
       9000
       9003
+      8888 # For the wstunnel websocket tunnel
     ];
 
     # Screen reader for visually impaired users
