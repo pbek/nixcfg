@@ -164,6 +164,10 @@ in
                 trigger = "!amaz";
                 replace = "!amazonde ";
               }
+              {
+                trigger = "!geiz";
+                replace = "!geizhalsat ";
+              }
             ];
           };
           github = {
