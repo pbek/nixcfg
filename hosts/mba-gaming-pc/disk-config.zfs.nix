@@ -2,7 +2,7 @@
 {
   disko.devices = {
     disk.disk1 = {
-      device = lib.mkDefault "/dev/sdc";
+      device = lib.mkDefault "/dev/sdb";
       type = "disk";
       content = {
         type = "gpt";
@@ -26,20 +26,20 @@
             size = "100%";
             content = {
               type = "zfs";
-              pool = "zroot";
+              pool = "mbazroot";
             };
           };
         };
       };
     };
     zpool = {
-      zroot = {
+      mbazroot = {
         type = "zpool";
         rootFsOptions = {
           compression = "zstd";
           "com.sun:auto-snapshot" = "false";
         };
-        postCreateHook = "zfs snapshot zroot@blank";
+        postCreateHook = "zfs snapshot mbazroot@blank";
 
         datasets = {
           root = {

@@ -32,7 +32,8 @@ in
     _1password-gui # 1Password GUI client
     mplayer
     vlc
-    (callPackage ../../pkgs/zen-browser/package.nix { })
+    # Audio not working on e.g. X (Twitter) and Tiktok
+    # (callPackage ../../pkgs/zen-browser/package.nix { })
   ];
 
   # Enable hardware accelerated graphics drivers
@@ -95,7 +96,8 @@ in
 
     zfs = {
       enable = true;
-      hostId = "96cb2b23";
+      hostId = "96cb2b24";
+      poolName = "mbazroot";
     };
   };
 }
