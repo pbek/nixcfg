@@ -222,7 +222,11 @@ in
         # pingu # ping, but more colorful
         gping # graphical ping
         sysz # fzf terminal UI for systemctl
-        isd # a better way to work with systemd units
+
+        # textual is currently broken in unstable
+        # https://github.com/NixOS/nixpkgs/pull/425707
+        # isd # a better way to work with systemd units
+
         ouch # compress and decompress files
         procs # ps "replacement"
         just # command runner like make
