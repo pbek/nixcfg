@@ -312,6 +312,15 @@ in
         enable = true;
         enableFishIntegration = true;
         enableBashIntegration = true;
+        plugins = {
+          inherit (pkgs.yaziPlugins) yatline;
+          inherit (pkgs.yaziPlugins) time-travel;
+          inherit (pkgs.yaziPlugins) ouch;
+          inherit (pkgs.yaziPlugins) piper;
+          inherit (pkgs.yaziPlugins) lazygit;
+          inherit (pkgs.yaziPlugins) chmod;
+          inherit (pkgs.yaziPlugins) diff;
+        };
       };
 
       # Exit Yazi to the current path
