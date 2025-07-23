@@ -306,23 +306,6 @@ in
         options = [ "--cmd cd" ];
       };
 
-      # Blazing fast terminal file manager written in Rust
-      # https://github.com/sxyazi/yazi
-      yazi = {
-        enable = true;
-        enableFishIntegration = true;
-        enableBashIntegration = true;
-        plugins = {
-          inherit (pkgs.yaziPlugins) yatline;
-          inherit (pkgs.yaziPlugins) time-travel;
-          inherit (pkgs.yaziPlugins) ouch;
-          inherit (pkgs.yaziPlugins) piper;
-          inherit (pkgs.yaziPlugins) lazygit;
-          inherit (pkgs.yaziPlugins) chmod;
-          inherit (pkgs.yaziPlugins) diff;
-        };
-      };
-
       # Post-modern editor (like vim)
       helix = {
         enable = true;
