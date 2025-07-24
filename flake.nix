@@ -83,6 +83,34 @@
         agenix.nixosModules.age
         espanso-fix.nixosModules.espanso-capdacoverride
       ];
+      mkDesktopHost =
+        hostName: extraModules:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules =
+            commonDesktopModules
+            ++ [
+              ./hosts/${hostName}/configuration.nix
+            ]
+            ++ extraModules;
+          specialArgs = self.commonArgs // {
+            inherit inputs;
+          };
+        };
+      mkServerHost =
+        hostName: extraModules:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules =
+            commonServerModules
+            ++ [
+              ./hosts/${hostName}/configuration.nix
+            ]
+            ++ extraModules;
+          specialArgs = self.commonArgs // {
+            inherit inputs;
+          };
+        };
     in
     {
       #     config = nixpkgs.config.systems.${builtins.currentSystem}.config;
@@ -94,317 +122,58 @@
 
       nixosConfigurations = {
         # Office Work PC
-        gaia = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/gaia/configuration.nix
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        gaia = mkDesktopHost "gaia" [ ];
         # Livingroom PC
-        venus = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/venus/configuration.nix
-            disko.nixosModules.disko
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        venus = mkDesktopHost "venus" [ disko.nixosModules.disko ];
         # Asus Vivobook Laptop
-        rhea = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/rhea/configuration.nix
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        rhea = mkDesktopHost "rhea" [ ];
         # Acer Aspire 5 Laptop
-        hyperion = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/hyperion/configuration.nix
-            disko.nixosModules.disko
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        hyperion = mkDesktopHost "hyperion" [ disko.nixosModules.disko ];
         # Asus ROG Ally (using NixOS)
-        ally2 = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/ally2/configuration.nix
-            nixos-hardware.nixosModules.asus-ally-rc71l
-            disko.nixosModules.disko
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
-
+        ally2 = mkDesktopHost "ally2" [
+          nixos-hardware.nixosModules.asus-ally-rc71l
+          disko.nixosModules.disko
+        ];
         # TUG VM
-        astra = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/astra/configuration.nix
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        astra = mkDesktopHost "astra" [ ];
         # TU Work PC
-        caliban = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/caliban/configuration.nix
-            home-manager.nixosModules.home-manager
-            { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
-            agenix.nixosModules.age
-            disko.nixosModules.disko
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        caliban = mkDesktopHost "caliban" [
+          disko.nixosModules.disko
+        ];
         # TU HP EliteBook Laptop 840 G5
-        sinope = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/sinope/configuration.nix
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        sinope = mkDesktopHost "sinope" [ ];
         # Netcup Server netcup01
-        netcup01 = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonServerModules ++ [
-            disko.nixosModules.disko
-            ./hosts/netcup01/configuration.nix
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        netcup01 = mkServerHost "netcup01" [ disko.nixosModules.disko ];
         # Netcup Server netcup02
-        netcup02 = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonServerModules ++ [
-            disko.nixosModules.disko
-            ./hosts/netcup02/configuration.nix
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        netcup02 = mkServerHost "netcup02" [ disko.nixosModules.disko ];
         # Home Server home01
-        home01 = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonServerModules ++ [
-            disko.nixosModules.disko
-            ./hosts/home01/configuration.nix
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        home01 = mkServerHost "home01" [ disko.nixosModules.disko ];
         # Server moobox01 for Alex
-        moobox01 = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonServerModules ++ [
-            disko.nixosModules.disko
-            ./hosts/moobox01/configuration.nix
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        moobox01 = mkServerHost "moobox01" [ disko.nixosModules.disko ];
         # Asus Laptop
-        jupiter = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/jupiter/configuration.nix
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        jupiter = mkDesktopHost "jupiter" [ ];
         # Asus ROG Ally (usually using Windows)
-        ally = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/ally/configuration.nix
-            nixos-hardware.nixosModules.asus-ally-rc71l
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        ally = mkDesktopHost "ally" [ nixos-hardware.nixosModules.asus-ally-rc71l ];
         # PC Garage
-        pluto = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/pluto/configuration.nix
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        pluto = mkDesktopHost "pluto" [ ];
         # macBook
-        neptun = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/neptun/configuration.nix
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        neptun = mkDesktopHost "neptun" [ ];
         # TU HP EliteBook Laptop 820 G4
-        eris = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/eris/configuration.nix
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        eris = mkDesktopHost "eris" [ ];
         # TU "Guest" HP EliteBook Laptop 840 G5
-        dp01 = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/dp01/configuration.nix
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        dp01 = mkDesktopHost "dp01" [ ];
         # TU ThinkBook Manuel
-        dp02 = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/dp02/configuration.nix
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        dp02 = mkDesktopHost "dp02" [ ];
         # TU ThinkBook Andrea
-        dp03 = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/dp03/configuration.nix
-            disko.nixosModules.disko
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
-        dp04 = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/dp04/configuration.nix
-            disko.nixosModules.disko
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        dp03 = mkDesktopHost "dp03" [ disko.nixosModules.disko ];
+        # TU Thinkstation Andrea
+        dp04 = mkDesktopHost "dp04" [ disko.nixosModules.disko ];
         # TU Thinkbook Tobias
-        dp05 = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/dp05/configuration.nix
-            disko.nixosModules.disko
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        dp05 = mkDesktopHost "dp05" [ disko.nixosModules.disko ];
         # TU ThinkBook Shiva
-        dp06 = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/dp06/configuration.nix
-            disko.nixosModules.disko
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
+        dp06 = mkDesktopHost "dp06" [ disko.nixosModules.disko ];
         # MBA Gaming PC
-        mba-gaming-pc = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = commonDesktopModules ++ [
-            ./hosts/mba-gaming-pc/configuration.nix
-            disko.nixosModules.disko
-          ];
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
-        };
-        #      # Home Server miniserver24 for Markus
-        #      miniserver24 = nixpkgs.lib.nixosSystem {
-        #        inherit system;
-        #        modules = [
-        #          home-manager.nixosModules.home-manager
-        #          disko.nixosModules.disko
-        #          ./hosts/miniserver24/configuration.nix
-        #        ];
-        #        specialArgs = self.commonArgs // {
-        #          inherit inputs;
-        #          userLogin = "mba";
-        #        };
-        #      };
-        #      vm-netcup02 = nixpkgs.lib.nixosSystem {
-        #        inherit system;
-        #        modules = [
-        #          home-manager.nixosModules.home-manager
-        #          disko.nixosModules.disko
-        #          ./hosts/netcup02/vm.nix
-        #        ];
-        #        specialArgs = self.commonArgs // { inherit inputs; };
-        #      };
-        #      vm-miniserver24 = nixpkgs.lib.nixosSystem {
-        #        inherit system;
-        #        modules = [
-        #          home-manager.nixosModules.home-manager
-        #          disko.nixosModules.disko
-        #          ./hosts/miniserver24/vm.nix
-        #        ];
-        #        specialArgs = self.commonArgs // {
-        #          inherit inputs;
-        #          userLogin = "mba";
-        #        };
-        #      };
-        #      # VM Desktop
-        #      vm-desktop = nixpkgs.lib.nixosSystem {
-        #        inherit system;
-        #        modules = [
-        #          ./hosts/vm-desktop/vm.nix
-        #          home-manager.nixosModules.home-manager { home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ]; }
-        #          agenix.nixosModules.age
-        #        ];
-        #        specialArgs = self.commonArgs // { inherit inputs; };
-        #      };
-        #      # VM Server
-        #      vm-server = nixpkgs.lib.nixosSystem {
-        #        inherit system;
-        #        modules = [
-        #          ./hosts/vm-server/vm.nix
-        #          home-manager.nixosModules.home-manager
-        #          agenix.nixosModules.age
-        #        ];
-        #        specialArgs = self.commonArgs // { inherit inputs; };
-        #      };
+        mba-gaming-pc = mkDesktopHost "mba-gaming-pc" [ disko.nixosModules.disko ];
       };
     };
 }
