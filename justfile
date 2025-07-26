@@ -84,7 +84,7 @@ build-host hostname args='':
 # Build a host with nh on another host
 [group('build')]
 build-host-on buildHost hostname args='':
-    nh os build -H {{ hostname }} . -- --build-host omega@{{ buildHost }} {{ args }}
+    nh os build -H {{ hostname }} --build-host omega@{{ buildHost }} . -- {{ args }}
     just _notify "build of host {{ hostname }} on {{ buildHost }} finished"
 
 # Build the current host with nh
