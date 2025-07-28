@@ -32,6 +32,7 @@ in
     _1password-gui # 1Password GUI client
     mplayer
     vlc
+    brave # Brave browser
     # Audio not working on e.g. X (Twitter) and Tiktok
     # (callPackage ../../pkgs/zen-browser/package.nix { })
   ];
