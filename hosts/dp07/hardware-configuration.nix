@@ -16,12 +16,12 @@
 
   boot.initrd.availableKernelModules = [
     "xhci_pci"
-    "nvme"
     "thunderbolt"
+    "nvme"
     "usbhid"
     "usb_storage"
     "sd_mod"
-    "rtsx_pci_sdmmc"
+    "sdhci_pci"
   ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
@@ -32,7 +32,7 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp72s0u2u4u4u3.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp0s13f0u3u1.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
