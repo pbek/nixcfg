@@ -21,6 +21,7 @@
     thunderbird
     webex
     discord
+    gimp3
   ];
 
   # https://wiki.nixos.org/wiki/nvidia
@@ -36,6 +37,13 @@
     # beta
     package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
+
+  # Use US keyboard layout
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+  console.keyMap = "us";
 
   hokage = {
     hostName = "dp07";

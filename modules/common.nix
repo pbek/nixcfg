@@ -130,7 +130,7 @@ in
   };
 
   # Configure console keymap
-  console.keyMap = "de-latin1-nodeadkeys";
+  console.keyMap = lib.mkDefault "de-latin1-nodeadkeys";
 
   networking = {
     networkmanager.enable = mkDefault true;

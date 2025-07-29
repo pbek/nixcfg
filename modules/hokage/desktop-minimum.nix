@@ -53,8 +53,8 @@ in
 
     # Configure keymap in X11
     services.xserver.xkb = {
-      layout = "de";
-      variant = "nodeadkeys";
+      layout = lib.mkDefault "de";
+      variant = lib.mkDefault "nodeadkeys";
     };
 
     # Enable touchpad support (enabled default in most desktopManager).
