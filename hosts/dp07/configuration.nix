@@ -22,6 +22,7 @@
     webex
     discord
     gimp3
+    ddev
   ];
 
   # https://wiki.nixos.org/wiki/nvidia
