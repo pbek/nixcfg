@@ -1,4 +1,4 @@
-# TU Laptop Arslan
+# TU Laptop Arslan - Lenovo Yoga Pro 9i
 
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page

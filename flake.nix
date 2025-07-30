@@ -172,7 +172,7 @@
         dp05 = mkDesktopHost "dp05" [ disko.nixosModules.disko ];
         # TU ThinkBook Shiva
         dp06 = mkDesktopHost "dp06" [ disko.nixosModules.disko ];
-        # TU Laptop Arslan
+        # TU Laptop Arslan - Lenovo Yoga Pro 9i
         dp07 = mkDesktopHost "dp07" [ disko.nixosModules.disko ];
         # MBA Gaming PC
         mba-gaming-pc = mkDesktopHost "mba-gaming-pc" [ disko.nixosModules.disko ];
