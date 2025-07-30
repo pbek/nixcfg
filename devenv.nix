@@ -47,7 +47,10 @@ in
     # https://github.com/astro/deadnix
     deadnix = {
       enable = true;
-      settings.exclude = [ "pkgs" ];
+      settings = {
+        edit = true; # Allow to edit the file if it is not formatted
+        exclude = [ "pkgs" ];
+      };
     };
   };
 
