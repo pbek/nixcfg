@@ -13,7 +13,6 @@ let
 
   inherit (lib)
     mkEnableOption
-    types
     ;
 in
 {
@@ -25,7 +24,7 @@ in
 
   config = lib.mkIf cfg.enable {
     # https://home-manager-options.extranix.com
-    home-manager.users = lib.genAttrs hokage.users (userName: {
+    home-manager.users = lib.genAttrs hokage.users (_userName: {
       programs = {
         # Sync your shell history across all your devices
         # https://docs.atuin.sh

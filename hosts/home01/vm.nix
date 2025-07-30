@@ -9,7 +9,6 @@
 # > nixos-rebuild --flake .#vm-home01 build-vm
 #
 {
-  lib,
   config,
   ...
 }:

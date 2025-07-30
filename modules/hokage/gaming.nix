@@ -6,9 +6,6 @@
 }:
 let
   inherit (config) hokage;
-  inherit (hokage) userLogin;
-  inherit (hokage) useInternalInfrastructure;
-  inherit (hokage) useSecrets;
   cfg = hokage.gaming;
 
   inherit (lib)

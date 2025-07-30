@@ -9,8 +9,6 @@
 # > nixos-rebuild --flake .#vm-miniserver24 build-vm
 #
 {
-  lib,
-  config,
   ...
 }:
 {

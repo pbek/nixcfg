@@ -26,7 +26,7 @@ in
       qtcreator
     ];
 
-    home-manager.users = lib.genAttrs hokage.users (userName: {
+    home-manager.users = lib.genAttrs hokage.users (_userName: {
       xdg.desktopEntries = {
         qtcreator-nix-shell = {
           name = "Qt Creator with dev packages";

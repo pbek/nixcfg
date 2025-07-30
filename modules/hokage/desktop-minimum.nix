@@ -131,7 +131,7 @@ in
     services.netbird.enable = true;
 
     users.users = lib.genAttrs hokage.users (
-      userName:
+      _userName:
       lib.mkIf useSharedKey {
         openssh.authorizedKeys.keys = [
           # Yubikey public key
@@ -143,7 +143,7 @@ in
 
     # https://rycee.gitlab.io/home-manager/options.html
     # https://nix-community.github.io/home-manager/options.html#opt-home.file
-    home-manager.users = lib.genAttrs hokage.users (userName: {
+    home-manager.users = lib.genAttrs hokage.users (_userName: {
       # allow unfree packages in nix-shell
       home.file.".config/nixpkgs/config.nix".text = ''
         {

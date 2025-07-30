@@ -30,8 +30,6 @@
       nixpkgs,
       nixpkgs-stable,
       agenix,
-      pia,
-      catppuccin,
       disko,
       nixos-hardware,
       plasma-manager,
@@ -53,7 +51,7 @@
           ) (builtins.readDir overlaysDir)
         )
       );
-      overlays-nixpkgs = final: prev: {
+      overlays-nixpkgs = _final: _prev: {
         stable = import nixpkgs-stable {
           inherit system;
           config.allowUnfree = true;

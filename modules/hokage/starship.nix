@@ -1,13 +1,11 @@
 {
   config,
-  pkgs,
   inputs,
   lib,
   ...
 }:
 let
   inherit (config) hokage;
-  inherit (hokage) userLogin;
   cfg = hokage.starship;
 
   inherit (lib)
@@ -23,7 +21,7 @@ in
 
   config = lib.mkIf cfg.enable {
     # https://rycee.gitlab.io/home-manager/options.html
-    home-manager.users = lib.genAttrs hokage.users (userName: {
+    home-manager.users = lib.genAttrs hokage.users (_userName: {
       # enable https://starship.rs
       programs.starship =
         let

@@ -1,7 +1,5 @@
 # home01 server
 {
-  modulesPath,
-  config,
   pkgs,
   ...
 }:

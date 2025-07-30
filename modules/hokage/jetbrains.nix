@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  inputs,
   lib,
   xdg,
   ...
@@ -13,7 +12,6 @@ let
   cfg = hokage.jetbrains;
 
   inherit (lib)
-    mkDefault
     mkEnableOption
     mkPackageOption
     mkOption
@@ -55,7 +53,7 @@ let
 
   # Unfortunately, we can't have per-application plugin settings
   mkJetbrainsPackage =
-    name: cfgPackage:
+    _name: cfgPackage:
     let
       inherit (cfg) plugins;
       basePackage =
@@ -126,7 +124,7 @@ in
       ++ lib.optionals cfg.clion.enable (mkJetbrainsPackage "clion" cfg.clion.package)
       ++ lib.optionals cfg.goland.enable (mkJetbrainsPackage "goland" cfg.goland.package);
 
-    home-manager.users = lib.genAttrs hokage.users (userName: {
+    home-manager.users = lib.genAttrs hokage.users (_userName: {
       xdg.desktopEntries = lib.mkMerge [
         (lib.mkIf cfg.clion.enable {
           clion-nix-shell =

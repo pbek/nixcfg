@@ -9,7 +9,6 @@
 # > nixos-rebuild --flake .#vm-netcup02 build-vm
 #
 {
-  lib,
   config,
   ...
 }:

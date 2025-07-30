@@ -88,7 +88,7 @@ in
   };
 
   # Define a user account. Don't forget to set a password with "passwd".
-  users.users = lib.genAttrs hokage.users (userName: {
+  users.users = lib.genAttrs hokage.users (_userName: {
     isNormalUser = true;
     description = mkDefault userNameLong;
     extraGroups = [
@@ -274,7 +274,7 @@ in
 
   # https://rycee.gitlab.io/home-manager/options.html
   # https://nix-community.github.io/home-manager/options.html#opt-home.file
-  home-manager.users = lib.genAttrs hokage.users (userName: {
+  home-manager.users = lib.genAttrs hokage.users (_userName: {
     # The home.stateVersion option does not have a default and must be set
     home.stateVersion = "24.11";
 

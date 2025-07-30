@@ -1,7 +1,5 @@
 # moobox01 Netcup server
 {
-  modulesPath,
-  config,
   pkgs,
   ...
 }:

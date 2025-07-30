@@ -8,7 +8,7 @@
 # build in vm
 # > nixos-rebuild --flake .#vm-moobox01 build-vm
 #
-{ lib, config, ... }:
+{ config, ... }:
 let
   inherit (config.hokage) userLogin;
 in

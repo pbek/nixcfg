@@ -1,8 +1,6 @@
 # This module defines a small NixOS installation CD.
 # https://wiki.nixos.org/wiki/Creating_a_NixOS_live_CD
 {
-  config,
-  pkgs,
 
   ...
 }:

@@ -1,6 +1,5 @@
 # miniserver24 server for Markus
 {
-  modulesPath,
   config,
   pkgs,
   ...

@@ -6,7 +6,6 @@
 }:
 let
   inherit (config) hokage;
-  inherit (hokage) userLogin;
   inherit (hokage) userNameLong;
   inherit (hokage) userNameShort;
   inherit (hokage) userEmail;
@@ -37,7 +36,7 @@ in
       else
         "";
 
-    home-manager.users = lib.genAttrs hokage.users (userName: {
+    home-manager.users = lib.genAttrs hokage.users (_userName: {
       # https://mynixos.com/home-manager/options/services.espanso
       services.espanso = {
         enable = true;

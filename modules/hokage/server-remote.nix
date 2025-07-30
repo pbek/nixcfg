@@ -5,7 +5,6 @@
 }:
 let
   inherit (config) hokage;
-  inherit (hokage) userLogin;
 in
 {
   config = lib.mkIf (hokage.role == "server-remote") {
@@ -28,7 +27,7 @@ in
       allowedTCPPorts = [ 2222 ]; # SSH
     };
 
-    users.users = lib.genAttrs hokage.users (userName: {
+    users.users = lib.genAttrs hokage.users (_userName: {
       openssh.authorizedKeys.keys = [
         # Yubikey public key
         "sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBFDWxqigrXdCx7mX/yvBpHJf2JIab9HIrjof+sCbn0cOr/NySAirjE7tWxkZJPBrUs/8wSgn/rFO742O+NkOXTYAAAAEc3NoOg== omega@yubikey"

@@ -6,7 +6,6 @@
 }:
 let
   inherit (config) hokage;
-  inherit (hokage) userLogin;
   cfg = hokage.tugraz;
 in
 {
@@ -45,7 +44,7 @@ in
     services.gnome.at-spi2-core.enable = cfg.enableOrca;
 
     # https://home-manager-options.extranix.com
-    home-manager.users = lib.genAttrs hokage.users (userName: {
+    home-manager.users = lib.genAttrs hokage.users (_userName: {
       # https://searchix.alanpearce.eu/options/home-manager/search?query=git
       programs.git = {
         extraConfig = {

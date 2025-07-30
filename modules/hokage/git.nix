@@ -5,7 +5,6 @@
 }:
 let
   inherit (config) hokage;
-  inherit (hokage) userLogin;
   inherit (hokage) userNameLong;
   inherit (hokage) userEmail;
 in

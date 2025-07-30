@@ -13,7 +13,6 @@
 # > QEMU_OPTS="-m 4096 -smp 4 -enable-kvm" ./result/bin/run-*-vm
 #
 {
-  lib,
   config,
   ...
 }:

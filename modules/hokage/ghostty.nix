@@ -6,7 +6,6 @@
 }:
 let
   inherit (config) hokage;
-  inherit (hokage) userLogin;
   inherit (hokage) termFontSize;
   inherit (hokage) useGhosttyGtkFix;
   ghosttyPackage =
@@ -56,7 +55,7 @@ in
 
     # https://rycee.gitlab.io/home-manager/options.html
     # https://nix-community.github.io/home-manager/options.html#opt-home.file
-    home-manager.users = lib.genAttrs hokage.users (userName: {
+    home-manager.users = lib.genAttrs hokage.users (_userName: {
       # Doc: https://ghostty.org/docs/config/reference
       # Config generator: https://ghostty.zerebos.com
       # Theme: https://github.com/catppuccin/ghostty/blob/main/themes/catppuccin-mocha.conf

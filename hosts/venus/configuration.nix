@@ -5,14 +5,9 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 {
-  config,
   pkgs,
-  lib,
   ...
 }:
-let
-  inherit (config.hokage) userLogin;
-in
 {
   imports = [
     # Include the results of the hardware scan.

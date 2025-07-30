@@ -1,8 +1,5 @@
 # netcup02 Netcup server
 {
-  modulesPath,
-  config,
-  pkgs,
   ...
 }:
 
