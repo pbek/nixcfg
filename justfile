@@ -436,6 +436,16 @@ add-git-blame-ignore-revs:
     sort .git-blame-ignore-revs | uniq > .git-blame-ignore-revs.tmp
     mv .git-blame-ignore-revs.tmp .git-blame-ignore-revs
 
+# Scan for dead code in the nix files
+[group('linter')]
+scan-dead-code args='':
+    deadnix --exclude pkgs/ {{ args }}
+
+# Fix dead code in the nix files
+[group('linter')]
+fix-dead-code args='':
+    deadnix --exclude pkgs/ -e {{ args }}
+
 # Format all files
 [group('linter')]
 format args='':
