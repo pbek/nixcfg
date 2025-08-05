@@ -58,6 +58,7 @@
     lact # AMD GPU monitoring
     jellyfin-media-player
     aider-chat # AI assistant for Linux
+    vlc
   ];
 
   # Enable hardware accelerated graphics drivers
