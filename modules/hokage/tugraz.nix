@@ -56,6 +56,9 @@ in
           pull = {
             rebase = true;
           };
+          rebase = {
+            autoStash = true;
+          };
           blame = {
             ignoreRevsFile = ".git-blame-ignore-revs";
           };

@@ -48,6 +48,10 @@ in
           pull = lib.mkDefault {
             rebase = true;
           };
+          rebase = lib.mkDefault {
+            # https://git-scm.com/docs/git-config#Documentation/git-config.txt-rebaseautoStash
+            autoStash = true;
+          };
           gui = {
             pruneduringfetch = true;
           };
