@@ -30,8 +30,8 @@ in
     maxKernelVersion = lib.mkOption {
       type = lib.types.package;
       # Set the currently maximum allowed kernel package for VirtualBox here
-      # Look if package is available for your kernel version on https://search.nixos.org/packages?channel=unstable&type=packages&query=linuxKernel.packages.linux_6_15.virtualbox
-      default = pkgs.linuxKernel.packages.linux_6_15.kernel;
+      # Look if package is available for your kernel version on https://search.nixos.org/packages?channel=unstable&type=packages&query=linuxKernel.packages.linux_6_16.virtualbox
+      default = pkgs.linuxKernel.packages.linux_6_16.kernel;
       description = "Maximum allowed kernel package vor VirtualBox";
       readOnly = true;
     };
