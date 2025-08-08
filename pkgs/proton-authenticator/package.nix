@@ -4,6 +4,7 @@
   fetchurl,
   autoPatchelfHook,
   dpkg,
+  glib-networking,
   wrapGAppsHook4,
   webkitgtk_4_1,
 }:
@@ -35,6 +36,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     install -Dm755 usr/bin/proton-authenticator $out/bin/${finalAttrs.meta.mainProgram}
     cp -r usr/share $out
+
+    wrapProgram "$out/bin/${finalAttrs.meta.mainProgram}" \
+      --prefix GIO_EXTRA_MODULES : "${glib-networking}/lib/gio/modules"
 
     runHook postInstall
   '';
