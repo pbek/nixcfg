@@ -42,6 +42,7 @@ in
           #    (pkgs.libsForQt5.callPackage ../../pkgs/loganalyzer/default.nix { })
           #    noseyparker
           #    (pkgs.callPackage ../../pkgs/noseyparker/default.nix { })
+          (pkgs.callPackage ../../pkgs/proton-authenticator/package.nix { })
 
           keepassxc
           gcc
