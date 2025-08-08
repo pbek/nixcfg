@@ -83,6 +83,10 @@ in
           act # Run GitHub Actions locally
           # (callPackage ../../pkgs/zen-browser/package.nix {})
           gptcommit # Git commit message generator
+
+          aspell # Dictionaries for QOwnNotes
+          aspellDicts.en
+          aspellDicts.de
         ];
       in
       requiredPackages ++ utils.removePackagesByName optionalPackages hokage.excludePackages;

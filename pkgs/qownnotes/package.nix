@@ -13,16 +13,17 @@
   xvfb-run,
   versionCheckHook,
   nix-update-script,
+  aspell,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "qownnotes";
   appname = "QOwnNotes";
-  version = "25.8.1";
+  version = "25.8.2";
 
   src = fetchurl {
     url = "https://github.com/pbek/QOwnNotes/releases/download/v${finalAttrs.version}/qownnotes-${finalAttrs.version}.tar.xz";
-    hash = "sha256-OmwJe9LxeGHIjo7wj78GvYepYfvZo0PaUwdN8Ksg6rY=";
+    hash = "sha256-6N49s/TFV2xZJPC4nN60eovIAoEdMh0eF3ZtMRNVkLU=";
   };
 
   nativeBuildInputs =
@@ -43,12 +44,14 @@ stdenv.mkDerivation (finalAttrs: {
     qt6Packages.qtwebsockets
     botan3
     libgit2
+    aspell
   ] ++ lib.optionals stdenv.hostPlatform.isLinux [ qt6Packages.qtwayland ];
 
   cmakeFlags = [
     "-DQON_QT6_BUILD=ON"
     "-DBUILD_WITH_SYSTEM_BOTAN=ON"
     "-DBUILD_WITH_LIBGIT2=ON"
+    "-DBUILD_WITH_ASPELL=ON"
   ];
 
   # Install shell completion on Linux (with xvfb-run)
