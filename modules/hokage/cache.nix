@@ -33,8 +33,10 @@ in
               "http://home01.lan:5000"
               # Local attic
               "http://cicinas2.lan:8050/nix-store"
-              # Local nginx cache
+              # Local nginx nix cache
               "http://cicinas2.lan:8282"
+              # Local nginx devenv cachix cache
+              "http://cicinas2.lan:8283"
             ])
             (lib.optionals (builtins.elem "remote" cfg.sources) [
               "https://cache.nixos.org/"
