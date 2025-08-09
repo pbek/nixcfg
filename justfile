@@ -28,6 +28,7 @@ alias sp := switch-push
 alias fix-command-not-found-error := update-channels
 alias options := hokage-options
 alias fmt := format
+alias fmta := format-all
 
 # Notify the user with neosay
 @_notify text:
@@ -446,7 +447,12 @@ scan-dead-code args='':
 fix-dead-code args='':
     deadnix --exclude pkgs/ -e {{ args }}
 
-# Format all files
+# Format all files using treefmt
 [group('linter')]
 format args='':
     treefmt {{ args }}
+
+# Format all files using pre-commit
+[group('linter')]
+format-all args='':
+    pre-commit run --all-files {{ args }}
