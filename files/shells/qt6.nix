@@ -23,5 +23,6 @@ pkgs.mkShell {
     kdePackages.knotifications
     pkg-config
     libgit2
+    aspell
   ];
 }

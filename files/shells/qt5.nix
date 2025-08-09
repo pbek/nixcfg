@@ -9,5 +9,6 @@ pkgs.mkShell {
     libsForQt5.qt5.full # You need the full Qt5 package to not get QSqlError messages like "Driver not loaded" when running a built Qt5 application
     libsForQt5.qt5.wrapQtAppsHook
     gdb
+    aspell
   ];
 }
