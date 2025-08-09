@@ -88,7 +88,8 @@ in
             # https://github.com/catppuccin/starship
             # https://github.com/catppuccin/starship/blob/main/themes/mocha.toml
             palette = "catppuccin_${flavour}";
-          } // builtins.fromTOML (builtins.readFile "${inputs.catppuccin}/themes/${flavour}.toml");
+          }
+          // builtins.fromTOML (builtins.readFile "${inputs.catppuccin}/themes/${flavour}.toml");
         };
     });
   };

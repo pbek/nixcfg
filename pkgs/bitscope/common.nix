@@ -14,7 +14,6 @@
 }:
 
 {
-  src,
   toolName,
   version,
   ...

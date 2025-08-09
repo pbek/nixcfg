@@ -3,8 +3,6 @@
   lib,
   fetchzip,
   appimageTools,
-  autoPatchelfHook,
-  desktop-file-utils,
 }:
 
 stdenv.mkDerivation rec {
