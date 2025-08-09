@@ -1,0 +1,9 @@
+version: "3"
+services:
+  web:
+    build: .
+    restart: no
+    ports:
+      - "8283:80"
+    volumes:
+      - /tmp/nix:/var/nix
