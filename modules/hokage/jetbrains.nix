@@ -24,8 +24,8 @@ let
         (fetchTarball {
           # Date: 20250608
           # https://github.com/NixOS/nixpkgs/commits/nixpkgs-unstable
-          url = "https://github.com/NixOS/nixpkgs/tarball/d3d2d80a2191a73d1e86456a751b83aa13085d7d";
-          sha256 = "sha256-QuUtALJpVrPnPeozlUG/y+oIMSLdptHxb3GK6cpSVhA=";
+          url = "https://github.com/NixOS/nixpkgs/tarball/005433b926e16227259a1843015b5b2b7f7d1fc3";
+          sha256 = "sha256-IVft239Bc8p8Dtvf7UAACMG5P3ZV+3/aO28gXpGtMXI=";
         })
         {
           inherit (config.nixpkgs) config;
@@ -101,12 +101,10 @@ in
     # Documentation: https://github.com/NixOS/nixpkgs/tree/nixos-unstable/pkgs/applications/editors/jetbrains
     # Plugin list: https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/applications/editors/jetbrains/plugins/plugins.json
     plugins = mkOption {
-      # type = types.listOf types.anything;
       type = types.listOf (types.either types.str types.package);
-      # GitHub copilot is broken with JetBrains 2025.1
       # https://plugins.jetbrains.com/plugin/17718-github-copilot
       default = [
-        pkgs.jetbrains.plugins.github-copilot-fixed
+        "github-copilot"
         "nixidea"
       ];
       example = [ "github-copilot" ];
