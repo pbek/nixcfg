@@ -1,0 +1,39 @@
+{
+  config,
+  lib,
+  ...
+}:
+let
+  inherit (config) hokage;
+  cfg = hokage.nushell;
+
+  inherit (lib)
+    mkEnableOption
+    ;
+in
+{
+  options.hokage.nushell = {
+    enable = mkEnableOption "Enable Nushell" // {
+      default = hokage.role == "desktop";
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
+    home-manager.users = lib.genAttrs hokage.users (_userName: {
+      programs = {
+        # https://www.nushell.sh/book/
+        nushell = {
+          enable = true;
+          shellAliases = config.programs.fish.shellAliases;
+        };
+
+        zoxide.enableNushellIntegration = true;
+        direnv.enableNushellIntegration = true;
+        eza.enableNushellIntegration = true;
+        starship.enableNushellIntegration = config.hokage.starship.enable;
+        atuin.enableNushellIntegration = config.hokage.atuin.enable;
+        yazi.enableNushellIntegration = config.hokage.yazi.enable;
+      };
+    });
+  };
+}
