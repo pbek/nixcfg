@@ -289,6 +289,12 @@ in
       fish.enable = true;
       bash.enable = true;
 
+      # Run nix-shell, etc. in the fish shell instead of bash
+      nix-your-shell = {
+        enable = true;
+        enableFishIntegration = true;
+      };
+
       # Tiling terminal multiplexer
       zellij = {
         enable = true;
