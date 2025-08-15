@@ -43,6 +43,8 @@ in
             -- https://github.com/yazi-rs/plugins/tree/main/git.yazi
             require("git"):setup()
           '';
+          # https://yazi-rs.github.io/docs/configuration/yazi
+          # ~/.config/yazi/yazi.toml
           settings = {
             plugin.prepend_fetchers = [
               # https://github.com/yazi-rs/plugins/tree/main/git.yazi
@@ -57,7 +59,10 @@ in
                 run = "git";
               }
             ];
+            # https://yazi-rs.github.io/docs/configuration/yazi#mgr.linemode
+            mgr.linemode = "mtime";
           };
+          # https://yazi-rs.github.io/docs/configuration/keymap
           keymap = {
             mgr.prepend_keymap = [
               # https://github.com/iynaix/time-travel.yazi
