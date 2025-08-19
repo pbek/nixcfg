@@ -437,7 +437,11 @@ add-git-blame-ignore-revs:
     sort .git-blame-ignore-revs | uniq > .git-blame-ignore-revs.tmp
     mv .git-blame-ignore-revs.tmp .git-blame-ignore-revs
 
-# Scan for dead code in the nix files
+# Restart the plasmashell service (useful after an update)
+[group('maintenance')]
+restart-plasmashell:
+    systemctl restart --user plasma-plasmashell.service
+
 [group('linter')]
 scan-dead-code args='':
     deadnix --exclude pkgs/ {{ args }}
