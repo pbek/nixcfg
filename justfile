@@ -202,18 +202,22 @@ boot-iso:
 
 [group('vm')]
 boot-vm:
+    echo "To exit, use: Ctrl + A then X"
     QEMU_OPTS="-m 4096 -smp 4 -enable-kvm" QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
 
 [group('vm')]
 boot-vm-no-kvm:
+    echo "To exit, use: Ctrl + A then X"
     QEMU_OPTS="-m 4096 -smp 4" QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
 
 [group('vm')]
 boot-vm-console:
+    echo "To exit, use: Ctrl + A then X"
     QEMU_OPTS="-nographic -serial mon:stdio" QEMU_KERNEL_PARAMS=console=ttyS0 QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
 
 [group('vm')]
 boot-vm-server-console:
+    echo "To exit, use: Ctrl + A then X"
     QEMU_OPTS="-nographic -serial mon:stdio" QEMU_KERNEL_PARAMS=console=ttyS0 QEMU_NET_OPTS="hostfwd=tcp::2222-:2222" ./result/bin/run-*-vm
 
 [group('vm')]
