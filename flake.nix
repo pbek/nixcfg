@@ -174,6 +174,8 @@
         dp07 = mkDesktopHost "dp07" [ disko.nixosModules.disko ];
         # MBA Gaming PC
         mba-gaming-pc = mkDesktopHost "mba-gaming-pc" [ disko.nixosModules.disko ];
+        # MBA Miniserver ww87
+        mba-msww87 = mkDesktopHost "mba-msww87" [ disko.nixosModules.disko ];
       };
     };
 }
