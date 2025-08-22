@@ -24,7 +24,7 @@ in
         # https://www.nushell.sh/book/
         nushell = {
           enable = true;
-          shellAliases = config.programs.fish.shellAliases;
+          inherit (config.programs.fish) shellAliases;
         };
 
         zoxide.enableNushellIntegration = true;
