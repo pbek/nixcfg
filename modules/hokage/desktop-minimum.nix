@@ -29,6 +29,14 @@ in
     services.displayManager.sddm.enable = true;
     programs.kdeconnect.enable = true;
 
+    # Try to fix favorite menu reloading
+    # https://github.com/NixOS/nixpkgs/issues/414909#issuecomment-3216038215
+    system.userActivationScripts = {
+      "restart-plasma" = ''
+        ${pkgs.xdg-utils}/bin/xdg-desktop-menu forceupdate
+      '';
+    };
+
     # Enable bluetooth
     hardware.bluetooth.enable = true;
 
