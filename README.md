@@ -4,7 +4,7 @@
 
 My personal NixOS config of my machines.
 
-**Not be meant to be used by others**, but feel free to take inspiration from it.
+**Not meant to be used by others**, but feel free to take inspiration from it.
 
 ## Screenhots
 
