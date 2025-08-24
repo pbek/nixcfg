@@ -16,6 +16,8 @@ jobs:
   check:
     name: 🔎️ Eval flake
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       matrix:
         host:

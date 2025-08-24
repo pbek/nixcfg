@@ -13,6 +13,8 @@ jobs:
   format-check:
     name: 📄 Check code formatting with "just format-all"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: 🧰 Checkout code
         uses: actions/checkout@v5
