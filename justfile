@@ -195,29 +195,35 @@ keyscan:
 build-iso:
     nix-build '<nixpkgs/nixos>' -A config.system.build.isoImage -I nixos-config=iso.nix
 
+@_show-qemu-exit-message:
+    echo "Booting VM. To exit, use: Ctrl + A then X"
+    echo "Press any key to continue..."
+    read -n 1
+
 # Boot the built iso image in QEMU
 [group('build')]
 boot-iso:
+    just _show-qemu-exit-message
     nix-shell -p qemu --run "qemu-system-x86_64 -m 256 -cdrom result/iso/nixos-*.iso"
 
 [group('vm')]
 boot-vm:
-    echo "To exit, use: Ctrl + A then X"
+    just _show-qemu-exit-message
     QEMU_OPTS="-m 4096 -smp 4 -enable-kvm" QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
 
 [group('vm')]
 boot-vm-no-kvm:
-    echo "To exit, use: Ctrl + A then X"
+    just _show-qemu-exit-message
     QEMU_OPTS="-m 4096 -smp 4" QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
 
 [group('vm')]
 boot-vm-console:
-    echo "To exit, use: Ctrl + A then X"
+    just _show-qemu-exit-message
     QEMU_OPTS="-nographic -serial mon:stdio" QEMU_KERNEL_PARAMS=console=ttyS0 QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
 
 [group('vm')]
 boot-vm-server-console:
-    echo "To exit, use: Ctrl + A then X"
+    just _show-qemu-exit-message
     QEMU_OPTS="-nographic -serial mon:stdio" QEMU_KERNEL_PARAMS=console=ttyS0 QEMU_NET_OPTS="hostfwd=tcp::2222-:2222" ./result/bin/run-*-vm
 
 [group('vm')]
