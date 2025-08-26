@@ -5,9 +5,20 @@
 }:
 let
   inherit (config) hokage;
+  cfg = hokage.audio;
+
+  inherit (lib)
+    mkEnableOption
+    ;
 in
 {
-  config = lib.mkIf (hokage.role == "desktop" || hokage.role == "ally") {
+  options.hokage.audio = {
+    enable = mkEnableOption "Enable audio system" // {
+      default = hokage.role == "desktop" || hokage.role == "ally";
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
     # Enable sound with pipewire.
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
