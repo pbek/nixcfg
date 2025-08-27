@@ -56,9 +56,11 @@
     cura-appimage
     amdgpu_top # AMD GPU monitoring
     lact # AMD GPU monitoring
-    jellyfin-media-player
-    stable.aider-chat # AI assistant for Linux
+    aider-chat # AI assistant for Linux
     vlc
+
+    # qtwebengine-5.15.19 is marked insecure
+    # jellyfin-media-player
   ];
 
   # Enable hardware accelerated graphics drivers
