@@ -8,6 +8,12 @@ let
   unstablePkgs = nixpkgs-unstable.legacyPackages.${pkgs.system};
 in
 {
+  # https://devenv.sh/reference/options/#cachixpull
+  cachix.pull = [
+    "devenv"
+    "pbek-nixcfg-devenv"
+  ];
+
   # languages.nix.enable = true;
 
   # https://devenv.sh/packages/
