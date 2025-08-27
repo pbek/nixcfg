@@ -57,7 +57,7 @@
     amdgpu_top # AMD GPU monitoring
     lact # AMD GPU monitoring
     jellyfin-media-player
-    aider-chat # AI assistant for Linux
+    stable.aider-chat # AI assistant for Linux
     vlc
   ];
 
