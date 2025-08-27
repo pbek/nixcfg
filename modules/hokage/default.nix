@@ -64,11 +64,6 @@ in
         default = true;
         description = "Use graphical system by default, otherwise use text-based system";
       };
-      usePlasma6 = mkOption {
-        type = types.bool;
-        default = true;
-        description = "Plasma 6 is the default, otherwise use Plasma 5";
-      };
       useGhosttyGtkFix = mkOption {
         type = types.bool;
         default = false;
@@ -121,7 +116,7 @@ in
     #
     # General configs for Plasma 6
     #
-    (lib.mkIf (cfg.useGraphicalSystem && cfg.usePlasma6) {
+    (lib.mkIf cfg.useGraphicalSystem {
       services.desktopManager.plasma6.enable = true;
       environment.plasma6.excludePackages = with pkgs.kdePackages; [
         baloo
@@ -212,65 +207,14 @@ in
     #
     # General configs for X11 with Plasma 6
     #
-    (lib.mkIf (cfg.useGraphicalSystem && !cfg.waylandSupport && cfg.usePlasma6) {
+    (lib.mkIf (cfg.useGraphicalSystem && !cfg.waylandSupport) {
       services.displayManager.defaultSession = "plasmax11";
-    })
-
-    #
-    # General configs for X11 with Plasma 5
-    #
-    (lib.mkIf (cfg.useGraphicalSystem && !cfg.waylandSupport && !cfg.usePlasma6) {
-      services.xserver.desktopManager.plasma5.enable = true;
-      environment.plasma5.excludePackages = with pkgs.libsForQt5; [
-        baloo
-      ];
-
-      environment.systemPackages =
-        with pkgs.libsForQt5;
-        let
-          requiredPackages = [
-          ];
-          optionalPackages = [
-            kwalletmanager
-            plasma-systemmonitor
-            kfind
-            kontact
-            akonadiconsole
-            kleopatra
-            kmail
-            korganizer
-            kaddressbook
-            yakuake
-            spectacle
-            ark
-            bluedevil
-            dolphin
-            dolphin-plugins
-            gwenview
-            kaccounts-integration
-            kaccounts-providers
-            ksshaskpass
-            okular
-            plasma-browser-integration
-            plasma-disks
-            plasma-nm
-            plasma-pa
-            plasma-vault
-            kate
-            kmail
-            akonadi
-            kdepim-runtime
-            filelight
-            kcolorchooser
-          ];
-        in
-        requiredPackages ++ utils.removePackagesByName optionalPackages config.hokage.excludePackages;
     })
 
     #
     # General configs for Plasma 6 with Wayland
     #
-    (lib.mkIf (cfg.useGraphicalSystem && cfg.waylandSupport && cfg.usePlasma6) {
+    (lib.mkIf (cfg.useGraphicalSystem && cfg.waylandSupport) {
       services.displayManager.defaultSession = "plasma";
 
       # Launch SDDM in Wayland too

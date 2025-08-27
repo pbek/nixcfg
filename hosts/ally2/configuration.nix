@@ -21,7 +21,6 @@
   hokage = {
     hostName = "ally2";
     role = "ally";
-    #    usePlasma6 = false;
     #    useWayland = false;
     #    termFontSize = 15.0;
     zfs = {

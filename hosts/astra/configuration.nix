@@ -47,7 +47,6 @@
     espanso.enable = false; # App-specific configurations are not yet supported in Wayland on caliban for VirtualBox!
     waylandSupport = false;
     termFontSize = 16.0;
-    usePlasma6 = true;
     useGhosttyGtkFix = false;
     virtualbox = {
       enable = true;
