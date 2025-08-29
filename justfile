@@ -30,6 +30,39 @@ alias options := hokage-options
 alias fmt := format
 alias fmta := format-all
 
+# Generate aider configuration file with GitHub Copilot oauth token
+[group('config')]
+generate-aider-config:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    # Extract oauth_token from GitHub Copilot apps.json
+    APPS_JSON="$HOME/.config/github-copilot/apps.json"
+
+    if [ ! -f "$APPS_JSON" ]; then
+        echo "Error: GitHub Copilot apps.json not found at $APPS_JSON"
+        exit 1
+    fi
+
+    # Extract the oauth_token using jq
+    OAUTH_TOKEN=$(jq -r '.[].oauth_token' "$APPS_JSON")
+
+    if [ -z "$OAUTH_TOKEN" ] || [ "$OAUTH_TOKEN" = "null" ]; then
+        echo "Error: Could not extract oauth_token from $APPS_JSON"
+        exit 1
+    fi
+
+    # Create the aider config file
+    cat > "$HOME/.aider.conf.yml" << EOF
+    openai-api-base: https://api.githubcopilot.com
+    openai-api-key:  "$OAUTH_TOKEN"
+    model:           openai/claude-sonnet-4
+    weak-model:      openai/gpt-4o-mini
+    show-model-warnings: false
+    EOF
+
+    echo "✅ Generated aider configuration at ~/.aider.conf.yml"
+
 # Notify the user with neosay
 @_notify text:
     if test -f ~/.config/neosay/config.json; then echo "❄️ nixcfg {{ text }}" | neosay; fi
