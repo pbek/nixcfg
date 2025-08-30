@@ -173,11 +173,11 @@
         # TU Laptop Arslan - Lenovo Yoga Pro 9i
         dp07 = mkDesktopHost "dp07" [ disko.nixosModules.disko ];
         # MBA Miniserver24
-        miniserver24 = mkDesktopHost "miniserver24" [ disko.nixosModules.disko ];
+        miniserver24 = mkServerHost "miniserver24" [ disko.nixosModules.disko ];
         # MBA Gaming PC
         mba-gaming-pc = mkDesktopHost "mba-gaming-pc" [ disko.nixosModules.disko ];
         # MBA Miniserver ww87
-        mba-msww87 = mkDesktopHost "mba-msww87" [ disko.nixosModules.disko ];
+        mba-msww87 = mkServerHost "mba-msww87" [ disko.nixosModules.disko ];
       };
     };
 }
