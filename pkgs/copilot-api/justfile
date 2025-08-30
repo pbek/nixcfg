@@ -1,0 +1,8 @@
+build:
+    nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })'
+
+build-force:
+    nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })' --check
+
+edit-app:
+    cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || cd ~/Code/tools/nixpkgs; kate ./pkgs/by-name/co/copilot-api/package.nix
