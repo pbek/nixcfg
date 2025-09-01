@@ -123,6 +123,9 @@ in
       ++ lib.optionals cfg.goland.enable (mkJetbrainsPackage "goland" cfg.goland.package);
 
     home-manager.users = lib.genAttrs hokage.users (_userName: {
+      # https://searchix.alanpearce.eu/options/home-manager/search?query=git
+      programs.git.ignores = [ ".idea" ];
+
       xdg.desktopEntries = lib.mkMerge [
         (lib.mkIf cfg.clion.enable {
           clion-nix-shell =

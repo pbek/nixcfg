@@ -34,7 +34,6 @@ in
         userName = lib.mkDefault userNameLong;
         userEmail = lib.mkDefault userEmail;
         ignores = [
-          ".idea"
           ".direnv"
           "result"
           ".aider*"
