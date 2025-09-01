@@ -40,7 +40,6 @@ in
     docker-slim # Docker image size optimizer and analysis tool
     amdgpu_top # AMD GPU monitoring
     lact # AMD GPU monitoring
-    aider-chat # AI code completion tool
   ];
 
   # Enable hardware accelerated graphics drivers
@@ -116,6 +115,7 @@ in
     };
     qtcreator.enable = false;
     virtualbox.enable = true;
+    aider.enable = true;
     jetbrains = {
       clion.enable = false;
       goland.enable = false;

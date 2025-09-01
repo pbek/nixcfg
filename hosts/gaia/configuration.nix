@@ -55,7 +55,6 @@ in
     cura-appimage
     #    (pkgs.callPackage ../../pkgs/lact/package.nix { })
     lact
-    aider-chat # AI assistant for Linux
   ];
 
   # Handle keyboard leds
@@ -133,5 +132,6 @@ in
     cache.sources = [ "home" ];
     platformio.enable = true;
     virtualbox.enable = true;
+    aider.enable = true;
   };
 }

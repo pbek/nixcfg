@@ -56,7 +56,6 @@
     cura-appimage
     amdgpu_top # AMD GPU monitoring
     lact # AMD GPU monitoring
-    aider-chat # AI assistant for Linux
     vlc
 
     # qtwebengine-5.15.19 is marked insecure
@@ -145,6 +144,7 @@
     hostName = "venus";
     role = "desktop";
     virtualbox.enable = true;
+    aider.enable = true;
     gaming = {
       enable = true;
       ryubing.highDpi = true;

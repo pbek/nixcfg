@@ -36,7 +36,6 @@ in
         ignores = [
           ".direnv"
           "result"
-          ".aider*"
         ];
         signing = {
           signByDefault = lib.mkDefault (hokage.useInternalInfrastructure && hokage.useGraphicalSystem);
