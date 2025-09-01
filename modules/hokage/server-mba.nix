@@ -15,7 +15,7 @@ in
 
   config = lib.mkIf cfg.enable {
     # No password needed for sudo for wheel group
-    security.sudo.wheelNeedsPassword = false;
+    security.sudo-rs.wheelNeedsPassword = false;
 
     users.users.mba = {
       description = "Markus";
