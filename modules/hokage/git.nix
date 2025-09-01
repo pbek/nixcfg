@@ -7,9 +7,23 @@ let
   inherit (config) hokage;
   inherit (hokage) userNameLong;
   inherit (hokage) userEmail;
+  cfg = hokage.git;
+
+  inherit (lib)
+    mkEnableOption
+    ;
 in
 {
-  config = lib.mkIf (hokage.role == "desktop") {
+  options.hokage.git = {
+    enable = mkEnableOption "Enable Git integration" // {
+      default = hokage.role == "desktop";
+    };
+    enableUrlRewriting = mkEnableOption "Enable URL rewriting from HTTPS to SSH" // {
+      default = true;
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
     # https://home-manager-options.extranix.com
     home-manager.users = lib.genAttrs hokage.users (userName: {
       # https://searchix.alanpearce.eu/options/home-manager/search?query=git
@@ -35,6 +49,8 @@ in
             autoDetach = false;
           };
           # You can't bypass whose rules, you rather need to remove ~/.config/git/config
+        }
+        // lib.optionalAttrs cfg.enableUrlRewriting {
           url = {
             "ssh://git@github.com/" = {
               insteadOf = "https://github.com/";
@@ -46,6 +62,8 @@ in
               insteadOf = "https://bitbucket.org/";
             };
           };
+        }
+        // {
           pull = lib.mkDefault {
             rebase = true;
           };
