@@ -11,6 +11,15 @@
 }:
 let
   inherit (config.hokage) userLogin;
+
+  #  nixpkgs_multipass_pr = import (builtins.fetchTarball {
+  #      # replace <commit> with the PR's head commit of NixOS/nixpkgs#439454
+  #      url = "https://github.com/NixOS/nixpkgs/archive/5aa37bc5ce1ea85df3d04ac278b6a3784ed4cc88.tar.gz";
+  #      sha256 = "sha256:109bj2i9nywgr4jn1bxmgc2fvp3x7ymrm4k8bczs79apry1r23r6";
+  #    }) {
+  #      inherit (pkgs) system;
+  #      config = config.nixpkgs.config or {};
+  #    };
 in
 {
   imports = [
@@ -69,6 +78,7 @@ in
 
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/
   virtualisation.multipass.enable = true;
+  #  virtualisation.multipass.package = nixpkgs_multipass_pr.multipass;
 
   users.users.omegah = {
     description = "Patrizio Bekerle Home";
