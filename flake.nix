@@ -172,6 +172,8 @@
         dp06 = mkDesktopHost "dp06" [ disko.nixosModules.disko ];
         # TU Laptop Arslan - Lenovo Yoga Pro 9i
         dp07 = mkDesktopHost "dp07" [ disko.nixosModules.disko ];
+        # TU Gaming Station - ThinkCentre M720q
+        dp08 = mkDesktopHost "dp08" [ disko.nixosModules.disko ];
         # MBA Miniserver24
         miniserver24 = mkServerHost "miniserver24" [ disko.nixosModules.disko ];
         # MBA Gaming PC
