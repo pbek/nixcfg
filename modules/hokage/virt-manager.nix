@@ -25,5 +25,9 @@ in
     programs.dconf.enable = true;
     environment.systemPackages = with pkgs; [ virt-manager ];
     virtualisation.spiceUSBRedirection.enable = true;
+
+    users.users = lib.genAttrs hokage.users (_userName: {
+      extraGroups = [ "libvirtd" ];
+    });
   };
 }
