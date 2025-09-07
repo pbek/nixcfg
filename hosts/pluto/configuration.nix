@@ -64,7 +64,6 @@
     hostName = "pluto";
     jetbrains.useStable = true;
     useGhosttyGtkFix = false;
-    virtualbox.enable = true;
     cache.sources = [ "home" ];
   };
 }
