@@ -143,7 +143,6 @@
   hokage = {
     hostName = "venus";
     role = "desktop";
-    virtualbox.enable = true;
     aider.enable = true;
     gaming = {
       enable = true;
