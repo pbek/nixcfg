@@ -7,7 +7,6 @@
 }:
 let
   inherit (config) hokage;
-  inherit (hokage) userLogin;
   inherit (hokage) useInternalInfrastructure;
   cfg = hokage.jetbrains;
 
@@ -16,6 +15,7 @@ let
     mkPackageOption
     mkOption
     types
+    mkIf
     ;
 
   jetbrainsPackages =
@@ -116,25 +116,30 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     environment.systemPackages =
       lib.optionals cfg.phpstorm.enable (mkJetbrainsPackage "phpstorm" cfg.phpstorm.package)
       ++ lib.optionals cfg.clion.enable (mkJetbrainsPackage "clion" cfg.clion.package)
       ++ lib.optionals cfg.goland.enable (mkJetbrainsPackage "goland" cfg.goland.package);
 
     home-manager.users = lib.genAttrs hokage.users (_userName: {
+      programs.fish.shellAliases = mkIf cfg.clion.enable {
+        cl = "nix-shell /home/${_userName}/.shells/qt5.nix --run clion";
+        cl6 = "nix-shell /home/${_userName}/.shells/qt6.nix --run clion";
+      };
+
       # https://searchix.alanpearce.eu/options/home-manager/search?query=git
       programs.git.ignores = [ ".idea" ];
 
       xdg.desktopEntries = lib.mkMerge [
-        (lib.mkIf cfg.clion.enable {
+        (mkIf cfg.clion.enable {
           clion-nix-shell =
             let
               shellPath =
                 if cfg.clion.enableQt6 then
-                  "/home/${userLogin}/.shells/qt6.nix"
+                  "/home/${_userName}/.shells/qt6.nix"
                 else
-                  "/home/${userLogin}/.shells/qt5.nix";
+                  "/home/${_userName}/.shells/qt5.nix";
             in
             {
               name = "CLion with dev packages";
@@ -146,18 +151,18 @@ in
               categories = [ "Development" ];
             };
         })
-        (lib.mkIf cfg.phpstorm.enable {
+        (mkIf cfg.phpstorm.enable {
           phpstorm-nix-shell = {
             name = "PhpStorm with dev packages";
             genericName = "Professional IDE for Web and PHP developers";
             comment = "PhpStorm provides an editor for PHP, HTML and JavaScript with on-the-fly code analysis, error prevention and automated refactorings for PHP and JavaScript code.";
             icon = "${jetbrainsPackages.phpstorm}/share/pixmaps/phpstorm.svg";
-            exec = "nix-shell /home/${userLogin}/.shells/webdev.nix --run phpstorm";
+            exec = "nix-shell /home/${_userName}/.shells/webdev.nix --run phpstorm";
             terminal = false;
             categories = [ "Development" ];
           };
         })
-        (lib.mkIf cfg.goland.enable {
+        (mkIf cfg.goland.enable {
           goland-nix-shell = {
             name = "Goland with dev packages";
             genericName = "Up and Coming Go IDE";

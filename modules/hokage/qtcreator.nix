@@ -6,7 +6,6 @@
 }:
 let
   inherit (config) hokage;
-  inherit (hokage) userLogin;
   inherit (hokage) useInternalInfrastructure;
   cfg = hokage.qtcreator;
 
@@ -27,13 +26,18 @@ in
     ];
 
     home-manager.users = lib.genAttrs hokage.users (_userName: {
+      programs.fish.shellAliases = {
+        qtc = "nix-shell /home/${_userName}/.shells/qt5.nix --run qtcreator";
+        qtc6 = "nix-shell /home/${_userName}/.shells/qt6.nix --run qtcreator";
+      };
+
       xdg.desktopEntries = {
         qtcreator-nix-shell = {
           name = "Qt Creator with dev packages";
           genericName = "C++ IDE for developing Qt applications";
           comment = "";
           icon = "${pkgs.qtcreator}/share/icons/hicolor/128x128/apps/QtProject-qtcreator.png";
-          exec = "nix-shell /home/${userLogin}/.shells/qt5.nix --run qtcreator";
+          exec = "nix-shell /home/${_userName}/.shells/qt5.nix --run qtcreator";
           terminal = false;
           categories = [ "Development" ];
         };
