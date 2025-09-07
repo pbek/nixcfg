@@ -279,6 +279,11 @@ repair-store:
 list-generations:
     nh os info
 
+# Rollback to the previous generation
+[group('maintenance')]
+rollback:
+    nh os rollback
+
 # Garbage collect the nix store to free up space
 [group('maintenance')]
 optimize-store:
