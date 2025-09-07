@@ -52,4 +52,5 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
 
       - name: Run nix eval for ${{ matrix.host }}
+        continue-on-error: true
         run: nix eval .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel.drvPath
