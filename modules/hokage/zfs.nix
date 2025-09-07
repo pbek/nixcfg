@@ -53,7 +53,7 @@ in
       # Set the currently maximum allowed kernel package for ZFS here
       # Look for Kernel support on https://github.com/openzfs/zfs/releases
       # Look for ZFS version in nixpkgs on https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=zfs+linux_6_16
-      default = pkgs.linuxKernel.packages.linux_6_15.kernel;
+      default = pkgs.linuxKernel.packages.linux_6_16.kernel;
       description = "Maximum allowed kernel package vor ZFS";
       readOnly = true;
     };
