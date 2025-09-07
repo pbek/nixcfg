@@ -152,6 +152,22 @@ in
     # https://rycee.gitlab.io/home-manager/options.html
     # https://nix-community.github.io/home-manager/options.html#opt-home.file
     home-manager.users = lib.genAttrs hokage.users (_userName: {
+      # Set some fish shell aliases
+      programs.fish.shellAliases = {
+        n18 = "nix-shell /home/${_userName}/.shells/node18.nix --run fish";
+        p8 = "nix-shell /home/${_userName}/.shells/php8.nix --run fish";
+        qmake5-path = "nix-shell /home/${_userName}/.shells/qt5.nix --run \"whereis qmake\"";
+        qmake6-path = "nix-shell /home/${_userName}/.shells/qt6.nix --run \"whereis qmake\"";
+        qce = "qc exec --command --color --atuin";
+        qcel = "qc exec --command --color --atuin --last";
+        qcs = "qc search --color";
+        qcsw = "qc switch";
+        pia-up = "~/Scripts/pia.sh";
+        pia-down = "wg-quick down pia";
+        pwdc = "pwd | xclip -sel clip";
+        fwup = "fwupdmgr get-updates";
+      };
+
       # allow unfree packages in nix-shell
       home.file.".config/nixpkgs/config.nix".text = ''
         {
@@ -206,24 +222,6 @@ in
     # networking.firewall.allowedUDPPorts = [ ... ];
     # Or disable the firewall altogether.
     # networking.firewall.enable = false;
-
-    # Set some fish config
-    programs.fish = {
-      shellAliases = {
-        n18 = "nix-shell /home/${userLogin}/.shells/node18.nix --run fish";
-        p8 = "nix-shell /home/${userLogin}/.shells/php8.nix --run fish";
-        qmake5-path = "nix-shell /home/${userLogin}/.shells/qt5.nix --run \"whereis qmake\"";
-        qmake6-path = "nix-shell /home/${userLogin}/.shells/qt6.nix --run \"whereis qmake\"";
-        qce = "qc exec --command --color --atuin";
-        qcel = "qc exec --command --color --atuin --last";
-        qcs = "qc search --color";
-        qcsw = "qc switch";
-        pia-up = "~/Scripts/pia.sh";
-        pia-down = "wg-quick down pia";
-        pwdc = "pwd | xclip -sel clip";
-        fwup = "fwupdmgr get-updates";
-      };
-    };
 
     age.secrets =
       if useSecrets then
