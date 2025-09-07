@@ -21,8 +21,6 @@
   ];
 
   services.kmscon.enable = false;
-  services.qemuGuest.enable = true;
-  services.spice-vdagentd.enable = true; # enable copy and paste between host and guest
 
   hokage = {
     hostName = "astra-beta";
@@ -34,6 +32,7 @@
       hostId = "6194bc24";
       encrypted = true;
     };
+    virtManager.role = "guest";
     cache.sources = [ "home" ];
     # cache.sources = [ "caliban" ];
   };
