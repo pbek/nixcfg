@@ -23,17 +23,16 @@
   services.kmscon.enable = false;
 
   hokage = {
-    hostName = "astra-beta";
+    hostName = "mercury";
     espanso.enable = false; # Host will already use espanso
     waylandSupport = false; # Disable Wayland support for clipboard sharing from guest to host
     termFontSize = 16.0;
     zfs = {
       enable = true;
-      hostId = "6194bc24";
+      hostId = "29a6f1f7";
       encrypted = true;
     };
     libvirt.role = "guest";
     cache.sources = [ "home" ];
-    # cache.sources = [ "caliban" ];
   };
 }
