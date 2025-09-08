@@ -123,7 +123,6 @@ in
       encrypted = true;
     };
     qtcreator.enable = false;
-    virtualbox.enable = true;
     aider.enable = true;
     jetbrains = {
       clion.enable = false;
