@@ -35,7 +35,7 @@
 
   # Enable Tailscale VPN
   # Use `sudo tailscale up --accept-routes` to connect to the VPN
-  services.tailscale.enable = true;
+  # services.tailscale.enable = true;
 
   environment.systemPackages = with pkgs; [
   ];
@@ -44,14 +44,11 @@
 
   hokage = {
     hostName = "astra";
-    espanso.enable = false; # App-specific configurations are not yet supported in Wayland on caliban for VirtualBox!
-    waylandSupport = false;
+    espanso.enable = false; # Host will already use espanso
+    waylandSupport = false; # Disable Wayland support for clipboard sharing from guest to host
     termFontSize = 16.0;
     useGhosttyGtkFix = false;
-    virtualbox = {
-      enable = true;
-      role = "guest";
-    };
+    virtManager.role = "guest";
     cache.sources = [ "caliban" ];
   };
 }
