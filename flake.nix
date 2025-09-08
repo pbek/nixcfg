@@ -133,7 +133,7 @@
           disko.nixosModules.disko
         ];
         # TUG VM
-        astra = mkDesktopHost "astra" [ ];
+        astra = mkDesktopHost "astra" [ disko.nixosModules.disko ];
         astra-beta = mkDesktopHost "astra-beta" [ disko.nixosModules.disko ];
         # TU Work PC
         caliban = mkDesktopHost "caliban" [
