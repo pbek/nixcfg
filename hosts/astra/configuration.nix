@@ -32,7 +32,7 @@
     waylandSupport = false; # Disable Wayland support for clipboard sharing from guest to host
     termFontSize = 16.0;
     useGhosttyGtkFix = false;
-    virtManager.role = "guest";
+    libvirt.role = "guest";
     cache.sources = [ "caliban" ];
     zfs = {
       enable = true;

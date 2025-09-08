@@ -1,12 +1,11 @@
 {
-  pkgs,
   config,
   lib,
   ...
 }:
 let
   inherit (config) hokage;
-  cfg = hokage.virtManager;
+  cfg = hokage.libvirt;
 
   inherit (lib)
     mkEnableOption
@@ -16,9 +15,12 @@ let
     ;
 in
 {
-  options.hokage.virtManager = {
-    enable = mkEnableOption "Enable VirtManager support" // {
+  options.hokage.libvirt = {
+    enable = mkEnableOption "Enable libvirt support" // {
       default = hokage.role == "desktop";
+    };
+    gui.enable = mkEnableOption "Enable VirtManager" // {
+      default = cfg.role == "host" && hokage.role == "desktop";
     };
     role = mkOption {
       type = types.enum [
@@ -26,7 +28,7 @@ in
         "guest"
       ];
       default = "host";
-      description = "Role of the VirtManager system";
+      description = "Role of the libvirt system";
     };
   };
 
@@ -37,7 +39,7 @@ in
     #
     virtualisation.libvirtd.enable = mkIf (cfg.role == "host") true;
     programs.dconf.enable = mkIf (cfg.role == "host") true;
-    environment.systemPackages = mkIf (cfg.role == "host") (with pkgs; [ virt-manager ]);
+    programs.virt-manager.enable = mkIf cfg.gui.enable true;
     virtualisation.spiceUSBRedirection.enable = mkIf (cfg.role == "host") true;
 
     users.users = mkIf (cfg.role == "host") (

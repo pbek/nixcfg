@@ -32,7 +32,7 @@
       hostId = "6194bc24";
       encrypted = true;
     };
-    virtManager.role = "guest";
+    libvirt.role = "guest";
     cache.sources = [ "home" ];
     # cache.sources = [ "caliban" ];
   };
