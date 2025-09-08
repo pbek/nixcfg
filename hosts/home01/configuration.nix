@@ -119,6 +119,7 @@
   hokage = {
     hostName = "home01";
     role = "server-home";
+    libvirt.enable = true;
     zfs.hostId = "daafda01";
     cache.sources = [ "home" ];
   };
