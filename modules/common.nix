@@ -213,7 +213,7 @@ in
         # television # fuzzy finder TUI
         # (callPackage ../../pkgs/television/package.nix { })
         zellij # terminal multiplexer (like tmux)
-        netcat-gnu
+        netcat-openbsd # Netcat with -U parameter for libvirt
         nmap
         lazygit
         dogdns # dig replacement
