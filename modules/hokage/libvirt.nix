@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -49,6 +50,9 @@ in
         extraGroups = [ "libvirtd" ];
       })
     );
+
+    # Netcat with -U parameter for libvirt remote access
+    environment.systemPackages = mkIf (cfg.role == "host") (with pkgs; [ netcat-openbsd ]);
 
     #
     # Guest configuration
