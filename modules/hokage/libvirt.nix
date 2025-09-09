@@ -32,15 +32,17 @@ in
     };
   };
 
-  # https://wiki.nixos.org/wiki/Virt-manager
+  # https://wiki.nixos.org/wiki/Libvirt
   config = lib.mkIf cfg.enable {
     #
     # Host configuration
     #
     virtualisation.libvirtd.enable = mkIf (cfg.role == "host") true;
     programs.dconf.enable = mkIf (cfg.role == "host") true;
-    programs.virt-manager.enable = mkIf cfg.gui.enable true;
     virtualisation.spiceUSBRedirection.enable = mkIf (cfg.role == "host") true;
+
+    # https://wiki.nixos.org/wiki/Virt-manager
+    programs.virt-manager.enable = mkIf cfg.gui.enable true;
 
     users.users = mkIf (cfg.role == "host") (
       lib.genAttrs hokage.users (_userName: {
