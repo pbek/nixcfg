@@ -131,7 +131,6 @@ in
     tugraz.enable = true;
     cache.sources = [ "home" ];
     platformio.enable = true;
-    virtualbox.enable = true;
     aider.enable = true;
   };
 }
