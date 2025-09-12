@@ -122,11 +122,10 @@ in
       poolName = "calroot";
       encrypted = true;
     };
-    qtcreator.enable = false;
     aider.enable = true;
     jetbrains = {
-      clion.enable = false;
       goland.enable = false;
     };
+    languages.cplusplus.enable = false;
   };
 }

@@ -156,8 +156,6 @@ in
       programs.fish.shellAliases = {
         n18 = "nix-shell /home/${_userName}/.shells/node18.nix --run fish";
         p8 = "nix-shell /home/${_userName}/.shells/php8.nix --run fish";
-        qmake5-path = "nix-shell /home/${_userName}/.shells/qt5.nix --run \"whereis qmake\"";
-        qmake6-path = "nix-shell /home/${_userName}/.shells/qt6.nix --run \"whereis qmake\"";
         qce = "qc exec --command --color --atuin";
         qcel = "qc exec --command --color --atuin --last";
         qcs = "qc search --color";

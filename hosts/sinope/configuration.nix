@@ -35,9 +35,9 @@
     hostName = "sinope";
     tugraz.enable = true;
     jetbrains = {
-      clion.enable = false;
       goland.enable = false;
     };
+    languages.cplusplus.enable = false;
     cache.sources = [ "caliban" ];
   };
 }

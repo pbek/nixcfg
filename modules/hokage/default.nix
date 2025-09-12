@@ -18,9 +18,12 @@ let
     ;
 in
 {
-  imports = builtins.map import (lib-utils.listNixFiles ./.) ++ [
-    ../common.nix
-  ];
+  imports =
+    builtins.map import (lib-utils.listNixFiles ./.)
+    ++ builtins.map import (lib-utils.listNixFiles ./languages)
+    ++ [
+      ../common.nix
+    ];
 
   options = {
     hokage = {

@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  xdg,
   ...
 }:
 let
@@ -83,9 +82,6 @@ in
       enable = mkEnableOption "Enable CLion support" // {
         default = useInternalInfrastructure;
       };
-      enableQt6 = mkEnableOption "Enable Qt6 for CLion" // {
-        default = true;
-      };
       package = mkPackageOption jetbrainsPackages "clion" {
         example = "clion";
       };
@@ -132,25 +128,6 @@ in
       programs.git.ignores = [ ".idea" ];
 
       xdg.desktopEntries = lib.mkMerge [
-        (mkIf cfg.clion.enable {
-          clion-nix-shell =
-            let
-              shellPath =
-                if cfg.clion.enableQt6 then
-                  "/home/${_userName}/.shells/qt6.nix"
-                else
-                  "/home/${_userName}/.shells/qt5.nix";
-            in
-            {
-              name = "CLion with dev packages";
-              genericName = "C/C++ IDE. New. Intelligent. Cross-platform";
-              comment = "Test Enhancing productivity for every C and C++ developer on Linux, macOS and Windows.";
-              icon = "${jetbrainsPackages.clion}/share/pixmaps/clion.svg";
-              exec = "nix-shell ${shellPath} --run clion";
-              terminal = false;
-              categories = [ "Development" ];
-            };
-        })
         (mkIf cfg.phpstorm.enable {
           phpstorm-nix-shell = {
             name = "PhpStorm with dev packages";

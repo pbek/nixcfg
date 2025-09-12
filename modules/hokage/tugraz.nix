@@ -67,10 +67,13 @@ in
     });
 
     # Add common settings when externally managed
-    hokage.useInternalInfrastructure = lib.mkIf cfg.enableExternal (lib.mkDefault false);
-    hokage.useSecrets = lib.mkIf cfg.enableExternal (lib.mkDefault false);
-    hokage.useSharedKey = lib.mkIf cfg.enableExternal (lib.mkDefault false);
-    hokage.espanso.enable = lib.mkIf cfg.enableExternal (lib.mkDefault false);
-    hokage.jetbrains.phpstorm.enable = lib.mkIf cfg.enableExternal (lib.mkDefault true);
+    hokage = {
+      useInternalInfrastructure = lib.mkIf cfg.enableExternal (lib.mkDefault false);
+      useSecrets = lib.mkIf cfg.enableExternal (lib.mkDefault false);
+      useSharedKey = lib.mkIf cfg.enableExternal (lib.mkDefault false);
+      espanso.enable = lib.mkIf cfg.enableExternal (lib.mkDefault false);
+      jetbrains.phpstorm.enable = lib.mkIf cfg.enableExternal (lib.mkDefault true);
+      languages.cplusplus.enable = lib.mkIf cfg.enableExternal (lib.mkDefault false);
+    };
   };
 }
