@@ -6,7 +6,6 @@
 }:
 let
   inherit (config) hokage;
-  inherit (hokage) useInternalInfrastructure;
   cfg = hokage.jetbrains;
 
   inherit (lib)
@@ -66,32 +65,24 @@ let
 in
 {
   options.hokage.jetbrains = {
-    enable = mkEnableOption "Enable JetBrains IDEs support" // {
-      default = hokage.role == "desktop"; # Enable JetBrains IDEs support by default for desktops
-    };
+    enable = mkEnableOption "Enable JetBrains IDEs support";
     useStable = mkEnableOption "Use stable JetBrains packages" // {
       default = hokage.lowBandwidth; # Use stable JetBrains packages to save bandwidth
     };
     phpstorm = {
-      enable = mkEnableOption "Enable PhpStorm support" // {
-        default = useInternalInfrastructure;
-      };
+      enable = mkEnableOption "Enable PhpStorm support";
       package = mkPackageOption jetbrainsPackages "phpstorm" {
         example = "phpstorm";
       };
     };
     clion = {
-      enable = mkEnableOption "Enable CLion support" // {
-        default = useInternalInfrastructure;
-      };
+      enable = mkEnableOption "Enable CLion support";
       package = mkPackageOption jetbrainsPackages "clion" {
         example = "clion";
       };
     };
     goland = {
-      enable = mkEnableOption "Enable Goland support" // {
-        default = useInternalInfrastructure;
-      };
+      enable = mkEnableOption "Enable Goland support";
       package = mkPackageOption jetbrainsPackages "goland" {
         example = "goland";
       };
