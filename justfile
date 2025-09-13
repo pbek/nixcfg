@@ -51,7 +51,7 @@ check-trace-high-memory:
 
 # Check all hosts configured in the flake.nix
 [group('build')]
-check:
+check-all:
     #!/usr/bin/env bash
     echo "🔍 Checking all hosts configured in flake.nix..."
 
@@ -92,10 +92,15 @@ check:
         echo "🎉 All hosts checked successfully!"
     fi
 
-# Checks if the host configuration can be built
+# Checks if the configuration of a host can be built
 [group('build')]
 check-host hostname:
     nix eval .#nixosConfigurations.{{ hostname }}.config.system.build.toplevel.drvPath
+
+# Checks if the current host configuration can be built
+[group('build')]
+check:
+    just check-host {{ hostname }}
 
 [group('build')]
 nix-switch:
