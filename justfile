@@ -47,6 +47,11 @@ check:
 check-trace:
     nix flake check --no-build --show-trace
 
+# Checks if the host configuration can be built
+[group('build')]
+check-host hostname:
+    nix eval .#nixosConfigurations.{{ hostname }}.config.system.build.toplevel.drvPath
+
 [group('build')]
 nix-switch:
     sudo nixos-rebuild switch --flake .#{{ hostname }} -L
