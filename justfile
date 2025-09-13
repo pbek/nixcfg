@@ -38,14 +38,59 @@ alias fmta := format-all
 test:
     sudo nixos-rebuild test --flake .#{{ hostname }} -L
 
+# Careful: This can use a lot of memory on large flakes
 # https://nix.dev/manual/nix/2.18/command-ref/new-cli/nix3-flake-check.html
 [group('build')]
-check:
+check-high-memory:
     nix flake check --no-build --keep-going
 
+# Careful: This can use a lot of memory on large flakes
 [group('build')]
-check-trace:
+check-trace-high-memory:
     nix flake check --no-build --show-trace
+
+# Check all hosts configured in the flake.nix
+[group('build')]
+check:
+    #!/usr/bin/env bash
+    echo "🔍 Checking all hosts configured in flake.nix..."
+
+    # Extract host names from flake.nix nixosConfigurations
+    hosts=($(nix eval --raw .#nixosConfigurations --apply 'pkgs: builtins.concatStringsSep " " (builtins.attrNames pkgs)'))
+
+    if [ ${#hosts[@]} -eq 0 ]; then
+        echo "❌ No hosts found in flake.nix"
+        exit 1
+    fi
+
+    echo "📋 Found ${#hosts[@]} hosts: ${hosts[*]}"
+    echo ""
+
+    failed_hosts=()
+    successful_hosts=()
+
+    for host in "${hosts[@]}"; do
+        echo "📋 Checking host: $host"
+        if just check-host "$host" > /dev/null 2>&1; then
+            echo "✅ $host: OK"
+            successful_hosts+=("$host")
+        else
+            echo "❌ $host: FAILED"
+            failed_hosts+=("$host")
+        fi
+    done
+
+    echo ""
+    echo "📊 Summary:"
+    echo "✅ Successful hosts (${#successful_hosts[@]}): ${successful_hosts[*]}"
+    if [ ${#failed_hosts[@]} -gt 0 ]; then
+        echo "❌ Failed hosts (${#failed_hosts[@]}): ${failed_hosts[*]}"
+        echo ""
+        echo "Run 'just check-host <hostname>' for detailed error information."
+        exit 1
+    else
+        echo "🎉 All hosts checked successfully!"
+    fi
 
 # Checks if the host configuration can be built
 [group('build')]
