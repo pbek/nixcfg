@@ -72,8 +72,7 @@ in
       useSecrets = lib.mkIf cfg.enableExternal (lib.mkDefault false);
       useSharedKey = lib.mkIf cfg.enableExternal (lib.mkDefault false);
       espanso.enable = lib.mkIf cfg.enableExternal (lib.mkDefault false);
-      jetbrains.phpstorm.enable = lib.mkIf cfg.enableExternal (lib.mkDefault true);
-      languages.cplusplus.enable = lib.mkIf cfg.enableExternal (lib.mkDefault false);
+      languages.javascript.enable = lib.mkIf cfg.enableExternal (lib.mkDefault true);
     };
   };
 }

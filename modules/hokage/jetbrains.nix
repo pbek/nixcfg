@@ -128,20 +128,6 @@ in
 
       # https://searchix.alanpearce.eu/options/home-manager/search?query=git
       programs.git.ignores = [ ".idea" ];
-
-      xdg.desktopEntries = lib.mkMerge [
-        (mkIf cfg.phpstorm.enable {
-          phpstorm-nix-shell = {
-            name = "PhpStorm with dev packages";
-            genericName = "Professional IDE for Web and PHP developers";
-            comment = "PhpStorm provides an editor for PHP, HTML and JavaScript with on-the-fly code analysis, error prevention and automated refactorings for PHP and JavaScript code.";
-            icon = "${jetbrainsPackages.phpstorm}/share/pixmaps/phpstorm.svg";
-            exec = "nix-shell /home/${_userName}/.shells/webdev.nix --run phpstorm";
-            terminal = false;
-            categories = [ "Development" ];
-          };
-        })
-      ];
     });
   };
 }
