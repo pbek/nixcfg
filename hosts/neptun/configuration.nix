@@ -36,7 +36,7 @@
 
   hokage = {
     hostName = "neptun";
-    jetbrains.useStable = true;
+    lowBandwidth = true;
     cache.sources = [ "home" ];
   };
 }

@@ -69,7 +69,9 @@ in
     enable = mkEnableOption "Enable JetBrains IDEs support" // {
       default = hokage.role == "desktop"; # Enable JetBrains IDEs support by default for desktops
     };
-    useStable = mkEnableOption "Use stable JetBrains packages";
+    useStable = mkEnableOption "Use stable JetBrains packages" // {
+      default = hokage.lowBandwidth; # Use stable JetBrains packages to save bandwidth
+    };
     phpstorm = {
       enable = mkEnableOption "Enable PhpStorm support" // {
         default = useInternalInfrastructure;

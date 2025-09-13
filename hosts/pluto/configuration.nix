@@ -62,7 +62,7 @@
 
   hokage = {
     hostName = "pluto";
-    jetbrains.useStable = true;
+    lowBandwidth = true;
     useGhosttyGtkFix = false;
     cache.sources = [ "home" ];
   };

@@ -47,6 +47,10 @@ in
         default = true;
         description = "Use internal infrastructure of omega";
       };
+      lowBandwidth = mkOption {
+        type = types.bool;
+        description = "Don't install all packages or use stable versions to save bandwidth";
+      };
       useSecrets = mkOption {
         type = types.bool;
         default = true;

@@ -18,7 +18,7 @@
 
   hokage = {
     hostName = "hyperion";
-    jetbrains.useStable = true;
+    lowBandwidth = true;
     useGhosttyGtkFix = false;
     cache.sources = [ "home" ];
 

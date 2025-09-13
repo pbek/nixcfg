@@ -53,6 +53,6 @@
   hokage = {
     hostName = "jupiter";
     cache.sources = [ "home" ];
-    jetbrains.useStable = true;
+    lowBandwidth = true;
   };
 }

@@ -35,7 +35,7 @@
 
   hokage = {
     hostName = "rhea";
-    jetbrains.useStable = true;
+    lowBandwidth = true;
     useGhosttyGtkFix = false;
     cache.sources = [ "home" ];
   };
