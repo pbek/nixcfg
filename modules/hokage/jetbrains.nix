@@ -141,17 +141,6 @@ in
             categories = [ "Development" ];
           };
         })
-        (mkIf cfg.goland.enable {
-          goland-nix-shell = {
-            name = "Goland with dev packages";
-            genericName = "Up and Coming Go IDE";
-            comment = "Goland is the codename for a new commercial IDE by JetBrains aimed at providing an ergonomic environment for Go development. The new IDE extends the IntelliJ platform with the coding assistance and tool integrations specific for the Go language.";
-            icon = "${jetbrainsPackages.goland}/share/pixmaps/goland.svg";
-            exec = "nix-shell -p go --run goland";
-            terminal = false;
-            categories = [ "Development" ];
-          };
-        })
       ];
     });
   };
