@@ -162,8 +162,6 @@ in
         qcel = "qc exec --command --color --atuin --last";
         qcs = "qc search --color";
         qcsw = "qc switch";
-        pia-up = mkIf useSecrets "~/Scripts/pia.sh";
-        pia-down = mkIf useSecrets "wg-quick down pia";
         pwdc = "pwd | xclip -sel clip";
         fwup = "fwupdmgr get-updates";
       };

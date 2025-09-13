@@ -1,14 +1,12 @@
 {
   config,
   pkgs,
-  inputs,
   lib,
   utils,
   ...
 }:
 let
   inherit (config) hokage;
-  inherit (hokage) useSecrets;
   inherit (hokage) termFontSize;
 in
 {
@@ -131,22 +129,6 @@ in
     # https://rycee.gitlab.io/home-manager/options.html
     # https://nix-community.github.io/home-manager/options.html#opt-home.file
     home-manager.users = lib.genAttrs hokage.users (_userName: {
-      # Set the path to the pia-manual repository and the userLogin and password for the PIA VPN script
-      home.file."Scripts/pia.sh" = {
-        text =
-          if useSecrets then
-            ''
-              #!/usr/bin/env bash
-              # PIA startup script
-              set -e
-              cd "${inputs.pia}"
-              sudo VPN_PROTOCOL=wireguard DISABLE_IPV6=yes DIP_TOKEN=no AUTOCONNECT=true PIA_PF=false PIA_DNS=false PIA_USER=$(cat "${config.age.secrets.pia-user.path}") PIA_PASS=$(cat "${config.age.secrets.pia-pass.path}") ./run_setup.sh
-            ''
-          else
-            "";
-        executable = true;
-      };
-
       programs = {
         # Terminal with OSC 52 support
         kitty = {
