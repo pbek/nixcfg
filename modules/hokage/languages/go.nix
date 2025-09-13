@@ -26,6 +26,7 @@ in
     environment.systemPackages = with pkgs; [ go ];
 
     hokage = {
+      jetbrains.enable = mkDefault cfg.ide.enable;
       jetbrains.goland.enable = mkDefault cfg.ide.enable;
     };
   };

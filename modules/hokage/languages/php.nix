@@ -38,6 +38,7 @@ in
     ];
 
     hokage = {
+      jetbrains.enable = mkDefault cfg.ide.enable;
       jetbrains.phpstorm.enable = mkDefault cfg.ide.enable;
     };
   };

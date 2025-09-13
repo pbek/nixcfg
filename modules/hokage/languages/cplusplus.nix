@@ -79,6 +79,7 @@ in
       );
 
     hokage = {
+      jetbrains.enable = mkDefault cfg.ide.enable;
       jetbrains.clion.enable = mkDefault cfg.ide.enable;
       qtcreator.enable = mkDefault cfg.ide.enable;
     };
