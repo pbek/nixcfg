@@ -73,6 +73,7 @@ in
       useSharedKey = lib.mkIf cfg.enableExternal (lib.mkDefault false);
       espanso.enable = lib.mkIf cfg.enableExternal (lib.mkDefault false);
       languages.javascript.enable = lib.mkIf cfg.enableExternal (lib.mkDefault true);
+      languages.php.enable = lib.mkIf cfg.enableExternal (lib.mkDefault true);
     };
   };
 }
