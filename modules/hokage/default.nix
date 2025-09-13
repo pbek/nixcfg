@@ -49,6 +49,7 @@ in
       };
       lowBandwidth = mkOption {
         type = types.bool;
+        default = false;
         description = "Don't install all packages or use stable versions to save bandwidth";
       };
       useSecrets = mkOption {
