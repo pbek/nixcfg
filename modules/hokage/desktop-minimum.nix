@@ -11,9 +11,13 @@ let
   inherit (hokage) userLogin;
   inherit (hokage) useSharedKey;
   inherit (hokage) useSecrets;
+
+  inherit (lib)
+    mkIf
+    ;
 in
 {
-  config = lib.mkIf (hokage.role == "desktop" || hokage.role == "ally") {
+  config = mkIf (hokage.role == "desktop" || hokage.role == "ally") {
     boot.kernel.sysctl = {
       # Note that inotify watches consume 1kB on 64-bit machines.
       "fs.inotify.max_user_watches" = 1048576; # default: 8192
@@ -140,7 +144,7 @@ in
 
     users.users = lib.genAttrs hokage.users (
       _userName:
-      lib.mkIf useSharedKey {
+      mkIf useSharedKey {
         openssh.authorizedKeys.keys = [
           # Yubikey public key
           "sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBFDWxqigrXdCx7mX/yvBpHJf2JIab9HIrjof+sCbn0cOr/NySAirjE7tWxkZJPBrUs/8wSgn/rFO742O+NkOXTYAAAAEc3NoOg== omega@yubikey"
@@ -154,14 +158,12 @@ in
     home-manager.users = lib.genAttrs hokage.users (_userName: {
       # Set some fish shell aliases
       programs.fish.shellAliases = {
-        n18 = "nix-shell /home/${_userName}/.shells/node18.nix --run fish";
-        p8 = "nix-shell /home/${_userName}/.shells/php8.nix --run fish";
         qce = "qc exec --command --color --atuin";
         qcel = "qc exec --command --color --atuin --last";
         qcs = "qc search --color";
         qcsw = "qc switch";
-        pia-up = "~/Scripts/pia.sh";
-        pia-down = "wg-quick down pia";
+        pia-up = mkIf useSecrets "~/Scripts/pia.sh";
+        pia-down = mkIf useSecrets "wg-quick down pia";
         pwdc = "pwd | xclip -sel clip";
         fwup = "fwupdmgr get-updates";
       };
