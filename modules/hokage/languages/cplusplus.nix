@@ -11,7 +11,7 @@ let
 
   inherit (lib)
     mkEnableOption
-    mkDefault
+    mkIf
     ;
 in
 {
@@ -78,10 +78,10 @@ in
           ]
       );
 
-    hokage = {
-      jetbrains.enable = mkDefault cfg.ide.enable;
-      jetbrains.clion.enable = mkDefault cfg.ide.enable;
-      qtcreator.enable = mkDefault cfg.ide.enable;
+    hokage = mkIf cfg.ide.enable {
+      jetbrains.enable = true;
+      jetbrains.clion.enable = true;
+      qtcreator.enable = true;
     };
   };
 }

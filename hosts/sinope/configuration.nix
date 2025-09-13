@@ -34,10 +34,10 @@
   hokage = {
     hostName = "sinope";
     tugraz.enable = true;
-    jetbrains = {
-      goland.enable = false;
+    languages = {
+      cplusplus.enable = false;
+      go.enable = false;
     };
-    languages.cplusplus.enable = false;
     cache.sources = [ "caliban" ];
   };
 }

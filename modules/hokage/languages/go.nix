@@ -11,7 +11,7 @@ let
 
   inherit (lib)
     mkEnableOption
-    mkDefault
+    mkIf
     ;
 in
 {
@@ -19,15 +19,17 @@ in
     enable = mkEnableOption "Enable Go development support" // {
       default = hokage.role == "desktop" && useInternalInfrastructure && !hokage.lowBandwidth;
     };
-    ide.enable = mkEnableOption "Enable Go IDE";
+    ide.enable = mkEnableOption "Enable Go IDE" // {
+      default = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ go ];
 
-    hokage = {
-      jetbrains.enable = mkDefault cfg.ide.enable;
-      jetbrains.goland.enable = mkDefault cfg.ide.enable;
+    hokage = mkIf cfg.ide.enable {
+      jetbrains.enable = true;
+      jetbrains.goland.enable = true;
     };
   };
 }

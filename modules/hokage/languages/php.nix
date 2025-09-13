@@ -11,7 +11,7 @@ let
 
   inherit (lib)
     mkEnableOption
-    mkDefault
+    mkIf
     ;
 in
 {
@@ -37,9 +37,9 @@ in
       php84Packages.composer
     ];
 
-    hokage = {
-      jetbrains.enable = mkDefault cfg.ide.enable;
-      jetbrains.phpstorm.enable = mkDefault cfg.ide.enable;
+    hokage = mkIf cfg.ide.enable {
+      jetbrains.enable = true;
+      jetbrains.phpstorm.enable = true;
     };
   };
 }
