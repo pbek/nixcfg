@@ -28,6 +28,7 @@ jobs:
           - ally2
           - astra
           - caliban
+          - mercury
           - sinope
           - netcup01
           - netcup02
@@ -44,6 +45,7 @@ jobs:
           - dp05
           - dp06
           - dp07
+          - dp08
     steps:
       - uses: actions/checkout@v4
 
@@ -52,5 +54,6 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
 
       - name: Run nix eval for ${{ matrix.host }}
-        continue-on-error: true
+        # We don't want to continue on error of the workflow will not fail if one host fails
+        # continue-on-error: true
         run: nix eval .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel.drvPath
