@@ -53,7 +53,7 @@ in
     };
 
     environment.systemPackages = with pkgs; [
-      wowup-cf
+      # wowup-cf
       #    (pkgs.callPackage ../../pkgs/wowup-cf/default.nix { })
       heroic # Epic Games Store
       ryubing # Nintendo Switch emulator
