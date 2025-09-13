@@ -30,6 +30,11 @@
   # Don't sleep when lid is closed
   # services.logind.lidSwitch = "ignore";
 
+  # Allow insecure Broadcom driver
+  nixpkgs.config.permittedInsecurePackages = [
+    "broadcom-sta-6.30.223.271-57-6.16.6"
+  ];
+
   environment.systemPackages = with pkgs; [
     powertop
   ];
