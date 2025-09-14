@@ -57,6 +57,7 @@
     amdgpu_top # AMD GPU monitoring
     lact # AMD GPU monitoring
     vlc
+    discord
 
     # qtwebengine-5.15.19 is marked insecure
     # jellyfin-media-player
