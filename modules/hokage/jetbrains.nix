@@ -119,6 +119,31 @@ in
 
       # https://searchix.alanpearce.eu/options/home-manager/search?query=git
       programs.git.ignores = [ ".idea" ];
+
+      xdg.desktopEntries = lib.mkMerge [
+        # We still need a desktop entry that launches CLion in a nix-shell with the
+        # necessary development packages, otherwise CMake won't find the libraries.
+        # https://www.reddit.com/r/NixOS/comments/9xjbxc/clion_cmake_not_finding_libraries_on_nixos/
+        (mkIf cfg.clion.enable {
+          clion-nix-shell =
+            let
+              shellPath =
+                if hokage.languages.cplusplus.qt6.enable then
+                  "/home/${_userName}/.shells/qt6.nix"
+                else
+                  "/home/${_userName}/.shells/qt5.nix";
+            in
+            {
+              name = "CLion with dev packages";
+              genericName = "C/C++ IDE. New. Intelligent. Cross-platform";
+              comment = "Test Enhancing productivity for every C and C++ developer on Linux, macOS and Windows.";
+              icon = "${cfg.clion.package}/share/pixmaps/clion.svg";
+              exec = "nix-shell ${shellPath} --run clion";
+              terminal = false;
+              categories = [ "Development" ];
+            };
+        })
+      ];
     });
   };
 }
