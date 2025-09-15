@@ -79,9 +79,9 @@ in
   virtualisation.multipass.enable = true;
   #  virtualisation.multipass.package = nixpkgs_multipass_pr.multipass;
 
-  users.users.omegah = {
-    description = "Patrizio Bekerle Home";
-  };
+  #  users.users.omegah = {
+  #    description = "Patrizio Bekerle Home";
+  #  };
 
   # Try if another console fonts make the console apear
   # Disabled, because since the new installation with ZFS the console was very small
@@ -111,10 +111,10 @@ in
   };
 
   hokage = {
-    users = [
-      "omega"
-      "omegah"
-    ];
+    #    users = [
+    #      "omega"
+    #      "omegah"
+    #    ];
     tugraz.enable = true;
     zfs = {
       enable = true;
