@@ -60,7 +60,7 @@ let
         else
           jetbrainsPackages.plugins.addPlugins cfgPackage plugins;
     in
-    [ (basePackage.overrideAttrs { preferLocalBuild = true; }) ];
+    basePackage.overrideAttrs { preferLocalBuild = true; };
 
 in
 {
@@ -107,9 +107,9 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages =
-      lib.optionals cfg.phpstorm.enable (mkJetbrainsPackage "phpstorm" cfg.phpstorm.package)
-      ++ lib.optionals cfg.clion.enable (mkJetbrainsPackage "clion" cfg.clion.package)
-      ++ lib.optionals cfg.goland.enable (mkJetbrainsPackage "goland" cfg.goland.package);
+      lib.optionals cfg.phpstorm.enable [ (mkJetbrainsPackage "phpstorm" cfg.phpstorm.package) ]
+      ++ lib.optionals cfg.clion.enable [ (mkJetbrainsPackage "clion" cfg.clion.package) ]
+      ++ lib.optionals cfg.goland.enable [ (mkJetbrainsPackage "goland" cfg.goland.package) ];
 
     home-manager.users = lib.genAttrs hokage.users (_userName: {
       programs.fish.shellAliases = mkIf cfg.clion.enable {
@@ -132,12 +132,13 @@ in
                   "/home/${_userName}/.shells/qt6.nix"
                 else
                   "/home/${_userName}/.shells/qt5.nix";
+              clionPkg = mkJetbrainsPackage "clion" cfg.clion.package;
             in
             {
               name = "CLion with dev packages";
               genericName = "C/C++ IDE. New. Intelligent. Cross-platform";
               comment = "Test Enhancing productivity for every C and C++ developer on Linux, macOS and Windows.";
-              icon = "${cfg.clion.package}/share/pixmaps/clion.svg";
+              icon = "${clionPkg}/share/pixmaps/clion.svg";
               exec = "nix-shell ${shellPath} --run clion";
               terminal = false;
               categories = [ "Development" ];
