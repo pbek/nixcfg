@@ -123,6 +123,13 @@ in
   };
 
   config = lib.mkMerge [
+    {
+      # Placed here, because common.nix already had a "users.users" attribute
+      users.users.root = {
+        shell = pkgs.fish;
+      };
+    }
+
     (mkIf (cfg.hostName != "") {
       networking.hostName = cfg.hostName;
     })
