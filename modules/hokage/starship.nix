@@ -21,7 +21,7 @@ in
 
   config = lib.mkIf cfg.enable {
     # https://rycee.gitlab.io/home-manager/options.html
-    home-manager.users = lib.genAttrs hokage.users (_userName: {
+    home-manager.users = lib.genAttrs hokage.usersWithRoot (_userName: {
       # enable https://starship.rs
       programs.starship =
         let

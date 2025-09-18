@@ -20,7 +20,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home-manager.users = lib.genAttrs hokage.users (_userName: {
+    home-manager.users = lib.genAttrs hokage.usersWithRoot (_userName: {
       programs = {
         # Blazing fast terminal file manager written in Rust
         # https://github.com/sxyazi/yazi

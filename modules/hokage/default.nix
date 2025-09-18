@@ -32,6 +32,12 @@ in
         default = [ cfg.userLogin ];
         description = "List of users that should be created by hokage";
       };
+      usersWithRoot = mkOption {
+        type = types.listOf types.str;
+        default = cfg.users ++ [ "root" ];
+        description = "List of users, including root";
+        readOnly = true;
+      };
       role = mkOption {
         type = types.enum [
           "desktop"
