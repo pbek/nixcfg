@@ -10,14 +10,14 @@ let
   inherit (hokage) userNameShort;
   inherit (hokage) userEmail;
   inherit (hokage) waylandSupport;
-  cfg = hokage.espanso;
+  cfg = hokage.programs.espanso;
 
   inherit (lib)
     mkEnableOption
     ;
 in
 {
-  options.hokage.espanso = {
+  options.hokage.programs.espanso = {
     enable = mkEnableOption "Enable Espanso to expand text" // {
       default = hokage.role == "desktop";
     };

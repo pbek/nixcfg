@@ -69,8 +69,8 @@ in
     userEmail = "dp@tugraz";
     useInternalInfrastructure = false;
     useSecrets = false;
-    espanso.enable = false;
-    git.enableUrlRewriting = false;
+    programs.espanso.enable = false;
+    programs.git.enableUrlRewriting = false;
 
     gaming = {
       enable = true;

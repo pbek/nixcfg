@@ -144,7 +144,7 @@
   hokage = {
     hostName = "venus";
     role = "desktop";
-    aider.enable = true;
+    programs.aider.enable = true;
     gaming = {
       enable = true;
       ryubing.highDpi = true;

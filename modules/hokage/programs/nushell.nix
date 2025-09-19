@@ -5,14 +5,14 @@
 }:
 let
   inherit (config) hokage;
-  cfg = hokage.nushell;
+  cfg = hokage.programs.nushell;
 
   inherit (lib)
     mkEnableOption
     ;
 in
 {
-  options.hokage.nushell = {
+  options.hokage.programs.nushell = {
     enable = mkEnableOption "Enable Nushell" // {
       default = hokage.role == "desktop";
     };
@@ -30,9 +30,9 @@ in
         zoxide.enableNushellIntegration = true;
         direnv.enableNushellIntegration = true;
         eza.enableNushellIntegration = true;
-        starship.enableNushellIntegration = config.hokage.starship.enable;
-        atuin.enableNushellIntegration = config.hokage.atuin.enable;
-        yazi.enableNushellIntegration = config.hokage.yazi.enable;
+        starship.enableNushellIntegration = config.hokage.programs.starship.enable;
+        atuin.enableNushellIntegration = config.hokage.programs.atuin.enable;
+        yazi.enableNushellIntegration = config.hokage.programs.yazi.enable;
       };
     });
   };

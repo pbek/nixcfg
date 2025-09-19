@@ -6,14 +6,14 @@
 }:
 let
   inherit (config) hokage;
-  cfg = hokage.platformio;
+  cfg = hokage.programs.platformio;
 
   inherit (lib)
     mkEnableOption
     ;
 in
 {
-  options.hokage.platformio = {
+  options.hokage.programs.platformio = {
     enable = mkEnableOption "Enable PlatformIO support";
   };
 

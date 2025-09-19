@@ -6,12 +6,12 @@
 }:
 
 let
-  cfg = config.hokage.uutilsAliases;
+  cfg = config.hokage.programs.uutilsAliases;
 in
 {
-  options.hokage.uutilsAliases = {
+  options.hokage.programs.uutilsAliases = {
     enable = lib.mkEnableOption "Add aliases for uutils to replace GNU coreutils in the shell" // {
-      default = !config.hokage.uutils.enable;
+      default = !config.hokage.programs.uutils.enable;
     };
   };
 

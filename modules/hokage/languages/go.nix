@@ -28,8 +28,8 @@ in
     environment.systemPackages = with pkgs; [ go ];
 
     hokage = mkIf cfg.ide.enable {
-      jetbrains.enable = true;
-      jetbrains.goland.enable = true;
+      programs.jetbrains.enable = true;
+      programs.jetbrains.goland.enable = true;
     };
   };
 }

@@ -6,14 +6,14 @@
 }:
 let
   inherit (config) hokage;
-  cfg = hokage.starship;
+  cfg = hokage.programs.starship;
 
   inherit (lib)
     mkEnableOption
     ;
 in
 {
-  options.hokage.starship = {
+  options.hokage.programs.starship = {
     enable = mkEnableOption "Enable Starship support" // {
       default = true;
     };

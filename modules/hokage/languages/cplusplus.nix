@@ -79,9 +79,9 @@ in
       );
 
     hokage = mkIf cfg.ide.enable {
-      jetbrains.enable = true;
-      jetbrains.clion.enable = true;
-      qtcreator.enable = true;
+      programs.jetbrains.enable = true;
+      programs.jetbrains.clion.enable = true;
+      programs.qtcreator.enable = true;
     };
   };
 }

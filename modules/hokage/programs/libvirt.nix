@@ -6,7 +6,7 @@
 }:
 let
   inherit (config) hokage;
-  cfg = hokage.libvirt;
+  cfg = hokage.programs.libvirt;
 
   inherit (lib)
     mkEnableOption
@@ -16,7 +16,7 @@ let
     ;
 in
 {
-  options.hokage.libvirt = {
+  options.hokage.programs.libvirt = {
     enable = mkEnableOption "Enable libvirt support" // {
       default = hokage.role == "desktop";
     };

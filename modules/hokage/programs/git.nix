@@ -7,14 +7,14 @@ let
   inherit (config) hokage;
   inherit (hokage) userNameLong;
   inherit (hokage) userEmail;
-  cfg = hokage.git;
+  cfg = hokage.programs.git;
 
   inherit (lib)
     mkEnableOption
     ;
 in
 {
-  options.hokage.git = {
+  options.hokage.programs.git = {
     enable = mkEnableOption "Enable Git integration" // {
       default = hokage.role == "desktop";
     };

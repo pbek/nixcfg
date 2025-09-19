@@ -6,14 +6,14 @@
 }:
 let
   inherit (config) hokage;
-  cfg = hokage.aider;
+  cfg = hokage.programs.aider;
 
   inherit (lib)
     mkEnableOption
     ;
 in
 {
-  options.hokage.aider = {
+  options.hokage.programs.aider = {
     enable = mkEnableOption "Enable Aider AI code completion tool";
   };
 

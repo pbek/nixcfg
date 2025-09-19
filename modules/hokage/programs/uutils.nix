@@ -7,10 +7,10 @@
 
 let
   inherit (config) hokage;
-  cfg = hokage.uutils;
+  cfg = hokage.programs.uutils;
 in
 {
-  options.hokage.uutils = {
+  options.hokage.programs.uutils = {
     enable =
       lib.mkEnableOption "Turn on uutils replacements for GNU utils, changes seems to need reboot"
       // {

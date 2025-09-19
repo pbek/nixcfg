@@ -6,7 +6,7 @@
 }:
 let
   inherit (config) hokage;
-  cfg = hokage.jetbrains;
+  cfg = hokage.programs.jetbrains;
 
   inherit (lib)
     mkEnableOption
@@ -64,7 +64,7 @@ let
 
 in
 {
-  options.hokage.jetbrains = {
+  options.hokage.programs.jetbrains = {
     enable = mkEnableOption "Enable JetBrains IDEs support";
     useStable = mkEnableOption "Use stable JetBrains packages" // {
       default = hokage.lowBandwidth; # Use stable JetBrains packages to save bandwidth

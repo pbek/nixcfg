@@ -9,14 +9,14 @@ let
   inherit (hokage) userLogin;
   inherit (hokage) useInternalInfrastructure;
   inherit (hokage) useSecrets;
-  cfg = hokage.atuin;
+  cfg = hokage.programs.atuin;
 
   inherit (lib)
     mkEnableOption
     ;
 in
 {
-  options.hokage.atuin = {
+  options.hokage.programs.atuin = {
     enable = mkEnableOption "Enable Atuin shell history" // {
       default = true;
     };

@@ -87,8 +87,8 @@ in
     useInternalInfrastructure = false;
     useSecrets = false;
     useSharedKey = false;
-    espanso.enable = false;
-    git.enableUrlRewriting = false;
+    programs.espanso.enable = false;
+    programs.git.enableUrlRewriting = false;
 
     gaming = {
       enable = true;

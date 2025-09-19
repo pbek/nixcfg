@@ -6,14 +6,14 @@
 }:
 let
   inherit (config) hokage;
-  cfg = hokage.yazi;
+  cfg = hokage.programs.yazi;
 
   inherit (lib)
     mkEnableOption
     ;
 in
 {
-  options.hokage.yazi = {
+  options.hokage.programs.yazi = {
     enable = mkEnableOption "Enable Yazi terminal file manager" // {
       default = true;
     };

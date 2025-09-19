@@ -28,11 +28,11 @@
 
   hokage = {
     hostName = "astra";
-    espanso.enable = false; # Host will already use espanso
+    programs.espanso.enable = false; # Host will already use espanso
     waylandSupport = false; # Disable Wayland support for clipboard sharing from guest to host
     termFontSize = 16.0;
     useGhosttyGtkFix = false;
-    libvirt.role = "guest";
+    programs.libvirt.role = "guest";
     cache.sources = [ "caliban" ];
     zfs = {
       enable = true;

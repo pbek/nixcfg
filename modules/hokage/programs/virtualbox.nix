@@ -7,7 +7,7 @@
 let
   inherit (config) hokage;
   inherit (hokage) userLogin;
-  cfg = hokage.virtualbox;
+  cfg = hokage.programs.virtualbox;
 
   inherit (lib)
     mkEnableOption
@@ -17,7 +17,7 @@ let
     ;
 in
 {
-  options.hokage.virtualbox = {
+  options.hokage.programs.virtualbox = {
     enable = mkEnableOption "Enable VirtualBox";
     role = mkOption {
       type = types.enum [

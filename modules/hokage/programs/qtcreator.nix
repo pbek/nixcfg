@@ -7,14 +7,14 @@
 let
   inherit (config) hokage;
   inherit (hokage) useInternalInfrastructure;
-  cfg = hokage.qtcreator;
+  cfg = hokage.programs.qtcreator;
 
   inherit (lib)
     mkEnableOption
     ;
 in
 {
-  options.hokage.qtcreator = {
+  options.hokage.programs.qtcreator = {
     enable = mkEnableOption "Enable qtcreator" // {
       default = hokage.role == "desktop" && useInternalInfrastructure;
     };

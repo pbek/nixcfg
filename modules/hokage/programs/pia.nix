@@ -7,14 +7,14 @@
 let
   inherit (config) hokage;
   inherit (hokage) useSecrets;
-  cfg = hokage.pia;
+  cfg = hokage.programs.pia;
 
   inherit (lib)
     mkEnableOption
     ;
 in
 {
-  options.hokage.pia = {
+  options.hokage.programs.pia = {
     enable = mkEnableOption "Enable Private Internet Access" // {
       default = hokage.role == "desktop" && hokage.useSecrets;
     };

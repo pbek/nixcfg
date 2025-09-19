@@ -122,7 +122,7 @@ in
       poolName = "calroot";
       encrypted = true;
     };
-    aider.enable = true;
+    programs.aider.enable = true;
     languages = {
       cplusplus.enable = false;
       go.enable = false;

@@ -130,7 +130,7 @@ in
     hostName = "gaia";
     tugraz.enable = true;
     cache.sources = [ "home" ];
-    platformio.enable = true;
-    aider.enable = true;
+    programs.platformio.enable = true;
+    programs.aider.enable = true;
   };
 }
