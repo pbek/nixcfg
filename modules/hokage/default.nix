@@ -21,6 +21,7 @@ in
   imports =
     builtins.map import (lib-utils.listNixFiles ./.)
     ++ builtins.map import (lib-utils.listNixFiles ./languages)
+    ++ builtins.map import (lib-utils.listNixFiles ./programs)
     ++ [
       ../common.nix
     ];
