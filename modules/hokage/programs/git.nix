@@ -25,7 +25,7 @@ in
 
   config = lib.mkIf cfg.enable {
     # https://home-manager-options.extranix.com
-    home-manager.users = lib.genAttrs hokage.users (userName: {
+    home-manager.users = lib.genAttrs hokage.users (_userName: {
       # https://searchix.alanpearce.eu/options/home-manager/search?query=git
       programs.git = {
         enable = true;

@@ -9,9 +9,6 @@
   pkgs,
   ...
 }:
-let
-  inherit (config.hokage) userNameLong;
-in
 {
   imports = [
     # Include the results of the hardware scan.

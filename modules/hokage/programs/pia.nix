@@ -6,7 +6,6 @@
 }:
 let
   inherit (config) hokage;
-  inherit (hokage) useSecrets;
   cfg = hokage.programs.pia;
 
   inherit (lib)

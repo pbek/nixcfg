@@ -63,7 +63,7 @@ in
     ];
 
     # https://rycee.gitlab.io/home-manager/options.html
-    home-manager.users = lib.genAttrs hokage.users (userName: {
+    home-manager.users = lib.genAttrs hokage.users (_userName: {
       programs.git = {
         enable = true;
         # use "git diff --no-ext-diff" for creating patches!

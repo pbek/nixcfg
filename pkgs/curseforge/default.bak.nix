@@ -6,7 +6,6 @@
 }:
 
 let
-  name = "curseforge";
   pname = "curseforge";
   version = "1.250.2";
   curseForgeAppImage = pkgs.stdenv.mkDerivation {
