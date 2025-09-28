@@ -425,7 +425,7 @@ in
                   ":up"
                   ":ok"
                 ];
-                replace = "👍️";
+                replace = "👍🏻️";
               }
               {
                 triggers = [
