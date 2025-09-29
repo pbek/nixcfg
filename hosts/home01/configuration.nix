@@ -27,6 +27,7 @@
     # Add local hostname to /etc/hosts so that it can be resolved for the binary cache
     hosts = {
       "192.168.1.115" = [ "home01.lan" ];
+      "192.168.1.103" = [ "camerapi.lan" ];
     };
 
     # SSH is already enabled by the server-common mixin
@@ -113,8 +114,8 @@
     };
 
     # Monitor Wireguard UDP port 51821 on camerapi.lan and report to Uptime Kuma
-    camerapi-udp-monitor = {
-      description = "Monitor UDP port 51821 on camerapi.lan";
+    camerapi-wireguard-monitor = {
+      description = "Monitor Wireguard on camerapi.lan";
       path = with pkgs; [
         nmap
         curl
