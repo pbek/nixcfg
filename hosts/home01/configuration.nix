@@ -111,6 +111,37 @@
       # Use `systemd-analyze calendar "*-*-* 5,7,8,9,12,15,16,18,21:00:00"` to test
       startAt = "*-*-* 5,7,8,9,12,15,16,18,21:00:00";
     };
+
+    # Monitor Wireguard UDP port 51821 on camerapi.lan and report to Uptime Kuma
+    camerapi-udp-monitor = {
+      description = "Monitor UDP port 51821 on camerapi.lan";
+      path = with pkgs; [
+        nmap
+        curl
+      ];
+      script = ''
+        #!/bin/bash
+        set -e
+
+        UPTIME_KUMA_URL="http://cicinas2.lan:8130/api/push/HeUH8QHFMsj0yZZEqB8wuutNqCUQBoFz"
+
+        # Test UDP port 51821 on camerapi.lan using nmap
+        if timeout 30 nmap -sU -p 51821 -Pn -n --reason camerapi.lan | grep -q "51821/udp open"; then
+          # Port is open - send success status
+          curl -s "$UPTIME_KUMA_URL?status=up&msg=UDP_51821_Open&ping=0" || true
+          echo "Port 51821/udp is open on camerapi.lan - reported success to Uptime Kuma"
+        else
+          # Port is closed or filtered - send failure status
+          curl -s "$UPTIME_KUMA_URL?status=down&msg=UDP_51821_Closed&ping=0" || true
+          echo "Port 51821/udp is closed/filtered on camerapi.lan - reported failure to Uptime Kuma"
+        fi
+      '';
+      serviceConfig = {
+        User = "root";
+      };
+      # Run every 10 minutes
+      startAt = "*:0/10";
+    };
   };
 
   environment.systemPackages = with pkgs; [
