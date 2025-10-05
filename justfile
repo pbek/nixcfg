@@ -588,3 +588,15 @@ format args='':
 [group('linter')]
 format-all args='':
     pre-commit run --all-files {{ args }}
+
+# Run the QOwnNotes tests
+[group('tests')]
+test-qownnotes:
+    nix build .#checks.x86_64-linux.qownnotes
+
+# Run the QOwnNotes interactive test
+[group('tests')]
+test-qownnotes-interactive:
+    nix build .#checks.x86_64-linux.qownnotes.driverInteractive
+    echo "To interact with the test VM, run: start_all()"
+    ./result/bin/nixos-test-driver

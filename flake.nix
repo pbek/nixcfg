@@ -109,6 +109,11 @@
             inherit inputs;
           };
         };
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+        overlays = allOverlays;
+      };
     in
     {
       #     config = nixpkgs.config.systems.${builtins.currentSystem}.config;
@@ -181,6 +186,10 @@
         mba-gaming-pc = mkDesktopHost "mba-gaming-pc" [ disko.nixosModules.disko ];
         # MBA Miniserver ww87
         mba-msww87 = mkServerHost "mba-msww87" [ disko.nixosModules.disko ];
+      };
+
+      checks.x86_64-linux = {
+        qownnotes = pkgs.testers.runNixOSTest ./tests/qownnotes.nix;
       };
     };
 }
