@@ -5,12 +5,16 @@ on:
     branches-ignore:
       # Ignore changes to the flake update workflow, it is handled by the pull_request event
       - update_flake_lock_action
-    paths-ignore:
-      - "docker/**"
+    paths:
+      - pkgs/qownnotes/package.nix
+      - flake.lock
+      - tests/**
   workflow_dispatch:
   pull_request:
-    paths-ignore:
-      - "docker/**"
+    paths:
+      - pkgs/qownnotes/package.nix
+      - flake.lock
+      - tests/**
 
 jobs:
   check:
