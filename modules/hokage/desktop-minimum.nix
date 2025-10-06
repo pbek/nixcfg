@@ -114,8 +114,8 @@ in
           fishPlugins.fzf-fish
           usbutils # lsusb
 
-          #    qownnotes
-          (callPackage ../../pkgs/qownnotes/package.nix { })
+          qownnotes
+          # (callPackage ../../pkgs/qownnotes/package.nix { })
           qc
           #    (pkgs.callPackage ../../pkgs/qc/default.nix { })
           bluez

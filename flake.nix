@@ -51,17 +51,21 @@
           ) (builtins.readDir overlaysDir)
         )
       );
+      # Only include user-defined overlays here (exclude the meta overlays-nixpkgs to avoid recursion)
+      validOverlays = builtins.filter (x: builtins.isFunction x) overlaysFromDir;
+      # Provide stable and unstable package sets as attributes of pkgs while ensuring our local overlays are also applied there.
       overlays-nixpkgs = _final: _prev: {
         stable = import nixpkgs-stable {
           inherit system;
           config.allowUnfree = true;
+          overlays = validOverlays;
         };
         unstable = import nixpkgs {
           inherit system;
           config.allowUnfree = true;
+          overlays = validOverlays;
         };
       };
-      validOverlays = builtins.filter (x: builtins.isFunction x) overlaysFromDir;
       allOverlays = validOverlays ++ [ overlays-nixpkgs ];
       commonServerModules = [
         home-manager.nixosModules.home-manager
@@ -189,7 +193,15 @@
       };
 
       checks.x86_64-linux = {
-        qownnotes = pkgs.testers.runNixOSTest ./tests/qownnotes.nix;
+        # Unstable (nixos-unstable) test using local overlay package
+        qownnotes-unstable = pkgs.testers.runNixOSTest ./tests/qownnotes.nix;
+        # Stable (nixos-25.05) test using stable package set with same overlays
+        qownnotes-stable = pkgs.stable.testers.runNixOSTest ./tests/qownnotes.nix;
+      };
+
+      packages.x86_64-linux = {
+        inherit (pkgs) qownnotes;
+        qownnotes-stable = pkgs.stable.qownnotes;
       };
     };
 }

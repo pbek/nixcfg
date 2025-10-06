@@ -592,7 +592,7 @@ format-all args='':
 # Run the QOwnNotes tests
 [group('tests')]
 test-qownnotes:
-    nix build .#checks.x86_64-linux.qownnotes
+    nix build .#checks.x86_64-linux.qownnotes-unstable -L --no-link
 
 # Run the QOwnNotes interactive test
 [group('tests')]

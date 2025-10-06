@@ -1,5 +1,15 @@
 { lib, pkgs, ... }:
 
+let
+  # Use the local package definition directly (independent of overlays)
+  qownnotesLocal = pkgs.callPackage ../pkgs/qownnotes/package.nix {
+    # Provide dummy nixosTests attr so passthru reference resolves
+    nixosTests = {
+      qownnotes = pkgs.runCommand "dummy-qownnotes-nixos-test" { } "mkdir -p $out";
+    };
+  };
+
+in
 {
   name = "qownnotes";
   meta.maintainers = [ lib.maintainers.pbek ];
@@ -15,7 +25,7 @@
 
       test-support.displayManager.auto.user = "alice";
       environment.systemPackages = [
-        pkgs.qownnotes
+        qownnotesLocal
         pkgs.xdotool
       ];
     };
@@ -36,7 +46,7 @@
       with subtest("Check QOwnNotes version on CLI"):
           ${aliceDo "qownnotes --version"}
 
-          machine.wait_for_console_text("QOwnNotes ${pkgs.qownnotes.version}")
+          machine.wait_for_console_text("QOwnNotes ${qownnotesLocal.version}")
 
       with subtest("Ensure QOwnNotes starts"):
           # start QOwnNotes window
