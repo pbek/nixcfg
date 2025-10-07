@@ -9,6 +9,7 @@ on:
       - pkgs/qownnotes/package.nix
       - flake.lock
       - tests/**
+      - .github/workflows/tests.yml
   workflow_dispatch:
   pull_request:
     paths:
@@ -30,6 +31,9 @@ jobs:
         uses: cachix/install-nix-action@v24
         with:
           nix_path: nixpkgs=channel:nixos-unstable
+          extra_nix_config: |
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= main:WYsIaF+ItMNE9Xt976bIGKSKp9jaaVeTzYlfqQqpP28= qownnotes:7hN006Z7xgK5v97WKFo9u3qcVbZIXHtFmPPM3NPERpM=
+            substituters = https://cache.nixos.org/ https://nix-cache.qownnotes.org/main https://nix-cache.qownnotes.org/qownnotes
 
       - name: "🧪 Run QOwnNotes integration test"
         run: nix build .#checks.x86_64-linux.qownnotes-unstable -L --no-link
