@@ -29,7 +29,8 @@
   hokage = {
     hostName = "astra";
     programs.espanso.enable = false; # Host will already use espanso
-    waylandSupport = false; # Disable Wayland support for clipboard sharing from guest to host
+    # waylandSupport = false; # Disable Wayland support for clipboard sharing from guest to host
+    waylandSupport = true; # Disable Wayland support for clipboard sharing from guest to host
     termFontSize = 16.0;
     useGhosttyGtkFix = false;
     programs.libvirt.role = "guest";
