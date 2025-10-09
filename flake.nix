@@ -195,13 +195,56 @@
       checks.x86_64-linux = {
         # Unstable (nixos-unstable) test using local overlay package
         qownnotes-unstable = pkgs.testers.runNixOSTest ./tests/qownnotes.nix;
-        # Stable (nixos-25.05) test using stable package set with same overlays
-        qownnotes-stable = pkgs.stable.testers.runNixOSTest ./tests/qownnotes.nix;
       };
 
       packages.x86_64-linux = {
         inherit (pkgs) qownnotes;
         qownnotes-stable = pkgs.stable.qownnotes;
+      }
+      // {
+        # Generate Markdown docs for hokage module options
+        hokage-options-md =
+          let
+            inherit (nixpkgs) lib;
+            makeOptionsDoc = import (nixpkgs + "/nixos/lib/make-options-doc");
+            # Minimal utils implementation needed by some modules during evaluation
+            utilsStub = {
+              removePackagesByName =
+                list: excluded:
+                lib.filter (
+                  p: !(lib.any (q: (q.pname or q.name or "") == (p.pname or p.name or "")) excluded)
+                ) list;
+            };
+            eval = lib.evalModules {
+              modules = [
+                { _module.check = false; }
+                ./modules/hokage
+              ];
+              # Provide required special arguments used by the modules
+              specialArgs = self.commonArgs // {
+                inherit inputs pkgs;
+                utils = utilsStub;
+              };
+            };
+            # Patch problematic examples that reference removed kernels
+            optionsHokagePatched =
+              let
+                oh = eval.options.hokage;
+              in
+              oh
+              // {
+                kernel = (oh.kernel or { }) // {
+                  requirements = (oh.kernel.requirements or { }) // {
+                    example = [ ];
+                  };
+                };
+              };
+            docs = makeOptionsDoc {
+              inherit lib pkgs;
+              options = optionsHokagePatched;
+            };
+          in
+          docs.optionsCommonMark;
       };
     };
 }

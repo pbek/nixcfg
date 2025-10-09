@@ -600,3 +600,38 @@ test-qownnotes-interactive:
     nix build .#checks.x86_64-linux.qownnotes.driverInteractive
     echo "To interact with the test VM, run: start_all()"
     ./result/bin/nixos-test-driver
+
+# Generate Markdown documentation for hokage module options
+[group('docs')]
+hokage-options-md:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    nix build .#hokage-options-md -L
+    FILE="result"
+    if [ -d "result" ]; then
+        if [ -f "result/share/doc/nixos/options.md" ]; then
+            FILE="result/share/doc/nixos/options.md"
+        elif [ -f "result/options.md" ]; then
+            FILE="result/options.md"
+        fi
+    fi
+    echo -e "\n📄 Built hokage options Markdown at: ${FILE}\n"
+    if command -v bat >/dev/null 2>&1; then bat -l markdown "$FILE"; else cat "$FILE"; fi
+
+# Build and save the Markdown to a file in the repo (default docs/hokage-options.md)
+[group('docs')]
+hokage-options-md-save path='docs/hokage-options.md':
+    #!/usr/bin/env bash
+    set -euo pipefail
+    nix build .#hokage-options-md -L
+    FILE="result"
+    if [ -d "result" ]; then
+        if [ -f "result/share/doc/nixos/options.md" ]; then
+            FILE="result/share/doc/nixos/options.md"
+        elif [ -f "result/options.md" ]; then
+            FILE="result/options.md"
+        fi
+    fi
+    mkdir -p "$(dirname "{{ path }}")"
+    install -Dm644 "$FILE" "{{ path }}"
+    echo "✅ Saved hokage options documentation to {{ path }}"
