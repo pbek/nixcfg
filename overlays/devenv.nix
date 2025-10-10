@@ -9,8 +9,8 @@ _final: prev: {
       };
       # Import the pinned nixpkgs
       pinnedPkgs = import pinnedNixpkgs {
-        system = prev.system;
-        config = prev.config;
+        inherit (prev) system;
+        inherit (prev) config;
       };
     in
     pinnedPkgs.devenv;
