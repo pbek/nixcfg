@@ -104,7 +104,11 @@
       path = [
         pkgs.nixos-rebuild
       ];
-      script = "nixos-rebuild build --flake github:pbek/nixcfg#venus";
+      script = ''
+        nixos-rebuild build --flake github:pbek/nixcfg#venus
+        nixos-rebuild build --flake github:pbek/nixcfg#gaia
+        nixos-rebuild build --flake github:pbek/nixcfg#pluto
+      '';
       serviceConfig = {
         User = "root";
       };
