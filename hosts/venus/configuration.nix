@@ -87,7 +87,8 @@
   #  ];
 
   services.ollama = {
-    enable = true;
+    # Turn off because hipblaslt build goes OOM
+    enable = false;
     acceleration = "rocm";
     package = pkgs.ollama;
     #    environmentVariables = {
