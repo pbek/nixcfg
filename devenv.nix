@@ -22,7 +22,6 @@ in
     [
       git
       gum
-      just
     ]
     ++ [
       unstablePkgs.nh
@@ -33,30 +32,12 @@ in
     echo "🛠️ pbek nixcfg dev shell"
   '';
 
-  # https://devenv.sh/git-hooks/
   git-hooks.hooks = {
-    # https://devenv.sh/reference/options/#git-hookshookstreefmt
-    # https://github.com/numtide/treefmt
-    # https://github.com/numtide/treefmt-nix
-    treefmt = {
-      enable = true;
-      settings.formatters = with pkgs; [
-        nodePackages.prettier
-        shfmt
-        nixfmt-rfc-style
-        statix
-        taplo
-      ];
-    };
-
-    # https://devenv.sh/reference/options/#git-hookshooksdeadnix
-    # https://github.com/astro/deadnix
-    deadnix = {
-      enable = true;
-      settings = {
-        edit = true; # Allow to edit the file if it is not formatted
-        exclude = [ "pkgs" ];
-      };
+    statix.settings = {
+      ignore = [ "hardware-configuration.nix" ];
+      config = ''
+        nix_version = '2.28.1'
+      '';
     };
   };
 

@@ -28,7 +28,6 @@ alias sp := switch-push
 alias fix-command-not-found-error := update-channels
 alias options := hokage-options
 alias fmt := format
-alias fmta := format-all
 
 # Notify the user with neosay
 @_notify text:
@@ -39,6 +38,7 @@ test:
     sudo nixos-rebuild test --flake .#{{ hostname }} -L
 
 # Careful: This can use a lot of memory on large flakes
+
 # https://nix.dev/manual/nix/2.18/command-ref/new-cli/nix3-flake-check.html
 [group('build')]
 check-high-memory:
@@ -579,14 +579,9 @@ scan-dead-code args='':
 fix-dead-code args='':
     deadnix --exclude pkgs/ -e {{ args }}
 
-# Format all files using treefmt
-[group('linter')]
-format args='':
-    treefmt {{ args }}
-
 # Format all files using pre-commit
 [group('linter')]
-format-all args='':
+format args='':
     pre-commit run --all-files {{ args }}
 
 # Run the QOwnNotes tests

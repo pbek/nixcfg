@@ -5,3 +5,9 @@ inputs:
     # url: github:NixOS/nixpkgs/nixos-unstable
   nixpkgs-unstable:
     url: github:NixOS/nixpkgs/nixos-unstable
+  shared:
+    url: github:pbek/nix-shared
+    flake: false
+
+imports:
+  - shared/devenv/default.nix
