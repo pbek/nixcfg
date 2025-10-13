@@ -5,7 +5,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 {
-  config,
   pkgs,
   ...
 }:
@@ -23,29 +22,6 @@
     evolution
     evolution-ews
   ];
-
-  # https://wiki.nixos.org/wiki/nvidia
-  services.xserver.videoDrivers = [ "nvidia" ];
-  nixpkgs.config.nvidia.acceptLicense = true;
-  hardware.graphics.enable = true;
-  hardware.nvidia = {
-    # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
-    # NVIDIA Quadro P620 didn't work properly with open = true
-    open = false;
-
-    # production: version 550
-    # latest: version 565
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
-
-    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    # Enable this if you have graphical corruption issues or application crashes after waking
-    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
-    # of just the bare essentials.
-    powerManagement.enable = true;
-
-    #    # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
-    #    modesetting.enable = true;
-  };
 
   hokage = {
     hostName = "dp04";
@@ -66,6 +42,14 @@
       enable = true;
       hostId = "dccada04";
       poolName = "calroot";
+    };
+
+    nvidia = {
+      enable = true;
+      packageType = "beta";
+      # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
+      # NVIDIA Quadro P620 didn't work properly with open = true
+      open = false;
     };
   };
 }

@@ -31,14 +31,6 @@
   boot.initrd.luks.devices."luks-fd774d6e-6a78-4d0b-a06e-fb759e2eb6b2".keyFile =
     "/crypto_keyfile.bin";
 
-  # https://wiki.nixos.org/wiki/nvidia
-  services.xserver.videoDrivers = [ "nvidia" ];
-  nixpkgs.config.nvidia.acceptLicense = true;
-  hardware.graphics.enable = true;
-  # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
-  hardware.nvidia.modesetting.enable = true;
-  hardware.nvidia.open = false;
-
   hardware.nvidia.prime = {
     sync.enable = true;
 
@@ -53,5 +45,12 @@
     hostName = "jupiter";
     cache.sources = [ "home" ];
     lowBandwidth = true;
+
+    nvidia = {
+      enable = true;
+      modesetting.enable = true;
+      # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
+      open = false;
+    };
   };
 }

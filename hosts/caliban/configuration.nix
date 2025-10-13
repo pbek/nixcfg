@@ -57,24 +57,6 @@ in
   services.xserver.videoDrivers = [ "amdgpu" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
 
-  #  # https://wiki.nixos.org/wiki/nvidia
-  #  services.xserver.videoDrivers = [ "nvidia" ];
-  #  nixpkgs.config.nvidia.acceptLicense = true;
-  #  hardware.nvidia = {
-  #    modesetting.enable = true;
-  #    open = true;
-  #
-  #    # production: version 550
-  #    # latest: version 560
-  #    package = config.boot.kernelPackages.nvidiaPackages.latest;
-  #
-  #    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-  #    # Enable this if you have graphical corruption issues or application crashes after waking
-  #    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
-  #    # of just the bare essentials.
-  #    powerManagement.enable = false;
-  #  };
-
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/
   virtualisation.multipass.enable = true;
   # Use stable multipass until, because of build issues with the latest version

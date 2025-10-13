@@ -6,7 +6,6 @@
 
 {
   pkgs,
-  config,
   ...
 }:
 {
@@ -25,20 +24,6 @@
     ddev
   ];
 
-  # https://wiki.nixos.org/wiki/nvidia
-  services.xserver.videoDrivers = [ "nvidia" ];
-  nixpkgs.config.nvidia.acceptLicense = true;
-  hardware.graphics.enable = true;
-  hardware.nvidia = {
-    # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
-    open = true;
-
-    # production
-    # latest
-    # beta
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
-  };
-
   # Use US keyboard layout
   services.xserver.xkb = {
     layout = "us";
@@ -53,6 +38,7 @@
     userNameShort = "Arslan";
     userEmail = "arslan.khurshid@tugraz.at";
     tugraz.enableExternal = true;
+    nvidia.enable = true;
 
     zfs = {
       enable = true;

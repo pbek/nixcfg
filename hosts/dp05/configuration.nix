@@ -5,7 +5,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 {
-  config,
   pkgs,
   ...
 }:
@@ -24,29 +23,6 @@
     gimp
   ];
 
-  # https://wiki.nixos.org/wiki/nvidia
-  services.xserver.videoDrivers = [ "nvidia" ];
-  nixpkgs.config.nvidia.acceptLicense = true;
-  hardware.graphics.enable = true;
-  hardware.nvidia = {
-    # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
-    open = false;
-
-    # production
-    # latest
-    # beta
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
-
-    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    # Enable this if you have graphical corruption issues or application crashes after waking
-    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
-    # of just the bare essentials.
-    powerManagement.enable = true;
-
-    #    # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
-    #    modesetting.enable = true;
-  };
-
   hokage = {
     hostName = "dp05";
     userLogin = "tgros";
@@ -59,6 +35,13 @@
       enable = true;
       hostId = "dccada05";
       encrypted = true;
+    };
+
+    nvidia = {
+      enable = true;
+      packageType = "beta";
+      # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
+      open = false;
     };
   };
 }
