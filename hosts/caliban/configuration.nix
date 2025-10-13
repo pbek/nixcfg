@@ -77,6 +77,8 @@ in
 
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/
   virtualisation.multipass.enable = true;
+  # Use stable multipass until, because of build issues with the latest version
+  virtualisation.multipass.package = pkgs.stable.multipass;
   #  virtualisation.multipass.package = nixpkgs_multipass_pr.multipass;
 
   #  users.users.omegah = {

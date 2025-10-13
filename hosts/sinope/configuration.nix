@@ -5,7 +5,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 {
-
+  pkgs,
   ...
 }:
 
@@ -27,6 +27,8 @@
 
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/
   virtualisation.multipass.enable = true;
+  # Use stable multipass until, because of build issues with the latest version
+  virtualisation.multipass.package = pkgs.stable.multipass;
 
   # Increase the console font size for kmscon
   services.kmscon.extraConfig = "font-size = 18";
