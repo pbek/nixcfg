@@ -184,6 +184,8 @@
         dp07 = mkDesktopHost "dp07" [ disko.nixosModules.disko ];
         # TU Gaming Station - ThinkCentre M720q
         dp08 = mkDesktopHost "dp08" [ disko.nixosModules.disko ];
+        # TU Laptop Ruxandra - Lenovo ThinkBook
+        dp09 = mkDesktopHost "dp09" [ disko.nixosModules.disko ];
         # MBA Miniserver24
         miniserver24 = mkServerHost "miniserver24" [ disko.nixosModules.disko ];
         # MBA Gaming PC
