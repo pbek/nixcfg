@@ -20,11 +20,16 @@ in
   };
 
   config = lib.mkIf (cfg.enable || cfg.enableExternal) {
-    environment.systemPackages = with pkgs; [
-      go-passbolt-cli
-      # (pkgs.callPackage ../../pkgs/go-passbolt-cli/default.nix { })
-      wstunnel # WebSocket tunnel for accessing local development environments
-    ];
+    environment.systemPackages =
+      with pkgs;
+      [
+        go-passbolt-cli
+        # (pkgs.callPackage ../../pkgs/go-passbolt-cli/default.nix { })
+        wstunnel # WebSocket tunnel for accessing local development environments
+      ]
+      ++ lib.optionals cfg.enableExternal [
+        zulip
+      ];
 
     # Add the openconnect plugin for NetworkManager
     networking.networkmanager.plugins = with pkgs; [
