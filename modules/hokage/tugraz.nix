@@ -50,22 +50,33 @@ in
 
     # https://home-manager-options.extranix.com
     home-manager.users = lib.genAttrs hokage.users (_userName: {
-      # https://searchix.alanpearce.eu/options/home-manager/search?query=git
-      programs.git = {
-        extraConfig = {
-          url = {
-            "ssh://git@gitlab.tugraz.at/" = {
-              insteadOf = "https://gitlab.tugraz.at/";
+      programs = {
+        fish = {
+          shellAliases = {
+            # Shell alias to update the system and home-manager configuration
+            nixos-update = "cd ~/nixcfg || ~/Code/nixcfg || cd /etc/nixos && git pull && just switch";
+          };
+          shellAbbrs = {
+            update-nixos = "nixos-update";
+          };
+        };
+        # https://searchix.alanpearce.eu/options/home-manager/search?query=git
+        git = {
+          extraConfig = {
+            url = {
+              "ssh://git@gitlab.tugraz.at/" = {
+                insteadOf = "https://gitlab.tugraz.at/";
+              };
             };
-          };
-          pull = {
-            rebase = true;
-          };
-          rebase = {
-            autoStash = true;
-          };
-          blame = {
-            ignoreRevsFile = ".git-blame-ignore-revs";
+            pull = {
+              rebase = true;
+            };
+            rebase = {
+              autoStash = true;
+            };
+            blame = {
+              ignoreRevsFile = ".git-blame-ignore-revs";
+            };
           };
         };
       };
