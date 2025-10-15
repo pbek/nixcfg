@@ -116,8 +116,8 @@ in
 
           qownnotes
           # (callPackage ../../pkgs/qownnotes/package.nix { })
-          qc
-          #    (pkgs.callPackage ../../pkgs/qc/default.nix { })
+          # qc
+          (pkgs.callPackage ../../pkgs/qc/default.nix { })
           bluez
           nextcloud-client
         ];
