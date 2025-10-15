@@ -32,7 +32,7 @@ in
       };
     });
 
-    environment.systemPackages = with pkgs; [ nodePackages.nodejs ];
+    environment.systemPackages = with pkgs; [ nodejs_24 ];
 
     hokage = mkIf cfg.ide.enable {
       programs.jetbrains.enable = true;

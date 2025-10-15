@@ -4,7 +4,7 @@
 pkgs.mkShell {
   # nativeBuildInputs is usually what you want -- tools you need to run
   nativeBuildInputs = with pkgs; [
-    nodejs_22
+    nodejs_24
     php84
     php84Extensions.ldap
     php84Extensions.gd
