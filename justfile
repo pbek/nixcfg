@@ -1,6 +1,8 @@
 # Use `just <recipe>` to run a recipe
 # https://just.systems/man/en/
 
+import ".shared/common.just"
+
 # By default, run the `--list` command
 default:
     @just --list
@@ -27,7 +29,6 @@ alias p := push
 alias sp := switch-push
 alias fix-command-not-found-error := update-channels
 alias options := hokage-options
-alias fmt := format
 
 # Notify the user with neosay
 @_notify text:
@@ -500,13 +501,6 @@ nix-store-reverse-dependencies:
 zfs-generate-host-id:
     head -c4 /dev/urandom | od -A none -t x4
 
-# Add git commit hashes to the .git-blame-ignore-revs file
-[group('linter')]
-add-git-blame-ignore-revs:
-    git log --pretty=format:"%H" --grep="^lint" >> .git-blame-ignore-revs
-    sort .git-blame-ignore-revs | uniq > .git-blame-ignore-revs.tmp
-    mv .git-blame-ignore-revs.tmp .git-blame-ignore-revs
-
 # Restart the plasmashell service (useful after an update)
 [group('maintenance')]
 restart-plasmashell:
@@ -578,11 +572,6 @@ scan-dead-code args='':
 [group('linter')]
 fix-dead-code args='':
     deadnix --exclude pkgs/ -e {{ args }}
-
-# Format all files using pre-commit
-[group('linter')]
-format args='':
-    pre-commit run --all-files {{ args }}
 
 # Run the QOwnNotes tests
 [group('tests')]
