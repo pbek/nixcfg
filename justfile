@@ -220,6 +220,7 @@ push:
     -attic push main `which tv` --no-closure
     -attic push qownnotes `which qownnotes` --no-closure
     -attic push qownnotes `which qc` --no-closure
+    -attic push qownnotes `which nixbit` --no-closure
 
 [group('cache')]
 push-all:

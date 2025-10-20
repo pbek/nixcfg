@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "pkgs/qownnotes/**"
+      - "pkgs/nixbit/**"
       - ".github/workflows/build.yml"
   workflow_dispatch:
 
@@ -44,5 +45,10 @@ jobs:
       - name: Build qownnotes package
         run: |
           cd pkgs/qownnotes && \
+          nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })' && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build nixbit package
+        run: |
+          cd pkgs/nixbit && \
           nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })' && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"

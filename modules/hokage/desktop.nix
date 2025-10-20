@@ -44,6 +44,8 @@ in
           # (pkgs.callPackage ../../pkgs/proton-authenticator/package.nix { })
           proton-authenticator
 
+          (pkgs.callPackage ../../pkgs/nixbit/package.nix { })
+
           keepassxc
           gcc
           gdb
