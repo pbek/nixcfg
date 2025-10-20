@@ -17,7 +17,7 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    thunderbird
+    thunderbird-esr
     webex
     discord
     gimp3
