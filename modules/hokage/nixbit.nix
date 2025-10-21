@@ -40,8 +40,8 @@ in
     environment.systemPackages = [ cfg.package ];
 
     environment.etc."nixbit.conf".text = ''
-      [General]
-      repository = ${cfg.repository}
+      [Repository]
+      Url = ${cfg.repository}
     '';
   };
 }
