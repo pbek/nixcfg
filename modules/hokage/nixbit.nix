@@ -5,39 +5,34 @@
   ...
 }:
 
-with lib;
-
 let
-  nixbitPkg = import ./package.nix {
-    inherit (pkgs)
-      lib
-      stdenv
-      cmake
-      ninja
-      pkg-config
-      libgit2
-      installShellFiles
-      xvfb-run
-      ;
-    kdePackages = pkgs.kdePackages;
-    qt6 = pkgs.qt6;
-  };
+  inherit (config) hokage;
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types
+    ;
   cfg = config.services.nixbit;
 in
 {
   options.services.nixbit = {
-    enable = mkEnableOption "nixbit configuration";
+    # enable = mkEnableOption "Nixbit configuration";
+    enable = mkEnableOption "Nixbit configuration" // {
+      default = hokage.role == "desktop";
+    };
 
     package = mkOption {
       type = types.package;
-      default = nixbitPkg;
-      description = "The nixbit package to install";
+      # default = pkgs.nixbit;
+      default = pkgs.callPackage ../../pkgs/nixbit/package.nix { };
+      description = "The Nixbit package to install";
     };
 
     repository = mkOption {
       type = types.str;
       default = "https://github.com/pbek/nixcfg.git";
-      description = "Git repository URL for nixbit";
+      description = "Git repository URL for Nixbit";
     };
   };
 
