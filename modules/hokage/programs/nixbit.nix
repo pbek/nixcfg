@@ -25,7 +25,7 @@ in
     package = mkOption {
       type = types.package;
       # default = pkgs.nixbit;
-      default = pkgs.callPackage ../../pkgs/nixbit/package.nix { };
+      default = pkgs.callPackage ../../../pkgs/nixbit/package.nix { };
       description = "The Nixbit package to install";
     };
 
