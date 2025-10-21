@@ -433,6 +433,20 @@ qownnotes-hash:
 qownnotes-update-release:
     ./scripts/update-qownnotes-release.sh
 
+# Get the nix hash of a Nixbit release
+[group('nixbit')]
+nixbit-hash:
+    #!/usr/bin/env bash
+    set -euxo pipefail
+    version=$(gum input --placeholder "Nixbit version number")
+    url="https://github.com/pbek/nixbit/archive/refs/tags/v${version}.tar.gz"
+    nix-prefetch-url "$url" | xargs nix hash convert --hash-algo sha256
+
+# Update the Nixbit release in the app
+[group('nixbit')]
+nixbit-update-release:
+    ./scripts/update-nixbit-release.sh
+
 # Evaluate a config for a hostname (default current host)
 eval-config configPath host=hostname *args:
     nix eval .#nixosConfigurations.{{ host }}.config.{{ configPath }} {{ args }}
