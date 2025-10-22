@@ -34,6 +34,13 @@ in
       default = "https://github.com/pbek/nixcfg.git";
       description = "Git repository URL for Nixbit";
     };
+
+    # forceAutostart = mkEnableOption "Force creation of autostart desktop entry when application starts";
+    forceAutostart =
+      mkEnableOption "Force creation of autostart desktop entry when application starts"
+      // {
+        default = true;
+      };
   };
 
   config = mkIf cfg.enable {
@@ -42,6 +49,9 @@ in
     environment.etc."nixbit.conf".text = ''
       [Repository]
       Url = ${cfg.repository}
+
+      [Autostart]
+      Force = ${if cfg.forceAutostart then "true" else "false"}
     '';
   };
 }
