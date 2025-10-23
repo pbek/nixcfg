@@ -1,0 +1,11 @@
+build:
+    nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })'
+
+edit-app:
+    cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || cd ~/Code/tools/nixpkgs && kate ./pkgs/by-name/ni/nixbit/package.nix
+
+edit-module:
+    cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || cd ~/Code/tools/nixpkgs && kate ./nixos/modules/programs/nixbit.nix
+
+open-browser:
+    xdg-open https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/ni/nixbit/package.nix

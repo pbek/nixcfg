@@ -46,12 +46,21 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = [ cfg.package ];
 
-    environment.etc."nixbit.conf".text = ''
-      [Repository]
-      Url = ${cfg.repository}
-
-      [Autostart]
-      Force = ${if cfg.forceAutostart then "true" else "false"}
-    '';
+    environment.etc."nixbit.conf".text =
+      let
+        repoSection =
+          if cfg.repository != "" then
+            ''
+              [Repository]
+              Url = ${cfg.repository}
+            ''
+          else
+            "";
+      in
+      ''
+        ${repoSection}
+        [Autostart]
+        Force = ${if cfg.forceAutostart then "true" else "false"}
+      '';
   };
 }
