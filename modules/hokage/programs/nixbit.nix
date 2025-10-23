@@ -13,10 +13,10 @@ let
     mkIf
     types
     ;
-  cfg = config.services.nixbit;
+  cfg = config.hokage.programs.nixbit;
 in
 {
-  options.services.nixbit = {
+  options.hokage.programs.nixbit = {
     # enable = mkEnableOption "Nixbit configuration";
     enable = mkEnableOption "Nixbit configuration" // {
       default = hokage.role == "desktop";
