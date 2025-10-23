@@ -62,7 +62,7 @@ in
         };
         # https://searchix.alanpearce.eu/options/home-manager/search?query=git
         git = {
-          extraConfig = {
+          settings = {
             url = {
               "ssh://git@gitlab.tugraz.at/" = {
                 insteadOf = "https://gitlab.tugraz.at/";
