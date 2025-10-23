@@ -11,6 +11,8 @@ let
 
   inherit (lib)
     mkEnableOption
+    mkOption
+    types
     ;
 in
 {
@@ -18,11 +20,17 @@ in
     enable = mkEnableOption "Enable qtcreator" // {
       default = hokage.role == "desktop" && useInternalInfrastructure;
     };
+
+    package = mkOption {
+      type = types.package;
+      default = pkgs.qtcreator;
+      description = "The QtCreator package to install";
+    };
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      qtcreator
+    environment.systemPackages = [
+      cfg.package
     ];
 
     home-manager.users = lib.genAttrs hokage.users (_userName: {
@@ -36,7 +44,7 @@ in
           name = "Qt Creator with dev packages";
           genericName = "C++ IDE for developing Qt applications";
           comment = "";
-          icon = "${pkgs.qtcreator}/share/icons/hicolor/128x128/apps/QtProject-qtcreator.png";
+          icon = "${cfg.package}/share/icons/hicolor/128x128/apps/QtProject-qtcreator.png";
           exec = "nix-shell /home/${_userName}/.shells/qt6.nix --run qtcreator";
           terminal = false;
           categories = [ "Development" ];
