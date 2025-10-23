@@ -59,7 +59,7 @@ stdenv.mkDerivation (finalAttrs: {
     description = "A KDE Plasma application to update your nixos system from a git repository";
     homepage = "https://github.com/pbek/nixbit";
     license = licenses.gpl3Plus;
-    maintainers = [ "pbek" ];
+    maintainers = with lib.maintainers; [ pbek ];
     platforms = platforms.linux;
     mainProgram = "nixbit";
   };
