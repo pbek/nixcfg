@@ -36,7 +36,7 @@ in
   services.printing.drivers = [ pkgs.splix ];
 
   environment.systemPackages = with pkgs; [
-    calibre
+    stable.calibre
     arduino-ide
     g810-led # Logitech G213 keyboard
     kdePackages.kdialog
