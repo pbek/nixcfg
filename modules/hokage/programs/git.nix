@@ -29,10 +29,6 @@ in
       # https://searchix.alanpearce.eu/options/home-manager/search?query=git
       programs.git = {
         enable = true;
-        # use "git diff --no-ext-diff" for creating patches!
-        difftastic.enable = true;
-        userName = lib.mkDefault userNameLong;
-        userEmail = lib.mkDefault userEmail;
         ignores = [
           ".direnv"
           "result"
@@ -42,7 +38,11 @@ in
           key = lib.mkDefault "948530F2497017761DFCACC075960E6926556207";
         };
         # https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration
-        extraConfig = {
+        settings = {
+          user = {
+            name = lib.mkDefault userNameLong;
+            email = lib.mkDefault userEmail;
+          };
           gc = {
             autoDetach = false;
           };
@@ -89,6 +89,9 @@ in
           };
         };
       };
+
+      # use "git diff --no-ext-diff" for creating patches!
+      programs.difftastic.enable = true;
 
       # Helper for merge conflicts for git
       # https://mergiraf.org/
