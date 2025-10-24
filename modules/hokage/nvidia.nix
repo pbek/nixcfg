@@ -27,9 +27,11 @@ in
     modesetting.enable = mkEnableOption "NVIDIA DRM modesetting (required for some Wayland compositors, e.g. Sway)";
     packageType = mkOption {
       type = types.enum [
+        "stable"
         "latest"
         "beta"
         "production"
+        "legacy_535"
       ];
       default = "latest";
       description = "Type of NVIDIA driver package to use";
