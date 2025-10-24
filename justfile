@@ -409,6 +409,21 @@ home-manager-status:
 home01-restart-nix-serve:
     systemctl restart nix-serve
 
+# Show logs from current boot session
+[group('log')]
+logs-current-boot:
+    journalctl -b -e
+
+# Show logs from previous boot session
+[group('log')]
+logs-previous-boot:
+    journalctl -b-1
+
+# Show logs in real time
+[group('log')]
+logs-follow:
+    journalctl -f
+
 # Edit the QOwnNotes build file
 [group('qownnotes')]
 edit-qownnotes-build:
