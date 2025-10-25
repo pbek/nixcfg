@@ -86,6 +86,11 @@ in
     extraGroups = [ "plugdev" ];
   };
 
+  # Add a normal user for testing purposes
+  users.users.test = {
+    isNormalUser = true;
+  };
+
   # https://wiki.nixos.org/wiki/steam
   programs.steam = {
     enable = true;
