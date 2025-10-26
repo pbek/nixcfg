@@ -57,7 +57,7 @@ in
       # (pkgs.qt6Packages.callPackage ../../pkgs/qownnotes/package.nix { })
       qc
       #    (pkgs.callPackage ../../pkgs/qc/default.nix { })
-      stable.nextcloud-client
+      nextcloud-client
       qjoypad # Joystick mapper
       maliit-keyboard # Virtual keyboard
     ];

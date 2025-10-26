@@ -119,7 +119,7 @@ in
           # qc
           (pkgs.callPackage ../../pkgs/qc/default.nix { })
           bluez
-          stable.nextcloud-client
+          nextcloud-client
         ];
       in
       requiredPackages ++ utils.removePackagesByName optionalPackages hokage.excludePackages;
