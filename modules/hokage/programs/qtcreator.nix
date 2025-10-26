@@ -23,8 +23,7 @@ in
 
     package = mkOption {
       type = types.package;
-      # https://github.com/NixOS/nixpkgs/issues/454783
-      default = pkgs.stable.qtcreator;
+      default = pkgs.qtcreator;
       description = "The QtCreator package to install";
     };
   };
