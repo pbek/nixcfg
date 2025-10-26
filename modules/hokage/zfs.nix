@@ -52,10 +52,16 @@ in
       type = lib.types.package;
       # Set the currently maximum allowed kernel package for ZFS here
       # Look for Kernel support on https://github.com/openzfs/zfs/releases
-      # Look for ZFS version in nixpkgs on https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=zfs+linux_6_16
-      default = pkgs.linuxKernel.packages.linux_6_16.kernel;
+      # Look for ZFS version in nixpkgs on https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=zfs+linux_6_17
+      default = pkgs.linuxKernel.packages.linux_6_17.kernel;
       description = "Maximum allowed kernel package vor ZFS";
       readOnly = true;
+    };
+    useUnstable = mkOption {
+      type = types.bool;
+      # Currently use unstable by default, because Kernel 6.16 got EOL and was removed from NixOS unstable
+      default = true;
+      description = "Use pkgs.zfs_unstable for zfs.package when true (otherwise use pkgs.zfs).";
     };
   };
 
@@ -73,7 +79,7 @@ in
 
       supportedFilesystems = [ "zfs" ];
       zfs.requestEncryptionCredentials = lib.mkIf cfg.encrypted true;
-      # zfs.package = pkgs.zfs_unstable;
+      zfs.package = if cfg.useUnstable then pkgs.zfs_unstable else pkgs.zfs;
       initrd.network = {
         enable = true;
         postCommands = ''
