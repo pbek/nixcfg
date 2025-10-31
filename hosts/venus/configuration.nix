@@ -58,6 +58,7 @@
     lact # AMD GPU monitoring
     vlc
     discord
+    mycrypto # Cryptocurrency wallet manager
 
     # qtwebengine-5.15.19 is marked insecure
     # jellyfin-media-player
