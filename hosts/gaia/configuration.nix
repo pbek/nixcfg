@@ -118,7 +118,7 @@ in
     nvidia = {
       enable = true;
       packageType = "beta";
-      # With kernel 6.17.2 there were no resolutions detected without mmodesetting
+      # With kernel 6.17.2 there were no resolutions detected without modesetting
       modesetting.enable = true;
     };
   };
