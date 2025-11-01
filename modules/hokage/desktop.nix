@@ -74,7 +74,7 @@ in
           #    pinentry-curses
           pinentry-qt # For some reason this wasn't installed by the gpg settings
           cryfs
-          onlyoffice-bin
+          onlyoffice-desktopeditors
           gh
           git-town # Git extension
           smartmontools
