@@ -108,8 +108,8 @@ in
     services.handheld-daemon = {
       enable = true;
       user = userLogin;
-      package = (pkgs.callPackage ../../pkgs/handheld-daemon/package.nix { }).override {
-      };
+      # package = (pkgs.callPackage ../../pkgs/handheld-daemon/package.nix { }).override {
+      # };
     };
 
     environment.sessionVariables = {
