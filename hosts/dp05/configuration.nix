@@ -28,6 +28,17 @@
     wineWowPackages.waylandFull
   ];
 
+  hardware.nvidia.prime = {
+    sync.enable = true;
+
+    # NVIDIA Quadro P2000
+    # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
+    nvidiaBusId = "PCI:1:0:0";
+
+    # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
+    intelBusId = "PCI:0:2:0";
+  };
+
   hokage = {
     hostName = "dp05";
     userLogin = "tgros";
@@ -47,6 +58,7 @@
       packageType = "beta";
       # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
       open = false;
+      modesetting.enable = true;
     };
   };
 
