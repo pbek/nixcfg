@@ -14,18 +14,9 @@
     ../../modules/hokage
   ];
 
-  # Enable Tailscale VPN
-  # Use `sudo tailscale up --accept-routes` to connect to the VPN
-  services.tailscale.enable = true;
-
   hokage = {
     hostName = "ally2";
     role = "ally";
-    #    useWayland = false;
-    #    termFontSize = 15.0;
-    zfs = {
-      enable = true;
-      hostId = "decfda01";
-    };
+    zfs.hostId = "decfda01";
   };
 }

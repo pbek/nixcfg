@@ -7,8 +7,6 @@
 let
   inherit (config) hokage;
   inherit (hokage) userLogin;
-  inherit (hokage) userNameLong;
-  inherit (hokage) userEmail;
 in
 {
   config = lib.mkIf (hokage.role == "ally") {
@@ -62,21 +60,6 @@ in
       maliit-keyboard # Virtual keyboard
     ];
 
-    # https://rycee.gitlab.io/home-manager/options.html
-    home-manager.users = lib.genAttrs hokage.users (_userName: {
-      programs.git = {
-        enable = true;
-        # use "git diff --no-ext-diff" for creating patches!
-        difftastic.enable = true;
-        userName = lib.mkDefault userNameLong;
-        userEmail = lib.mkDefault userEmail;
-        ignores = [
-          ".idea"
-          ".direnv"
-        ];
-      };
-    });
-
     # Touch screen gestures
     services.touchegg.enable = true;
 
@@ -112,6 +95,10 @@ in
       # };
     };
 
+    # Enable Tailscale VPN
+    # Use `sudo tailscale up --accept-routes` to connect to the VPN
+    services.tailscale.enable = true;
+
     environment.sessionVariables = {
       # High DPI for ryubing
       AVALONIA_GLOBAL_SCALE_FACTOR = 2;
@@ -124,6 +111,7 @@ in
       gaming.enable = true;
       cache.sources = [ "home" ];
       useSecrets = false;
+      zfs.enable = true;
     };
   };
 }
