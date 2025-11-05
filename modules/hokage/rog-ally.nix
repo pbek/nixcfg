@@ -123,6 +123,7 @@ in
       termFontSize = 15.0;
       gaming.enable = true;
       cache.sources = [ "home" ];
+      useSecrets = false;
     };
   };
 }

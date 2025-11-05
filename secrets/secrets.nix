@@ -48,12 +48,6 @@ let
   hyperion = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPekfECLzMzhx8LqZ08orVgjCdCGnA5BDKK3Huwdjb8M"
   ];
-  ally = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDIGVAPgueo3rVUB+JaZwGpD6yl29Vb2OFkCzwa1VrHl"
-  ];
-  ally2 = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIak2XXCbbSUAmwAvr5aGQ8JMIE54lR7gPGeXJjfV27W"
-  ];
   mercury = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMs5X4W+EfqosLHw7g41pH6nAyAN0Ql2XuVKEi3ME1PZ"
   ];
@@ -76,8 +70,6 @@ let
     ++ sinope
     ++ rhea
     ++ hyperion
-    ++ ally
-    ++ ally2
     ++ mercury;
 in
 {
