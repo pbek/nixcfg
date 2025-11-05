@@ -19,7 +19,7 @@ in
   options.hokage.programs.nixbit = {
     # enable = mkEnableOption "Nixbit configuration";
     enable = mkEnableOption "Nixbit configuration" // {
-      default = hokage.role == "desktop";
+      default = hokage.role == "desktop" || hokage.role == "ally";
     };
 
     package = mkOption {
