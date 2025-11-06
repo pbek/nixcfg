@@ -98,6 +98,12 @@
     rocmOverrideGfx = "11.0.0";
   };
 
+  # Sleep doesn't work anymore, the fans just go to max speed instead of suspending
+  # So disable bluetooth before suspend to see if that helps
+  powerManagement.powerDownCommands = ''
+    rfkill block bluetooth
+  '';
+
   #  # Enable suspend to RAM
   #  # Sleep is hindered by a component on the motherboard
   #  # Problem with "00:01.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge"
