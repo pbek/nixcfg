@@ -11,15 +11,16 @@ in
 {
   options.hokage.programs.uutilsAliases = {
     enable = lib.mkEnableOption "Add aliases for uutils to replace GNU coreutils in the shell" // {
-      default = !config.hokage.programs.uutils.enable;
+      # default = !config.hokage.programs.uutils.enable;
+      default = true;
     };
   };
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       uutils-coreutils # GNU coreutils replacement
-      # uutils-findutils # GNU findutils replacement
-      # uutils-diffutils # GNU diffutils replacement
+      uutils-findutils # GNU findutils replacement
+      # uutils-diffutils # GNU diffutils replacement, doesn't seem to be a drop in replacement
     ];
 
     # Replace GNU coreutils with uutils-coreutils
@@ -123,6 +124,9 @@ in
       more = "uutils-more";
       hashsum = "uutils-hashsum";
       nohup = "uutils-nohup";
+      find = "${pkgs.uutils-findutils}/bin/find";
+      xargs = "${pkgs.uutils-findutils}/bin/xargs";
+      # diff = "${pkgs.uutils-diffutils}/bin/diffutils";
     };
   };
 }
