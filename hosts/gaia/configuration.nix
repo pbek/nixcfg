@@ -108,6 +108,10 @@ in
   # Increase the console font size for kmscon
   services.kmscon.extraConfig = "font-size = 26";
 
+  # Try to get around being stuck after resume
+  # https://chatgpt.com/c/690d9bc5-e334-832b-b459-86b3e0f9250b
+  boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
+
   hokage = {
     hostName = "gaia";
     tugraz.enable = true;
