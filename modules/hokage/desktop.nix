@@ -89,15 +89,23 @@ in
           aspell # Dictionaries for QOwnNotes
           aspellDicts.en
           aspellDicts.de
+
+          lurk # strace "replacement"
         ];
       in
       requiredPackages ++ utils.removePackagesByName optionalPackages hokage.excludePackages;
 
-    programs.fish.shellAliases = {
-      lzd = "lazydocker";
-      gits = "git town sync";
-      gith = "git town hack";
-      gitdel = "git town delete";
+    programs.fish = {
+      shellAliases = {
+        lzd = "lazydocker";
+        gits = "git town sync";
+        gith = "git town hack";
+        gitdel = "git town delete";
+      };
+
+      shellAbbrs = {
+        strace = "lurk";
+      };
     };
 
     # Docker
