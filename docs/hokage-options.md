@@ -13,7 +13,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.cache\.enable
 
@@ -30,7 +30,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.cache\.sources
 
@@ -49,7 +49,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.excludePackages
 
@@ -66,7 +66,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.gaming\.enable
 
@@ -83,7 +83,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.gaming\.ryubing\.highDpi
 
@@ -100,7 +100,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.hostName
 
@@ -114,7 +114,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.kernel\.enable
 
@@ -128,7 +128,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.kernel\.maxVersion
 
@@ -138,11 +138,11 @@ _Type:_
 package
 
 _Default:_
-`<derivation linux-6.16.9>`
+`<derivation linux-6.17.7>`
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.kernel\.requirements
 
@@ -159,7 +159,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.kernel\.selectedKernel
 
@@ -170,7 +170,7 @@ package _(read only)_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.languages\.cplusplus\.enable
 
@@ -187,7 +187,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.languages\.cplusplus\.ide\.enable
 
@@ -204,7 +204,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.languages\.cplusplus\.qt6\.enable
 
@@ -221,7 +221,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.languages\.go\.enable
 
@@ -238,7 +238,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.languages\.go\.ide\.enable
 
@@ -255,7 +255,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.languages\.javascript\.enable
 
@@ -272,7 +272,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.languages\.javascript\.ide\.enable
 
@@ -289,7 +289,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.languages\.php\.enable
 
@@ -306,7 +306,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.languages\.php\.ide\.enable
 
@@ -323,7 +323,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.lowBandwidth
 
@@ -337,7 +337,137 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
+
+## hokage\.nvidia\.enable
+
+Whether to enable NVIDIA graphics support\.
+
+_Type:_
+boolean
+
+_Default:_
+`false`
+
+_Example:_
+`true`
+
+_Declared by:_
+
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
+
+## hokage\.nvidia\.package
+
+Nvidia driver package to use (overrides packageType if set)
+
+_Type:_
+null or package
+
+_Default:_
+`null`
+
+_Declared by:_
+
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
+
+## hokage\.nvidia\.packageType
+
+Type of NVIDIA driver package to use
+
+_Type:_
+one of “stable”, “latest”, “beta”, “production”, “legacy_535”
+
+_Default:_
+`"latest"`
+
+_Declared by:_
+
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
+
+## hokage\.nvidia\.modesetting\.enable
+
+Whether to enable NVIDIA DRM modesetting (required for some Wayland compositors, e\.g\. Sway)\.
+
+_Type:_
+boolean
+
+_Default:_
+`false`
+
+_Example:_
+`true`
+
+_Declared by:_
+
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
+
+## hokage\.nvidia\.open
+
+Whether to enable Open NVIDIA drivers (NVIDIA open-gpu-kernel-modules)\.
+
+_Type:_
+boolean
+
+_Default:_
+`true`
+
+_Example:_
+`true`
+
+_Declared by:_
+
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
+
+## hokage\.nvidia\.powerManagement\.enable
+
+Whether to enable NVIDIA power management\.
+
+_Type:_
+boolean
+
+_Default:_
+`true`
+
+_Example:_
+`true`
+
+_Declared by:_
+
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
+
+## hokage\.plasma\.enable
+
+Whether to enable Enable KDE Plasma\.
+
+_Type:_
+boolean
+
+_Default:_
+`true`
+
+_Example:_
+`true`
+
+_Declared by:_
+
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
+
+## hokage\.plasma\.enableOld
+
+Whether to enable Enable plasma with old KDE packages\.
+
+_Type:_
+boolean
+
+_Default:_
+`false`
+
+_Example:_
+`true`
+
+_Declared by:_
+
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.aider\.enable
 
@@ -354,7 +484,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.atuin\.enable
 
@@ -371,7 +501,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.espanso\.enable
 
@@ -388,7 +518,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.git\.enable
 
@@ -405,7 +535,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.git\.enableUrlRewriting
 
@@ -422,7 +552,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.jetbrains\.enable
 
@@ -439,7 +569,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.jetbrains\.clion\.enable
 
@@ -456,7 +586,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.jetbrains\.clion\.package
 
@@ -473,7 +603,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.jetbrains\.goland\.enable
 
@@ -490,7 +620,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.jetbrains\.goland\.package
 
@@ -507,7 +637,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.jetbrains\.phpstorm\.enable
 
@@ -524,7 +654,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.jetbrains\.phpstorm\.package
 
@@ -541,7 +671,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.jetbrains\.plugins
 
@@ -571,7 +701,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.jetbrains\.useStable
 
@@ -588,7 +718,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.libvirt\.enable
 
@@ -605,7 +735,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.libvirt\.gui\.enable
 
@@ -622,7 +752,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.libvirt\.role
 
@@ -636,7 +766,69 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
+
+## hokage\.programs\.nixbit\.enable
+
+Whether to enable Nixbit configuration\.
+
+_Type:_
+boolean
+
+_Default:_
+`true`
+
+_Example:_
+`true`
+
+_Declared by:_
+
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
+
+## hokage\.programs\.nixbit\.package
+
+The Nixbit package to install
+
+_Type:_
+package
+
+_Default:_
+`<derivation nixbit-0.1.5>`
+
+_Declared by:_
+
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
+
+## hokage\.programs\.nixbit\.forceAutostart
+
+Whether to enable Force creation of autostart desktop entry when application starts\.
+
+_Type:_
+boolean
+
+_Default:_
+`true`
+
+_Example:_
+`true`
+
+_Declared by:_
+
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
+
+## hokage\.programs\.nixbit\.repository
+
+Git repository URL for Nixbit
+
+_Type:_
+string
+
+_Default:_
+`"https://github.com/pbek/nixcfg.git"`
+
+_Declared by:_
+
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.nushell\.enable
 
@@ -653,7 +845,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.pia\.enable
 
@@ -670,7 +862,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.platformio\.enable
 
@@ -687,7 +879,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.qtcreator\.enable
 
@@ -704,7 +896,21 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
+
+## hokage\.programs\.qtcreator\.package
+
+The QtCreator package to install
+
+_Type:_
+package
+
+_Default:_
+`<derivation qtcreator-17.0.2>`
+
+_Declared by:_
+
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.starship\.enable
 
@@ -721,28 +927,11 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.uutils\.enable
 
 Whether to enable Turn on uutils replacements for GNU utils, changes seems to need reboot\.
-
-_Type:_
-boolean
-
-_Default:_
-`true`
-
-_Example:_
-`true`
-
-_Declared by:_
-
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
-
-## hokage\.programs\.uutilsAliases\.enable
-
-Whether to enable Add aliases for uutils to replace GNU coreutils in the shell\.
 
 _Type:_
 boolean
@@ -755,7 +944,24 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
+
+## hokage\.programs\.uutilsAliases\.enable
+
+Whether to enable Add aliases for uutils to replace GNU coreutils in the shell\.
+
+_Type:_
+boolean
+
+_Default:_
+`true`
+
+_Example:_
+`true`
+
+_Declared by:_
+
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.virtualbox\.enable
 
@@ -772,7 +978,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.virtualbox\.maxKernelVersion
 
@@ -782,11 +988,11 @@ _Type:_
 package _(read only)_
 
 _Default:_
-`<derivation linux-6.16.9>`
+`<derivation linux-6.17.7>`
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.virtualbox\.role
 
@@ -800,7 +1006,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.programs\.yazi\.enable
 
@@ -817,7 +1023,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.role
 
@@ -831,7 +1037,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.serverMba\.enable
 
@@ -848,7 +1054,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.termFontSize
 
@@ -862,7 +1068,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.tugraz\.enable
 
@@ -879,7 +1085,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.tugraz\.enableExternal
 
@@ -896,7 +1102,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.tugraz\.enableOrca
 
@@ -913,7 +1119,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.useGhosttyGtkFix
 
@@ -927,7 +1133,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.useGraphicalSystem
 
@@ -941,7 +1147,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.useInternalInfrastructure
 
@@ -955,7 +1161,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.useSecrets
 
@@ -969,7 +1175,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.useSharedKey
 
@@ -983,7 +1189,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.userEmail
 
@@ -997,7 +1203,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.userLogin
 
@@ -1011,7 +1217,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.userNameLong
 
@@ -1025,7 +1231,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.userNameShort
 
@@ -1039,7 +1245,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.users
 
@@ -1058,7 +1264,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.usersWithRoot
 
@@ -1078,7 +1284,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.waylandSupport
 
@@ -1092,7 +1298,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.zfs\.enable
 
@@ -1109,7 +1315,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.zfs\.arcMax
 
@@ -1123,7 +1329,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.zfs\.datasetRootName
 
@@ -1140,7 +1346,7 @@ _Example:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.zfs\.encrypted
 
@@ -1154,7 +1360,7 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.zfs\.hostId
 
@@ -1165,7 +1371,7 @@ string
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.zfs\.maxKernelVersion
 
@@ -1175,11 +1381,11 @@ _Type:_
 package _(read only)_
 
 _Default:_
-`<derivation linux-6.16.9>`
+`<derivation linux-6.17.7>`
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
 
 ## hokage\.zfs\.poolName
 
@@ -1193,4 +1399,18 @@ _Default:_
 
 _Declared by:_
 
-- [/nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage](file:///nix/store/4w0rjdsf93ln0qpkl2mkgcqrh401rmbw-source/modules/hokage)
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
+
+## hokage\.zfs\.useUnstable
+
+Use pkgs\.zfs_unstable for zfs\.package when true (otherwise use pkgs\.zfs)\.
+
+_Type:_
+boolean
+
+_Default:_
+`true`
+
+_Declared by:_
+
+- [/nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage](file:///nix/store/g9gd12zg526p4lnj7wlr877ns8pap7s1-source/modules/hokage)
