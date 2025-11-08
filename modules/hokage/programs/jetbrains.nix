@@ -20,10 +20,10 @@ let
     if cfg.useStable then
       (import
         (fetchTarball {
-          # Date: 20250608
+          # Date: 20251108
           # https://github.com/NixOS/nixpkgs/commits/nixpkgs-unstable
-          url = "https://github.com/NixOS/nixpkgs/tarball/005433b926e16227259a1843015b5b2b7f7d1fc3";
-          sha256 = "sha256-IVft239Bc8p8Dtvf7UAACMG5P3ZV+3/aO28gXpGtMXI=";
+          url = "https://github.com/NixOS/nixpkgs/tarball/ae814fd3904b621d8ab97418f1d0f2eb0d3716f4";
+          sha256 = "sha256-YRqMDEtSMbitIMj+JLpheSz0pwEr0Rmy5mC7myl17xs=";
         })
         {
           inherit (config.nixpkgs) config;
