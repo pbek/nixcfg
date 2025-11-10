@@ -27,11 +27,11 @@ fi
 echo ""
 echo "Cloning nixcfg and copying initial config..."
 
-nix-shell -p git --run 'git clone --recurse-submodules https://github.com/pbek/nixcfg.git ${NIXOS_DIR_NAME}'
+nix-shell -p git --run "git clone --recurse-submodules https://github.com/pbek/nixcfg.git ${NIXOS_DIR_NAME}"
 cd ${NIXOS_DIR_NAME}
-mkdir hosts/${HOSTNAME}
-cp /etc/nixos/configuration.nix hosts/${HOSTNAME}
-cp /etc/nixos/hardware-configuration.nix hosts/${HOSTNAME}
+mkdir hosts/"${HOSTNAME}"
+cp /etc/nixos/configuration.nix hosts/"${HOSTNAME}"
+cp /etc/nixos/hardware-configuration.nix hosts/"${HOSTNAME}"
 
 echo ""
 echo "Switching to unstable channel..."

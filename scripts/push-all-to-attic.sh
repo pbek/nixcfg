@@ -19,7 +19,7 @@ while read -r file; do
   [[ -x $file && -f $file ]] || continue
 
   # Only get the three first parts of the path
-  file=$(echo $file | cut -d "/" -f 1-4)
+  file=$(echo "$file" | cut -d "/" -f 1-4)
 
   # Add $file to pathList with a newline at the end
   pathList+="$file\n"

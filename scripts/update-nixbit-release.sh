@@ -11,11 +11,8 @@ fi
 
 echo "Using version $version..."
 
-# Set the URL
-url="https://api.github.com/repos/pbek/nixbit/tarball/v${version}"
-
 # Get the hash
-hash=$(nix flake prefetch github:pbek/nixbit/v${version} --json | jq -r '.hash')
+hash=$(nix flake prefetch github:pbek/nixbit/v"${version}" --json | jq -r '.hash')
 
 echo "Using hash $hash..."
 
