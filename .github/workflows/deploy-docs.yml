@@ -1,4 +1,4 @@
-name: Deploy Docs
+name: 📚 Deploy Docs
 
 on:
   push:
@@ -19,26 +19,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: 🛠️ Setup Nix
-        uses: cachix/install-nix-action@v24
+      - name: ⚙️ Install Nix
+        uses: cachix/install-nix-action@v31
         with:
           nix_path: nixpkgs=channel:nixos-unstable
-          extra_nix_config: |
-            experimental-features = nix-command flakes
 
-      - name: 📦 Install just
-        run: nix-env -iA nixpkgs.just
+      - name: 🔒 Cache dependencies
+        uses: cachix/cachix-action@v16
+        with:
+          # https://app.cachix.org/cache/pbek-nixcfg-devenv
+          name: pbek-nixcfg-devenv
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+
+      - name: 🔧 Install devenv.sh
+        run: nix profile add nixpkgs#devenv
 
       - name: 📝 Generate Docs
         run: just hokage-options-md-save
 
       - name: 🌐 Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
 
       - name: 📤 Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./
 
