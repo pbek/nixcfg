@@ -11,6 +11,7 @@ on:
       - "devenv.nix"
       - "devenv.yaml"
       - "devenv.lock"
+      - "scripts/build-site.sh"
   workflow_dispatch:
 
 permissions:
