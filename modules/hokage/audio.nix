@@ -13,7 +13,7 @@ let
 in
 {
   options.hokage.audio = {
-    enable = mkEnableOption "Enable audio system" // {
+    enable = mkEnableOption "audio system" // {
       default = hokage.role == "desktop" || hokage.role == "ally";
     };
   };

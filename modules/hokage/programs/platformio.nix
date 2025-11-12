@@ -14,7 +14,7 @@ let
 in
 {
   options.hokage.programs.platformio = {
-    enable = mkEnableOption "Enable PlatformIO support";
+    enable = mkEnableOption "PlatformIO support";
   };
 
   config = lib.mkIf cfg.enable {

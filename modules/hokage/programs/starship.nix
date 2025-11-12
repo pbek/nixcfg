@@ -14,7 +14,7 @@ let
 in
 {
   options.hokage.programs.starship = {
-    enable = mkEnableOption "Enable Starship support" // {
+    enable = mkEnableOption "Starship support" // {
       default = true;
     };
   };

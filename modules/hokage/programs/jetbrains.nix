@@ -65,24 +65,24 @@ let
 in
 {
   options.hokage.programs.jetbrains = {
-    enable = mkEnableOption "Enable JetBrains IDEs support";
-    useStable = mkEnableOption "Use stable JetBrains packages" // {
+    enable = mkEnableOption "JetBrains IDEs support";
+    useStable = mkEnableOption "stable JetBrains packages" // {
       default = hokage.lowBandwidth; # Use stable JetBrains packages to save bandwidth
     };
     phpstorm = {
-      enable = mkEnableOption "Enable PhpStorm support";
+      enable = mkEnableOption "PhpStorm support";
       package = mkPackageOption jetbrainsPackages "phpstorm" {
         example = "phpstorm";
       };
     };
     clion = {
-      enable = mkEnableOption "Enable CLion support";
+      enable = mkEnableOption "CLion support";
       package = mkPackageOption jetbrainsPackages "clion" {
         example = "clion";
       };
     };
     goland = {
-      enable = mkEnableOption "Enable Goland support";
+      enable = mkEnableOption "Goland support";
       package = mkPackageOption jetbrainsPackages "goland" {
         example = "goland";
       };

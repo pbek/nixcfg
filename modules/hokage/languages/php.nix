@@ -16,10 +16,10 @@ let
 in
 {
   options.hokage.languages.php = {
-    enable = mkEnableOption "Enable PHP development support" // {
+    enable = mkEnableOption "PHP development support" // {
       default = hokage.role == "desktop" && useInternalInfrastructure;
     };
-    ide.enable = mkEnableOption "Enable PHP IDE" // {
+    ide.enable = mkEnableOption "PHP IDE" // {
       default = true;
     };
   };

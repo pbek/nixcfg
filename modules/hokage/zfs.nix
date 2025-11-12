@@ -22,7 +22,7 @@ let
 in
 {
   options.hokage.zfs = {
-    enable = mkEnableOption "Enable ZFS support";
+    enable = mkEnableOption "ZFS support";
     hostId = mkOption {
       type = types.str;
       description = "Host ID for ZFS, generate with 'just zfs-generate-host-id'";

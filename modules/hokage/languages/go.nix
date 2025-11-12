@@ -16,10 +16,10 @@ let
 in
 {
   options.hokage.languages.go = {
-    enable = mkEnableOption "Enable Go development support" // {
+    enable = mkEnableOption "Go development support" // {
       default = hokage.role == "desktop" && useInternalInfrastructure && !hokage.lowBandwidth;
     };
-    ide.enable = mkEnableOption "Enable Go IDE" // {
+    ide.enable = mkEnableOption "Go IDE" // {
       default = true;
     };
   };

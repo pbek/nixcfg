@@ -16,10 +16,10 @@ let
 in
 {
   options.hokage.languages.javascript = {
-    enable = mkEnableOption "Enable Javascript development support" // {
+    enable = mkEnableOption "Javascript development support" // {
       default = hokage.role == "desktop" && useInternalInfrastructure;
     };
-    ide.enable = mkEnableOption "Enable Javascript IDE" // {
+    ide.enable = mkEnableOption "Javascript IDE" // {
       default = true;
     };
   };

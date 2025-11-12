@@ -10,7 +10,7 @@ let
 in
 {
   options.hokage.programs.uutilsAliases = {
-    enable = lib.mkEnableOption "Add aliases for uutils to replace GNU coreutils in the shell" // {
+    enable = lib.mkEnableOption "aliases for uutils to replace GNU coreutils in the shell" // {
       # default = !config.hokage.programs.uutils.enable;
       default = true;
     };

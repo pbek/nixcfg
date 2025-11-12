@@ -17,7 +17,6 @@ let
 in
 {
   options.hokage.programs.nixbit = {
-    # enable = mkEnableOption "Nixbit configuration";
     enable = mkEnableOption "Nixbit configuration" // {
       default = hokage.role == "desktop" || hokage.role == "ally";
     };
@@ -35,7 +34,6 @@ in
       description = "Git repository URL for Nixbit";
     };
 
-    # forceAutostart = mkEnableOption "Force creation of autostart desktop entry when application starts";
     forceAutostart =
       mkEnableOption "Force creation of autostart desktop entry when application starts"
       // {

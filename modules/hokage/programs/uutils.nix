@@ -35,12 +35,10 @@ let
 in
 {
   options.hokage.programs.uutils = {
-    enable =
-      lib.mkEnableOption "Turn on uutils replacements for GNU utils, changes seems to need reboot"
-      // {
-        default = false;
-        # default = hokage.role == "desktop" || hokage.role == "ally";
-      };
+    enable = lib.mkEnableOption "uutils replacements for GNU utils, changes seems to need reboot" // {
+      default = false;
+      # default = hokage.role == "desktop" || hokage.role == "ally";
+    };
   };
 
   config = lib.mkIf cfg.enable {

@@ -17,7 +17,7 @@ let
 in
 {
   options.hokage.programs.atuin = {
-    enable = mkEnableOption "Enable Atuin shell history" // {
+    enable = mkEnableOption "Atuin shell history" // {
       default = true;
     };
   };

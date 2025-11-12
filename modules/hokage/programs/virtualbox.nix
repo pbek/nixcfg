@@ -18,7 +18,7 @@ let
 in
 {
   options.hokage.programs.virtualbox = {
-    enable = mkEnableOption "Enable VirtualBox";
+    enable = mkEnableOption "VirtualBox";
     role = mkOption {
       type = types.enum [
         "host"

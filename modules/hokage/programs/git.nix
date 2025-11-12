@@ -15,10 +15,10 @@ let
 in
 {
   options.hokage.programs.git = {
-    enable = mkEnableOption "Enable Git integration" // {
+    enable = mkEnableOption "Git integration" // {
       default = hokage.role == "desktop" || hokage.role == "ally";
     };
-    enableUrlRewriting = mkEnableOption "Enable URL rewriting from HTTPS to SSH" // {
+    enableUrlRewriting = mkEnableOption "URL rewriting from HTTPS to SSH" // {
       default = hokage.role == "desktop";
     };
   };

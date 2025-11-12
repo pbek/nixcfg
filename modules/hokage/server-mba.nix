@@ -10,7 +10,7 @@ let
 in
 {
   options.hokage.serverMba = {
-    enable = mkEnableOption "Enable MBA server configuration";
+    enable = mkEnableOption "MBA server configuration";
   };
 
   config = lib.mkIf cfg.enable {

@@ -16,13 +16,13 @@ let
 in
 {
   options.hokage.languages.cplusplus = {
-    enable = mkEnableOption "Enable C++ development support" // {
+    enable = mkEnableOption "C++ development support" // {
       default = hokage.role == "desktop" && useInternalInfrastructure;
     };
-    qt6.enable = mkEnableOption "Enable Qt6 for IDEs" // {
+    qt6.enable = mkEnableOption "Qt6 for IDEs" // {
       default = true;
     };
-    ide.enable = mkEnableOption "Enable C++ IDEs" // {
+    ide.enable = mkEnableOption "C++ IDEs" // {
       default = true;
     };
   };

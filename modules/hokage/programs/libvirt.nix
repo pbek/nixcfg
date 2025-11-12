@@ -17,10 +17,10 @@ let
 in
 {
   options.hokage.programs.libvirt = {
-    enable = mkEnableOption "Enable libvirt support" // {
+    enable = mkEnableOption "libvirt support" // {
       default = hokage.role == "desktop";
     };
-    gui.enable = mkEnableOption "Enable VirtManager" // {
+    gui.enable = mkEnableOption "VirtManager" // {
       default = cfg.role == "host" && hokage.role == "desktop";
     };
     role = mkOption {

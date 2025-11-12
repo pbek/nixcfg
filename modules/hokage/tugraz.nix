@@ -10,13 +10,13 @@ let
 in
 {
   options.hokage.tugraz = {
-    enable = lib.mkEnableOption "Enable TU Graz infrastructure" // {
+    enable = lib.mkEnableOption "TU Graz infrastructure" // {
       default = cfg.enableExternal;
     };
-    enableOrca = lib.mkEnableOption "Enable Orca screen reader support" // {
+    enableOrca = lib.mkEnableOption "Orca screen reader support" // {
       default = cfg.enableExternal;
     };
-    enableExternal = lib.mkEnableOption "Enable settings for externally managed desktop";
+    enableExternal = lib.mkEnableOption "settings for externally managed desktop";
   };
 
   config = lib.mkIf (cfg.enable || cfg.enableExternal) {

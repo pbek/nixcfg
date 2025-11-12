@@ -18,7 +18,7 @@ let
 in
 {
   options.hokage.programs.espanso = {
-    enable = mkEnableOption "Enable Espanso to expand text" // {
+    enable = mkEnableOption "Espanso to expand text" // {
       default = hokage.role == "desktop";
     };
   };

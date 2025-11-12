@@ -15,10 +15,10 @@ let
 in
 {
   options.hokage.plasma = {
-    enable = lib.mkEnableOption "Enable KDE Plasma" // {
+    enable = lib.mkEnableOption "KDE Plasma" // {
       default = useGraphicalSystem;
     };
-    enableOld = lib.mkEnableOption "Enable plasma with old KDE packages";
+    enableOld = lib.mkEnableOption "plasma with old KDE packages";
   };
 
   config = lib.mkIf cfg.enable {

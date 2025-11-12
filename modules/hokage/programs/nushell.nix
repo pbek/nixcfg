@@ -13,7 +13,7 @@ let
 in
 {
   options.hokage.programs.nushell = {
-    enable = mkEnableOption "Enable Nushell" // {
+    enable = mkEnableOption "Nushell" // {
       default = hokage.role == "desktop";
     };
   };

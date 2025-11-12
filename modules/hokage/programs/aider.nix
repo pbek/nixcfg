@@ -14,7 +14,7 @@ let
 in
 {
   options.hokage.programs.aider = {
-    enable = mkEnableOption "Enable Aider AI code completion tool";
+    enable = mkEnableOption "Aider AI code completion tool";
   };
 
   config = lib.mkIf cfg.enable {

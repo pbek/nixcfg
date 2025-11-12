@@ -14,7 +14,7 @@ let
 in
 {
   options.hokage.programs.pia = {
-    enable = mkEnableOption "Enable Private Internet Access" // {
+    enable = mkEnableOption "Private Internet Access" // {
       default = hokage.role == "desktop" && hokage.useSecrets;
     };
   };

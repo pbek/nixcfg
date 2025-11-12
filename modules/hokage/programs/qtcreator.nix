@@ -17,7 +17,7 @@ let
 in
 {
   options.hokage.programs.qtcreator = {
-    enable = mkEnableOption "Enable qtcreator" // {
+    enable = mkEnableOption "qtcreator" // {
       default = hokage.role == "desktop" && useInternalInfrastructure;
     };
 

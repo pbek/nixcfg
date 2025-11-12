@@ -14,7 +14,7 @@ let
 in
 {
   options.hokage.programs.yazi = {
-    enable = mkEnableOption "Enable Yazi terminal file manager" // {
+    enable = mkEnableOption "Yazi terminal file manager" // {
       default = true;
     };
   };

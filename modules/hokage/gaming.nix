@@ -15,9 +15,9 @@ let
 in
 {
   options.hokage.gaming = {
-    enable = mkEnableOption "Enable Gaming";
+    enable = mkEnableOption "gaming";
     ryubing = {
-      highDpi = mkEnableOption "Enable high-dpi for ryubing";
+      highDpi = mkEnableOption "high-dpi for ryubing";
     };
   };
 
