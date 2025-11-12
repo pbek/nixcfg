@@ -48,10 +48,7 @@ jobs:
         run: devenv shell "just hokage-options-md-save"
 
       - name: 🏗️ Prepare Site
-        run: |
-          mkdir -p site
-          cp README.md site/index.md
-          cp -r docs site/
+        run: ./scripts/build-site.sh
 
       - name: 🌐 Setup Pages
         uses: actions/configure-pages@v5
