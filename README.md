@@ -1,6 +1,7 @@
 # nixcfg
 
 [GitHub](https://github.com/pbek/nixcfg) |
+[Documentation](https://pbek.github.io/nixcfg/) |
 [Hokage Options](docs/hokage-options.md)
 
 My personal NixOS config of my machines.
