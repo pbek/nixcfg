@@ -44,8 +44,14 @@ jobs:
       - name: 🔧 Install devenv.sh
         run: nix profile add nixpkgs#devenv
 
-      - name: 📝 Generate Docs
+      - name: 📝 Generate Hokage Docs
         run: devenv shell "just hokage-options-md-save"
+
+      - name: 🏗️ Prepare Site
+        run: |
+          mkdir -p site
+          cp README.md site/index.md
+          cp -r docs site/
 
       - name: 🌐 Setup Pages
         uses: actions/configure-pages@v5
@@ -53,7 +59,7 @@ jobs:
       - name: 📤 Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./
+          path: site/
 
   deploy:
     environment:
