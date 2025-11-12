@@ -3,6 +3,14 @@ name: 📚 Deploy Docs
 on:
   push:
     branches: [main]
+    paths:
+      - "README.md"
+      - "docs/**"
+      - "modules/**"
+      - ".github/workflows/deploy-docs.yml"
+      - "devenv.nix"
+      - "devenv.yaml"
+      - "devenv.lock"
   workflow_dispatch:
 
 permissions:
