@@ -1,10 +1,13 @@
 # nixcfg
 
-[GitHub](https://github.com/pbek/nixcfg)
+[GitHub](https://github.com/pbek/nixcfg) |
+[Hokage Options](docs/hokage-options.md)
 
 My personal NixOS config of my machines.
 
 **Not meant to be used by others**, but feel free to take inspiration from it.
+
+See [Hokage Options](docs/hokage-options.md) for detailed configuration options.
 
 ## Screenhots
 
