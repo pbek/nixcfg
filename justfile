@@ -462,6 +462,11 @@ nixbit-hash:
 nixbit-update-release:
     ./scripts/update-nixbit-release.sh
 
+# Update the Nixbit flake
+[group('nixbit')]
+nixbit-update-flake:
+    nix flake update nixbit
+
 # Evaluate a config for a hostname (default current host)
 eval-config configPath host=hostname *args:
     nix eval .#nixosConfigurations.{{ host }}.config.{{ configPath }} {{ args }}

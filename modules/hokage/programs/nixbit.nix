@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  pkgs,
+  options,
   ...
 }:
 
@@ -21,13 +21,6 @@ in
       default = hokage.role == "desktop" || hokage.role == "ally";
     };
 
-    package = mkOption {
-      type = types.package;
-      # default = pkgs.nixbit;
-      default = pkgs.callPackage ../../../pkgs/nixbit/package.nix { };
-      description = "The Nixbit package to install";
-    };
-
     repository = mkOption {
       type = types.str;
       default = "https://github.com/pbek/nixcfg.git";
@@ -41,24 +34,14 @@ in
       };
   };
 
-  config = mkIf cfg.enable {
-    environment.systemPackages = [ cfg.package ];
-
-    environment.etc."nixbit.conf".text =
-      let
-        repoSection =
-          if cfg.repository != "" then
-            ''
-              [Repository]
-              Url = ${cfg.repository}
-            ''
-          else
-            "";
-      in
-      ''
-        ${repoSection}
-        [Autostart]
-        Force = ${if cfg.forceAutostart then "true" else "false"}
-      '';
-  };
+  config = mkIf cfg.enable (
+    lib.optionalAttrs (builtins.hasAttr "nixbit" options) {
+      nixbit = {
+        enable = true;
+        # package = pkgs.callPackage ../../../pkgs/nixbit/package.nix { };
+        repository = cfg.repository;
+        forceAutostart = cfg.forceAutostart;
+      };
+    }
+  );
 }

@@ -52,3 +52,7 @@ jobs:
           cd pkgs/nixbit && \
           nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })' && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build nixbit flake package
+        run: |
+          nix build .#nixbit && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"

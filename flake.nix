@@ -21,6 +21,8 @@
       inputs.home-manager.follows = "home-manager";
     };
     espanso-fix.url = "github:pitkling/nixpkgs/espanso-fix-capabilities-export";
+    nixbit.url = "github:pbek/nixbit/release";
+    nixbit.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -34,6 +36,7 @@
       nixos-hardware,
       plasma-manager,
       espanso-fix,
+      nixbit,
       ...
     }@inputs:
 
@@ -84,6 +87,7 @@
         })
         agenix.nixosModules.age
         espanso-fix.nixosModules.espanso-capdacoverride
+        nixbit.nixosModules.nixbit
       ];
       mkDesktopHost =
         hostName: extraModules:
@@ -202,6 +206,7 @@
       packages.x86_64-linux = {
         inherit (pkgs) qownnotes;
         qownnotes-stable = pkgs.stable.qownnotes;
+        nixbit = inputs.nixbit.packages.${system}.default;
       }
       // {
         # Generate Markdown docs for hokage module options
