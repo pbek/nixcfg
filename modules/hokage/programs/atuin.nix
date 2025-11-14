@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }:
@@ -39,9 +38,7 @@ in
           enable = true;
           daemon.enable = true;
           enableFishIntegration = true;
-          # Writing to the atuin history doesn't work with bash
-          # See https://github.com/nix-community/home-manager/issues/5958
-          enableBashIntegration = false;
+          enableBashIntegration = true;
           # https://docs.atuin.sh/configuration/config/
           # Writes ~/.config/atuin/config.toml
           # If you have issues with home-manager not being able to link the file, because it was written by atuin
@@ -69,12 +66,6 @@ in
             };
           };
         };
-
-        # Add atuin init to bashrc, because it doesn't work with bashIntegration
-        # But it still doesn't add anything to the Atuin history
-        bash.bashrcExtra = ''
-          eval "$(${pkgs.atuin}/bin/atuin init --disable-up-arrow bash)"
-        '';
       };
     });
   };
