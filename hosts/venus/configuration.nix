@@ -137,8 +137,8 @@
   # Increase the console font size for kmscon
   services.kmscon.extraConfig = "font-size = 26";
 
-  programs.alvr.enable = true;
-  programs.alvr.openFirewall = true;
+  #  programs.alvr.enable = true;
+  #  programs.alvr.openFirewall = true;
 
   # We have enough RAM
   zramSwap.enable = false;
