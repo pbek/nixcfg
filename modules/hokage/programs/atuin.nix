@@ -26,14 +26,6 @@ in
     # https://home-manager-options.extranix.com
     home-manager.users = lib.genAttrs hokage.users (_userName: {
       programs = {
-        # https://github.com/atuinsh/atuin/issues/2803
-        # Workaround: https://github.com/atuinsh/atuin/issues/2803#issuecomment-3402340878
-        fish.interactiveShellInit = ''
-          # Atuin shell history with fish fix for "bind -k up" issue
-          # https://github.com/atuinsh/atuin/issues/2803
-          ${pkgs.atuin}/bin/atuin init fish | sed 's/-k up/up/' | source
-        '';
-
         # Sync your shell history across all your devices
         # https://docs.atuin.sh
         atuin = {
@@ -46,11 +38,7 @@ in
           #          });
           enable = true;
           daemon.enable = true;
-
-          # Don't enable fish integration, but do it manually in fish.interactiveShellInit
-          # because the default binding for up causes https://github.com/atuinsh/atuin/issues/2803
-          enableFishIntegration = false;
-
+          enableFishIntegration = true;
           # Writing to the atuin history doesn't work with bash
           # See https://github.com/nix-community/home-manager/issues/5958
           enableBashIntegration = false;
