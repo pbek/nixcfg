@@ -93,10 +93,10 @@ in
       type = types.listOf (types.either types.str types.package);
       # https://plugins.jetbrains.com/plugin/17718-github-copilot
       default = [
-        "github-copilot"
+        "17718" # Name changed to "github-copilot--your-ai-pair-programmer" on nixos-unstable, so we are using the ID for now
         "nixidea"
       ];
-      example = [ "github-copilot" ];
+      example = [ "github-copilot--your-ai-pair-programmer" ];
       description = ''
         List of JetBrains plugin IDs or names to install. See
         https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/applications/editors/jetbrains/plugins/plugins.json
