@@ -1,0 +1,11 @@
+# Nix build artifacts
+result
+result-*
+
+# Flake lock
+# Uncomment if you want to track flake.lock
+# flake.lock
+
+# Hardware configuration (system-specific)
+hardware-configuration.nix
+

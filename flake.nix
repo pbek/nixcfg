@@ -131,6 +131,12 @@
         lib-utils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
       };
 
+      # Expose the hokage module for external consumption
+      nixosModules = {
+        hokage = import ./modules/hokage;
+        default = import ./modules/hokage;
+      };
+
       nixosConfigurations = {
         # Office Work PC
         gaia = mkDesktopHost "gaia" [ ];
