@@ -27,6 +27,14 @@ in
     # Get around: [ERROR] Error: could not open uinput device
     boot.kernelModules = if waylandSupport then [ "uinput" ] else [ ];
 
+    # Espanso dependency: kdotool missing or not available for the current wayland DE.
+    environment.systemPackages = lib.mkIf waylandSupport (
+      with pkgs;
+      [
+        kdotool
+      ]
+    );
+
     # Get around permission denied error on /dev/uinput
     services.udev.extraRules =
       if waylandSupport then
