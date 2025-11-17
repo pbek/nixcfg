@@ -264,7 +264,7 @@ in
   system = {
     # Create a symlink to the latest nixpkgs of the flake
     # See: https://discourse.nixos.org/t/do-flakes-also-set-the-system-channel/19798/18
-    extraSystemBuilderCmds = ''
+    systemBuilderCommands = ''
       ln -sv ${pkgs.path} $out/nixpkgs
     '';
 
