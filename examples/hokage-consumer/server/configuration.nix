@@ -4,22 +4,19 @@
   # Basic system configuration
   system.stateVersion = "25.05";
 
-  # Hostname
-  networking.hostName = "example-host";
-
   # Enable hokage module configurations
   hokage = {
-    userLogin = "myuser";
-    role = "desktop"; # Options: "desktop", "server-home", "server-remote", "ally"
-
-    # These are internal settings - you may want to disable them for external use
+    hostName = "example-server";
+    userLogin = "john";
+    userNameLong = "John Doe";
+    userNameShort = "John";
+    userEmail = "john@example.com";
     useInternalInfrastructure = false;
     useSecrets = false;
     useSharedKey = false;
-
-    # Configure system preferences
-    waylandSupport = true;
-    useGraphicalSystem = true;
+    programs.git.enableUrlRewriting = false;
+    zfs.enable = false;
+    role = "server-remote"; # Options: "desktop", "server-home", "server-remote", "ally"
 
     # Additional hokage options can be configured here
     # See the hokage module documentation for all available options

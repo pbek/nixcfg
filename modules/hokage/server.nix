@@ -81,7 +81,7 @@ in
     hokage = {
       useSecrets = lib.mkDefault false;
       zfs = {
-        enable = true;
+        enable = lib.mkDefault true;
         encrypted = lib.mkDefault false;
       };
       useGraphicalSystem = false;

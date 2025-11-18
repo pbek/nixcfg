@@ -9,6 +9,11 @@ default:
 
 set shell := ["bash", "-c"]
 
+@_show-qemu-exit-message:
+    echo "Booting VM. To exit, use: Ctrl + A then X"
+    echo "Press any key to continue..."
+    read -n 1
+
 [group('vm')]
 boot-vm:
     just _show-qemu-exit-message
@@ -52,6 +57,10 @@ build-vm host:
 build-host hostname args='':
     nh os build -H {{ hostname }} . -- {{ args }}
 
-# Build host  with nh
+# Build host desktop with nh
 [group('build')]
 build-desktop args='': (build-host "desktop" args)
+
+# Build host server with nh
+[group('build')]
+build-server args='': (build-host "server" args)

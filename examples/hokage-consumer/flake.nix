@@ -57,7 +57,28 @@
             }
 
             # Import the local configuration
-            ./configuration.nix
+            ./desktop/configuration.nix
+          ];
+          specialArgs = {
+            inherit inputs;
+            # Pass lib-utils from nixcfg if needed
+            lib-utils = nixcfg.commonArgs.lib-utils;
+          };
+        };
+        server = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            # Import the hokage module from nixcfg
+            nixcfg.nixosModules.hokage
+
+            # Import agenix (required by hokage)
+            agenix.nixosModules.age
+
+            # Import home-manager
+            home-manager.nixosModules.home-manager
+
+            # Import the local configuration
+            ./server/configuration.nix
           ];
           specialArgs = {
             inherit inputs;
