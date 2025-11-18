@@ -46,3 +46,12 @@ ssh-vm:
 [group('vm')]
 build-vm host:
     nixos-rebuild --flake .#{{ host }} build-vm
+
+# Build a host with nh
+[group('build')]
+build-host hostname args='':
+    nh os build -H {{ hostname }} . -- {{ args }}
+
+# Build host  with nh
+[group('build')]
+build-desktop args='': (build-host "desktop" args)

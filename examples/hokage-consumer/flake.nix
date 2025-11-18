@@ -21,6 +21,10 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Required by starship module in hokage
+    catppuccin.url = "github:catppuccin/starship";
+    catppuccin.flake = false;
   };
 
   outputs =
@@ -37,7 +41,7 @@
     in
     {
       nixosConfigurations = {
-        example-host = nixpkgs.lib.nixosSystem {
+        desktop = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
             # Import the hokage module from nixcfg
@@ -59,14 +63,6 @@
             inherit inputs;
             # Pass lib-utils from nixcfg if needed
             lib-utils = nixcfg.commonArgs.lib-utils;
-            # Provide utils with removePackagesByName function
-            utils = {
-              removePackagesByName =
-                list: excluded:
-                nixpkgs.lib.filter (
-                  p: !(nixpkgs.lib.any (q: (q.pname or q.name or "") == (p.pname or p.name or "")) excluded)
-                ) list;
-            };
           };
         };
       };
