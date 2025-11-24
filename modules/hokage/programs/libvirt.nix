@@ -38,7 +38,15 @@ in
     #
     # Host configuration
     #
-    virtualisation.libvirtd.enable = mkIf (cfg.role == "host") true;
+    virtualisation.libvirtd = mkIf (cfg.role == "host") {
+      enable = true;
+      qemu = {
+        # Enable TPM emulation (useful for Windows 11)
+        swtpm.enable = true;
+        # Run QEMU as regular user instead of root (more secure)
+        runAsRoot = false;
+      };
+    };
     programs.dconf.enable = mkIf (cfg.role == "host") true;
     virtualisation.spiceUSBRedirection.enable = mkIf (cfg.role == "host") true;
 
