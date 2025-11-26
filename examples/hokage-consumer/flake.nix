@@ -22,9 +22,8 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Required by starship module in hokage
-    catppuccin.url = "github:catppuccin/starship";
-    catppuccin.flake = false;
+    # Required by hokage catppuccin module
+    catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs =

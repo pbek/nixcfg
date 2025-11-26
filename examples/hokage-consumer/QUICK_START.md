@@ -11,6 +11,7 @@
     agenix.url = "github:ryantm/agenix";
     home-manager.url = "github:nix-community/home-manager";
     plasma-manager.url = "github:nix-community/plasma-manager";
+    catppuccin.url = "github:catppuccin/nix";
 
     # Follow nixpkgs for all
     nixcfg.inputs.nixpkgs.follows = "nixpkgs";
@@ -20,7 +21,7 @@
     plasma-manager.inputs.home-manager.follows = "home-manager";
   };
 
-  outputs = { self, nixpkgs, nixcfg, agenix, plasma-manager, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nixcfg, agenix, plasma-manager, home-manager, catppuccin, ... }@inputs: {
     nixosConfigurations.myhost = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [

@@ -14,6 +14,7 @@ The hokage module requires several inputs to function properly:
 1. **agenix** - Secret management (required by hokage)
 2. **home-manager** - User environment management
 3. **plasma-manager** - KDE Plasma configuration (required for desktop setups)
+4. **catppuccin** - Theme system (required by hokage catppuccin module)
 
 ## Usage
 
@@ -89,7 +90,7 @@ nix build .#hokage-options-md
 - The `utils.removePackagesByName` function is used to filter packages
 - Make sure to add a hardware-configuration.nix if you're installing on real hardware
 - Set user passwords after first boot: `sudo passwd myuser`
-- The hokage module requires agenix, home-manager, and plasma-manager as dependencies
+- The hokage module requires agenix, home-manager, plasma-manager, and catppuccin as dependencies
 
 ## Troubleshooting
 

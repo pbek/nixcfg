@@ -56,9 +56,12 @@ Here's a complete `flake.nix` that properly imports and configures the hokage mo
     # Agenix is needed if using secrets (optional, can disable with useSecrets = false)
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Catppuccin theme (required by hokage catppuccin module)
+    catppuccin.url = "github:catppuccin/nix";
   };
 
-  outputs = { self, nixpkgs, nixcfg, home-manager, agenix, ... }@inputs: {
+  outputs = { self, nixpkgs, nixcfg, home-manager, agenix, catppuccin, ... }@inputs: {
     nixosConfigurations.myhost = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
 
@@ -100,9 +103,10 @@ If you don't need secrets management, you can simplify:
     nixcfg.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    catppuccin.url = "github:catppuccin/nix";
   };
 
-  outputs = { self, nixpkgs, nixcfg, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nixcfg, home-manager, catppuccin, ... }@inputs: {
     nixosConfigurations.myhost = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -250,6 +254,12 @@ hokage = {
 
   # KDE Plasma configuration
   plasma.enable = true;             # Enable KDE Plasma (default on desktop)
+
+  # Catppuccin theming (enabled by default)
+  catppuccin = {
+    enable = true;                  # Enable catppuccin theme system-wide
+    flavor = "mocha";               # Options: "latte", "frappe", "macchiato", "mocha"
+  };
 
   # Audio
   audio.enable = true;              # Enable PipeWire audio (default)
