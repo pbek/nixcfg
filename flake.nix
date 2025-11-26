@@ -10,8 +10,7 @@
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     pia.url = "github:pia-foss/manual-connections";
     pia.flake = false;
-    catppuccin.url = "github:catppuccin/starship";
-    catppuccin.flake = false;
+    catppuccin.url = "github:catppuccin/nix";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -37,6 +36,7 @@
       plasma-manager,
       espanso-fix,
       nixbit,
+      catppuccin,
       ...
     }@inputs:
 
@@ -72,6 +72,7 @@
       allOverlays = validOverlays ++ [ overlays-nixpkgs ];
       commonServerModules = [
         home-manager.nixosModules.home-manager
+        catppuccin.nixosModules.catppuccin
         { }
         (_: {
           nixpkgs.overlays = allOverlays;
@@ -81,6 +82,7 @@
       ];
       commonDesktopModules = [
         home-manager.nixosModules.home-manager
+        catppuccin.nixosModules.catppuccin
         { home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ]; }
         (_: {
           nixpkgs.overlays = allOverlays;
