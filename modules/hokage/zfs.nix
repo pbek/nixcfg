@@ -72,6 +72,11 @@ in
     # Use the latest kernel version possible for ZFS or the latest kernel
     hokage.kernel.requirements = [ cfg.maxKernelVersion ];
 
+    # Secure /boot mount point permissions to prevent world-accessible security hole
+    fileSystems."/boot" = {
+      options = [ "umask=0077" ];
+    };
+
     boot = {
       # Set maximum ARC size to prevent the Early OOM from killing processes
       # https://wiki.nixos.org/wiki/ZFS#Tuning_Adaptive_Replacement_Cache_size
@@ -80,25 +85,33 @@ in
       supportedFilesystems = [ "zfs" ];
       zfs.requestEncryptionCredentials = lib.mkIf cfg.encrypted true;
       zfs.package = if cfg.useUnstable then pkgs.zfs_unstable else pkgs.zfs;
-      initrd.network = {
-        enable = true;
-        postCommands = ''
-          sleep 2
-          zpool import -a;
-        '';
-      };
-      loader.grub = {
-        enable = true;
-        zfsSupport = true;
-        efiSupport = true;
-        efiInstallAsRemovable = true;
-        mirroredBoots = [
-          {
-            devices = [ "nodev" ];
-            path = "/boot";
-          }
-        ];
-      };
+      zfs.extraPools = [ cfg.poolName ];
+      loader.systemd-boot.enable = true;
+      loader.efi.canTouchEfiVariables = true;
+      /*
+            initrd.network = {
+              enable = true;
+              postCommands = ''
+                sleep 2
+                zpool import -a;
+              '';
+            };
+      */
+      loader.grub.enable = false;
+      /*
+            loader.grub = {
+              enable = true;
+              zfsSupport = true;
+              efiSupport = true;
+              efiInstallAsRemovable = true;
+              mirroredBoots = [
+                {
+                  devices = [ "nodev" ];
+                  path = "/boot";
+                }
+              ];
+            };
+      */
     };
 
     # Add the sanoid service to take snapshots of the ZFS datasets
