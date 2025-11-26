@@ -101,9 +101,7 @@
               ./hosts/${hostName}/configuration.nix
             ]
             ++ extraModules;
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
+          specialArgs = self.commonArgs;
         };
       mkServerHost =
         hostName: extraModules:
@@ -115,9 +113,7 @@
               ./hosts/${hostName}/configuration.nix
             ]
             ++ extraModules;
-          specialArgs = self.commonArgs // {
-            inherit inputs;
-          };
+          specialArgs = self.commonArgs;
         };
       pkgs = import nixpkgs {
         inherit system;
@@ -131,6 +127,7 @@
       #    nixosModules = import ./modules { inherit (nixpkgs) lib; };
       commonArgs = {
         lib-utils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
+        inherit inputs;
       };
 
       # Expose the hokage module for external consumption
