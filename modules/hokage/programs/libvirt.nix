@@ -43,8 +43,6 @@ in
       qemu = {
         # Enable TPM emulation (useful for Windows 11)
         swtpm.enable = true;
-        # Run QEMU as regular user instead of root (more secure)
-        runAsRoot = false;
       };
     };
     programs.dconf.enable = mkIf (cfg.role == "host") true;
