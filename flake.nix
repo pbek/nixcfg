@@ -19,7 +19,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
-    espanso-fix.url = "github:pitkling/nixpkgs/espanso-fix-capabilities-export";
     nixbit.url = "github:pbek/nixbit/release";
     nixbit.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -34,7 +33,6 @@
       disko,
       nixos-hardware,
       plasma-manager,
-      espanso-fix,
       nixbit,
       catppuccin,
       ...
@@ -88,7 +86,6 @@
           nixpkgs.overlays = allOverlays;
         })
         agenix.nixosModules.age
-        espanso-fix.nixosModules.espanso-capdacoverride
         nixbit.nixosModules.nixbit
       ];
       mkDesktopHost =
