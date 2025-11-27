@@ -6,9 +6,9 @@
 
     # Import the nixcfg flake to get the hokage module
     # For local development/testing (default in this example):
-    nixcfg.url = "path:../..";
+    # nixcfg.url = "path:../..";
     # For production use, change to:
-    # nixcfg.url = "github:pbek/nixcfg";
+    nixcfg.url = "github:pbek/nixcfg";
     nixcfg.inputs.nixpkgs.follows = "nixpkgs";
 
     # Note: We don't need to declare agenix, plasma-manager, home-manager, or catppuccin here
