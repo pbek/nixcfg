@@ -6,7 +6,7 @@
 
     # Import the nixcfg flake to get the hokage module
     # For local development/testing (default in this example):
-    nixcfg.url = "git+file:../..?shallow=1";
+    nixcfg.url = "path:../..";
     # For production use, change to:
     # nixcfg.url = "github:pbek/nixcfg";
     nixcfg.inputs.nixpkgs.follows = "nixpkgs";
