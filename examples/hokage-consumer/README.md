@@ -4,17 +4,38 @@ This directory contains an example NixOS configuration that consumes the `hokage
 
 ## Structure
 
-- `flake.nix` - The flake configuration that imports the hokage module with all required dependencies
-- `configuration.nix` - Example NixOS configuration using hokage options
+- `flake.nix` - The flake configuration that imports the hokage module
+- `desktop/configuration.nix` - Example desktop configuration using hokage options
+- `server/configuration.nix` - Example server configuration using hokage options
 
-## Required Dependencies
+## Dependencies
 
-The hokage module requires several inputs to function properly:
+The hokage module requires several dependencies to function properly:
 
 1. **agenix** - Secret management (required by hokage)
 2. **home-manager** - User environment management
 3. **plasma-manager** - KDE Plasma configuration (required for desktop setups)
 4. **catppuccin** - Theme system (required by hokage catppuccin module)
+
+**Important:** You don't need to declare these as separate inputs in your flake! The example demonstrates using `nixcfg.commonArgs.inputs` to access these dependencies directly from nixcfg, which ensures version compatibility and reduces duplication.
+
+## Why Not Declare All Inputs?
+
+You might notice that the `flake.nix` only declares `nixpkgs` and `nixcfg` as inputs, even though hokage needs agenix, home-manager, plasma-manager, and catppuccin.
+
+**This is intentional!** Since nixcfg already has all these dependencies, we can access them through:
+
+- `nixcfg.commonArgs.inputs.agenix`
+- `nixcfg.commonArgs.inputs.home-manager`
+- `nixcfg.commonArgs.inputs.plasma-manager`
+- `nixcfg.commonArgs.inputs.catppuccin` (used internally by hokage)
+
+**Benefits:**
+
+- Simpler flake with fewer inputs to manage
+- Automatically uses versions tested with nixcfg
+- No version conflicts between your inputs and nixcfg's
+- Less code duplication
 
 ## Usage
 

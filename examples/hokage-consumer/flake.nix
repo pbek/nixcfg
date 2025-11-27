@@ -11,30 +11,16 @@
     # nixcfg.url = "github:pbek/nixcfg";
     nixcfg.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Required by hokage module
-    agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
-
-    plasma-manager.url = "github:nix-community/plasma-manager";
-    plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
-    plasma-manager.inputs.home-manager.follows = "home-manager";
-
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    # Required by hokage catppuccin module
-    catppuccin.url = "github:catppuccin/nix";
+    # Note: We don't need to declare agenix, plasma-manager, home-manager, or catppuccin here
+    # because they're already available through nixcfg.commonArgs.inputs
   };
 
   outputs =
     {
       nixpkgs,
       nixcfg,
-      agenix,
-      plasma-manager,
-      home-manager,
       ...
-    }@inputs:
+    }:
     let
       system = "x86_64-linux";
     in
@@ -43,47 +29,47 @@
         desktop = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
+            # Import catppuccin module (required by hokage)
+            nixcfg.commonArgs.inputs.catppuccin.nixosModules.catppuccin
+
             # Import the hokage module from nixcfg
             nixcfg.nixosModules.hokage
 
-            # Import agenix (required by hokage)
-            agenix.nixosModules.age
+            # Import agenix (required by hokage) - from nixcfg's inputs
+            nixcfg.commonArgs.inputs.agenix.nixosModules.age
 
-            # Import home-manager with plasma-manager
-            home-manager.nixosModules.home-manager
+            # Import home-manager with plasma-manager - from nixcfg's inputs
+            nixcfg.commonArgs.inputs.home-manager.nixosModules.home-manager
             {
-              home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
+              home-manager.sharedModules = [
+                nixcfg.commonArgs.inputs.plasma-manager.homeModules.plasma-manager
+              ];
             }
 
             # Import the local configuration
             ./desktop/configuration.nix
           ];
-          specialArgs = {
-            inherit inputs;
-            # Pass lib-utils from nixcfg if needed
-            lib-utils = nixcfg.commonArgs.lib-utils;
-          };
+          specialArgs = nixcfg.commonArgs;
         };
         server = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
+            # Import catppuccin module (required by hokage)
+            nixcfg.commonArgs.inputs.catppuccin.nixosModules.catppuccin
+
             # Import the hokage module from nixcfg
             nixcfg.nixosModules.hokage
 
-            # Import agenix (required by hokage)
-            agenix.nixosModules.age
+            # Import agenix (required by hokage) - from nixcfg's inputs
+            nixcfg.commonArgs.inputs.agenix.nixosModules.age
 
-            # Import home-manager
-            home-manager.nixosModules.home-manager
+            # Import home-manager - from nixcfg's inputs
+            nixcfg.commonArgs.inputs.home-manager.nixosModules.home-manager
 
             # Import the local configuration
             ./server/configuration.nix
           ];
-          specialArgs = {
-            inherit inputs;
-            # Pass lib-utils from nixcfg if needed
-            lib-utils = nixcfg.commonArgs.lib-utils;
-          };
+          specialArgs = nixcfg.commonArgs;
         };
       };
     };

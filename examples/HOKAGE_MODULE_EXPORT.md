@@ -33,54 +33,48 @@ Files created:
 
 ## How to Use the Hokage Module in Other Projects
 
-### Complete flake.nix Example
+### Recommended flake.nix Example (Using nixcfg's inputs)
 
-Here's a complete `flake.nix` that properly imports and configures the hokage module:
+The simplest approach is to use the inputs that are already defined in nixcfg. This avoids duplication and ensures version compatibility:
 
 ```nix
 {
   description = "My NixOS Configuration using Hokage";
 
   inputs = {
-    # Main nixpkgs input
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # Import nixcfg for the hokage module
+    # Import nixcfg - it already includes all required dependencies
     nixcfg.url = "github:pbek/nixcfg";
     nixcfg.inputs.nixpkgs.follows = "nixpkgs";
-
-    # Home-manager is required by hokage (if using desktop role)
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    # Agenix is needed if using secrets (optional, can disable with useSecrets = false)
-    agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
-
-    # Catppuccin theme (required by hokage catppuccin module)
-    catppuccin.url = "github:catppuccin/nix";
   };
 
-  outputs = { self, nixpkgs, nixcfg, home-manager, agenix, catppuccin, ... }@inputs: {
+  outputs = { nixpkgs, nixcfg, ... }@inputs: {
     nixosConfigurations.myhost = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
 
       modules = [
-        # Required: home-manager NixOS module
-        home-manager.nixosModules.home-manager
-
-        # Required: agenix module (or disable with hokage.useSecrets = false)
-        agenix.nixosModules.age
-
         # Import the hokage module
         nixcfg.nixosModules.hokage
+
+        # Use agenix from nixcfg's inputs (or disable with hokage.useSecrets = false)
+        nixcfg.commonArgs.inputs.agenix.nixosModules.age
+
+        # Use home-manager from nixcfg's inputs
+        nixcfg.commonArgs.inputs.home-manager.nixosModules.home-manager
+        {
+          # For desktop role, also enable plasma-manager
+          home-manager.sharedModules = [
+            nixcfg.commonArgs.inputs.plasma-manager.homeModules.plasma-manager
+          ];
+        }
 
         # Your configuration
         ./configuration.nix
       ];
 
-      # IMPORTANT: Pass lib-utils through specialArgs
-      # The hokage module requires this for loading its submodules
+      # IMPORTANT: Pass nixcfg's commonArgs which includes lib-utils and inputs
+      # The hokage module requires these for loading its submodules
       specialArgs = nixcfg.commonArgs // {
         inherit inputs;
       };
@@ -89,9 +83,16 @@ Here's a complete `flake.nix` that properly imports and configures the hokage mo
 }
 ```
 
-### Minimal flake.nix (Without Secrets)
+**Benefits of this approach:**
 
-If you don't need secrets management, you can simplify:
+- No need to redeclare dependencies (agenix, home-manager, plasma-manager, catppuccin)
+- Automatically uses the same versions tested with nixcfg
+- Simpler flake with fewer inputs to manage
+- The hokage module will use `inputs.catppuccin` from `nixcfg.commonArgs.inputs`
+
+### Alternative: Declare Your Own Inputs
+
+If you need specific versions of dependencies, you can declare them explicitly:
 
 ```nix
 {
@@ -101,17 +102,22 @@ If you don't need secrets management, you can simplify:
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixcfg.url = "github:pbek/nixcfg";
     nixcfg.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Optionally override specific inputs
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    catppuccin.url = "github:catppuccin/nix";
+
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixcfg, home-manager, catppuccin, ... }@inputs: {
+  outputs = { nixpkgs, nixcfg, home-manager, agenix, ... }@inputs: {
     nixosConfigurations.myhost = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        home-manager.nixosModules.home-manager
         nixcfg.nixosModules.hokage
+        agenix.nixosModules.age
+        home-manager.nixosModules.home-manager
         ./configuration.nix
       ];
       specialArgs = nixcfg.commonArgs // {
