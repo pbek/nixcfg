@@ -7,7 +7,6 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
     ./disk-config.zfs.nix
   ];
 

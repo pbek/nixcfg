@@ -92,6 +92,7 @@
           modules =
             commonDesktopModules
             ++ [
+              ./hosts/${hostName}/hardware-configuration.nix
               ./hosts/${hostName}/configuration.nix
             ]
             ++ extraModules;
@@ -104,6 +105,7 @@
           modules =
             commonServerModules
             ++ [
+              ./hosts/${hostName}/hardware-configuration.nix
               ./hosts/${hostName}/configuration.nix
             ]
             ++ extraModules;
