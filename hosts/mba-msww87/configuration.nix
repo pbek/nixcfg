@@ -6,7 +6,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/hokage
     ./disk-config.zfs.nix
   ];
 

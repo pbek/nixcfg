@@ -14,7 +14,6 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./disk-config.zfs.nix
-    ../../modules/hokage
   ];
 
   # Search on https://search.nixos.org/packages?channel=unstable

@@ -20,10 +20,6 @@ let
   inherit (config.hokage) userLogin;
 in
 {
-  imports = [
-    ../../modules/hokage
-  ];
-
   users.users.root.initialPassword = "root";
   users.users.${userLogin}.initialPassword = userLogin;
 

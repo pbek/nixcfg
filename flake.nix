@@ -76,6 +76,7 @@
         })
         # We still need the age module for servers, because it needs to evaluate "age" in the services
         agenix.nixosModules.age
+        ./modules/hokage
       ];
       commonServerModules = commonModules ++ [
         { }

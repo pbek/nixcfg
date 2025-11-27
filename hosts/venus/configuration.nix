@@ -13,7 +13,6 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./disk-config.zfs.nix
-    ../../modules/hokage
   ];
 
   # Getting the bootloader to detect Windows didn't work, use F12 at boot for a boot manager
