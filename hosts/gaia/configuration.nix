@@ -36,12 +36,12 @@ in
     arduino-ide
     g810-led # Logitech G213 keyboard
     kdePackages.kdialog
-    bitscope.meter
-    bitscope.dso
-    bitscope.logic
-    #    (pkgs.callPackage ../../pkgs/bitscope/packages.nix { }).meter
-    #    (pkgs.callPackage ../../pkgs/bitscope/packages.nix { }).dso
-    #    (pkgs.callPackage ../../pkgs/bitscope/packages.nix { }).logic
+    #    bitscope.meter
+    #    bitscope.dso
+    #    bitscope.logic
+    (pkgs.callPackage ../../pkgs/bitscope/packages.nix { }).meter
+    (pkgs.callPackage ../../pkgs/bitscope/packages.nix { }).dso
+    (pkgs.callPackage ../../pkgs/bitscope/packages.nix { }).logic
     blender
     # Temporarily disabled for: sip-4.19.25 not supported for interpreter python3.12
     # Using stable.blender-hip doesn't work because of: Cannot mix incompatible Qt library (5.15.15) with this library (5.15.14)
