@@ -68,24 +68,20 @@
         };
       };
       allOverlays = validOverlays ++ [ overlays-nixpkgs ];
-      commonServerModules = [
+      commonModules = [
         home-manager.nixosModules.home-manager
         catppuccin.nixosModules.catppuccin
-        { }
         (_: {
           nixpkgs.overlays = allOverlays;
         })
         # We still need the age module for servers, because it needs to evaluate "age" in the services
         agenix.nixosModules.age
       ];
-      commonDesktopModules = [
-        home-manager.nixosModules.home-manager
-        catppuccin.nixosModules.catppuccin
+      commonServerModules = commonModules ++ [
+        { }
+      ];
+      commonDesktopModules = commonModules ++ [
         { home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ]; }
-        (_: {
-          nixpkgs.overlays = allOverlays;
-        })
-        agenix.nixosModules.age
         nixbit.nixosModules.nixbit
       ];
       mkDesktopHost =
