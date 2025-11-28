@@ -28,6 +28,8 @@
     # waylandSupport = false; # Disable Wayland support for clipboard sharing from guest to host
     waylandSupport = true;
     termFontSize = 16.0;
+    useInternalInfrastructure = false;
+    useSecrets = false;
     zfs = {
       enable = true;
       hostId = "29a6f1f7";

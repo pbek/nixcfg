@@ -88,15 +88,13 @@ in
       zfs.extraPools = [ cfg.poolName ];
       loader.systemd-boot.enable = true;
       loader.efi.canTouchEfiVariables = true;
-      /*
-            initrd.network = {
-              enable = true;
-              postCommands = ''
-                sleep 2
-                zpool import -a;
-              '';
-            };
-      */
+      initrd.network = {
+        enable = true;
+        postCommands = ''
+          sleep 2
+          zpool import -a;
+        '';
+      };
       loader.grub.enable = false;
       /*
             loader.grub = {
