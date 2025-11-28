@@ -24,13 +24,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # Workaround for git shell completions in fish shell
-    # https://github.com/NixOS/nixpkgs/issues/462025
-    # This workaround has a side effect with "just", see https://github.com/NixOS/nixpkgs/issues/462025#issuecomment-3581353705
-    # programs.fish.interactiveShellInit = ''
-    #   set -p fish_complete_path ${config.programs.fish.package}/share/fish/completions
-    # '';
-
     # https://home-manager-options.extranix.com
     home-manager.users = lib.genAttrs hokage.users (_userName: {
       # https://searchix.alanpearce.eu/options/home-manager/search?query=git
