@@ -88,6 +88,8 @@ in
       zfs.extraPools = [ cfg.poolName ];
       loader.systemd-boot.enable = true;
       loader.efi.canTouchEfiVariables = true;
+      # Ensure systemd-boot installs to the ESP created by disko (mounted at /boot)
+      loader.efi.efiSysMountPoint = "/boot";
       initrd.network = {
         enable = true;
         postCommands = ''
