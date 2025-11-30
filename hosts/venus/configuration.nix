@@ -68,6 +68,16 @@
   services.xserver.videoDrivers = [ "amdgpu" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
 
+  # AMD GPU kernel parameters to fix suspend/resume issues
+  # - amdgpu.gpu_recovery=1: Enable GPU recovery mechanisms
+  # - amdgpu.ppfeaturemask=0xffffffff: Enable all PowerPlay features
+  # - amdgpu.runpm=0: Disable runtime power management to prevent GPU hang on resume
+  boot.kernelParams = [
+    "amdgpu.gpu_recovery=1"
+    "amdgpu.ppfeaturemask=0xffffffff"
+    "amdgpu.runpm=0"
+  ];
+
   # Try amdvlk for Dragon Dogma 2
   # See: https://www.protondb.com/app/2054970
   #  hardware.amdgpu.amdvlk = {
@@ -99,6 +109,15 @@
   # So disable bluetooth before suspend to see if that helps
   powerManagement.powerDownCommands = ''
     rfkill block bluetooth
+  '';
+
+  # AMD GPU recovery after resume - restart display manager to recover from GL context loss
+  # The amdgpu driver fails to properly restore the GL context causing KWin to crash
+  powerManagement.resumeCommands = ''
+    # Wait a moment for the GPU to stabilize
+    sleep 2
+    # Restart the display manager to recover from GL context loss
+    systemctl restart display-manager
   '';
 
   #  # Enable suspend to RAM
