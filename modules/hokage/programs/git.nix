@@ -16,7 +16,7 @@ in
 {
   options.hokage.programs.git = {
     enable = mkEnableOption "Git integration" // {
-      default = hokage.role == "desktop" || hokage.role == "ally";
+      default = true;
     };
     enableUrlRewriting = mkEnableOption "URL rewriting from HTTPS to SSH" // {
       default = hokage.role == "desktop";

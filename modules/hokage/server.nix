@@ -6,8 +6,6 @@
 }:
 let
   inherit (config) hokage;
-  inherit (hokage) userNameLong;
-  inherit (hokage) userEmail;
 in
 {
   config = lib.mkIf (hokage.role == "server-home" || hokage.role == "server-remote") {
@@ -51,21 +49,6 @@ in
         ];
       };
     };
-
-    # https://rycee.gitlab.io/home-manager/options.html
-    home-manager.users = lib.genAttrs hokage.usersWithRoot (_userName: {
-      programs.git = {
-        enable = true;
-        # use "git diff --no-ext-diff" for creating patches!
-        difftastic.enable = true;
-        userName = lib.mkDefault userNameLong;
-        userEmail = lib.mkDefault userEmail;
-        ignores = [
-          ".idea"
-          ".direnv"
-        ];
-      };
-    });
 
     # List packages installed in system profile. To search, run:
     # $ nix search wget
