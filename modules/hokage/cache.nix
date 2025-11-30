@@ -29,6 +29,8 @@ in
         substituters = lib.mkBefore (
           lib.concatLists [
             (lib.optionals (builtins.elem "home" cfg.sources) [
+              # Local home01 ncps cache
+              "http://home01.lan:8501"
               # Local home01 nix binary cache
               "http://home01.lan:5000"
               # Local attic
@@ -49,6 +51,9 @@ in
         );
         trusted-public-keys = lib.concatLists [
           (lib.optionals (builtins.elem "home" cfg.sources) [
+            # Local home01 ncps cache
+            "home01:i1KZjxU7/OawuxnNzG3eFuQ5rPF7opURDq9BCCrYD6E="
+            # Local home01 nix binary cache
             "home01.lan:/9arPyImijmvlBXeb8vVyOe67KH8Q7AeihW6MKtLDLQ="
             "nix-store:p02fHdHXqUw9LSUgz8NiiTSnn+jbqBQ6XRypKz0axQw="
           ])
