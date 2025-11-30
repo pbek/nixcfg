@@ -49,6 +49,7 @@
         8200 # Photoprism
         8400 # Restic Rest Server
         8500 # Speedtest Tracker
+        8501 # ncps Nix Cache Proxy Server
         8050 # Attic
         8282 # Nix-Cache
         8383 # Zigbee2MQTT
@@ -94,6 +95,30 @@
     package = pkgs.nix-serve-ng;
     secretKeyFile = "/etc/cache-priv-key.pem";
     openFirewall = true;
+  };
+
+  # https://github.com/kalbasit/ncps?tab=readme-ov-file#-installation
+  services.ncps = {
+    enable = true;
+    cache = {
+      hostName = "home01.lan";
+      maxSize = "50G";
+      lru.schedule = "0 2 * * *"; # Clean up daily at 2 AM
+    };
+    upstream = {
+      caches = [
+        "https://cache.nixos.org"
+        "https://nix-community.cachix.org"
+        "https://nix-cache.qownnotes.org/main"
+        "https://nix-cache.qownnotes.org/qownnotes"
+      ];
+      publicKeys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "main:WYsIaF+ItMNE9Xt976bIGKSKp9jaaVeTzYlfqQqpP28="
+        "qownnotes:7hN006Z7xgK5v97WKFo9u3qcVbZIXHtFmPPM3NPERpM="
+      ];
+    };
   };
 
   systemd.services = {
