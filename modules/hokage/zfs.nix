@@ -59,8 +59,8 @@ in
     };
     useUnstable = mkOption {
       type = types.bool;
-      # Currently use unstable by default, because Kernel 6.16 got EOL and was removed from NixOS unstable
-      default = true;
+      # Currently use stable by default, because Kernel 6.17 is supported by ZFS stable
+      default = false;
       description = "Use pkgs.zfs_unstable for zfs.package when true (otherwise use pkgs.zfs).";
     };
   };
