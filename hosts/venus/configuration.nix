@@ -113,12 +113,12 @@
 
   # AMD GPU recovery after resume - restart display manager to recover from GL context loss
   # The amdgpu driver fails to properly restore the GL context causing KWin to crash
-  powerManagement.resumeCommands = ''
-    # Wait a moment for the GPU to stabilize
-    sleep 2
-    # Restart the display manager to recover from GL context loss
-    systemctl restart display-manager
-  '';
+  #  powerManagement.resumeCommands = ''
+  #    # Wait a moment for the GPU to stabilize
+  #    sleep 2
+  #    # Restart the display manager to recover from GL context loss
+  #    systemctl restart display-manager
+  #  '';
 
   #  # Enable suspend to RAM
   #  # Sleep is hindered by a component on the motherboard
