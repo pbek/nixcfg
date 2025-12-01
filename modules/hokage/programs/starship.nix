@@ -25,6 +25,7 @@ in
       programs.starship = {
         enable = true;
         enableFishIntegration = false; # We manually initialize it below for interactive shells only
+        enableBashIntegration = false;
 
         # https://starship.rs/config
         # Lookup icons: https://www.nerdfonts.com/cheat-sheet
