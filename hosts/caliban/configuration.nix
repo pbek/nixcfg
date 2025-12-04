@@ -55,9 +55,10 @@ in
   boot.initrd.kernelModules = [ "amdgpu" ];
 
   # For testing https://gitlab.tugraz.at/vpu-private/ansible/
-  virtualisation.multipass.enable = true;
+  # Multipass got removed, because it's unmaintained
+  # virtualisation.multipass.enable = true;
   # Use stable multipass until, because of build issues with the latest version
-  virtualisation.multipass.package = pkgs.stable.multipass;
+  # virtualisation.multipass.package = pkgs.stable.multipass;
   #  virtualisation.multipass.package = nixpkgs_multipass_pr.multipass;
 
   #  users.users.omegah = {
