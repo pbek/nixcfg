@@ -5,7 +5,7 @@
 }:
 
 let
-  unstablePkgs = nixpkgs-unstable.legacyPackages.${pkgs.system};
+  unstablePkgs = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
 {
   # https://devenv.sh/reference/options/#cachixpull
