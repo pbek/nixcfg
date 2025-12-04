@@ -303,8 +303,11 @@ in
               {
                 triggers = [
                   ":ghnixmerge"
+                  ":ghnmb"
+                  ":ghmerge"
                 ];
-                replace = "@NixOS/nixpkgs-merge-bot merge";
+                # If we make that "S" in "NixOS" uppercase, espanso breaks the replacement by switching to caps lock
+                replace = "@NixO$|$s/nixpkgs-merge-bot merge";
               }
             ];
           };
