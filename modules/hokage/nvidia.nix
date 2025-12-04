@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -41,9 +42,20 @@ in
       default = null;
       description = "Nvidia driver package to use (overrides packageType if set)";
     };
+    maxKernelVersion = lib.mkOption {
+      type = lib.types.package;
+      # Set the currently maximum allowed kernel package for NVIDIA here
+      # We had an issue with kernel 6.18 and the NVIDIA drivers, so we limit it to 6.17 for now
+      default = pkgs.linuxKernel.packages.linux_6_17.kernel;
+      description = "Maximum allowed kernel package vor NVIDIA";
+      readOnly = true;
+    };
   };
 
   config = mkIf cfg.enable {
+    # Use the latest kernel version possible for NVIDIA or the latest kernel
+    hokage.kernel.requirements = [ cfg.maxKernelVersion ];
+
     # https://wiki.nixos.org/wiki/nvidia
     services.xserver.videoDrivers = [ "nvidia" ];
     nixpkgs.config.nvidia.acceptLicense = true;
