@@ -97,8 +97,7 @@
   services.ollama = {
     # Turn off because hipblaslt build goes OOM
     enable = false;
-    acceleration = "rocm";
-    package = pkgs.ollama;
+    package = pkgs.ollama-rocm;
     #    environmentVariables = {
     #      HCC_AMDGPU_TARGET = "gfx1100"; # used to be necessary, but doesn't seem to anymore
     #    };
