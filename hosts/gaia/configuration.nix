@@ -51,6 +51,7 @@ in
     cura-appimage
     #    (pkgs.callPackage ../../pkgs/lact/package.nix { })
     lact
+    rustdesk-flutter
   ];
 
   # Handle keyboard leds

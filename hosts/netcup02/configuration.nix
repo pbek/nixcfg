@@ -23,6 +23,12 @@
   # Enable Netbird Wireguard VPN service
   services.netbird.enable = true;
 
+  services.rustdesk-server = {
+    enable = true;
+    openFirewall = true;
+    signal.relayHosts = [ "rustdesk.bekerle.com" ];
+  };
+
   hokage = {
     hostName = "netcup02";
     role = "server-remote";
