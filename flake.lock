@@ -150,11 +150,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1765573330,
-        "narHash": "sha256-qbGhWP8nvElvOZCtGjM6nB4FYs+JOJjd3yDle4OjIBo=",
+        "lastModified": 1766084633,
+        "narHash": "sha256-GXa9Y7E27X8UYpp/DTWkUSbqXahnrZd4HBrHkxVWW8c=",
         "owner": "pbek",
         "repo": "nixbit",
-        "rev": "bded8ca1d9fcf9453e9ac4a08fa5b2990b641f45",
+        "rev": "4b052bcf251b41952c526bd6d30e620264838183",
         "type": "github"
       },
       "original": {
