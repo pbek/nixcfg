@@ -73,9 +73,15 @@
   # - amdgpu.ppfeaturemask=0xffffffff: Enable all PowerPlay features
   # - amdgpu.runpm=0: Disable runtime power management to prevent GPU hang on resume
   boot.kernelParams = [
-    "amdgpu.gpu_recovery=1"
-    "amdgpu.ppfeaturemask=0xffffffff"
-    "amdgpu.runpm=0"
+    "amdgpu.gpu_recovery=1" # Enable GPU recovery mechanisms
+    # "amdgpu.ppfeaturemask=0xffffffff"  # Enable all PowerPlay features
+    # "amdgpu.runpm=0"                   # Disable runtime power management
+    "amdgpu.preserve_vram=1" # Preserve VRAM contents across suspend/resume
+
+    "mem_sleep_default=deep" # keep S3
+    "amdgpu.gpu_recovery=1" # reset GPU on hang
+    "amdgpu.dcdebugmask=0x10" # avoid DC deep power gating bugs
+    "amdgpu.reset_method=1" # optional, aggressive GPU reset
   ];
 
   # Try amdvlk for Dragon Dogma 2
