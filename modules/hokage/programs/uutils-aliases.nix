@@ -32,7 +32,8 @@ in
       factor = "uutils-factor";
       uptime = "uutils-uptime";
       rmdir = "uutils-rmdir";
-      printf = "uutils-printf";
+      # Ignore `printf` for now, because "utils-printf: warning: ignoring excess arguments, starting with 'trimmed_arg'"
+      # printf = "uutils-printf";
       od = "uutils-od";
       basename = "uutils-basename";
       cut = "uutils-cut";
