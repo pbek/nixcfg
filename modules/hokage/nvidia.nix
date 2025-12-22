@@ -46,7 +46,8 @@ in
       type = lib.types.package;
       # Set the currently maximum allowed kernel package for NVIDIA here
       # We had an issue with kernel 6.18 and the NVIDIA drivers, so we limit it to 6.17 for now
-      default = pkgs.linuxKernel.packages.linux_6_17.kernel;
+      # default = pkgs.linuxKernel.packages.linux_6_18.kernel;
+      default = pkgs.linuxPackages_latest.kernel;
       description = "Maximum allowed kernel package vor NVIDIA";
       readOnly = true;
     };
