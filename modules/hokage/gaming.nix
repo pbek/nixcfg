@@ -47,6 +47,11 @@ in
       };
     };
 
+    # home-manager.users = lib.genAttrs hokage.users (_userName: {
+    #   # Also overwrites settings file for ludusavi
+    #   services.ludusavi.enable = true; # Game save manager
+    # });
+
     environment.sessionVariables = mkIf cfg.ryubing.highDpi {
       # High DPI for ryubing
       AVALONIA_GLOBAL_SCALE_FACTOR = 2;
@@ -58,6 +63,7 @@ in
       heroic # Epic Games Store
       ryubing # Nintendo Switch emulator
       mangohud # Overlay for monitoring performance of games
+      ludusavi # Game save manager
     ];
   };
 }
