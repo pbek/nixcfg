@@ -6,3 +6,5 @@ default_shell "fish"
 
 // wayland
 //copy_command "wl-copy"
+
+show_startup_tips false
