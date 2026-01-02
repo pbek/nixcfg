@@ -54,6 +54,7 @@
         8282 # Nix-Cache
         8383 # Zigbee2MQTT
         8384 # Zigbee2MQTT2
+        20211 # NetAlertX
       ];
       allowedUDPPorts = [
         53 # DNS
