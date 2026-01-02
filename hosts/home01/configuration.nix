@@ -37,8 +37,8 @@
         1234 # Homepage
         1880 # Node-RED Web UI
         1883 # MQTT
-        2048 # Homeatic
-        2049 # Homeatic
+        2048 # Homematic
+        2049 # Homematic
         4533 # Navidrome
         8086 # InfluxDB
         8087 # Chronograf
@@ -59,8 +59,8 @@
         53 # DNS
         67 # DHCP
         443 # HTTPS
-        2048 # Homeatic
-        2049 # Homeatic
+        2048 # Homematic
+        2049 # Homematic
       ];
     };
   };
