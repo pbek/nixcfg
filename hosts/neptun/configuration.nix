@@ -28,7 +28,7 @@
 
   # Allow insecure Broadcom driver
   nixpkgs.config.permittedInsecurePackages = [
-    "broadcom-sta-6.30.223.271-57-6.17.1"
+    "broadcom-sta-6.30.223.271-59-6.18.2"
   ];
 
   environment.systemPackages = with pkgs; [
