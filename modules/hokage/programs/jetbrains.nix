@@ -2,6 +2,8 @@
   config,
   pkgs,
   lib,
+  nix-jetbrains-plugins,
+  system,
   ...
 }:
 let
@@ -10,7 +12,7 @@ let
 
   inherit (lib)
     mkEnableOption
-    mkPackageOption
+    #    mkPackageOption
     mkOption
     types
     mkIf
@@ -20,10 +22,10 @@ let
     if cfg.useStable then
       (import
         (fetchTarball {
-          # Date: 20251108
+          # Date: 20260103
           # https://github.com/NixOS/nixpkgs/commits/nixpkgs-unstable
-          url = "https://github.com/NixOS/nixpkgs/tarball/ae814fd3904b621d8ab97418f1d0f2eb0d3716f4";
-          sha256 = "sha256-YRqMDEtSMbitIMj+JLpheSz0pwEr0Rmy5mC7myl17xs=";
+          url = "https://github.com/NixOS/nixpkgs/tarball/cad22e7d996aea55ecab064e84834289143e44a0";
+          sha256 = "sha256-5vKw92l1GyTnjoLzEagJy5V5mDFck72LiQWZSOnSicw=";
         })
         {
           inherit (config.nixpkgs) config;
@@ -50,17 +52,17 @@ let
       pkgs.jetbrains;
 
   # Unfortunately, we can't have per-application plugin settings
-  mkJetbrainsPackage =
-    _name: cfgPackage:
-    let
-      inherit (cfg) plugins;
-      basePackage =
-        if builtins.isNull plugins || builtins.length plugins == 0 then
-          cfgPackage
-        else
-          jetbrainsPackages.plugins.addPlugins cfgPackage plugins;
-    in
-    basePackage.overrideAttrs { preferLocalBuild = true; };
+  #  mkJetbrainsPackage =
+  #    name: cfgPackage:
+  #    let
+  #      inherit (cfg) plugins;
+  #      basePackage =
+  #        if builtins.isNull plugins || builtins.length plugins == 0 then
+  #          cfgPackage
+  #        else
+  #          jetbrainsPackages.plugins.addPlugins cfgPackage plugins;
+  #    in
+  #    basePackage.overrideAttrs { preferLocalBuild = true; };
 
 in
 {
@@ -71,45 +73,47 @@ in
     };
     phpstorm = {
       enable = mkEnableOption "PhpStorm support";
-      package = mkPackageOption jetbrainsPackages "phpstorm" {
-        example = "phpstorm";
-      };
+      #      package = mkPackageOption jetbrainsPackages "phpstorm" {
+      #        example = "phpstorm";
+      #      };
     };
     clion = {
       enable = mkEnableOption "CLion support";
-      package = mkPackageOption jetbrainsPackages "clion" {
-        example = "clion";
-      };
+      #      package = mkPackageOption jetbrainsPackages "clion" {
+      #        example = "clion";
+      #      };
     };
     goland = {
       enable = mkEnableOption "Goland support";
-      package = mkPackageOption jetbrainsPackages "goland" {
-        example = "goland";
-      };
+      #      package = mkPackageOption jetbrainsPackages "goland" {
+      #        example = "goland";
+      #      };
     };
     # Documentation: https://github.com/NixOS/nixpkgs/tree/nixos-unstable/pkgs/applications/editors/jetbrains
-    # Plugin list: https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/applications/editors/jetbrains/plugins/plugins.json
     plugins = mkOption {
-      type = types.listOf (types.either types.str types.package);
-      # https://plugins.jetbrains.com/plugin/17718-github-copilot
+      type = types.listOf types.str;
       default = [
-        "17718" # Name changed to "github-copilot--your-ai-pair-programmer" on nixos-unstable, so we are using the ID for now
-        "nixidea"
+        # https://plugins.jetbrains.com/plugin/17718-github-copilot
+        "com.github.copilot"
+        # https://plugins.jetbrains.com/plugin/8607-nixidea
+        "nix-idea"
       ];
-      example = [ "github-copilot--your-ai-pair-programmer" ];
+      example = [ "nix-idea" ];
       description = ''
-        List of JetBrains plugin IDs or names to install. See
-        https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/applications/editors/jetbrains/plugins/plugins.json
-        for a list of plugins.
+        List of JetBrains plugin IDs to install.
       '';
     };
   };
 
   config = mkIf cfg.enable {
     environment.systemPackages =
-      lib.optionals cfg.phpstorm.enable [ (mkJetbrainsPackage "phpstorm" cfg.phpstorm.package) ]
-      ++ lib.optionals cfg.clion.enable [ (mkJetbrainsPackage "clion" cfg.clion.package) ]
-      ++ lib.optionals cfg.goland.enable [ (mkJetbrainsPackage "goland" cfg.goland.package) ];
+      with nix-jetbrains-plugins.lib."${system}";
+      #      lib.optionals cfg.phpstorm.enable [ (mkJetbrainsPackage "phpstorm" cfg.phpstorm.package) ]
+      #      ++ lib.optionals cfg.clion.enable [ (mkJetbrainsPackage "clion" cfg.clion.package) ]
+      #      ++ lib.optionals cfg.goland.enable [ (mkJetbrainsPackage "goland" cfg.goland.package) ];
+      lib.optionals cfg.phpstorm.enable [ (buildIdeWithPlugins jetbrainsPackages "phpstorm" cfg.plugins) ]
+      ++ lib.optionals cfg.clion.enable [ (buildIdeWithPlugins jetbrainsPackages "clion" cfg.plugins) ]
+      ++ lib.optionals cfg.goland.enable [ (buildIdeWithPlugins jetbrainsPackages "goland" cfg.plugins) ];
 
     home-manager.users = lib.genAttrs hokage.users (_userName: {
       programs.fish.shellAliases = mkIf cfg.clion.enable {
@@ -132,7 +136,10 @@ in
                   "/home/${_userName}/.shells/qt6.nix"
                 else
                   "/home/${_userName}/.shells/qt5.nix";
-              clionPkg = mkJetbrainsPackage "clion" cfg.clion.package;
+              #              clionPkg = mkJetbrainsPackage "clion" cfg.clion.package;
+              clionPkg = (
+                nix-jetbrains-plugins.lib."${system}".buildIdeWithPlugins jetbrainsPackages "clion" cfg.plugins
+              );
             in
             {
               name = "CLion with dev packages";

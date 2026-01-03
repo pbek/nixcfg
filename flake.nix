@@ -21,6 +21,7 @@
     };
     nixbit.url = "github:pbek/nixbit/release";
     nixbit.inputs.nixpkgs.follows = "nixpkgs";
+    nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
   };
 
   outputs =
@@ -35,6 +36,7 @@
       plasma-manager,
       nixbit,
       catppuccin,
+      nix-jetbrains-plugins,
       ...
     }@inputs:
 
@@ -84,6 +86,7 @@
       commonDesktopModules = commonModules ++ [
         { home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ]; }
         nixbit.nixosModules.nixbit
+        # nix-jetbrains-plugins.nixosModules.default
       ];
       mkDesktopHost =
         hostName: extraModules:
@@ -96,7 +99,9 @@
               ./hosts/${hostName}/configuration.nix
             ]
             ++ extraModules;
-          specialArgs = self.commonArgs;
+          specialArgs = self.commonArgs // {
+            inherit system nix-jetbrains-plugins;
+          };
         };
       mkServerHost =
         hostName: extraModules:
