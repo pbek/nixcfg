@@ -19,7 +19,7 @@ in
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       uutils-coreutils # GNU coreutils replacement
-      uutils-findutils # GNU findutils replacement
+      stable.uutils-findutils # GNU findutils replacement
       # uutils-diffutils # GNU diffutils replacement, doesn't seem to be a drop in replacement
     ];
 
@@ -125,8 +125,8 @@ in
       more = "uutils-more";
       hashsum = "uutils-hashsum";
       nohup = "uutils-nohup";
-      find = "${pkgs.uutils-findutils}/bin/find";
-      xargs = "${pkgs.uutils-findutils}/bin/xargs";
+      find = "${pkgs.stable.uutils-findutils}/bin/find";
+      xargs = "${pkgs.stable.uutils-findutils}/bin/xargs";
       # diff = "${pkgs.uutils-diffutils}/bin/diffutils";
     };
   };

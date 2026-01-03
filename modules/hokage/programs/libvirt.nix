@@ -58,7 +58,7 @@ in
     );
 
     # Netcat with -U parameter for libvirt remote access
-    environment.systemPackages = mkIf (cfg.role == "host") (with pkgs; [ netcat-openbsd ]);
+    environment.systemPackages = mkIf (cfg.role == "host") (with pkgs; [ stable.netcat-openbsd ]);
 
     #
     # Guest configuration

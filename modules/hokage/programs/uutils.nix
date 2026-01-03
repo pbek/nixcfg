@@ -52,7 +52,7 @@ in
       cpio
       curl
       uutils-diffutils
-      uutils-findutils
+      stable.uutils-findutils
       gawk
       getent
       getconf
