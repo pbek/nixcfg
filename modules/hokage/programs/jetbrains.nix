@@ -90,6 +90,7 @@ in
       #      };
     };
     # Documentation: https://github.com/NixOS/nixpkgs/tree/nixos-unstable/pkgs/applications/editors/jetbrains
+    # Bundled plugins where droped in https://github.com/NixOS/nixpkgs/pull/470147
     plugins = mkOption {
       type = types.listOf types.str;
       default = [
