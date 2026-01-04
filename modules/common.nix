@@ -55,7 +55,7 @@ in
         df = "duf";
         tree = "erd";
         tmux = "zellij";
-        dig = "dog";
+        dig = "doggo";
         diff = "difft";
         # ping = "pingu";
         ping = "gping";
@@ -217,7 +217,7 @@ in
         stable.netcat-openbsd # Netcat with -U parameter for libvirt
         nmap
         lazygit
-        dogdns # dig replacement
+        doggo # dig replacement
         broot # fast directory switcher (has "br" alias for changing into directories)
         difftastic # Structural diff tool that compares files based on their syntax
         # pingu # ping, but more colorful
