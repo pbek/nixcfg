@@ -31,7 +31,7 @@ in
         inputs.catppuccin.homeModules.catppuccin
       ];
 
-      # https://nix.catppuccin.com/options/main/nixos
+      # https://nix.catppuccin.com/options/main/home/catppuccin/
       catppuccin = {
         enable = true;
         flavor = cfg.flavor;
