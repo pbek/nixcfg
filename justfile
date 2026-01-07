@@ -103,9 +103,20 @@ check-host hostname:
 check:
     just check-host {{ hostname }}
 
+# Build and switch to the new configuration for the current host (native nixos-rebuild)
 [group('build')]
 nix-switch:
     sudo nixos-rebuild switch --flake .#{{ hostname }} -L
+
+# Build and boot to the new configuration for the current host (activate after reboot)
+[group('build')]
+nix-boot:
+    sudo nixos-rebuild boot --flake .#{{ hostname }} -L
+
+# Build and switch to the new configuration ignoring inhibitors (use with caution!)
+[group('build')]
+nix-switch-force:
+    sudo NIXOS_NO_CHECK=1 nixos-rebuild switch --flake .#{{ hostname }} -L
 
 # Build and switch to the new configuration for the current host (no notification)
 [group('build')]
