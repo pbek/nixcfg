@@ -13,7 +13,7 @@
     thunderbird
     spotify
     inkscape
-    stable.rustdesk-flutter
+    rustdesk-flutter
   ];
 
   hokage = {
