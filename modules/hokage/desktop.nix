@@ -76,6 +76,7 @@ in
           cryfs
           onlyoffice-desktopeditors
           gh
+          github-copilot-cli
           git-town # Git extension
           smartmontools
           lazydocker
