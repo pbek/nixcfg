@@ -138,6 +138,21 @@ switch args='':
       just _notify "switch finished on {{ hostname }}, exit code: $exit_code (runtime: ${runtime}s)"
     fi
 
+# Build and activate the new configuration at next boot, you need to do this if "switch inhibitors" are present
+[group('build')]
+boot args='':
+    #!/usr/bin/env bash
+    echo "❄️ Running boot for {{ hostname }}..."
+    sudo true
+    start_time=$(date +%s)
+    nh os boot -H {{ hostname }} . -- {{ args }}
+    end_time=$(date +%s)
+    exit_code=$?
+    runtime=$((end_time - start_time))
+    if [ $runtime -gt 10 ]; then
+      just _notify "boot finished on {{ hostname }}, exit code: $exit_code (runtime: ${runtime}s)"
+    fi
+
 # Build the current host with nix-rebuild
 [group('build')]
 nix-build:
