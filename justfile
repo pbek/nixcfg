@@ -423,7 +423,7 @@ build-venus: (build-host "venus")
 # Show home-manager logs
 [group('maintenance')]
 home-manager-logs:
-    sudo journalctl --since today | grep "hm-activate-" | bat
+    sudo journalctl --since "1 hour ago" | grep "hm-activate-" | bat
 
 # Show home-manager service status
 [group('maintenance')]
