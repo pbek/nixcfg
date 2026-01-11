@@ -64,6 +64,10 @@ let
   #    in
   #    basePackage.overrideAttrs { preferLocalBuild = true; };
 
+  mkJetbrainsIde =
+    ideName:
+    nix-jetbrains-plugins.lib."${system}".buildIdeWithPlugins jetbrainsPackages ideName cfg.plugins;
+
 in
 {
   options.hokage.programs.jetbrains = {
@@ -108,13 +112,12 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages =
-      with nix-jetbrains-plugins.lib."${system}";
       #      lib.optionals cfg.phpstorm.enable [ (mkJetbrainsPackage "phpstorm" cfg.phpstorm.package) ]
       #      ++ lib.optionals cfg.clion.enable [ (mkJetbrainsPackage "clion" cfg.clion.package) ]
       #      ++ lib.optionals cfg.goland.enable [ (mkJetbrainsPackage "goland" cfg.goland.package) ];
-      lib.optionals cfg.phpstorm.enable [ (buildIdeWithPlugins jetbrainsPackages "phpstorm" cfg.plugins) ]
-      ++ lib.optionals cfg.clion.enable [ (buildIdeWithPlugins jetbrainsPackages "clion" cfg.plugins) ]
-      ++ lib.optionals cfg.goland.enable [ (buildIdeWithPlugins jetbrainsPackages "goland" cfg.plugins) ];
+      lib.optionals cfg.phpstorm.enable [ (mkJetbrainsIde "phpstorm") ]
+      ++ lib.optionals cfg.clion.enable [ (mkJetbrainsIde "clion") ]
+      ++ lib.optionals cfg.goland.enable [ (mkJetbrainsIde "goland") ];
 
     home-manager.users = lib.genAttrs hokage.users (_userName: {
       programs.fish.shellAliases = mkIf cfg.clion.enable {
@@ -138,9 +141,7 @@ in
                 else
                   "/home/${_userName}/.shells/qt5.nix";
               #              clionPkg = mkJetbrainsPackage "clion" cfg.clion.package;
-              clionPkg = (
-                nix-jetbrains-plugins.lib."${system}".buildIdeWithPlugins jetbrainsPackages "clion" cfg.plugins
-              );
+              clionPkg = mkJetbrainsIde "clion";
             in
             {
               name = "CLion with dev packages";
