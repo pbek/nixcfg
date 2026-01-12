@@ -92,6 +92,10 @@ in
           aspellDicts.de
 
           lurk # strace "replacement"
+
+          signal-desktop
+          # telegram-desktop
+          # whatsapp-electron
         ];
       in
       requiredPackages ++ utils.removePackagesByName optionalPackages hokage.excludePackages;
