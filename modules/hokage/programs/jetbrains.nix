@@ -3,7 +3,6 @@
   pkgs,
   lib,
   nix-jetbrains-plugins,
-  system,
   ...
 }:
 let
@@ -33,7 +32,7 @@ let
             system = "x86_64-linux";
           };
         }
-      ).jetbrains
+      )
     else
       #      (import
       #        (fetchTarball {
@@ -48,8 +47,8 @@ let
       #            system = "x86_64-linux";
       #          };
       #        }
-      #      ).jetbrains;
-      pkgs.jetbrains;
+      #      );
+      pkgs;
 
   # Unfortunately, we can't have per-application plugin settings
   #  mkJetbrainsPackage =
@@ -66,7 +65,8 @@ let
 
   mkJetbrainsIde =
     ideName:
-    nix-jetbrains-plugins.lib."${system}".buildIdeWithPlugins jetbrainsPackages ideName cfg.plugins;
+    # https://github.com/nix-community/nix-jetbrains-plugins?tab=readme-ov-file#example
+    nix-jetbrains-plugins.lib.buildIdeWithPlugins jetbrainsPackages ideName cfg.plugins;
 
 in
 {
