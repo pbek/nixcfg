@@ -27,7 +27,13 @@ in
     port = mkOption {
       type = types.port;
       default = 4096;
-      description = "Port to bind zerobyte service (localhost only)";
+      description = "Port to bind zerobyte service";
+    };
+
+    localhostOnly = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Whether to bind zerobyte service only to localhost (127.0.0.1). When false, binds to all interfaces.";
     };
 
     timezone = mkOption {
@@ -45,12 +51,12 @@ in
     backupPaths = mkOption {
       type = types.listOf types.str;
       default = [
-        "/var/lib/docker/volumes:/backup/var/lib/docker/volumes:ro"
-        "/home:/backup/home:ro"
-        "/etc:/backup/etc:ro"
-        "/root:/backup/root:ro"
+        "/var/lib/docker/volumes"
+        "/home"
+        "/etc"
+        "/root"
       ];
-      description = "List of paths to backup in container format (host:container:options)";
+      description = "List of paths to backup from the host system";
     };
   };
 
@@ -71,9 +77,9 @@ in
           "--device=/dev/fuse:/dev/fuse"
         ];
 
-        # Port binding - only bind to localhost for security
+        # Port binding - bind to localhost or all interfaces based on localhostOnly setting
         ports = [
-          "127.0.0.1:${toString cfg.port}:4096"
+          "${if cfg.localhostOnly then "127.0.0.1:" else ""}${toString cfg.port}:4096"
         ];
 
         # Environment variables
@@ -87,7 +93,7 @@ in
           "/etc/localtime:/etc/localtime:ro"
           "zerobyte-data:/var/lib/zerobyte"
         ]
-        ++ cfg.backupPaths;
+        ++ (map (path: "${path}:/backup${path}:ro") cfg.backupPaths);
       };
     };
 

@@ -18,13 +18,14 @@ Add to your NixOS configuration:
 hokage.programs.zerobyte = {
   enable = true;
   port = 4096;                    # Default port
+  localhostOnly = true;           # Default: true - bind to localhost only
   timezone = "Europe/Vienna";     # Your timezone
   resticHostname = "myserver";    # Hostname for restic backups
   backupPaths = [
-    "/var/lib/docker/volumes:/backup/var/lib/docker/volumes:ro"
-    "/home/omega:/backup/home/omega:ro"
-    "/etc:/backup/etc:ro"
-    "/var/lib/libvirt:/backup/var/lib/libvirt:ro"
+    "/var/lib/docker/volumes"
+    "/home/omega"
+    "/etc"
+    "/var/lib/libvirt"
   ];
 };
 ```
@@ -47,7 +48,13 @@ hokage.programs.zerobyte = {
 
 - **Type:** port (1-65535)
 - **Default:** 4096
-- **Description:** Port to bind zerobyte service (localhost only)
+- **Description:** Port to bind zerobyte service
+
+### `localhostOnly`
+
+- **Type:** boolean
+- **Default:** true
+- **Description:** Whether to bind zerobyte service only to localhost (127.0.0.1). When false, binds to all interfaces.
 
 ### `timezone`
 
@@ -65,11 +72,11 @@ hokage.programs.zerobyte = {
 
 - **Type:** list of strings
 - **Default:** See example above
-- **Description:** List of paths to backup in Docker volume format (host:container:options)
+- **Description:** List of host paths to backup. Each path will be automatically mounted as `/backup<path>:ro` in the container.
 
 ## Security
 
-The service is configured to only listen on localhost (127.0.0.1) to prevent external access. The container runs with minimal required capabilities (SYS_ADMIN for FUSE support).
+By default, the service is configured to only listen on localhost (127.0.0.1) via the `localhostOnly = true` setting to prevent external access. Set `localhostOnly = false` if you need to access the service from other machines. The container runs with minimal required capabilities (SYS_ADMIN for FUSE support).
 
 ## Dependencies
 
