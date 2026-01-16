@@ -173,7 +173,19 @@
   hokage = {
     hostName = "venus";
     role = "desktop";
-    programs.aider.enable = true;
+    programs = {
+      aider.enable = true;
+      zerobyte = {
+        enable = true;
+        backupPaths = [
+          "/var/lib/docker/volumes:/backup/var/lib/docker/volumes:ro"
+          "/home:/backup/home:ro"
+          "/etc:/backup/etc:ro"
+          "/root:/backup/root:ro"
+          "/mnt/data02/Linux:/backup/mnt/data02/Linux:ro"
+        ];
+      };
+    };
     gaming = {
       enable = true;
       ryubing.highDpi = true;
