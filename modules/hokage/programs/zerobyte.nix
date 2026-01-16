@@ -44,8 +44,8 @@ in
 
     resticHostname = mkOption {
       type = types.str;
-      default = config.networking.hostName;
-      description = "Restic hostname to use for backups";
+      default = "";
+      description = "Restic hostname to use for backups. Defaults to the system hostname if not set.";
     };
 
     backupPaths = mkOption {
@@ -85,7 +85,8 @@ in
         # Environment variables
         environment = {
           TZ = cfg.timezone;
-          RESTIC_HOSTNAME = cfg.resticHostname;
+          RESTIC_HOSTNAME =
+            if cfg.resticHostname != "" then cfg.resticHostname else config.networking.hostName;
         };
 
         # Volumes
