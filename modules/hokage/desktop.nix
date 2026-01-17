@@ -145,6 +145,10 @@ in
     # https://nix-community.github.io/home-manager/options.html#opt-home.file
     home-manager.users = lib.genAttrs hokage.users (_userName: {
       programs = {
+        # https://github.com/anomalyco/opencode
+        # Use "/connect" to connect to GitHub copilot
+        opencode.enable = true;
+
         # Terminal with OSC 52 support
         kitty = {
           enable = true;
