@@ -41,6 +41,7 @@ in
       [
         cmakeWithGui
         aspell
+        ninja
       ]
       ++ (
         if cfg.qt6.enable then
@@ -65,7 +66,6 @@ in
           ]
         else
           [
-            cmakeWithGui
             qmake
             qttools
             qtbase
