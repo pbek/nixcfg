@@ -106,6 +106,7 @@ in
         gits = "git town sync";
         gith = "git town hack";
         gitdel = "git town delete";
+        oc = "opencode";
       };
 
       shellAbbrs = {
