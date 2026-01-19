@@ -24,5 +24,6 @@ pkgs.mkShell {
     pkg-config
     libgit2
     aspell
+    ninja
   ];
 }

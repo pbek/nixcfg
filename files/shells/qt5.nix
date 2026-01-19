@@ -20,5 +20,6 @@ pkgs.mkShell {
       wrapQtAppsHook
       gdb
       aspell
+      ninja
     ];
 }
