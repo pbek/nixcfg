@@ -141,6 +141,9 @@ in
       extraOptions = "--xkb-layout de";
     };
 
+    # Set Azure resource name for applications that need it, e.g., opencode
+    environment.variables.AZURE_RESOURCE_NAME = "zid-digitalisation-coding";
+
     # https://rycee.gitlab.io/home-manager/options.html
     # https://nix-community.github.io/home-manager/options.html#opt-home.file
     home-manager.users = lib.genAttrs hokage.users (_userName: {
