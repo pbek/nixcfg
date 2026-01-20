@@ -106,7 +106,7 @@ in
         gits = "git town sync";
         gith = "git town hack";
         gitdel = "git town delete";
-        oc = "opencode";
+        oc = "AZURE_RESOURCE_NAME=zid-digitalisation-coding opencode";
       };
 
       shellAbbrs = {
@@ -142,17 +142,10 @@ in
       extraOptions = "--xkb-layout de";
     };
 
-    # Set Azure resource name for applications that need it, e.g., opencode
-    environment.variables.AZURE_RESOURCE_NAME = "zid-digitalisation-coding";
-
     # https://rycee.gitlab.io/home-manager/options.html
     # https://nix-community.github.io/home-manager/options.html#opt-home.file
     home-manager.users = lib.genAttrs hokage.users (_userName: {
       programs = {
-        # https://github.com/anomalyco/opencode
-        # Use "/connect" to connect to GitHub copilot
-        opencode.enable = true;
-
         # Terminal with OSC 52 support
         kitty = {
           enable = true;
