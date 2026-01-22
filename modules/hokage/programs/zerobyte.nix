@@ -72,6 +72,12 @@ in
       default = true;
       description = "Whether to automatically start the zerobyte container on boot. Set to false to allow manual container control.";
     };
+
+    readWriteBackupPaths = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Whether to mount backup paths as read-write (rw) instead of read-only (ro). Set to false for read-only mounts. Note: You cannot restore files if this option is false.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -108,7 +114,9 @@ in
           "/etc/localtime:/etc/localtime:ro"
           "${if cfg.useLocalPath then "/var/lib/zerobyte" else "zerobyte-data"}:/var/lib/zerobyte"
         ]
-        ++ (map (path: "${path}:/backup${path}:ro") cfg.backupPaths);
+        ++ (map (
+          path: "${path}:/backup${path}:${if cfg.readWriteBackupPaths then "rw" else "ro"}"
+        ) cfg.backupPaths);
       };
     };
 
