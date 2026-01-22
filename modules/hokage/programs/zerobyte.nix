@@ -66,6 +66,12 @@ in
       default = true;
       description = "Whether to use /var/lib/zerobyte as local path (true) or docker volume zerobyte-data (false) for data storage.";
     };
+
+    autoStart = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Whether to automatically start the zerobyte container on boot. Set to false to allow manual container control.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -77,7 +83,7 @@ in
       backend = "docker";
       containers.zerobyte = {
         image = cfg.image;
-        autoStart = true;
+        autoStart = cfg.autoStart;
 
         # Capabilities
         extraOptions = [
