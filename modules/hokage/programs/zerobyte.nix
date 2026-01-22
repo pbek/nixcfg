@@ -16,7 +16,9 @@ let
 in
 {
   options.hokage.programs.zerobyte = {
-    enable = mkEnableOption "Zerobyte backup service";
+    enable = mkEnableOption "Zerobyte backup service" // {
+      default = hokage.role == "desktop";
+    };
 
     image = mkOption {
       type = types.str;
@@ -51,12 +53,18 @@ in
     backupPaths = mkOption {
       type = types.listOf types.str;
       default = [
-        "/var/lib/docker/volumes"
+        "/var/lib"
         "/home"
         "/etc"
         "/root"
       ];
       description = "List of paths to backup from the host system";
+    };
+
+    useLocalPath = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Whether to use /var/lib/zerobyte as local path (true) or docker volume zerobyte-data (false) for data storage.";
     };
   };
 
@@ -92,7 +100,7 @@ in
         # Volumes
         volumes = [
           "/etc/localtime:/etc/localtime:ro"
-          "zerobyte-data:/var/lib/zerobyte"
+          "${if cfg.useLocalPath then "/var/lib/zerobyte" else "zerobyte-data"}:/var/lib/zerobyte"
         ]
         ++ (map (path: "${path}:/backup${path}:ro") cfg.backupPaths);
       };

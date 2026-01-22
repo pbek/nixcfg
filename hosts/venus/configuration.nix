@@ -177,6 +177,7 @@
       aider.enable = true;
       zerobyte = {
         enable = true;
+        useLocalPath = false;
         backupPaths = [
           "/var/lib/docker/volumes"
           "/home"
