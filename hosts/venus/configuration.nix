@@ -148,8 +148,10 @@
   # Problem with "00:01.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge"
   # Disabling wake-up triggers for all PCIe devices
   # https://wiki.nixos.org/wiki/Power_Management#Solution_1:_Disabling_wakeup_triggers_for_all_PCIe_devices
+  # 2nd line: https://github.com/NixOS/nixos-hardware/blob/master/gigabyte/b550/b550-fix-suspend.nix
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="pci", DRIVER=="pcieport", ATTR{power/wakeup}="disabled"
+    ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x1022", ATTR{device}=="0x1483", ATTR{power/wakeup}="disabled"
   '';
 
   # Make the console font bigger
