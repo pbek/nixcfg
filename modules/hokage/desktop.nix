@@ -162,6 +162,28 @@ in
             enableBashIntegration = true;
           };
         };
+        mcp = {
+          enable = true;
+          servers = {
+            # https://github.com/utensils/mcp-nixos
+            nixos = {
+              command = "nix";
+              args = [
+                "run"
+                "github:utensils/mcp-nixos"
+                "--"
+              ];
+            };
+            # https://github.com/akirak/nix-playwright-mcp/
+            nix-playwright = {
+              command = "nix";
+              args = [
+                "run"
+                "github:akirak/nix-playwright-mcp"
+              ];
+            };
+          };
+        };
 
         # Enable https://wezfurlong.org/wezterm/ for terminal with OSC 52 support for zellij clipboard via SSH
         #      wezterm = {

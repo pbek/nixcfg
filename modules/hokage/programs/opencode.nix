@@ -31,7 +31,10 @@ in
       programs = {
         # https://github.com/anomalyco/opencode
         # Use "/connect" to connect to GitHub Copilot or Azure OpenAI
-        opencode.enable = true;
+        opencode = {
+          enable = true;
+          enableMcpIntegration = true;
+        };
       };
     });
   };
