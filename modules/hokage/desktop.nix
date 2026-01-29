@@ -11,6 +11,10 @@ let
 in
 {
   config = lib.mkIf (hokage.role == "desktop") {
+    # Enable memtest86 based on bootloader
+    boot.loader.systemd-boot.memtest86.enable = lib.mkIf config.boot.loader.systemd-boot.enable true;
+    boot.loader.grub.memtest86.enable = lib.mkIf config.boot.loader.grub.enable true;
+
     # Enable CUPS to print documents.
     services.printing.enable = true;
     # Disable avahi to avoid security issues
