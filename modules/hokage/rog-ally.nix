@@ -58,7 +58,6 @@ in
       nextcloud-client
       qjoypad # Joystick mapper
       maliit-keyboard # Virtual keyboard
-      ludusavi # Game save manager
     ];
 
     # Touch screen gestures
@@ -92,6 +91,7 @@ in
     services.handheld-daemon = {
       enable = true;
       user = userLogin;
+      ui.enable = true;
       # package = (pkgs.callPackage ../../pkgs/handheld-daemon/package.nix { }).override {
       # };
     };
@@ -99,11 +99,6 @@ in
     # Enable Tailscale VPN
     # Use `sudo tailscale up --accept-routes` to connect to the VPN
     services.tailscale.enable = true;
-
-    environment.sessionVariables = {
-      # High DPI for ryubing
-      AVALONIA_GLOBAL_SCALE_FACTOR = 2;
-    };
 
     hokage = {
       # Turn off default graphical system, we want to use our own configuration
