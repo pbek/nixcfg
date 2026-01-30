@@ -58,6 +58,7 @@ in
       nextcloud-client
       qjoypad # Joystick mapper
       maliit-keyboard # Virtual keyboard
+      ludusavi # Game save manager
     ];
 
     # Touch screen gestures
