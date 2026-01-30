@@ -52,10 +52,10 @@
     #    (pkgs.callPackage ../../pkgs/cura5/package.nix { })
     cura-appimage
     amdgpu_top # AMD GPU monitoring
-    lact # AMD GPU monitoring
     vlc
     discord
     mycrypto # Cryptocurrency wallet manager
+    lm_sensors
 
     # qtwebengine-5.15.19 is marked insecure
     # jellyfin-media-player
@@ -159,6 +159,9 @@
 
   # Increase the console font size for kmscon
   services.kmscon.extraConfig = "font-size = 26";
+
+  # AMD GPU monitoring tools
+  services.lact.enable = true;
 
   #  programs.alvr.enable = true;
   #  programs.alvr.openFirewall = true;
