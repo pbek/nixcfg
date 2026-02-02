@@ -29,6 +29,9 @@ in
     # https://wiki.nixos.org/wiki/KDE#GTK_themes_are_not_applied_in_Wayland_applications_.2F_Window_Decorations_missing_.2F_Cursor_looks_different
     programs.dconf.enable = true;
 
+    # Don't do a nix gc when we want to play games
+    programs.nh.clean.enable = false;
+
     #  environment.systemPackages = with pkgs.kdePackages; [
     environment.systemPackages = with pkgs; [
       kdePackages.kwalletmanager

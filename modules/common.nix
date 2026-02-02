@@ -73,7 +73,7 @@ in
     # https://github.com/viperML/nh
     nh = {
       enable = true;
-      clean.enable = true;
+      clean.enable = mkDefault true;
       clean.extraArgs = "--keep-since 14d --keep 4";
     };
 
