@@ -247,6 +247,7 @@ push:
     -attic push qownnotes `which qownnotes` --no-closure
     -attic push qownnotes `which qc` --no-closure
     -attic push qownnotes `which nixbit` --no-closure
+    -attic push qownnotes `which uncrash` --no-closure
 
 [group('cache')]
 push-all:
@@ -492,6 +493,11 @@ nixbit-update-release:
 [group('nixbit')]
 nixbit-update-flake:
     nix flake update nixbit
+
+# Update the Uncrash flake
+[group('uncrash')]
+uncrash-update-flake:
+    nix flake update uncrash
 
 # Evaluate a config for a hostname (default current host)
 eval-config configPath host=hostname *args:

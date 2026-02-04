@@ -163,6 +163,10 @@
   # AMD GPU monitoring tools
   services.lact.enable = true;
 
+  services.uncrash = {
+    enable = true;
+  };
+
   #  programs.alvr.enable = true;
   #  programs.alvr.openFirewall = true;
 

@@ -21,6 +21,8 @@
     };
     nixbit.url = "github:pbek/nixbit/release";
     nixbit.inputs.nixpkgs.follows = "nixpkgs";
+    uncrash.url = "github:pbek/uncrash/release";
+    uncrash.inputs.nixpkgs.follows = "nixpkgs";
     nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
   };
 
@@ -35,6 +37,7 @@
       nixos-hardware,
       plasma-manager,
       nixbit,
+      uncrash,
       catppuccin,
       nix-jetbrains-plugins,
       ...
@@ -86,6 +89,7 @@
       commonDesktopModules = commonModules ++ [
         { home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ]; }
         nixbit.nixosModules.nixbit
+        uncrash.nixosModules.uncrash
         # nix-jetbrains-plugins.nixosModules.default
       ];
       mkDesktopHost =
@@ -216,6 +220,7 @@
         inherit (pkgs) qownnotes;
         qownnotes-stable = pkgs.stable.qownnotes;
         nixbit = inputs.nixbit.packages.${system}.default;
+        uncrash = inputs.uncrash.packages.${system}.default;
       }
       // {
         # Generate Markdown docs for hokage module options
