@@ -64,6 +64,7 @@ in
         whois = "rdap";
         vim = "hx";
         nano = "micro";
+        nr = "nix run nixpkgs#";
       };
     };
 
