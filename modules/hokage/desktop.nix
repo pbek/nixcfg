@@ -38,7 +38,6 @@ in
           #    (pkgs.libsForQt5.callPackage ../../pkgs/gittyup/default.nix { })
           kdiff3
           chromium
-          hub
 
           loganalyzer
           #    (pkgs.libsForQt5.callPackage ../../pkgs/loganalyzer/default.nix { })
@@ -81,10 +80,8 @@ in
           onlyoffice-desktopeditors
           gh
           github-copilot-cli
-          git-town # Git extension
           smartmontools
           lazydocker
-          inkscape
           nil # Nix language server for kate
           # marksman # Markdown language server for kate
           act # Run GitHub Actions locally

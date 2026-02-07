@@ -184,8 +184,6 @@ in
       optionalPackages = [
         # neovim # replaced by helix
         wget
-        fish
-        tmux
         gitFull # git and gitk
         gitflow
         jq
@@ -195,7 +193,6 @@ in
         atop
         btop
         inetutils
-        dig
         gnumake
         restic
         nix-tree # look into the nix store
