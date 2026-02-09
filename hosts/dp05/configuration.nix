@@ -23,7 +23,41 @@
     php
     zoom-us
     wineWowPackages.waylandFull
+    usb-modeswitch
+    usbutils
+    superTuxKart
   ];
+
+  # Steam
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+  };
+
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "steam"
+      "steam-original"
+      "steam-unwrapped"
+      "steam-run"
+    ];
+  # End Steam
+
+  # Logitech G923
+  # boot.kernelModules = [ "hid-logitech-hidpp" ];
+
+  # services.udev.extraRules = ''
+  # ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="c26d", RUN+="/bin/sh -c 'echo 046d # # c26d > /sys/bus/hid/drivers/logitech-hidpp-device/new_id || true'"
+  # '';
+
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="usb", \
+    ATTR{idVendor}=="046d", ATTR{idProduct}=="c26d", \
+    RUN+="${pkgs.usb-modeswitch}/bin/usb_modeswitch -v 046d -p c26d -m 01 -r 01 -C 0x03 -M 0f00010142"
+  '';
 
   hardware.nvidia.prime = {
     sync.enable = true;
@@ -52,7 +86,9 @@
 
     nvidia = {
       enable = true;
-      packageType = "beta";
+      # "production" currently is at 580, that's the last release that supports the Quadro P2000
+      # If that ever changes, we might need to switch to "legacy_535"
+      packageType = "production";
       # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
       open = false;
       modesetting.enable = true;
