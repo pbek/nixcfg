@@ -26,6 +26,7 @@ in
       default = true;
     };
     modesetting.enable = mkEnableOption "NVIDIA DRM modesetting (required for some Wayland compositors, e.g. Sway)";
+    # See https://github.com/NixOS/nixpkgs/blob/master/pkgs/os-specific/linux/nvidia-x11/default.nix for available package types
     packageType = mkOption {
       type = types.enum [
         "stable"
@@ -33,6 +34,7 @@ in
         "beta"
         "production"
         "legacy_535"
+        "legacy_470"
       ];
       default = "latest";
       description = "Type of NVIDIA driver package to use";
