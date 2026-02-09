@@ -131,8 +131,8 @@ switch args='':
     sudo true
     start_time=$(date +%s)
     nh os switch -H {{ hostname }} . -- {{ args }}
-    end_time=$(date +%s)
     exit_code=$?
+    end_time=$(date +%s)
     runtime=$((end_time - start_time))
     if [ $runtime -gt 10 ]; then
       just _notify "switch finished on {{ hostname }}, exit code: $exit_code (runtime: ${runtime}s)"
@@ -146,8 +146,8 @@ boot args='':
     sudo true
     start_time=$(date +%s)
     nh os boot -H {{ hostname }} . -- {{ args }}
-    end_time=$(date +%s)
     exit_code=$?
+    end_time=$(date +%s)
     runtime=$((end_time - start_time))
     if [ $runtime -gt 10 ]; then
       just _notify "boot finished on {{ hostname }}, exit code: $exit_code (runtime: ${runtime}s)"
