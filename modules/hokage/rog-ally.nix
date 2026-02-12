@@ -32,6 +32,19 @@ in
     # Don't do a nix gc when we want to play games
     programs.nh.clean.enable = false;
 
+    #    environment.sessionVariables = {
+    #      # Try to fix ryubing freezing issues by disabling the open-source AMD graphics driver, which is not well supported on the ROG Ally's hardware
+    #      # RADV_DEBUG = "nogpl";
+    #      # Try to fix ryubing freezing issues by forcing the use of the X11 backend instead of Wayland, which has better compatibility with some games and applications
+    #      AVALONIA_BACKEND = "x11";
+    #    };
+    #
+    #    # Try to fix ryubing freezing issues by enabling OpenGL support, which is required for hardware acceleration and better performance in games and applications
+    #    hardware.graphics = {
+    #      enable = true;
+    #      enable32Bit = true; # Important for Switch emulation
+    #    };
+
     #  environment.systemPackages = with pkgs.kdePackages; [
     environment.systemPackages = with pkgs; [
       kdePackages.kwalletmanager
