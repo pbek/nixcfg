@@ -1,0 +1,8 @@
+build:
+    nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })'
+
+run:
+    ./result/bin/wden
+
+edit:
+    kate ./package.nix
