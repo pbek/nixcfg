@@ -56,3 +56,11 @@ jobs:
         run: |
           nix build .#nixbit && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build uncrash flake package
+        run: |
+          nix build .#uncrash && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build tokstat flake package
+        run: |
+          nix build .#tokstat && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
