@@ -5,6 +5,7 @@
   bun,
   nodejs,
   makeWrapper,
+  installShellFiles,
 }:
 
 let
@@ -56,6 +57,7 @@ let
       bun
       nodejs
       makeWrapper
+      installShellFiles
     ];
 
     dontConfigure = true;
@@ -105,12 +107,27 @@ let
       cp -r dist/ $out/lib/copilot-api/
       cp package.json $out/lib/copilot-api/
 
+      # Copy node_modules for runtime dependencies
+      cp -r node_modules $out/lib/copilot-api/
+
       # Create wrapper script
       makeWrapper ${bun}/bin/bun $out/bin/copilot-api \
         --add-flags "run $out/lib/copilot-api/dist/main.js" \
         --set NODE_ENV production
 
       runHook postInstall
+    '';
+
+    # Generate shell completions
+    postInstall = ''
+      # Create bash completion
+      installShellCompletion --cmd copilot-api --bash ${./completions/copilot-api.bash}
+
+      # Create zsh completion
+      installShellCompletion --cmd copilot-api --zsh ${./completions/_copilot-api}
+
+      # Create fish completion
+      installShellCompletion --cmd copilot-api --fish ${./completions/copilot-api.fish}
     '';
 
     meta = with lib; {

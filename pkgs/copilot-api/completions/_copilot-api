@@ -1,0 +1,49 @@
+#compdef copilot-api
+
+_copilot-api() {
+    local curcontext="$curcontext" state line
+    typeset -A opt_args
+
+    _arguments -C \
+        '1: :_copilot_api_commands' \
+        '*:: :->args'
+
+    case "$state" in
+        args)
+            case "$line[1]" in
+                start)
+                    _copilot_api_start
+                    ;;
+                *)
+                    _files
+                    ;;
+            esac
+            ;;
+    esac
+}
+
+_copilot_api_commands() {
+    local commands
+    commands=(
+        'auth:Run GitHub auth flow without running the server'
+        'start:Start the Copilot API server'
+        'check-usage:Show current GitHub Copilot usage/quota information'
+        'debug:Print debug information about the application'
+    )
+    _describe -t commands 'commands' commands
+}
+
+_copilot_api_start() {
+    _arguments -C \
+        '(-p --port)'{-p,--port}'[Port to listen on]:port:_ports' \
+        '(-v --verbose)'{-v,--verbose}'[Enable verbose logging]' \
+        '(-a --account-type)'{-a,--account-type}'[Account type to use]:account type:(individual business enterprise)' \
+        '--manual[Enable manual request approval]' \
+        '--rate-limit[Rate limit in seconds between requests]:seconds:' \
+        '(-w --wait)'{-w,--wait}'[Wait instead of error when rate limit is hit]' \
+        '(-g --github-token)'{-g,--github-token}'[Provide GitHub token directly]:token:' \
+        '(-c --claude-code)'{-c,--claude-code}'[Generate a command to launch Claude Code with Copilot API config]' \
+        '--show-token[Show GitHub and Copilot tokens on fetch and refresh]'
+}
+
+_copilot-api "$@"
