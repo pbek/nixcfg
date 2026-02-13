@@ -499,6 +499,11 @@ nixbit-update-flake:
 uncrash-update-flake:
     nix flake update uncrash
 
+# Update the Tokstat flake
+[group('tokstat')]
+tokstat-update-flake:
+    nix flake update tokstat
+
 # Evaluate a config for a hostname (default current host)
 eval-config configPath host=hostname *args:
     nix eval .#nixosConfigurations.{{ host }}.config.{{ configPath }} {{ args }}
