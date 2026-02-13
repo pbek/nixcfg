@@ -24,6 +24,8 @@
     uncrash.url = "github:pbek/uncrash/release";
     uncrash.inputs.nixpkgs.follows = "nixpkgs";
     nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
+    tokstat.url = "github:pbek/tokstat/release";
+    tokstat.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -71,6 +73,7 @@
           config.allowUnfree = true;
           overlays = validOverlays;
         };
+        tokstat = inputs.tokstat.packages.${system}.default;
       };
       allOverlays = validOverlays ++ [ overlays-nixpkgs ];
       commonModules = [
@@ -221,6 +224,7 @@
         qownnotes-stable = pkgs.stable.qownnotes;
         nixbit = inputs.nixbit.packages.${system}.default;
         uncrash = inputs.uncrash.packages.${system}.default;
+        tokstat = inputs.tokstat.packages.${system}.default;
       }
       // {
         # Generate Markdown docs for hokage module options
