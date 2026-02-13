@@ -43,6 +43,7 @@
         8086 # InfluxDB
         8087 # Chronograf
         3000 # Grafana
+        4141 # Copilot API
         8090 # Tasmoadmin
         8070 # Calibre Web
         13378 # Audiobookshelf
@@ -186,6 +187,7 @@
     hostName = "home01";
     role = "server-home";
     programs.libvirt.enable = true;
+    programs.copilot-api.enable = true;
     zfs.hostId = "daafda01";
     cache.sources = [ "home" ];
   };
