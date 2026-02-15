@@ -10,7 +10,7 @@
   pango,
   lib,
   stdenv,
-  xorg,
+  libX11,
 }:
 
 {
@@ -54,7 +54,7 @@ let
         glib
         gtk2-x11
         pango
-        xorg.libX11
+        libX11
       ];
 
     dontBuild = true;
