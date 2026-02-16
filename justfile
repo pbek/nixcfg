@@ -248,6 +248,7 @@ push:
     -attic push qownnotes `which qc` --no-closure
     -attic push qownnotes `which nixbit` --no-closure
     -attic push qownnotes `which uncrash` --no-closure
+    -attic push qownnotes `which tokstat` --no-closure
 
 [group('cache')]
 push-all:
