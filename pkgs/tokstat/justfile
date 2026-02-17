@@ -1,0 +1,8 @@
+build:
+    nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })' --show-trace
+
+run:
+    ./result/bin/tokstat
+
+edit-app:
+    cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || cd ~/Code/tools/nixpkgs ; kate ./pkgs/by-name/to/tokstat/package.nix
