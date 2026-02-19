@@ -26,6 +26,7 @@ in
         # https://github.com/sxyazi/yazi
         yazi = {
           enable = true;
+          shellWrapperName = "y";
           enableFishIntegration = true;
           enableBashIntegration = true;
           # https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=yaziPlugins

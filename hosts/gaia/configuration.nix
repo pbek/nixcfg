@@ -54,14 +54,22 @@ in
     rustdesk-flutter
   ];
 
-  # Handle keyboard leds
-  powerManagement.powerUpCommands = ''
-    ${pkgs.g810-led}/bin/g213-led -r 1 ff0000     # Set color of zone 1 to red
-    ${pkgs.g810-led}/bin/g213-led -r 2 ff0000     # Set color of zone 2 to red
-    ${pkgs.g810-led}/bin/g213-led -r 3 ff0000     # Set color of zone 3 to red
-    ${pkgs.g810-led}/bin/g213-led -r 4 7fff00     # Set color of zone 4 to green
-    ${pkgs.g810-led}/bin/g213-led -r 5 7fff00     # Set color of zone 5 to green
-  '';
+  # Handle keyboard leds - using systemd service instead of deprecated powerUpCommands
+  systemd.services.g810-led-keyboard = {
+    description = "Logitech G213 keyboard LED configuration";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = ''
+        ${pkgs.g810-led}/bin/g213-led -r 1 ff0000
+        ${pkgs.g810-led}/bin/g213-led -r 2 ff0000
+        ${pkgs.g810-led}/bin/g213-led -r 3 ff0000
+        ${pkgs.g810-led}/bin/g213-led -r 4 7fff00
+        ${pkgs.g810-led}/bin/g213-led -r 5 7fff00
+      '';
+    };
+  };
 
   # Extract
 
