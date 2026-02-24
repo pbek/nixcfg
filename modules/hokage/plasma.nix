@@ -19,6 +19,7 @@ in
       default = useGraphicalSystem;
     };
     enableOld = lib.mkEnableOption "plasma with old KDE packages";
+    enablePlasmaManager = lib.mkEnableOption "plasma-manager";
   };
 
   config = lib.mkIf cfg.enable {
@@ -28,6 +29,8 @@ in
 
     services.desktopManager.plasma6.enable = true;
     services.displayManager.defaultSession = if waylandSupport then "plasma" else "plasmax11";
+    services.displayManager.plasma-login-manager.enable = cfg.enablePlasmaManager;
+    services.displayManager.sddm.enable = lib.mkIf cfg.enablePlasmaManager false;
 
     # Launch SDDM in Wayland too
     # https://wiki.nixos.org/wiki/KDE#Launch_SDDM_in_Wayland_too

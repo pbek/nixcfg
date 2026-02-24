@@ -109,5 +109,6 @@ in
       cplusplus.enable = false;
       go.enable = false;
     };
+    plasma.enablePlasmaManager = true;
   };
 }

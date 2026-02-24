@@ -37,5 +37,6 @@
       hostId = "4ea35514";
       encrypted = true;
     };
+    plasma.enablePlasmaManager = true;
   };
 }

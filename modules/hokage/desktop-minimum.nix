@@ -30,7 +30,7 @@ in
 
     # Enable the KDE Plasma Desktop Environment.
     # https://wiki.nixos.org/wiki/KDE
-    services.displayManager.sddm.enable = true;
+    services.displayManager.sddm.enable = lib.mkDefault true;
     programs.kdeconnect.enable = true;
 
     # Try to fix favorite menu reloading
