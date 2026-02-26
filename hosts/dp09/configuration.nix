@@ -16,6 +16,7 @@
   environment.systemPackages = with pkgs; [
     backintime
     webex
+    ddev
   ];
 
   hardware.nvidia.prime = {
