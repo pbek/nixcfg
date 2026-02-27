@@ -61,6 +61,7 @@ in
       kdePackages.plasma-nm
       kdePackages.plasma-pa
       kdePackages.kate
+      kdePackages.plasma-keyboard
 
       onboard # On-screen keyboard
       google-chrome # Touch scrolling in Chrome
