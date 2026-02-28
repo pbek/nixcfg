@@ -26,6 +26,8 @@
     nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
     tokstat.url = "github:pbek/tokstat/release";
     tokstat.inputs.nixpkgs.follows = "nixpkgs";
+    zfsguard.url = "github:pbek/zfsguard";
+    zfsguard.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -93,6 +95,7 @@
         { home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ]; }
         nixbit.nixosModules.nixbit
         uncrash.nixosModules.uncrash
+        inputs.zfsguard.nixosModules.default
         # nix-jetbrains-plugins.nixosModules.default
       ];
       mkDesktopHost =
