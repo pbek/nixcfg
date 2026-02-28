@@ -249,6 +249,7 @@ push:
     -attic push qownnotes `which nixbit` --no-closure
     -attic push qownnotes `which uncrash` --no-closure
     -attic push qownnotes `which tokstat` --no-closure
+    -attic push qownnotes `which zfsguard` --no-closure
 
 [group('cache')]
 push-all:
@@ -504,6 +505,11 @@ uncrash-update-flake:
 [group('tokstat')]
 tokstat-update-flake:
     nix flake update tokstat
+
+# Update the zfsguard flake
+[group('zfsguard')]
+zfsguard-update-flake:
+    nix flake update zfsguard
 
 # Evaluate a config for a hostname (default current host)
 eval-config configPath host=hostname *args:
