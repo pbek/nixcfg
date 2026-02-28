@@ -533,11 +533,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1772285305,
-        "narHash": "sha256-ZpjYu76zCXTQ+SjET54ssJOcsUOcLZysiUdWeq8U0u4=",
+        "lastModified": 1772287549,
+        "narHash": "sha256-xqxKwIjYho4D8mr/cdhDepkSIt7lCFzGuK3l/rSYkvE=",
         "owner": "pbek",
         "repo": "zfsguard",
-        "rev": "0e6c5dc77accb1641b6800fa0b2f14cafc55b2bb",
+        "rev": "d983efe821d9554efaf331c8dadec3e758c94f17",
         "type": "github"
       },
       "original": {
