@@ -1,8 +1,9 @@
 {
   config,
   lib,
+  options,
   inputs,
-  system,
+  pkgs,
   ...
 }:
 
@@ -69,22 +70,27 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    services.zfsguard = {
-      enable = true;
-      package = inputs.zfsguard.packages.${system}.default;
-      settings = {
-        monitor = {
-          interval_minutes = cfg.intervalMinutes;
-          check_zfs = cfg.checkZfs;
-          check_smart = cfg.checkSmart;
-          smart_devices = cfg.smartDevices;
-        };
-        notify = {
-          shoutrrr_urls = cfg.shoutrrrUrls;
-          desktop = cfg.desktopNotifications;
+  # services.zfsguard is only available on desktop hosts where
+  # inputs.zfsguard.nixosModules.default is injected via commonDesktopModules.
+  # Use optionalAttrs to avoid "option does not exist" errors on server hosts.
+  config = mkIf cfg.enable (
+    lib.optionalAttrs (builtins.hasAttr "zfsguard" options.services) {
+      services.zfsguard = {
+        enable = true;
+        package = inputs.zfsguard.packages.${pkgs.system}.default;
+        settings = {
+          monitor = {
+            interval_minutes = cfg.intervalMinutes;
+            check_zfs = cfg.checkZfs;
+            check_smart = cfg.checkSmart;
+            smart_devices = cfg.smartDevices;
+          };
+          notify = {
+            shoutrrr_urls = cfg.shoutrrrUrls;
+            desktop = cfg.desktopNotifications;
+          };
         };
       };
-    };
-  };
+    }
+  );
 }
