@@ -53,14 +53,14 @@ in
       # Set the currently maximum allowed kernel package for ZFS here
       # Look for Kernel support on https://github.com/openzfs/zfs/releases
       # Look for ZFS version in nixpkgs on https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=zfs+linux_6_19
-      default = pkgs.linuxKernel.packages.linux_6_18.kernel;
+      default = pkgs.linuxKernel.packages.linux_6_19.kernel;
       description = "Maximum allowed kernel package vor ZFS";
       readOnly = true;
     };
     useUnstable = mkOption {
       type = types.bool;
-      # Currently use unstable by default, because Kernel 6.18 is supported by ZFS unstable and ZFS 2.4.0 is not marked as stable in nixpkgs yet
-      default = true;
+      # Currently, stable is zfs 2.4.1
+      default = false;
       description = "Use pkgs.zfs_unstable for zfs.package when true (otherwise use pkgs.zfs).";
     };
   };
