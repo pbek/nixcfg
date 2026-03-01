@@ -65,3 +65,7 @@ jobs:
         run: |
           nix build .#tokstat && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build zfsguard flake package
+        run: |
+          nix build .#zfsguard && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
