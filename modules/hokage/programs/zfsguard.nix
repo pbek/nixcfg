@@ -79,7 +79,7 @@ in
       {
         services.zfsguard = {
           enable = true;
-          package = inputs.zfsguard.packages.${pkgs.system}.default;
+          package = inputs.zfsguard.packages.${pkgs.stdenv.hostPlatform.system}.default;
           settings = {
             monitor = {
               interval_minutes = cfg.intervalMinutes;

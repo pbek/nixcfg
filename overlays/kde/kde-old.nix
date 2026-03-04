@@ -10,7 +10,7 @@ let
         sha256 = "sha256-OFcTuiCmh8g+kBMfUhr4ltaJdZdaLhG9TPV1UPoZ9Kc=";
       })
       {
-        inherit (prev) system;
+        inherit (prev.stdenv.hostPlatform) system;
         config.allowUnfree = true;
       };
 in
