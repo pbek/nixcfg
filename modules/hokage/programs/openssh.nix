@@ -24,7 +24,7 @@ in
       #    settings.PermitRootLogin = "yes";
       #    settings.PasswordAuthentication = true;
 
-      extraConfig = ''StreamLocalBindUnlink yes'';
+      extraConfig = "StreamLocalBindUnlink yes";
     };
 
     # Add Yubikey public ssh key

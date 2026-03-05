@@ -88,8 +88,8 @@ in
     virtualisation.oci-containers = {
       backend = "docker";
       containers.zerobyte = {
-        image = cfg.image;
-        autoStart = cfg.autoStart;
+        inherit (cfg) image;
+        inherit (cfg) autoStart;
 
         # Capabilities
         extraOptions = [

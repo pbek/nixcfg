@@ -16,7 +16,7 @@ let
 in
 {
   kdePackages = oldNixpkgs.kdePackages // {
-    knighttime = prev.kdePackages.knighttime;
+    inherit (prev.kdePackages) knighttime;
   };
-  qt6 = oldNixpkgs.qt6;
+  inherit (oldNixpkgs) qt6;
 }

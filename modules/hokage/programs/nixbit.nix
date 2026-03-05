@@ -39,8 +39,8 @@ in
       nixbit = {
         enable = true;
         # package = pkgs.callPackage ../../../pkgs/nixbit/package.nix { };
-        repository = cfg.repository;
-        forceAutostart = cfg.forceAutostart;
+        inherit (cfg) repository;
+        inherit (cfg) forceAutostart;
       };
     }
   );

@@ -34,7 +34,7 @@ in
       # https://nix.catppuccin.com/options/main/home/catppuccin/
       catppuccin = {
         enable = true;
-        flavor = cfg.flavor;
+        inherit (cfg) flavor;
       };
     });
   };
