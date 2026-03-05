@@ -19,11 +19,8 @@ in
     # See https://github.com/NixOS/nixpkgs/issues/303526#issuecomment-2692831998
     services.desktopManager.plasma6.enable = true;
     services.displayManager.defaultSession = "plasma";
-
-    services.displayManager.sddm = {
-      enable = true;
-      wayland.enable = true;
-    };
+    services.displayManager.plasma-login-manager.enable = true;
+    services.displayManager.sddm.enable = false;
 
     # GTK themes are not applied in Wayland applications / Window Decorations missing / Cursor looks different
     # https://wiki.nixos.org/wiki/KDE#GTK_themes_are_not_applied_in_Wayland_applications_.2F_Window_Decorations_missing_.2F_Cursor_looks_different
@@ -125,7 +122,6 @@ in
       cache.sources = [ "home" ];
       useSecrets = false;
       zfs.enable = true;
-      plasma.enablePlasmaManager = true;
     };
   };
 }
