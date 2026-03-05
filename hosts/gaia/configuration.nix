@@ -124,6 +124,7 @@ in
   hokage = {
     hostName = "gaia";
     tugraz.enable = true;
+    plasma.enablePlasmaManager = true;
     cache.sources = [ "home" ];
     programs.platformio.enable = true;
     programs.aider.enable = true;

@@ -125,6 +125,7 @@ in
       cache.sources = [ "home" ];
       useSecrets = false;
       zfs.enable = true;
+      plasma.enablePlasmaManager = true;
     };
   };
 }
