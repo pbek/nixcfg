@@ -27,6 +27,14 @@ alias bh := build-on-home01
 alias bc := build-on-caliban
 alias p := push
 alias sp := switch-push
+alias boot-vm := vm-boot
+alias boot-vm-no-kvm := vm-boot-no-kvm
+alias boot-vm-console := vm-boot-console
+alias boot-vm-server-console := vm-boot-server-console
+alias ssh-vm-server := vm-ssh-server
+alias reset-vm := vm-reset
+alias ssh-vm := vm-ssh
+alias build-vm := vm-build
 alias fix-command-not-found-error := update-channels
 alias options := hokage-options
 
@@ -293,42 +301,46 @@ boot-iso:
     nix-shell -p qemu --run "qemu-system-x86_64 -m 256 -cdrom result/iso/nixos-*.iso"
 
 [group('vm')]
-boot-vm:
+vm-boot:
     just _show-qemu-exit-message
     QEMU_OPTS="-m 4096 -smp 4 -enable-kvm" QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
 
 [group('vm')]
-boot-vm-no-kvm:
+vm-boot-no-kvm:
     just _show-qemu-exit-message
     QEMU_OPTS="-m 4096 -smp 4" QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
 
 [group('vm')]
-boot-vm-console:
+vm-boot-console:
     just _show-qemu-exit-message
     QEMU_OPTS="-nographic -serial mon:stdio" QEMU_KERNEL_PARAMS=console=ttyS0 QEMU_NET_OPTS="hostfwd=tcp::2222-:22" ./result/bin/run-*-vm
 
 [group('vm')]
-boot-vm-server-console:
+vm-boot-server-console:
     just _show-qemu-exit-message
     QEMU_OPTS="-nographic -serial mon:stdio" QEMU_KERNEL_PARAMS=console=ttyS0 QEMU_NET_OPTS="hostfwd=tcp::2222-:2222" ./result/bin/run-*-vm
 
 [group('vm')]
-ssh-vm-server:
+vm-ssh-server:
     ssh -p 2222 omega@localhost -t "tmux new-session -A -s pbek"
 
 # Reset the VM
 [confirm("Are you sure you want to reset the VM?")]
 [group('vm')]
-reset-vm:
+vm-reset:
     rm *.qcow2
 
 [group('vm')]
-ssh-vm:
+vm-ssh:
     ssh -p 2222 omega@localhost -t "tmux new-session -A -s pbek"
 
 [group('vm')]
-build-vm host:
-    nixos-rebuild --flake .#{{ host }} build-vm
+vm-build host:
+    nh os build-vm -H {{ host }} .
+
+[group('vm')]
+vm-run host:
+    nh os build-vm -H {{ host }} --run .
 
 # Rebuild the current host
 [group('build')]
