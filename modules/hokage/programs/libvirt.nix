@@ -48,6 +48,14 @@ in
     programs.dconf.enable = mkIf (cfg.role == "host") true;
     virtualisation.spiceUSBRedirection.enable = mkIf (cfg.role == "host") true;
 
+    # Work around upstream unit using /usr/bin/sh, which does not exist on NixOS.
+    systemd.services.virt-secret-init-encryption = mkIf (cfg.role == "host") {
+      serviceConfig.ExecStart = lib.mkForce [
+        ""
+        "${pkgs.runtimeShell} -c \"umask 0077 && ${pkgs.coreutils}/bin/dd if=/dev/random status=none bs=32 count=1 | ${pkgs.systemd}/bin/systemd-creds encrypt --name=secrets-encryption-key - /var/lib/libvirt/secrets/secrets-encryption-key\""
+      ];
+    };
+
     # https://wiki.nixos.org/wiki/Virt-manager
     programs.virt-manager.enable = mkIf cfg.gui.enable true;
 
