@@ -31,8 +31,7 @@ in
     environment.systemPackages = lib.mkIf waylandSupport (
       with pkgs;
       [
-        # Build error in unstable package
-        stable.kdotool
+        kdotool
       ]
     );
 
