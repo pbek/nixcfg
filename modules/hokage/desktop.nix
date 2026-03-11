@@ -105,9 +105,6 @@ in
     programs.fish = {
       shellAliases = {
         lzd = "lazydocker";
-        gits = "git town sync";
-        gith = "git town hack";
-        gitdel = "git town delete";
         oc = "AZURE_RESOURCE_NAME=zid-digitalisation-coding opencode";
       };
 
