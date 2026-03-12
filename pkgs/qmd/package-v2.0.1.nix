@@ -3,10 +3,10 @@
   lib,
   fetchFromGitHub,
   bun,
+  makeWrapper,
   nodejs,
   node-gyp,
   python3,
-  makeBinaryWrapper,
   sqlite,
   runCommand,
 }:
@@ -50,7 +50,8 @@ stdenv.mkDerivation (finalAttrs: {
   inherit src;
 
   nativeBuildInputs = [
-    makeBinaryWrapper
+    bun
+    makeWrapper
     nodejs
     node-gyp
     python3
@@ -75,13 +76,11 @@ stdenv.mkDerivation (finalAttrs: {
     mkdir -p $out/bin
 
     cp -r ./node_modules $out/lib/qmd/
-
     cp -r src $out/lib/qmd/
     cp package.json $out/lib/qmd/
 
-    makeBinaryWrapper ${bun}/bin/bun $out/bin/qmd \
-      --add-flags "run --prefer-offline --no-install --cwd $out/lib/qmd $out/lib/qmd/src/cli/qmd.ts" \
-      --set-default NODE_LLAMA_CPP_GPU false \
+    makeWrapper ${bun}/bin/bun $out/bin/qmd \
+      --add-flags "$out/lib/qmd/src/cli/qmd.ts" \
       --set DYLD_LIBRARY_PATH "${sqlite.out}/lib" \
       --set LD_LIBRARY_PATH "${
         lib.makeLibraryPath (
