@@ -11,6 +11,10 @@
     ./disk-config.zfs.nix
   ];
 
+  boot.initrd.secrets = {
+    "/crypto_keyfile.bin" = null;
+  };
+
   hokage = {
     hostName = "ally2";
     role = "ally";

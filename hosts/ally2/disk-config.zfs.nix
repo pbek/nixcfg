@@ -49,12 +49,8 @@
               mountpoint = "none";
               encryption = "aes-256-gcm";
               keyformat = "passphrase";
-              keylocation = "file:///tmp/secret.key";
+              keylocation = "file:///crypto_keyfile.bin";
             };
-            # use this to read the key during boot
-            postCreateHook = ''
-              zfs set keylocation="prompt" "zroot/$name";
-            '';
           };
           "encrypted/root" = {
             type = "zfs_fs";
