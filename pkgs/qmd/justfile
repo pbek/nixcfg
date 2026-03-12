@@ -1,2 +1,5 @@
 build:
     nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })' --show-trace
+
+build-v2_0_1:
+    nix-build -E '((import <nixpkgs> {}).callPackage (import ./package-v2.0.1.nix) { })' --show-trace
