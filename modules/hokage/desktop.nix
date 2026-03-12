@@ -95,7 +95,7 @@ in
 
           lurk # strace "replacement"
 
-          # (pkgs.callPackage ../../pkgs/qmd/package.nix { })
+          (pkgs.callPackage ../../pkgs/qmd/package.nix { })
 
           signal-desktop
           # telegram-desktop

@@ -8,17 +8,18 @@
   runCommand,
 }:
 let
-  pin = lib.importJSON ./pin.json;
+  version = "v2.0.1";
+  rev = "64c6e6c2e30d6063e0020db0b5eb515c56f7f09e";
   src = fetchFromGitHub {
     owner = "tobi";
     repo = "qmd";
-    inherit (pin) rev;
-    hash = pin.srcHash;
+    inherit rev;
+    hash = "sha256-0yWy0KhlMIbl3OM3nCMNR3XDtLppGVb7aNmjm+KA009=";
   };
   node_modules = stdenv.mkDerivation {
     pname = "qmd-node_modules";
     inherit src;
-    inherit (pin) version;
+    inherit version;
     impureEnvVars = lib.fetchers.proxyImpureEnvVars ++ [
       "GIT_PROXY_COMMAND"
       "SOCKS_SERVER"
@@ -35,14 +36,14 @@ let
     '';
     dontPatchShebangs = true;
     dontFixup = true;
-    outputHash = pin."${stdenv.system}";
+    outputHash = "sha256-nkFzT3IH3fr5p5Q8FRPGtYzUkwxoM2rx95RT7nvuHd2=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "qmd";
-  inherit (pin) version;
+  inherit version;
   inherit src;
 
   nativeBuildInputs = [ makeBinaryWrapper ];
@@ -63,8 +64,17 @@ stdenv.mkDerivation (finalAttrs: {
 
     makeBinaryWrapper ${bun}/bin/bun $out/bin/qmd \
       --add-flags "run --prefer-offline --no-install --cwd $out/lib/qmd $out/lib/qmd/src/qmd.ts" \
+      --set-default NODE_LLAMA_CPP_GPU false \
       --set DYLD_LIBRARY_PATH "${sqlite.out}/lib" \
-      --set LD_LIBRARY_PATH "${sqlite.out}/lib"
+      --set LD_LIBRARY_PATH "${
+        lib.makeLibraryPath (
+          [ sqlite ]
+          ++ lib.optionals stdenv.isLinux [
+            stdenv.cc.libc
+            stdenv.cc.cc.lib
+          ]
+        )
+      }"
 
     runHook postInstall
   '';
