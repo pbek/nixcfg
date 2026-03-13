@@ -104,6 +104,7 @@ stdenv.mkDerivation (finalAttrs: {
     description = "On-device search engine for markdown notes and knowledge bases";
     homepage = "https://github.com/tobi/qmd";
     license = lib.licenses.mit;
+    maintainers = with lib.maintainers; [ pbek ];
     mainProgram = "qmd";
     platforms = lib.platforms.unix;
   };
