@@ -186,7 +186,7 @@
         # PC Garage
         pluto = mkDesktopHost "pluto" [ ];
         # macBook
-        neptun = mkDesktopHost "neptun" [ ];
+        neptun = mkDesktopHost "neptun" [ disko.nixosModules.disko ];
         # TU HP EliteBook Laptop 820 G4
         eris = mkDesktopHost "eris" [ ];
         # TU "Guest" HP EliteBook Laptop 840 G5

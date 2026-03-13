@@ -7,28 +7,20 @@
 { pkgs, ... }:
 
 {
-  imports = [ ];
-
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  imports = [
+    ./disk-config.zfs.nix
+  ];
 
   # blacklist BCM43a0 Broadcom wifi
   # Wifi seems to still work and it seems much more stable
   boot.blacklistedKernelModules = [ "brcm80211" ];
-
-  # Setup keyfile
-  boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
-  };
 
   # Don't sleep when lid is closed
   # services.logind.lidSwitch = "ignore";
 
   # Allow insecure Broadcom driver
   nixpkgs.config.permittedInsecurePackages = [
-    "broadcom-sta-6.30.223.271-59-6.18.2"
+    "broadcom-sta-6.30.223.271-59-6.19.6"
   ];
 
   environment.systemPackages = with pkgs; [
@@ -39,5 +31,10 @@
     hostName = "neptun";
     lowBandwidth = true;
     cache.sources = [ "home" ];
+    zfs = {
+      enable = true;
+      hostId = "c15661e7";
+      encrypted = true;
+    };
   };
 }
