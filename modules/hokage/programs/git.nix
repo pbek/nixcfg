@@ -96,6 +96,7 @@ in
       # Helper for merge conflicts for git
       # https://mergiraf.org/
       programs.mergiraf.enable = true;
+      programs.mergiraf.enableGitIntegration = true;
 
       # Turn on signing off for git commits in lazygit
       home.file.".config/lazygit/config.yml".text = ''
