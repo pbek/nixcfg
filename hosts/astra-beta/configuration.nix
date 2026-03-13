@@ -34,6 +34,6 @@
     termFontSize = 16.0;
     programs.libvirt.role = "guest";
     cache.sources = [ "home" ];
-    programs.jetbrains.enable = lib.mkForce false;
+    programs.jetbrains.enable = false;
   };
 }

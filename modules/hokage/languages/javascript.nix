@@ -35,7 +35,7 @@ in
     environment.systemPackages = with pkgs; [ nodejs_24 ];
 
     hokage = mkIf cfg.ide.enable {
-      programs.jetbrains.enable = true;
+      programs.jetbrains.enable = lib.mkDefault true;
       programs.jetbrains.phpstorm.enable = true;
     };
   };

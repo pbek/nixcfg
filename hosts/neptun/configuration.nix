@@ -36,5 +36,6 @@
       hostId = "c15661e7";
       encrypted = true;
     };
+    programs.jetbrains.enable = false;
   };
 }
