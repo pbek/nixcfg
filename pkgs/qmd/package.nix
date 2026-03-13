@@ -3,26 +3,26 @@
   lib,
   fetchFromGitHub,
   bun,
-  makeWrapper,
-  nodejs,
-  node-gyp,
-  python3,
+  makeBinaryWrapper,
   sqlite,
   runCommand,
 }:
 let
-  version = "v2.0.1";
-  rev = version;
+  pin = lib.importJSON ./pin.json;
+  inherit (pin) version;
+
+  pname = "qmd";
+
   src = fetchFromGitHub {
     owner = "tobi";
-    repo = "qmd";
-    inherit rev;
-    hash = "sha256-UoR9iyxqbjwAbEmiC/kxS10lvdBJmDuQigS/aEgEzDs=";
+    repo = pname;
+    tag = "v${version}";
+    hash = pin.srcHash;
   };
   node_modules = stdenv.mkDerivation {
-    pname = "qmd-v2.0.1-node_modules";
+    pname = "${pname}-node_modules";
     inherit src;
-    inherit version;
+    inherit (pin) version;
     impureEnvVars = lib.fetchers.proxyImpureEnvVars ++ [
       "GIT_PROXY_COMMAND"
       "SOCKS_SERVER"
@@ -39,23 +39,17 @@ let
     '';
     dontPatchShebangs = true;
     dontFixup = true;
-    outputHash = "sha256-VJwVhcAw4hHe+hmUAEBQIGp3ibERBQuPdw2zmvLcvVI=";
+    outputHash = pin."${stdenv.system}";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
 in
 stdenv.mkDerivation (finalAttrs: {
-  pname = "qmd";
-  inherit version;
+  inherit pname;
+  inherit (pin) version;
   inherit src;
 
-  nativeBuildInputs = [
-    bun
-    makeWrapper
-    nodejs
-    node-gyp
-    python3
-  ];
+  nativeBuildInputs = [ makeBinaryWrapper ];
   buildInputs = [ sqlite ];
 
   dontConfigure = true;
@@ -64,23 +58,16 @@ stdenv.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
 
-    cp -r ${node_modules}/node_modules ./node_modules
-
-    export HOME=$(mktemp -d)
-    chmod -R u+w node_modules/better-sqlite3
-    pushd node_modules/better-sqlite3
-    node ../prebuild-install/bin.js || node-gyp rebuild --release
-    popd
-
     mkdir -p $out/lib/qmd
     mkdir -p $out/bin
 
-    cp -r ./node_modules $out/lib/qmd/
+    ln -s ${node_modules}/node_modules $out/lib/qmd/node_modules
     cp -r src $out/lib/qmd/
     cp package.json $out/lib/qmd/
 
-    makeWrapper ${bun}/bin/bun $out/bin/qmd \
-      --add-flags "$out/lib/qmd/src/cli/qmd.ts" \
+    makeBinaryWrapper ${bun}/bin/bun $out/bin/qmd \
+      --add-flags "run --prefer-offline --no-install --cwd $out/lib/qmd $out/lib/qmd/src/cli/qmd.ts" \
+      --set-default NODE_LLAMA_CPP_GPU false \
       --set DYLD_LIBRARY_PATH "${sqlite.out}/lib" \
       --set LD_LIBRARY_PATH "${
         lib.makeLibraryPath (
@@ -95,7 +82,7 @@ stdenv.mkDerivation (finalAttrs: {
     runHook postInstall
   '';
 
-  passthru.tests.version = runCommand "qmd-v2.0.1-test" { } ''
+  passthru.tests.version = runCommand "qmd-test" { } ''
     ${lib.getExe finalAttrs.finalPackage} --help > $out
     grep -q "qmd collection add" $out
   '';
