@@ -104,7 +104,6 @@ in
       poolName = "calroot";
       encrypted = true;
     };
-    programs.aider.enable = true;
     languages = {
       cplusplus.enable = false;
       go.enable = false;

@@ -183,7 +183,6 @@
     hostName = "venus";
     role = "desktop";
     programs = {
-      aider.enable = true;
       zerobyte = {
         enable = true;
         useLocalPath = false;
