@@ -56,6 +56,7 @@
     discord
     mycrypto # Cryptocurrency wallet manager
     lm_sensors
+    unrar
 
     # qtwebengine-5.15.19 is marked insecure
     # jellyfin-media-player
