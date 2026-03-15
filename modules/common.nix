@@ -153,12 +153,15 @@ in
         "@wheel"
       ];
 
-      # Above is more dangerous than below
-      # https://fosstodon.org/@lhf/112773183844782048
-      # https://github.com/NixOS/nix/issues/9649#issuecomment-1868001568
+      # Allow non-root users to use these additional binary caches.
+      # Entries must be substituter URLs, not user names.
       trusted-substituters = [
-        "root"
-        "@wheel"
+        "http://home01.lan:8501"
+        "http://home01.lan:5000"
+        "http://cicinas2.lan:8050/nix-store"
+        "http://cicinas2.lan:8282"
+        "http://cicinas2.lan:8283"
+        "http://caliban-1.netbird.cloud:5000"
       ];
 
       # Allow fallback from local caches
