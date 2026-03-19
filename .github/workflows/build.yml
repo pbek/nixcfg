@@ -69,3 +69,7 @@ jobs:
         run: |
           nix build .#zfsguard && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build devenv package
+        run: |
+          nix build nixpkgs#devenv && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
