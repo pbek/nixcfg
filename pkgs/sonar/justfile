@@ -1,0 +1,5 @@
+build:
+    nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })'
+
+build-force:
+    nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })' --check

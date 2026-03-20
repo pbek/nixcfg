@@ -7,6 +7,9 @@ on:
     paths:
       - "pkgs/qownnotes/**"
       - "pkgs/nixbit/**"
+      - "pkgs/sonar/**"
+      - "overlays/sonar.nix"
+      - "flake.nix"
       - "flake.lock"
       - ".github/workflows/build.yml"
   workflow_dispatch:
@@ -64,6 +67,10 @@ jobs:
       - name: Build tokstat flake package
         run: |
           nix build .#tokstat && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build sonar flake package
+        run: |
+          nix build .#sonar && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
       - name: Build zfsguard flake package
         run: |

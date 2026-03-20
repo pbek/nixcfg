@@ -229,6 +229,7 @@
         uncrash = inputs.uncrash.packages.${system}.default;
         tokstat = inputs.tokstat.packages.${system}.default;
         zfsguard = inputs.zfsguard.packages.${system}.default;
+        inherit (pkgs) sonar;
       }
       // {
         # Generate Markdown docs for hokage module options

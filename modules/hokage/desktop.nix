@@ -88,6 +88,7 @@ in
           # (callPackage ../../pkgs/zen-browser/package.nix {})
           gptcommit # Git commit message generator
           tokstat
+          sonar
 
           aspell # Dictionaries for QOwnNotes
           aspellDicts.en
