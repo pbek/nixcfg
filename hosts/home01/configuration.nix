@@ -40,6 +40,7 @@
         2048 # Homematic
         2049 # Homematic
         4533 # Navidrome
+        8010 # LangugeTool
         8086 # InfluxDB
         8087 # Chronograf
         3000 # Grafana
