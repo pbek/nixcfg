@@ -50,6 +50,7 @@
     let
       system = "x86_64-linux";
       overlaysDir = ./overlays;
+      # Keep disabled overlays under ./overlays/disabled/; only top-level .nix files are auto-imported.
       overlaysFromDir = builtins.filter (x: x != null) (
         builtins.attrValues (
           builtins.mapAttrs (
