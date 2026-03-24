@@ -34,6 +34,7 @@ in
           "result"
         ];
         signing = {
+          format = lib.mkDefault "openpgp";
           signByDefault = lib.mkDefault (hokage.useInternalInfrastructure && hokage.useGraphicalSystem);
           key = lib.mkDefault "948530F2497017761DFCACC075960E6926556207";
         };
