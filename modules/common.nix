@@ -322,9 +322,4 @@ in
     };
   });
 
-  # Enable ZRAM swap to get more memory
-  # https://search.nixos.org/options?channel=23.11&from=0&size=50&sort=relevance&type=packages&query=zram
-  zramSwap = {
-    enable = mkDefault true;
-  };
 }

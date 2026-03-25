@@ -79,9 +79,6 @@ in
     openFirewall = true;
   };
 
-  # We have enough RAM
-  zramSwap.enable = false;
-
   # Increase the console font size for kmscon
   services.kmscon.extraConfig = "font-size = 26";
 
@@ -93,6 +90,7 @@ in
   };
 
   hokage = {
+    memory-swap.enable = false;
     #    users = [
     #      "omega"
     #      "omegah"

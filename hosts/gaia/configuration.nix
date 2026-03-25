@@ -103,9 +103,6 @@ in
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   };
 
-  # We have enough RAM
-  zramSwap.enable = false;
-
   # Try to prevent popping of loudspeakers when audio starts again
   # See https://wiki.nixos.org/wiki/PulseAudio#Disabling_unwanted_modules
   services.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
@@ -123,6 +120,7 @@ in
 
   hokage = {
     hostName = "gaia";
+    memory-swap.enable = false;
     tugraz.enable = true;
     plasma.enablePlasmaManager = true;
     cache.sources = [ "home" ];

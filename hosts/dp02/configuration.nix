@@ -15,11 +15,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # We have enough RAM
-  zramSwap.enable = false;
-
   hokage = {
     hostName = "dp02";
+    memory-swap.enable = false;
     userLogin = "mkocher";
     userNameLong = "Manuel Kocher";
     userNameShort = "Manuel";
