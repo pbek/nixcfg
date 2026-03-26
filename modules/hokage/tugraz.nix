@@ -26,6 +26,7 @@ in
         go-passbolt-cli
         # (pkgs.callPackage ../../pkgs/go-passbolt-cli/default.nix { })
         wstunnel # WebSocket tunnel for accessing local development environments
+        glab # GitLab CLI tool
       ]
       ++ lib.optionals cfg.enableExternal [
         zulip
