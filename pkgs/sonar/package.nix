@@ -8,16 +8,15 @@
 
 buildGoModule rec {
   pname = "sonar";
-  version = "0.1.8";
+  version = "0.2.6";
 
   src = fetchFromGitHub {
     owner = "RasKrebs";
     repo = "sonar";
     tag = "v${version}";
-    hash = "sha256-mAFrEi/CMYadb0LaHh9zN6PEXOW0vcq6F5N04+cR+8o=";
+    hash = "sha256-awrtZDck4vKYgtw3wJW/EhNcB15Q4yIGsATM9OW6zKM=";
   };
 
-  sourceRoot = "${src.name}/cli";
   vendorHash = "sha256-komX1AmHt2NoF1x6xsNa2RFkfVzOXfYEMPhT0zwMxjw=";
 
   subPackages = [ "." ];
