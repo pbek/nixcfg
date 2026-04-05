@@ -9,6 +9,13 @@ let
   inherit (lib)
     mkEnableOption
     ;
+  opencodeThemeName =
+    if hokage.catppuccin.flavor == "frappe" then
+      "catppuccin-frappe"
+    else if hokage.catppuccin.flavor == "macchiato" then
+      "catppuccin-macchiato"
+    else
+      "catppuccin";
 in
 {
   options.hokage.programs.opencode = {
@@ -28,6 +35,8 @@ in
     };
 
     home-manager.users = lib.genAttrs hokage.users (_userName: {
+      catppuccin.opencode.enable = false;
+
       programs = {
         # https://github.com/anomalyco/opencode
         # Use "/connect" to connect to GitHub Copilot or Azure OpenAI
@@ -60,6 +69,9 @@ in
                 };
               };
             };
+          };
+          tui = lib.optionalAttrs hokage.catppuccin.enable {
+            theme = opencodeThemeName;
           };
         };
       };
