@@ -9,13 +9,13 @@
 
 buildGoModule rec {
   pname = "sonar";
-  version = "0.2.6";
+  version = "0.2.9";
 
   src = fetchFromGitHub {
     owner = "RasKrebs";
     repo = "sonar";
     tag = "v${version}";
-    hash = "sha256-awrtZDck4vKYgtw3wJW/EhNcB15Q4yIGsATM9OW6zKM=";
+    hash = "sha256-rEAc0lmpxxnaS1kwyPPW6LE4XxjAItIV/vjYTRm+Cvw=";
   };
 
   vendorHash = "sha256-komX1AmHt2NoF1x6xsNa2RFkfVzOXfYEMPhT0zwMxjw=";
