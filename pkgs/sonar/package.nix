@@ -3,6 +3,7 @@
   fetchFromGitHub,
   installShellFiles,
   lib,
+  nix-update-script,
   stdenv,
 }:
 
@@ -35,6 +36,8 @@ buildGoModule rec {
       --fish <($out/bin/sonar completion fish) \
       --zsh <($out/bin/sonar completion zsh)
   '';
+
+  passthru.updateScript = nix-update-script { };
 
   meta = with lib; {
     description = "CLI tool for inspecting and managing services listening on localhost ports";
