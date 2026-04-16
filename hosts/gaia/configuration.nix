@@ -20,6 +20,9 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
+  # Reduce boot console noise from harmless firmware ACPI messages.
+  boot.consoleLogLevel = 3;
+
   # Setup keyfile
   boot.initrd.secrets = {
     "/crypto_keyfile.bin" = null;
