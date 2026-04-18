@@ -20,6 +20,8 @@ buildGoModule rec {
 
   vendorHash = "sha256-komX1AmHt2NoF1x6xsNa2RFkfVzOXfYEMPhT0zwMxjw=";
 
+  __structuredAttrs = true;
+
   subPackages = [ "." ];
 
   ldflags = [
@@ -39,13 +41,13 @@ buildGoModule rec {
 
   passthru.updateScript = nix-update-script { };
 
-  meta = with lib; {
+  meta = {
     description = "CLI tool for inspecting and managing services listening on localhost ports";
     homepage = "https://github.com/RasKrebs/sonar";
     changelog = "https://github.com/RasKrebs/sonar/releases/tag/v${version}";
-    license = licenses.mit;
-    maintainers = with maintainers; [ pbek ];
+    license = lib.licenses.mit;
+    maintainers = with lib.maintainers; [ pbek ];
     mainProgram = "sonar";
-    platforms = platforms.linux ++ platforms.darwin;
+    platforms = with lib.platforms; linux ++ darwin;
   };
 }
