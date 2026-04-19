@@ -82,9 +82,21 @@ in
       zfs.package = if cfg.useUnstable then pkgs.zfs_unstable else pkgs.zfs;
       initrd.network = {
         enable = true;
-        postCommands = ''
+      };
+      initrd.systemd.services.zpool-import = {
+        description = "Import ZFS pools in initrd";
+        wantedBy = [ "initrd.target" ];
+        before = [ "initrd.target" ];
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
+        path = with pkgs; [
+          coreutils
+          config.boot.zfs.package
+        ];
+        serviceConfig.Type = "oneshot";
+        script = ''
           sleep 2
-          zpool import -a;
+          zpool import -a
         '';
       };
       loader.grub = {
