@@ -63,6 +63,26 @@ in
       default = false;
       description = "Use pkgs.zfs_unstable for zfs.package when true (otherwise use pkgs.zfs).";
     };
+    devNodes = mkOption {
+      type = types.str;
+      default = "";
+      example = "/dev/disk/by-path";
+      description = ''
+        Override boot.zfs.devNodes to control which directory ZFS scans for
+        pool devices. Useful for VMs with virtio disks that do not reliably
+        appear under /dev/disk/by-id (the ZFS default).  Leave empty to keep
+        the ZFS default.
+      '';
+    };
+    useSystemdInitrd = mkOption {
+      type = types.bool;
+      default = false;
+      description = ''
+        Enable the systemd-based stage-1 initrd (boot.initrd.systemd.enable).
+        Required on some VMs so the ZFS encryption passphrase prompt appears
+        early enough in the boot sequence.
+      '';
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -80,13 +100,8 @@ in
       supportedFilesystems = [ "zfs" ];
       zfs.requestEncryptionCredentials = lib.mkIf cfg.encrypted true;
       zfs.package = if cfg.useUnstable then pkgs.zfs_unstable else pkgs.zfs;
-      initrd.network = {
-        enable = true;
-        postCommands = ''
-          sleep 2
-          zpool import -a;
-        '';
-      };
+      zfs.devNodes = lib.mkIf (cfg.devNodes != "") cfg.devNodes;
+      initrd.systemd.enable = lib.mkIf cfg.useSystemdInitrd true;
       loader.grub = {
         enable = true;
         zfsSupport = true;
