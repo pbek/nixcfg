@@ -62,6 +62,10 @@ in
   hokage = {
     hostName = "netcup01";
     role = "server-remote";
-    zfs.hostId = "dafdad01";
+    zfs = {
+      hostId = "dafdad01";
+      devNodes = "/dev/disk/by-path";
+      useSystemdInitrd = true;
+    };
   };
 }

@@ -36,6 +36,8 @@
       hostId = "dafdad02";
       # Reduce memory usage
       arcMax = 300 * 1024 * 1024;
+      devNodes = "/dev/disk/by-path";
+      useSystemdInitrd = true;
     };
   };
 }
