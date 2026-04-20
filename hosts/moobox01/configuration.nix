@@ -34,6 +34,10 @@
     userEmail = "cow@cow";
     useSecrets = false;
     useInternalInfrastructure = false;
-    zfs.hostId = "dacdad01";
+    zfs = {
+      hostId = "dacdad01";
+      devNodes = "/dev/disk/by-path";
+      useSystemdInitrd = true;
+    };
   };
 }
