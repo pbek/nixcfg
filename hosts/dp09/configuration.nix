@@ -41,7 +41,7 @@
     nvidia = {
       enable = true;
       open = false;
-      packageType = "beta";
+      packageType = "production";
       modesetting.enable = true;
     };
 
