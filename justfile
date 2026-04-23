@@ -360,7 +360,7 @@ flake-update:
 cleanup:
     duf
     sudo journalctl --vacuum-time=3d
-    docker system prune -f
+    if command -v docker >/dev/null 2>&1; then docker system prune -f; else echo "Skipping Docker cleanup: docker not installed"; fi
     sudo rm -rf ~/.local/share/Trash/*
     sudo nix-collect-garbage -d
     nix-collect-garbage -d
