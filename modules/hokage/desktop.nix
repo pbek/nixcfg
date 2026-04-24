@@ -101,6 +101,8 @@ in
           signal-desktop
           # telegram-desktop
           # whatsapp-electron
+
+          harper # Grammar checker
         ];
       in
       requiredPackages ++ utils.removePackagesByName optionalPackages hokage.excludePackages;
