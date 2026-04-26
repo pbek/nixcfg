@@ -39,6 +39,5 @@
       devNodes = "/dev/disk/by-path";
       useSystemdInitrd = true;
     };
-    plasma.enablePlasmaManager = true;
   };
 }

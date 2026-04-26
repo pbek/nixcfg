@@ -19,7 +19,9 @@ in
       default = useGraphicalSystem;
     };
     enableOld = lib.mkEnableOption "plasma with old KDE packages";
-    enablePlasmaManager = lib.mkEnableOption "plasma-manager";
+    enablePlasmaManager = lib.mkEnableOption "plasma-manager" // {
+      default = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {

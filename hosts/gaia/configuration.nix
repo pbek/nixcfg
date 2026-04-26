@@ -126,7 +126,6 @@ in
     hostName = "gaia";
     memory-swap.enable = false;
     tugraz.enable = true;
-    plasma.enablePlasmaManager = true;
     cache.sources = [ "home" ];
     programs.platformio.enable = true;
 
