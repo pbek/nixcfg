@@ -146,6 +146,13 @@ in
       extraOptions = "--xkb-layout de";
     };
 
+    # kmscon's NixOS module unconditionally wires kmsconvt@tty1 into getty.target,
+    # which causes it to hold /dev/dri/card* exclusively and prevents kwin_wayland
+    # (started by plasmalogin on VT1) from opening the DRM device.
+    # Move kmscon to VT2 so VT1 is free for the display manager.
+    systemd.services."kmsconvt@tty1".wantedBy = lib.mkForce [ ];
+    systemd.services."kmsconvt@tty2".wantedBy = [ "getty.target" ];
+
     # https://rycee.gitlab.io/home-manager/options.html
     # https://nix-community.github.io/home-manager/options.html#opt-home.file
     home-manager.users = lib.genAttrs hokage.users (_userName: {
