@@ -103,6 +103,7 @@ in
           # whatsapp-electron
 
           harper # Grammar checker
+          rumdl # Markdown linter and formatter
         ];
       in
       requiredPackages ++ utils.removePackagesByName optionalPackages hokage.excludePackages;
