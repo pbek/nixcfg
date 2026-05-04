@@ -49,6 +49,14 @@ in
                     reasoning = true;
                     temperature = true;
                   };
+                  "claude-opus-4-7" = {
+                    id = "claude-opus-4-7";
+                    name = "Claude Opus 4.7";
+                    tool_call = true;
+                    attachment = true;
+                    reasoning = true;
+                    temperature = true;
+                  };
                   "claude-sonnet-4-6" = {
                     id = "claude-sonnet-4-6";
                     name = "Claude Sonnet 4.6";
