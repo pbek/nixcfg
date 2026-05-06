@@ -101,6 +101,8 @@ in
       zfs.requestEncryptionCredentials = lib.mkIf cfg.encrypted true;
       zfs.package = if cfg.useUnstable then pkgs.zfs_unstable else pkgs.zfs;
       zfs.devNodes = lib.mkIf (cfg.devNodes != "") cfg.devNodes;
+      # Silence warning https://github.com/nix-community/disko/issues/1255
+      zfs.forceImportRoot = true;
       initrd.systemd.enable = lib.mkIf cfg.useSystemdInitrd true;
       loader.grub = {
         enable = true;
