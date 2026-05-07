@@ -111,7 +111,6 @@ in
     programs.fish = {
       shellAliases = {
         lzd = "lazydocker";
-        oc = "AZURE_RESOURCE_NAME=zid-digitalisation-coding opencode";
       };
 
       shellAbbrs = {
