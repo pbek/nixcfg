@@ -260,6 +260,7 @@ push:
     -attic push qownnotes `which sonar` --no-closure
     -attic push qownnotes `which zfsguard` --no-closure
     -attic push qownnotes `which devenv` --no-closure
+    -attic push qownnotes `which kanboard-cli` --no-closure
 
 [group('cache')]
 push-all:
@@ -509,6 +510,11 @@ nixbit-update-release:
 [group('nixbit')]
 nixbit-update-flake:
     nix flake update nixbit
+
+# Update the kanboard-cli flake
+[group('nixbit')]
+kanboard-cli-update-flake:
+    nix flake update kanboard-cli
 
 # Update the Uncrash flake
 [group('uncrash')]

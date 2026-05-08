@@ -212,6 +212,26 @@
         "type": "github"
       }
     },
+    "kanboard-cli": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778245978,
+        "narHash": "sha256-+YgdYBI3LzGWWjeLGa4CxMUuq+8CmIjAjEs5KDzgXkc=",
+        "owner": "digital-blueprint",
+        "repo": "kanboard-cli",
+        "rev": "ab952b3a8965987cf220214e2290459ccee1aaa4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "digital-blueprint",
+        "repo": "kanboard-cli",
+        "type": "github"
+      }
+    },
     "nix-jetbrains-plugins": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -379,6 +399,7 @@
         "catppuccin": "catppuccin",
         "disko": "disko",
         "home-manager": "home-manager_2",
+        "kanboard-cli": "kanboard-cli",
         "nix-jetbrains-plugins": "nix-jetbrains-plugins",
         "nixbit": "nixbit",
         "nixos-hardware": "nixos-hardware",

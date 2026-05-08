@@ -28,6 +28,8 @@
     tokstat.inputs.nixpkgs.follows = "nixpkgs";
     zfsguard.url = "github:pbek/zfsguard";
     zfsguard.inputs.nixpkgs.follows = "nixpkgs";
+    kanboard-cli.url = "github:digital-blueprint/kanboard-cli";
+    kanboard-cli.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
