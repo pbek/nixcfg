@@ -288,7 +288,12 @@ in
         nix-direnv.enable = true;
       };
 
-      fish.enable = true;
+      fish = {
+        enable = true;
+        shellInit = ''
+          devenv hook fish | source
+        '';
+      };
       bash.enable = true;
 
       # Run nix-shell, etc. in the fish shell instead of bash
