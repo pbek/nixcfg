@@ -36,10 +36,10 @@ let
     else
       #      (import
       #        (fetchTarball {
-      #          # Date: 20250713
+      #          # Date: 20260503
       #          # https://github.com/NixOS/nixpkgs/issues/425328
-      #          url = "https://github.com/NixOS/nixpkgs/tarball/9807714d6944a957c2e036f84b0ff8caf9930bc0";
-      #          sha256 = "sha256:1g9qc3n5zx16h129dqs5ixfrsff0dsws9lixfja94r208fq9219g";
+      #          url = "https://github.com/NixOS/nixpkgs/tarball/1c3fe55ad329cbcb28471bb30f05c9827f724c76";
+      #          sha256 = "sha256-hGdgeU2Nk87RAuZyYjyDjFL6LK7dAZN5RE9+hrDTkDU=";
       #        })
       #        {
       #          inherit (config.nixpkgs) config;
@@ -65,33 +65,8 @@ let
 
   mkJetbrainsIde =
     ideName:
-    let
-      # The com.github.copilot plugin ships native .node modules (computer.node,
-      # keytar.node) that require additional libraries. We use pluginsForIdeWith
-      # with an extraOverride to add them so auto-patchelf can resolve them.
-      copilotExtraLibs = [
-        pkgs.libx11
-        pkgs.libxtst
-        pkgs.libjpeg8
-        pkgs.libpng
-        pkgs.glib
-        pkgs.pipewire
-        pkgs.libei
-        pkgs.libsecret
-      ];
-      plugins = nix-jetbrains-plugins.lib.pluginsForIdeWith {
-        extraOverrides = {
-          "com.github.copilot" =
-            plugin:
-            plugin.overrideAttrs (old: {
-              buildInputs = (old.buildInputs or [ ]) ++ copilotExtraLibs;
-            });
-        };
-      } jetbrainsPackages ideName cfg.plugins;
-      idePkg = if builtins.isString ideName then jetbrainsPackages.jetbrains.${ideName} else ideName;
-    in
     # https://github.com/nix-community/nix-jetbrains-plugins?tab=readme-ov-file#example
-    jetbrainsPackages.jetbrains.plugins.addPlugins idePkg (builtins.attrValues plugins);
+    nix-jetbrains-plugins.lib.buildIdeWithPlugins jetbrainsPackages ideName cfg.plugins;
 
 in
 {
