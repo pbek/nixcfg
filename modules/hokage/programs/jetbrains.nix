@@ -65,8 +65,33 @@ let
 
   mkJetbrainsIde =
     ideName:
+    let
+      # The com.github.copilot plugin ships native .node modules (computer.node,
+      # keytar.node) that require additional libraries. We use pluginsForIdeWith
+      # with an extraOverride to add them so auto-patchelf can resolve them.
+      copilotExtraLibs = [
+        pkgs.libx11
+        pkgs.libxtst
+        pkgs.libjpeg8
+        pkgs.libpng
+        pkgs.glib
+        pkgs.pipewire
+        pkgs.libei
+        pkgs.libsecret
+      ];
+      plugins = nix-jetbrains-plugins.lib.pluginsForIdeWith {
+        extraOverrides = {
+          "com.github.copilot" =
+            plugin:
+            plugin.overrideAttrs (old: {
+              buildInputs = (old.buildInputs or [ ]) ++ copilotExtraLibs;
+            });
+        };
+      } jetbrainsPackages ideName cfg.plugins;
+      idePkg = if builtins.isString ideName then jetbrainsPackages.jetbrains.${ideName} else ideName;
+    in
     # https://github.com/nix-community/nix-jetbrains-plugins?tab=readme-ov-file#example
-    nix-jetbrains-plugins.lib.buildIdeWithPlugins jetbrainsPackages ideName cfg.plugins;
+    jetbrainsPackages.jetbrains.plugins.addPlugins idePkg (builtins.attrValues plugins);
 
 in
 {
