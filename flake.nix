@@ -23,8 +23,7 @@
     nixbit.inputs.nixpkgs.follows = "nixpkgs";
     uncrash.url = "github:pbek/uncrash/release";
     uncrash.inputs.nixpkgs.follows = "nixpkgs";
-    # Pin to version from 2026-05-03 to avoid breaking of github copilot plugin
-    nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins/ac7e62b01d2dff57b96f19e98bd4e8e27f34a42b";
+    nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
     tokstat.url = "github:pbek/tokstat/release";
     tokstat.inputs.nixpkgs.follows = "nixpkgs";
     zfsguard.url = "github:pbek/zfsguard";
