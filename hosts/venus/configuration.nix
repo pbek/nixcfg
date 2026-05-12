@@ -6,6 +6,7 @@
 
 {
   pkgs,
+  inputs,
   ...
 }:
 {
@@ -58,6 +59,7 @@
     lm_sensors
     unrar
     wowup-cf # World of Warcraft addon manager
+    inputs.kanboard-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # qtwebengine-5.15.19 is marked insecure
     # jellyfin-media-player
