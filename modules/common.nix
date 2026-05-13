@@ -290,11 +290,9 @@ in
 
       fish = {
         enable = true;
-        # Disabled because, if you use "cd" in a terminal with a devenv project the terminal will close!
-        # See https://github.com/cachix/devenv/issues/2805
-        #        shellInit = ''
-        #          devenv hook fish | source
-        #        '';
+        shellInit = ''
+          devenv hook fish | source
+        '';
       };
       bash.enable = true;
 
