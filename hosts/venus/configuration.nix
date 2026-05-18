@@ -6,7 +6,6 @@
 
 {
   pkgs,
-  inputs,
   ...
 }:
 {
@@ -61,7 +60,6 @@
     wowup-cf # World of Warcraft addon manager
     sysex-controls # Configure Akai, Arturia, Korg MIDI devices via SysEx
     surge-xt # Synthesizer
-    inputs.kanboard-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # qtwebengine-5.15.19 is marked insecure
     # jellyfin-media-player

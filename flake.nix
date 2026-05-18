@@ -79,6 +79,7 @@
           overlays = validOverlays;
         };
         tokstat = inputs.tokstat.packages.${system}.default;
+        kanboard-cli = inputs.kanboard-cli.packages.${system}.default;
       };
       allOverlays = validOverlays ++ [ overlays-nixpkgs ];
       commonModules = [
@@ -232,6 +233,7 @@
         uncrash = inputs.uncrash.packages.${system}.default;
         tokstat = inputs.tokstat.packages.${system}.default;
         zfsguard = inputs.zfsguard.packages.${system}.default;
+        kanboard-cli = inputs.kanboard-cli.packages.${system}.default;
         inherit (pkgs) sonar;
       }
       // {

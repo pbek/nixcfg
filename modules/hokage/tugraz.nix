@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  inputs,
   ...
 }:
 let
@@ -25,7 +24,7 @@ in
       with pkgs;
       [
         go-passbolt-cli
-        inputs.kanboard-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
+        kanboard-cli
         # (pkgs.callPackage ../../pkgs/go-passbolt-cli/default.nix { })
         wstunnel # WebSocket tunnel for accessing local development environments
         glab # GitLab CLI tool

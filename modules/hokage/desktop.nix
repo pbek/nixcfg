@@ -7,7 +7,7 @@
 }:
 let
   inherit (config) hokage;
-  inherit (hokage) termFontSize;
+  inherit (hokage) termFontSize useInternalInfrastructure;
 in
 {
   config = lib.mkIf (hokage.role == "desktop") {
@@ -106,7 +106,9 @@ in
           rumdl # Markdown linter and formatter
         ];
       in
-      requiredPackages ++ utils.removePackagesByName optionalPackages hokage.excludePackages;
+      requiredPackages
+      ++ lib.optionals useInternalInfrastructure [ kanboard-cli ]
+      ++ utils.removePackagesByName optionalPackages hokage.excludePackages;
 
     programs.fish = {
       shellAliases = {
