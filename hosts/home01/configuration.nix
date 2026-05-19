@@ -131,23 +131,23 @@
   };
 
   systemd.services = {
-    nixcfg-autobuild = {
-      description = "Timer for automated NixOS configuration build";
-      path = [
-        pkgs.nixos-rebuild
-      ];
-      script = ''
-        nixos-rebuild build --flake github:pbek/nixcfg#venus
-        nixos-rebuild build --flake github:pbek/nixcfg#gaia
-        nixos-rebuild build --flake github:pbek/nixcfg#pluto
-      '';
-      serviceConfig = {
-        User = "root";
-      };
-      # https://www.freedesktop.org/software/systemd/man/latest/systemd.time.html
-      # Use `systemd-analyze calendar "*-*-* 5,7,8,9,12,15,16,18,21:00:00"` to test
-      startAt = "*-*-* 5,7,8,9,12,15,16,18,21:00:00";
-    };
+    #    nixcfg-autobuild = {
+    #      description = "Timer for automated NixOS configuration build";
+    #      path = [
+    #        pkgs.nixos-rebuild
+    #      ];
+    #      script = ''
+    #        nixos-rebuild build --flake github:pbek/nixcfg#venus
+    #        nixos-rebuild build --flake github:pbek/nixcfg#gaia
+    #        nixos-rebuild build --flake github:pbek/nixcfg#pluto
+    #      '';
+    #      serviceConfig = {
+    #        User = "root";
+    #      };
+    #      # https://www.freedesktop.org/software/systemd/man/latest/systemd.time.html
+    #      # Use `systemd-analyze calendar "*-*-* 5,7,8,9,12,15,16,18,21:00:00"` to test
+    #      startAt = "*-*-* 5,7,8,9,12,15,16,18,21:00:00";
+    #    };
 
     # Monitor Wireguard UDP port 51821 on camerapi.lan and report to Uptime Kuma
     camerapi-wireguard-monitor = {
@@ -189,6 +189,7 @@
     role = "server-home";
     programs.libvirt.enable = true;
     programs.copilot-api.enable = true;
+    services.nixhostforge.enable = true;
     zfs.hostId = "daafda01";
     cache.sources = [ "home" ];
   };
