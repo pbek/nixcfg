@@ -1,14 +1,14 @@
 final: prev:
 
 let
-  version = "2.1.2";
+  version = "2.1.3";
   src = final.fetchFromGitHub {
     owner = "cachix";
     repo = "devenv";
-    rev = "c733274dc2900f4bf8b3de279de8c5577930d982";
-    hash = "sha256-uX572+AJ1TAXZDg+npJFq5LMGIGg9IzffhDqcUJsdA0=";
+    rev = "8eff3cd84a4c2a86a02fe706582ae348650e3e76";
+    hash = "sha256-ekzTg0h7hb/FYF5XhTWC1J2MFGEs8yuEasVsQliJ6ek=";
   };
-  cargoHash = "sha256-uEwxqnLqCFpyV2NbnfuUyVqKrMeVeQzoGQmElaVeGU8=";
+  cargoHash = "sha256-O2v0BAXt2RjYAMUEjHiqV9CPmsOumv+i5bTe1vTgubM=";
 in
 {
   devenv = prev.devenv.overrideAttrs (
