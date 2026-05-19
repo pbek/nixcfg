@@ -274,6 +274,27 @@
         "type": "github"
       }
     },
+    "nixhostforge": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1779177537,
+        "narHash": "sha256-mvX8wyOzEuRZZohUBeWb9Kf6aoO7UcVSvcPt7iqvbw8=",
+        "owner": "pbek",
+        "repo": "nixhostforge",
+        "rev": "cd6fcc90b5e6596d5164cdb20c1c81ce972abb67",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pbek",
+        "ref": "release",
+        "repo": "nixhostforge",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1778945272,
@@ -402,6 +423,7 @@
         "kanboard-cli": "kanboard-cli",
         "nix-jetbrains-plugins": "nix-jetbrains-plugins",
         "nixbit": "nixbit",
+        "nixhostforge": "nixhostforge",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-stable": "nixpkgs-stable",

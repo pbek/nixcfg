@@ -21,6 +21,8 @@
     };
     nixbit.url = "github:pbek/nixbit/release";
     nixbit.inputs.nixpkgs.follows = "nixpkgs";
+    nixhostforge.url = "github:pbek/nixhostforge/release";
+    nixhostforge.inputs.nixpkgs.follows = "nixpkgs";
     uncrash.url = "github:pbek/uncrash/release";
     uncrash.inputs.nixpkgs.follows = "nixpkgs";
     nix-jetbrains-plugins.url = "github:nix-community/nix-jetbrains-plugins";
