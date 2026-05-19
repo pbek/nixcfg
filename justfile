@@ -511,8 +511,13 @@ nixbit-update-release:
 nixbit-update-flake:
     nix flake update nixbit
 
+# Update the NixHostForge flake
+[group('nixhostforge')]
+nixhostforge-update-flake:
+    nix flake update nixhostforge
+
 # Update the kanboard-cli flake
-[group('nixbit')]
+[group('kanboard-cli')]
 kanboard-cli-update-flake:
     nix flake update kanboard-cli
 
