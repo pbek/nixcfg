@@ -281,11 +281,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779224270,
-        "narHash": "sha256-p/DhY1wOlIeNYjhCXeivQsOI5ugH47EpAAEnEeAuXQI=",
+        "lastModified": 1779304222,
+        "narHash": "sha256-ksWPWNzoN3aSCNyMeSUbtsUeCvK99oHZSz+2G4VfYME=",
         "owner": "pbek",
         "repo": "nixhostforge",
-        "rev": "5c3490633259f606f67b5018e47fbb4fe13196d9",
+        "rev": "42ff2f84d15d26e6be278677e20b6cc9f43565e8",
         "type": "github"
       },
       "original": {
