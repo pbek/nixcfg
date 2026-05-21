@@ -5,10 +5,10 @@ let
   src = final.fetchFromGitHub {
     owner = "cachix";
     repo = "devenv";
-    rev = "8eff3cd84a4c2a86a02fe706582ae348650e3e76";
-    hash = "sha256-ekzTg0h7hb/FYF5XhTWC1J2MFGEs8yuEasVsQliJ6ek=";
+    rev = "a904b9b62d53399bb1c01b3ccf25255b59641b65";
+    hash = "sha256-esZvb5j2bjfBBYjj6OPi4mGLfFuQ5uguBCLI1S0u40E=";
   };
-  cargoHash = "sha256-O2v0BAXt2RjYAMUEjHiqV9CPmsOumv+i5bTe1vTgubM=";
+  cargoHash = "sha256-ncQCfWil20jtpzszkTjF+3wvNcfb7T/wW1JC6bx720I=";
 in
 {
   devenv = prev.devenv.overrideAttrs (
