@@ -58,9 +58,6 @@
     lm_sensors
     unrar
     wowup-cf # World of Warcraft addon manager
-    sysex-controls # Configure Akai, Arturia, Korg MIDI devices via SysEx
-    surge-xt # Synthesizer
-
     # qtwebengine-5.15.19 is marked insecure
     # jellyfin-media-player
   ];
@@ -201,6 +198,7 @@
       enable = true;
       ryubing.highDpi = true;
     };
+    synth.enable = true;
     zfs = {
       enable = true;
       hostId = "dcdaca04";

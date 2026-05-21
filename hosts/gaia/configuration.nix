@@ -126,6 +126,7 @@ in
     hostName = "gaia";
     memory-swap.enable = false;
     tugraz.enable = true;
+    synth.enable = true;
     cache.sources = [ "home" ];
     programs.platformio.enable = true;
 
