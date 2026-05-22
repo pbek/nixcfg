@@ -21,6 +21,7 @@ in
     environment.systemPackages = with pkgs; [
       sysex-controls # Configure Akai, Arturia, Korg MIDI devices via SysEx
       surge-xt # Synthesizer
+      lmms # Digital audio workstation with MIDI support
     ];
   };
 }
