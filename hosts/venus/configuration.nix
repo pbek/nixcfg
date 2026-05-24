@@ -173,7 +173,10 @@
 
   programs.gamescope = {
     enable = true;
-    capSysNice = true;
+    # Set to false, because of
+    # https://github.com/NixOS/nixpkgs/issues/523200
+    # https://github.com/NixOS/nixpkgs/issues/523427
+    capSysNice = false;
   };
   programs.steam.gamescopeSession.enable = true; # Integrates with programs.steam
 
