@@ -174,15 +174,6 @@ in
         mcp = {
           enable = true;
           servers = {
-            # https://github.com/utensils/mcp-nixos
-            nixos = {
-              command = "nix";
-              args = [
-                "run"
-                "github:utensils/mcp-nixos"
-                "--"
-              ];
-            };
             # https://github.com/akirak/nix-playwright-mcp/
             nix-playwright = {
               command = "nix";
