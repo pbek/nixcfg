@@ -261,6 +261,7 @@ push:
     -attic push qownnotes `which zfsguard` --no-closure
     -attic push qownnotes `which devenv` --no-closure
     -attic push qownnotes `which kanboard-cli` --no-closure
+    -attic push qownnotes `which codebar` --no-closure
 
 [group('cache')]
 push-all:

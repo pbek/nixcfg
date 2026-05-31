@@ -104,6 +104,8 @@ in
 
           harper # Grammar checker
           rumdl # Markdown linter and formatter
+
+          # codexbar-cli # AI provider usage stats CLI
         ];
       in
       requiredPackages
