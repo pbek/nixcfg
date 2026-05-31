@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
@@ -89,6 +89,9 @@
         catppuccin.nixosModules.catppuccin
         (_: {
           nixpkgs.overlays = allOverlays;
+          # Suppress catppuccin autoEnable migration warning; actual theming is
+          # handled per-user in modules/hokage/catppuccin.nix.
+          catppuccin.autoEnable = false;
         })
         # We still need the age module for servers, because it needs to evaluate "age" in the services
         agenix.nixosModules.age
