@@ -159,7 +159,7 @@
   console.font = "${pkgs.terminus_font}/share/consolefonts/ter-u20n.psf.gz";
 
   # Increase the console font size for kmscon
-  services.kmscon.extraConfig = "font-size = 26";
+  services.kmscon.config."font-size" = 26;
 
   # AMD GPU monitoring tools
   services.lact.enable = true;

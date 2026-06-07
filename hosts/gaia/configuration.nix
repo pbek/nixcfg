@@ -111,7 +111,7 @@ in
   services.pulseaudio.extraConfig = "unload-module module-suspend-on-idle";
 
   # Increase the console font size for kmscon
-  services.kmscon.extraConfig = "font-size = 26";
+  services.kmscon.config."font-size" = 26;
 
   services.uncrash = {
     enable = true;

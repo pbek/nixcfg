@@ -27,7 +27,7 @@
   # virtualisation.multipass.package = pkgs.stable.multipass;
 
   # Increase the console font size for kmscon
-  services.kmscon.extraConfig = "font-size = 18";
+  services.kmscon.config."font-size" = 18;
 
   hokage = {
     hostName = "sinope";

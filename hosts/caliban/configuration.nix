@@ -80,7 +80,7 @@ in
   };
 
   # Increase the console font size for kmscon
-  services.kmscon.extraConfig = "font-size = 26";
+  services.kmscon.config."font-size" = 26;
 
   users.users.${userLogin} = {
     openssh.authorizedKeys.keys = [

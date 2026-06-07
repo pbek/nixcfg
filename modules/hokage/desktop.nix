@@ -23,6 +23,7 @@ in
 
     # Allow some insecure packages to be installed
     nixpkgs.config.permittedInsecurePackages = [
+      "electron-39.8.10"
       "qtwebkit-5.212.0-alpha4"
     ];
 
