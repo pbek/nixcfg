@@ -180,6 +180,12 @@
   };
   programs.steam.gamescopeSession.enable = true; # Integrates with programs.steam
 
+  #  services.davfs2 = {
+  #    enable = true; # WebDAV support for network shares
+  #    davUser = "omega";
+  #    davGroup = "users";
+  #  };
+
   hokage = {
     hostName = "venus";
     memory-swap.enable = false;
