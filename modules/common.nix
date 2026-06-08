@@ -322,7 +322,7 @@ in
       # Post-modern editor (like vim)
       helix = {
         enable = true;
-        defaultEditor = useInternalInfrastructure;
+        defaultEditor = lib.mkDefault (useInternalInfrastructure && hokage.role != "desktop");
       };
     };
   });

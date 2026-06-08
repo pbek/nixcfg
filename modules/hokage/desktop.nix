@@ -185,6 +185,11 @@ in
           };
         };
 
+        fresh-editor = {
+          enable = true;
+          defaultEditor = lib.mkDefault (useInternalInfrastructure && hokage.role == "desktop");
+        };
+
         # Enable https://wezfurlong.org/wezterm/ for terminal with OSC 52 support for zellij clipboard via SSH
         #      wezterm = {
         #        enable = true;
