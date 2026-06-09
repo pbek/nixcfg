@@ -58,6 +58,8 @@ in
           userName = "pbeke";
           passwordCommand = passwordCommand "patrizio.bekerle@tugraz.at";
           folders.inbox = "INBOX";
+          folders.sent = "Sent Items";
+          folders.trash = "Deleted Items";
 
           imap = {
             host = "exchange.tugraz.at";
