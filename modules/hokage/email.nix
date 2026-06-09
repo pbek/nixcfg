@@ -26,6 +26,9 @@ in
     himalaya.enable = lib.mkEnableOption "Himalaya mail client" // {
       default = cfg.enable;
     };
+    meli.enable = lib.mkEnableOption "meli mail client" // {
+      default = cfg.enable;
+    };
     neomutt.enable = lib.mkEnableOption "NeoMutt mail client";
     aerc.enable = lib.mkEnableOption "aerc mail client" // {
       default = cfg.enable;
@@ -39,6 +42,7 @@ in
       ];
 
       programs.himalaya.enable = cfg.himalaya.enable;
+      programs.meli.enable = cfg.meli.enable;
       programs.neomutt.enable = cfg.neomutt.enable;
       programs.aerc = lib.mkIf cfg.aerc.enable {
         enable = true;
@@ -102,6 +106,7 @@ in
           };
 
           himalaya.enable = cfg.himalaya.enable;
+          meli.enable = cfg.meli.enable;
           neomutt.enable = cfg.neomutt.enable;
           aerc.enable = cfg.aerc.enable;
         };
@@ -129,6 +134,7 @@ in
           };
 
           himalaya.enable = cfg.himalaya.enable;
+          meli.enable = cfg.meli.enable;
           neomutt.enable = cfg.neomutt.enable;
           aerc.enable = cfg.aerc.enable;
         };
