@@ -32,6 +32,7 @@
     zfsguard.inputs.nixpkgs.follows = "nixpkgs";
     kanboard-cli.url = "github:digital-blueprint/kanboard-cli";
     kanboard-cli.inputs.nixpkgs.follows = "nixpkgs";
+    hunk.url = "github:modem-dev/hunk";
   };
 
   outputs =
@@ -140,6 +141,20 @@
         config.allowUnfree = true;
         overlays = allOverlays;
       };
+      hunkUpstream = inputs.hunk.packages.${system}.hunk;
+      hunk =
+        pkgs.runCommand "${hunkUpstream.pname}-${hunkUpstream.version}"
+          {
+            meta = hunkUpstream.meta // {
+              mainProgram = "hunk";
+            };
+          }
+          ''
+            mkdir -p $out/bin
+            ln -s ${hunkUpstream}/bin/hunk $out/bin/hunk
+            ln -s ${hunkUpstream}/bin/hunk $out/bin/hunkdiff
+            ln -s ${hunkUpstream}/skills $out/skills
+          '';
     in
     {
       #     config = nixpkgs.config.systems.${builtins.currentSystem}.config;
@@ -239,6 +254,7 @@
         tokstat = inputs.tokstat.packages.${system}.default;
         zfsguard = inputs.zfsguard.packages.${system}.default;
         kanboard-cli = inputs.kanboard-cli.packages.${system}.default;
+        inherit hunk;
         inherit (pkgs) sonar;
       }
       // {
@@ -285,6 +301,11 @@
             };
           in
           docs.optionsCommonMark;
+      };
+
+      apps.x86_64-linux.hunk = {
+        type = "app";
+        program = "${hunk}/bin/hunk";
       };
     };
 }
