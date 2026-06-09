@@ -45,8 +45,8 @@ in
           #    noseyparker
           #    (pkgs.callPackage ../../pkgs/noseyparker/default.nix { })
 
-          (pkgs.callPackage ../../pkgs/proton-authenticator/package.nix { })
-          # proton-authenticator
+          # (pkgs.callPackage ../../pkgs/proton-authenticator/package.nix { })
+          proton-authenticator
 
           # (pkgs.callPackage ../../pkgs/nixbit/package.nix { })
 
