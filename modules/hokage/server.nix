@@ -43,9 +43,13 @@ in
       settings = {
         substituters = [
           "https://cache.nixos.org/"
+          "https://nix-cache.qownnotes.org/main"
+          "https://nix-cache.qownnotes.org/qownnotes"
         ];
         trusted-public-keys = [
           "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+          "main:WYsIaF+ItMNE9Xt976bIGKSKp9jaaVeTzYlfqQqpP28="
+          "qownnotes:7hN006Z7xgK5v97WKFo9u3qcVbZIXHtFmPPM3NPERpM="
         ];
       };
     };
