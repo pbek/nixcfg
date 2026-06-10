@@ -101,8 +101,9 @@ in
 
           smtp = {
             host = "mail.bekerle.com";
-            port = 25;
+            port = 587;
             tls.useStartTls = true;
+            authentication = "plain";
           };
 
           himalaya.enable = cfg.himalaya.enable;
@@ -131,6 +132,7 @@ in
             host = "mailrelay.tugraz.at";
             port = 587;
             tls.useStartTls = true;
+            authentication = "plain";
           };
 
           himalaya.enable = cfg.himalaya.enable;
