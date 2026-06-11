@@ -14,7 +14,7 @@ in
 {
   options.hokage.programs.gemini-cli = {
     enable = mkEnableOption "Google Gemini CLI" // {
-      default = hokage.role == "desktop";
+      default = false;
     };
   };
 
