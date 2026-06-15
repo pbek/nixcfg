@@ -277,6 +277,8 @@ in
   # https://rycee.gitlab.io/home-manager/options.html
   # https://nix-community.github.io/home-manager/options.html#opt-home.file
   home-manager.users = lib.genAttrs hokage.usersWithRoot (_userName: {
+    home.enableNixpkgsReleaseCheck = false;
+
     # The home.stateVersion option does not have a default and must be set
     home.stateVersion = mkDefault "24.11";
 
