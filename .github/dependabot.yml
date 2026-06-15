@@ -8,6 +8,11 @@ updates:
       day: "monday"
       time: "03:00"
       timezone: "UTC"
+    open-pull-requests-limit: 1
+    groups:
+      nix-dependencies:
+        patterns:
+          - "*"
     labels:
       - dependencies
       - automated
