@@ -324,7 +324,12 @@ in
       # Post-modern editor (like vim)
       helix = {
         enable = true;
-        defaultEditor = lib.mkDefault (useInternalInfrastructure && hokage.role != "desktop");
+      };
+
+      # Powerful terminal text editor and IDE
+      fresh-editor = {
+        enable = true;
+        defaultEditor = lib.mkDefault useInternalInfrastructure;
       };
     };
   });
