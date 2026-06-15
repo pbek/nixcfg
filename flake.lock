@@ -240,11 +240,11 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1780734324,
-        "narHash": "sha256-Z+6tqhROBuYKzdqi6uQuWtV8vqee34tRJh/naF77ZnE=",
+        "lastModified": 1781341546,
+        "narHash": "sha256-17btxePnVyGjeYlQ6C6Jvc/X9Rn4NfxhQypx0eYwzHk=",
         "owner": "nix-community",
         "repo": "nix-jetbrains-plugins",
-        "rev": "967f904b44eba5aca8645db009b54fbdb657c7b6",
+        "rev": "bae5228a91aeb509e5e3053f9274189f900252dc",
         "type": "github"
       },
       "original": {
@@ -346,11 +346,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1780243769,
-        "narHash": "sha256-x5UQuRsH3MqI0U9afaXSNqzTPSeZlRLvFAav2Ux1pNw=",
+        "lastModified": 1780749050,
+        "narHash": "sha256-3av0pIjlOWQ6rDbNOmpUSvbNnJkGORQKKjb4LtCZsIY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "331800de5053fcebacf6813adb5db9c9dca22a0c",
+        "rev": "a799d3e3886da994fa307f817a6bc705ae538eeb",
         "type": "github"
       },
       "original": {
