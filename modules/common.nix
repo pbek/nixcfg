@@ -24,6 +24,15 @@ in
       shellInit = ''
         # Fix: Help messages to be shown in English, instead of German
         set -e LANGUAGE
+
+        function mkcd --description 'Create a directory and enter it'
+          if test (count $argv) -ne 1
+            echo 'Usage: mkcd <directory>' >&2
+            return 1
+          end
+
+          mkdir -p -- $argv[1]; and cd -- $argv[1]
+        end
       '';
       shellAliases = {
         gitc = "git commit";
