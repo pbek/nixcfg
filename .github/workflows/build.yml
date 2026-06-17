@@ -8,6 +8,7 @@ on:
       - "pkgs/qownnotes/**"
       - "pkgs/nixbit/**"
       - "pkgs/sonar/**"
+      - "overlays/devenv-commit.nix"
       - "overlays/sonar.nix"
       - "flake.nix"
       - "flake.lock"
@@ -78,5 +79,5 @@ jobs:
           nix-shell -p attic-client --run "attic push qownnotes ./result"
       - name: Build devenv package
         run: |
-          nix build nixpkgs#devenv && \
+          nix build .#devenv && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"

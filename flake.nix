@@ -232,7 +232,7 @@
       };
 
       packages.x86_64-linux = {
-        inherit (pkgs) qownnotes;
+        inherit (pkgs) devenv qownnotes;
         qownnotes-stable = pkgs.stable.qownnotes;
         nixbit = inputs.nixbit.packages.${system}.default;
         uncrash = inputs.uncrash.packages.${system}.default;
