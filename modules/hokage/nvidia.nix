@@ -47,8 +47,7 @@ in
     maxKernelVersion = lib.mkOption {
       type = lib.types.package;
       # Set the currently maximum allowed kernel package for NVIDIA here
-      # default = pkgs.linuxKernel.packages.linux_6_18.kernel;
-      default = pkgs.linuxPackages_latest.kernel;
+      default = pkgs.linuxPackages_7_0.kernel;
       description = "Maximum allowed kernel package for NVIDIA";
       readOnly = true;
     };
