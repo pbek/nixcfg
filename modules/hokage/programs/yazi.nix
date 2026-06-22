@@ -51,13 +51,15 @@ in
               # https://github.com/yazi-rs/plugins/tree/main/git.yazi
               {
                 id = "git";
-                name = "*";
+                url = "*";
                 run = "git";
+                group = "git";
               }
               {
                 id = "git";
-                name = "*/";
+                url = "*/";
                 run = "git";
+                group = "git";
               }
             ];
             # https://yazi-rs.github.io/docs/configuration/yazi#mgr.linemode
