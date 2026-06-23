@@ -244,7 +244,6 @@ in
         neosay # send messages to matrix room
         rdap # whois replacement
         lsof # list open files
-        devenv # DevEnv CLI
         micro # Nano replacement
       ];
     in
@@ -299,11 +298,14 @@ in
         nix-direnv.enable = true;
       };
 
+      devenv = {
+        enable = true;
+        package = pkgs.devenv;
+        enableFishIntegration = true;
+      };
+
       fish = {
         enable = true;
-        shellInit = ''
-          devenv hook fish | source
-        '';
       };
       bash.enable = true;
 
