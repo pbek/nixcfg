@@ -433,10 +433,16 @@ in
               {
                 triggers = [
                   ":+1"
-                  ":up"
                   ":ok"
                 ];
                 replace = "👍🏻️";
+              }
+              {
+                triggers = [
+                  ":up"
+                  ":wait"
+                ];
+                replace = "☝🏻️";
               }
               {
                 triggers = [
