@@ -7,6 +7,7 @@
   makeWrapper,
   botan3,
   libgit2,
+  libsecret,
   pkg-config,
   nixosTests,
   installShellFiles,
@@ -43,7 +44,10 @@ stdenv.mkDerivation (finalAttrs: {
     libgit2
     aspell
   ]
-  ++ lib.optionals stdenv.hostPlatform.isLinux [ qt6Packages.qtwayland ];
+  ++ lib.optionals stdenv.hostPlatform.isLinux [
+    libsecret
+    qt6Packages.qtwayland
+  ];
 
   cmakeFlags = [
     "-DQON_QT6_BUILD=ON"
