@@ -2,12 +2,16 @@ version: 2
 
 updates:
   - package-ecosystem: "nix"
-    directory: "/"
+    directories:
+      - "/"
+      - "/examples/hokage-consumer"
     schedule:
       interval: "weekly"
       day: "monday"
       time: "03:00"
       timezone: "UTC"
+    allow:
+      - dependency-type: "all"
     open-pull-requests-limit: 1
     groups:
       nix-dependencies:
