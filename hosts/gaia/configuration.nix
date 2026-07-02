@@ -117,11 +117,6 @@ in
     enable = true;
   };
 
-  # Try to get around being stuck after resume
-  # https://chatgpt.com/c/690d9bc5-e334-832b-b459-86b3e0f9250b
-  # Did not help
-  # boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
-
   hokage = {
     hostName = "gaia";
     memory-swap.enable = false;
@@ -132,7 +127,9 @@ in
 
     nvidia = {
       enable = true;
-      powerManagement.enable = false;
+      # Preserve NVIDIA VRAM across suspend/resume to avoid KWin/Plasma
+      # and Electron clients crashing with Xid 13 after wake.
+      powerManagement.enable = true;
       packageType = "beta";
       # With kernel 6.17.2 there were no resolutions detected without modesetting
       modesetting.enable = true;
