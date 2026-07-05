@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  nixpkgs-zfs,
   ...
 }:
 let
@@ -52,8 +53,8 @@ in
       type = lib.types.package;
       # Set the currently maximum allowed kernel package for ZFS here
       # Look for Kernel support on https://github.com/openzfs/zfs/releases
-      # Look for ZFS version in nixpkgs on https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=zfs+linux_7_0
-      default = pkgs.linuxKernel.packages.linux_7_0.kernel;
+      # Look for ZFS version in nixpkgs on https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=zfs+linux_7_1
+      default = nixpkgs-zfs.linuxKernel.packages.linux_7_0.kernel;
       description = "Maximum allowed kernel package vor ZFS";
       readOnly = true;
     };

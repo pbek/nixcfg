@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs-zfs.url = "github:NixOS/nixpkgs/0ebe44573fc3db41e7da92ecbad95912d5af98f6";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
@@ -42,6 +43,7 @@
       nixpkgs-stable,
       agenix,
       disko,
+      nixpkgs-zfs,
       nixos-hardware,
       plasma-manager,
       nixbit,
@@ -148,6 +150,10 @@
       commonArgs = {
         lib-utils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
         inherit inputs;
+        nixpkgs-zfs = import nixpkgs-zfs {
+          inherit system;
+          config.allowUnfree = true;
+        };
       };
 
       # Expose the hokage module for external consumption
