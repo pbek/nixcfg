@@ -65,8 +65,6 @@ in
       #    heroic-unwrapped # Epic Games Store
       lutris-unwrapped # Game manager
       ferdium
-      qownnotes
-      # (pkgs.qt6Packages.callPackage ../../pkgs/qownnotes/package.nix { })
       qc
       #    (pkgs.callPackage ../../pkgs/qc/default.nix { })
       nextcloud-client
