@@ -21,7 +21,13 @@ in
     };
     settings = mkOption {
       type = types.attrsOf (types.attrsOf (types.either types.bool (types.either types.int types.str)));
-      default = { };
+      default = {
+        Editor = {
+          hangingIndent = true;
+          showLineNumbers = true;
+          showMarkdownImagePreviews = true;
+        };
+      };
       description = "Settings for QOwnNotes.override.conf";
       example = {
         General = {
