@@ -18,7 +18,7 @@ Exec=nix-shell -p imagemagick --run 'convert "%u" -resize 1024x1024 "%u"'
 [Desktop Action convertWebp]
 Name=Convert image to WebP
 Icon=editimage
-Exec=nix-shell -p imagemagick --run 'convert "%u" "%u.webp"'
+Exec=nix-shell -p imagemagick --run 'u="%u"; convert "$u" "${u%.*}.webp"'
 
 [Desktop Action convertJpg90]
 Name=Convert image to JPG 90%
@@ -28,14 +28,14 @@ Exec=nix-shell -p imagemagick --run 'convert "%u" -quality 90 "%u.jpg"'
 [Desktop Action convertWebpLossless]
 Name=Convert image to WebP lossless
 Icon=editimage
-Exec=nix-shell -p imagemagick --run 'convert "%u" -define webp:lossless=true "%u.webp"'
+Exec=nix-shell -p imagemagick --run 'u="%u"; convert "$u" -define webp:lossless=true "${u%.*}.webp"'
 
 [Desktop Action convertWebp50]
 Name=Convert image to WebP 50%
 Icon=editimage
-Exec=nix-shell -p imagemagick --run 'convert "%u" -quality 50 "%u.webp"'
+Exec=nix-shell -p imagemagick --run 'u="%u"; convert "$u" -quality 50 "${u%.*}.webp"'
 
 [Desktop Action convertWebp70]
 Name=Convert image to WebP 70%
 Icon=editimage
-Exec=nix-shell -p imagemagick --run 'convert "%u" -quality 70 "%u.webp"'
+Exec=nix-shell -p imagemagick --run 'u="%u"; convert "$u" -quality 70 "${u%.*}.webp"'
