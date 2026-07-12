@@ -36,6 +36,9 @@
     userEmail = "arslan.khurshid@tugraz.at";
     tugraz.enableExternal = true;
     nvidia.enable = true;
+    gaming = {
+      enable = true;
+    };
 
     zfs = {
       enable = true;

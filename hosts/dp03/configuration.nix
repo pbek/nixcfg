@@ -42,6 +42,9 @@ in
     userNameShort = "Andrea";
     userEmail = "andrea.ortner@tugraz.at";
     tugraz.enableExternal = true;
+    gaming = {
+      enable = true;
+    };
 
     zfs = {
       enable = true;
