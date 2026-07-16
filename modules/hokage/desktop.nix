@@ -107,6 +107,8 @@ in
           rumdl # Markdown linter and formatter
 
           # codexbar-cli # AI provider usage stats CLI
+
+          handy # TTS system tray app
         ];
       in
       requiredPackages
