@@ -5,14 +5,28 @@ let
   src = final.fetchFromGitHub {
     owner = "cachix";
     repo = "devenv";
-    rev = "a904b9b62d53399bb1c01b3ccf25255b59641b65";
-    hash = "sha256-esZvb5j2bjfBBYjj6OPi4mGLfFuQ5uguBCLI1S0u40E=";
+    rev = "5f1cf17be0fc48689bd0ecb810de6d2e06d259a1";
+    hash = "sha256-Gof6j4d43yX2qSLLp78JILke346IggDFIxTgl3ecVQE=";
   };
-  cargoHash = "sha256-ncQCfWil20jtpzszkTjF+3wvNcfb7T/wW1JC6bx720I=";
+  cargoHash = "sha256-9Iz+HYQCrcEqF6x/vgw7n+eYBzHMRcWLYnNJlBFb9DI=";
+
+  nixVersion = "2.34";
+  nixSrc = final.fetchFromGitHub {
+    owner = "cachix";
+    repo = "nix";
+    rev = "782ac1b155679b065ec945ae50d0fa1d495883b7";
+    hash = "sha256-xem+4ncdQCTFJsQ4PrVuyVmi3j4w/Yqg298hBUzVejA=";
+  };
+
+  nixComponents = (prev.nixVersions.nixComponents_git.overrideSource nixSrc).overrideScope (
+    _finalScope: _prevScope: {
+      version = nixVersion;
+    }
+  );
 in
 {
   devenv = prev.devenv.overrideAttrs (
-    _finalAttrs: _previousAttrs: {
+    _finalAttrs: previousAttrs: {
       inherit version src cargoHash;
 
       cargoDeps = final.rustPlatform.fetchCargoVendor {
@@ -20,6 +34,17 @@ in
         inherit version src;
         hash = cargoHash;
       };
+
+      buildInputs = [
+        nixComponents.nix-expr-c
+        nixComponents.nix-store-c
+        nixComponents.nix-util-c
+        nixComponents.nix-flake-c
+        nixComponents.nix-cmd-c
+        nixComponents.nix-fetchers-c
+        nixComponents.nix-main-c
+      ]
+      ++ (previousAttrs.buildInputs or [ ]);
     }
   );
 }
