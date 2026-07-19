@@ -77,7 +77,6 @@ in
 
           #    pinentry-curses
           pinentry-qt # For some reason this wasn't installed by the gpg settings
-          cryfs
           onlyoffice-desktopeditors
           gh
           github-copilot-cli
