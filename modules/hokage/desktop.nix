@@ -89,6 +89,7 @@ in
           gptcommit # Git commit message generator
           tokstat
           sonar
+          stable.cryfs
 
           aspell # Dictionaries for QOwnNotes
           aspellDicts.en
