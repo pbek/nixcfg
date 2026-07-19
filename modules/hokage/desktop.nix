@@ -89,7 +89,7 @@ in
           gptcommit # Git commit message generator
           tokstat
           sonar
-          stable.cryfs
+          gocryptfs # Encrypted filesystem in userspace, used by KDE Vault
 
           aspell # Dictionaries for QOwnNotes
           aspellDicts.en
