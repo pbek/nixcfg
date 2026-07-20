@@ -89,6 +89,7 @@ in
           gptcommit # Git commit message generator
           tokstat
           sonar
+          ziggity # Git TUI client
           gocryptfs # Encrypted filesystem in userspace, used by KDE Vault
 
           aspell # Dictionaries for QOwnNotes

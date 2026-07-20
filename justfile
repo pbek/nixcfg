@@ -258,6 +258,7 @@ push:
     -attic push qownnotes `which uncrash` --no-closure
     -attic push qownnotes `which tokstat` --no-closure
     -attic push qownnotes `which sonar` --no-closure
+    -attic push qownnotes `which ziggity` --no-closure
     -attic push qownnotes `which zfsguard` --no-closure
     -attic push qownnotes `which devenv` --no-closure
     -attic push qownnotes `which kanboard-cli` --no-closure

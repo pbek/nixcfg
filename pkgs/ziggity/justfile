@@ -1,0 +1,14 @@
+build:
+    nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })'
+
+build-force:
+    nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })' --check
+
+run:
+    ./result/bin/ziggity --version
+
+edit-app:
+    cd ~/Code/_fork/nixpkgs || cd ~/Code/nixpkgs || cd ~/Code/tools/nixpkgs && kate ./pkgs/by-name/zi/ziggity/package.nix
+
+open-browser:
+    xdg-open https://github.com/simoarpe/ziggity

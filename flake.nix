@@ -245,7 +245,7 @@
         tokstat = inputs.tokstat.packages.${system}.default;
         zfsguard = inputs.zfsguard.packages.${system}.default;
         kanboard-cli = inputs.kanboard-cli.packages.${system}.default;
-        inherit (pkgs) sonar;
+        inherit (pkgs) sonar ziggity;
       }
       // {
         # Generate Markdown docs for hokage module options
