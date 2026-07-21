@@ -104,6 +104,7 @@ in
         git:
           commit:
             signOff: true
+          overrideGpg: true
       '';
     });
   };
