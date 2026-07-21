@@ -8,6 +8,7 @@ on:
       - "pkgs/qownnotes/**"
       - "pkgs/nixbit/**"
       - "pkgs/sonar/**"
+      - "pkgs/ziggity/**"
       - "overlays/devenv-commit.nix"
       - "overlays/sonar.nix"
       - "flake.nix"
@@ -76,6 +77,10 @@ jobs:
       - name: Build zfsguard flake package
         run: |
           nix build .#zfsguard && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build ziggity flake package
+        run: |
+          nix build .#ziggity && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
       - name: Build devenv package
         run: |
