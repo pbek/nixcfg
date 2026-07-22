@@ -22,10 +22,10 @@
     kdePackages.kcalc
     php
     zoom-us
-    wineWowPackages.waylandFull
+    wineWow64Packages.waylandFull
     usb-modeswitch
     usbutils
-    superTuxKart
+    supertuxkart
   ];
 
   # Steam
@@ -86,9 +86,8 @@
 
     nvidia = {
       enable = true;
-      # "production" currently is at 580, that's the last release that supports the Quadro P2000
-      # If that ever changes, we might need to switch to "legacy_535"
-      packageType = "production";
+      # 580 is the last release that supports the Quadro P2000
+      packageType = "legacy_580";
       # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
       open = false;
       modesetting.enable = true;
