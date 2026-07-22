@@ -33,8 +33,10 @@ in
         "latest"
         "beta"
         "production"
-        "legacy_535"
-        "legacy_470"
+        "new_feature"
+        "bleeding_edge"
+        "vulkan_beta"
+        "legacy_580"
       ];
       default = "latest";
       description = "Type of NVIDIA driver package to use";
