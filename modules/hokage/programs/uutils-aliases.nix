@@ -65,7 +65,8 @@ in
       chmod = "uutils-chmod";
       expr = "uutils-expr";
       whoami = "uutils-whoami";
-      tr = "uutils-tr";
+      # nix-shell has currently trouble with that
+      # tr = "uutils-tr";
       #    test = "uutils-test";
       tail = "uutils-tail";
       who = "uutils-who";
