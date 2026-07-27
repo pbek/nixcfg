@@ -305,11 +305,11 @@
         "zfsguard": "zfsguard"
       },
       "locked": {
-        "lastModified": 1783877926,
-        "narHash": "sha256-i21FbqU/w3mGK0YYeryUSMCuQEbgJOpLX1S/VLOsLxM=",
+        "lastModified": 1785087288,
+        "narHash": "sha256-HCjo7GB5gb4U5NuiQturyjmB29PrNZ9a2De2GiPbBiI=",
         "owner": "pbek",
         "repo": "nixcfg",
-        "rev": "12ad451a998bc5437ab8d992406722e9d4b67e78",
+        "rev": "3ce3c9eec55b518e197caba8f0d766b55621084e",
         "type": "github"
       },
       "original": {
