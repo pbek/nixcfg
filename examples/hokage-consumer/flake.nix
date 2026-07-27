@@ -29,6 +29,10 @@
         desktop = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
+            {
+              nixpkgs.overlays = [ (import (nixcfg + "/overlays/ziggity.nix")) ];
+            }
+
             # Import catppuccin module (required by hokage)
             nixcfg.commonArgs.inputs.catppuccin.nixosModules.catppuccin
 
