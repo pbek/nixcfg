@@ -104,7 +104,9 @@ in
         git:
           commit:
             signOff: true
-          overrideGpg: true
+          # false, because of issues in lazygit
+          # see https://github.com/jesseduffield/lazygit/issues/4668#issuecomment-4295182439
+          overrideGpg: false
       '';
     });
   };
