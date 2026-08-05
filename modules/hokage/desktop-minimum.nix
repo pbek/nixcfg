@@ -65,8 +65,21 @@ in
 
     # Configure keymap in X11
     services.xserver.xkb = {
-      layout = lib.mkDefault "de";
-      variant = lib.mkDefault "nodeadkeys";
+      layout = lib.mkDefault (if hokage.backtickFirst then "de-backtick" else "de");
+      variant = lib.mkDefault (if hokage.backtickFirst then "" else "nodeadkeys");
+      extraLayouts = lib.mkIf hokage.backtickFirst {
+        de-backtick = {
+          description = "German (backtick first)";
+          languages = [ "deu" ];
+          symbolsFile = pkgs.writeText "de-backtick" ''
+            default partial alphanumeric_keys
+            xkb_symbols "basic" {
+              include "de(nodeadkeys)"
+              key <AE12> { [ grave, acute, cedilla, ogonek ] };
+            };
+          '';
+        };
+      };
     };
 
     # Enable touchpad support (enabled default in most desktopManager).

@@ -7,7 +7,7 @@
 }:
 let
   inherit (config) hokage;
-  inherit (hokage) termFontSize useInternalInfrastructure;
+  inherit (hokage) backtickFirst termFontSize useInternalInfrastructure;
 in
 {
   config = lib.mkIf (hokage.role == "desktop") {
@@ -148,7 +148,7 @@ in
       enable = lib.mkDefault true;
       config."font-name" = "Source Code Pro";
       # https://github.com/Aetf/kmscon/blob/develop/src/kmscon_conf.c
-      extraOptions = "--xkb-layout de";
+      extraOptions = "--xkb-layout ${if backtickFirst then "de-backtick" else "de"}";
     };
 
     # kmscon's NixOS module unconditionally wires kmsconvt@tty1 into getty.target,

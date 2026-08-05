@@ -52,6 +52,12 @@ in
         default = true;
         description = "Use internal infrastructure of omega";
       };
+      backtickFirst = mkOption {
+        type = types.bool;
+        default = cfg.useInternalInfrastructure;
+        defaultText = literalExpression "config.hokage.useInternalInfrastructure";
+        description = "Type a backtick without Shift and an acute accent with Shift on German keyboards";
+      };
       lowBandwidth = mkOption {
         type = types.bool;
         default = false;
