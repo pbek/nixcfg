@@ -188,6 +188,11 @@ in
           };
         };
 
+        # https://herdr.dev
+        herdr = {
+          enable = true;
+        };
+
         # Enable https://wezfurlong.org/wezterm/ for terminal with OSC 52 support for zellij clipboard via SSH
         #      wezterm = {
         #        enable = true;
