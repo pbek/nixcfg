@@ -41,7 +41,13 @@ in
         # package = pkgs.callPackage ../../../pkgs/nixbit/package.nix { };
         inherit (cfg) repository;
         inherit (cfg) forceAutostart;
-      };
+      }
+      //
+        lib.optionalAttrs
+          (hokage.useInternalInfrastructure && builtins.hasAttr "notificationCommand" options.nixbit)
+          {
+            notificationCommand = "neosay";
+          };
     }
   );
 }
