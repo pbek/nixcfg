@@ -543,7 +543,7 @@ in
                 triggers = [
                   ":P"
                   ":-P"
-                  ":tong"
+                  ":tongue"
                 ];
                 replace = "😜";
               }
@@ -578,7 +578,7 @@ in
               {
                 triggers = [
                   ":heart"
-                  ":lov"
+                  ":love"
                 ];
                 replace = "🫶😍❤️🥰";
               }
@@ -622,7 +622,7 @@ in
               }
               {
                 trigger = ":birth";
-                replace = "🥳🎉🎁";
+                replace = "🥳🎉🎁🎂🎈";
               }
               {
                 triggers = [
@@ -647,8 +647,15 @@ in
                 triggers = [
                   ":cry"
                   ":'("
+                  ":tear"
                 ];
-                replace = "🥹😢😭";
+                replace = "🥹🥺😢😭";
+              }
+              {
+                triggers = [
+                  ":angry"
+                ];
+                replace = "😤😡😠";
               }
               {
                 # Don't use ":/" trigger because of "http://" and "https://"!
@@ -656,7 +663,7 @@ in
                   ":-/"
                   ":conf"
                 ];
-                replace = "😕🫤";
+                replace = "😕🫤😳";
               }
               {
                 triggers = [ ":fist" ];
