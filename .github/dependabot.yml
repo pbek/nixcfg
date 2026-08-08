@@ -7,8 +7,8 @@ updates:
       - "/examples/hokage-consumer"
     schedule:
       interval: "weekly"
-      day: "monday"
-      time: "03:00"
+      day: "sunday"
+      time: "04:00"
       timezone: "UTC"
     allow:
       - dependency-type: "all"
