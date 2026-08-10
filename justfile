@@ -263,6 +263,7 @@ push:
     -attic push qownnotes `which ziggity` --no-closure
     -attic push qownnotes `which zfsguard` --no-closure
     -attic push qownnotes `which devenv` --no-closure
+    -attic push qownnotes `nix-store --query --requisites $(readlink -f $(which devenv)) | grep -- '-nix-.*-2\.34$'` --no-closure
     -attic push qownnotes `which kanboard-cli` --no-closure
     -attic push qownnotes `which codebar` --no-closure
     -attic push qownnotes `which proton-authenticator` --no-closure

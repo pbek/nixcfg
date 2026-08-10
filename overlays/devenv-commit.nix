@@ -1,21 +1,21 @@
 final: prev:
 
 let
-  version = "2.1.3";
+  version = "2.2.2";
   src = final.fetchFromGitHub {
     owner = "cachix";
     repo = "devenv";
-    rev = "5f1cf17be0fc48689bd0ecb810de6d2e06d259a1";
-    hash = "sha256-Gof6j4d43yX2qSLLp78JILke346IggDFIxTgl3ecVQE=";
+    rev = "4158f6bffa1ac70104e390f8b5b5f59b3a23cbb0";
+    hash = "sha256-XtGARxGaiWgeWDvg3D3gVmynCtVnoBsEh/hQm8oVLe0=";
   };
-  cargoHash = "sha256-9Iz+HYQCrcEqF6x/vgw7n+eYBzHMRcWLYnNJlBFb9DI=";
+  cargoHash = "sha256-PrGUXPEkpDZPdifb7ha5AeOHYt4Ga8C/87wIKPh9T8Q=";
 
   nixVersion = "2.34";
   nixSrc = final.fetchFromGitHub {
     owner = "cachix";
     repo = "nix";
-    rev = "782ac1b155679b065ec945ae50d0fa1d495883b7";
-    hash = "sha256-xem+4ncdQCTFJsQ4PrVuyVmi3j4w/Yqg298hBUzVejA=";
+    rev = "59407321a92f7d34d4a53e38959294007c0bc37a";
+    hash = "sha256-WcqKvA7f7TGrlDVd69T1UXUqVXJ+wfoRbO+mg5L7/Rc=";
   };
 
   nixComponents = (prev.nixVersions.nixComponents_git.overrideSource nixSrc).overrideScope (
