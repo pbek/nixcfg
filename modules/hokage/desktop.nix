@@ -88,7 +88,8 @@ in
           # (callPackage ../../pkgs/zen-browser/package.nix {})
           gptcommit # Git commit message generator
           tokstat
-          sonar
+          sonar # Inspect and manage services listening on localhost ports
+          lan-orangutan # Self-hosted network discovery tool
           ziggity # Git TUI client
           gocryptfs # Encrypted filesystem in userspace, used by KDE Vault
 
