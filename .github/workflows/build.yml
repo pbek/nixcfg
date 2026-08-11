@@ -38,7 +38,7 @@ jobs:
       #      - name: Update Nix channels
       #        run: nix-channel --update
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Log-in into attic
         run: nix-shell -p attic-client --run "attic login server https://nix-cache.qownnotes.org $ATTIC_SECRET_KEY"
         env:
@@ -52,6 +52,10 @@ jobs:
         run: |
           cd pkgs/qownnotes && \
           nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })' && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build qownnotes-tui flake package
+        run: |
+          nix build .#qownnotes-tui && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
       - name: Build nixbit package
         run: |

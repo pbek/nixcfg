@@ -253,6 +253,7 @@ push:
     -attic push main `which ghostty` --no-closure
     -attic push main `which tv` --no-closure
     -attic push qownnotes `which qownnotes` --no-closure
+    -attic push qownnotes `which qownnotes-tui` --no-closure
     -attic push qownnotes `which qc` --no-closure
     -attic push qownnotes `which nixbit` --no-closure
     -attic push qownnotes `which uncrash` --no-closure
@@ -495,6 +496,11 @@ qownnotes-hash:
 [group('qownnotes')]
 qownnotes-update-release:
     ./scripts/update-qownnotes-release.sh
+
+# Update the QOwnNotes TUI flake
+[group('qownnotes')]
+qownnotes-tui-update-flake:
+    nix flake update qownnotes-tui
 
 # Get the nix hash of a Nixbit release
 [group('nixbit')]

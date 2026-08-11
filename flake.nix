@@ -33,6 +33,8 @@
     zfsguard.inputs.nixpkgs.follows = "nixpkgs";
     kanboard-cli.url = "github:digital-blueprint/kanboard-cli";
     kanboard-cli.inputs.nixpkgs.follows = "nixpkgs";
+    qownnotes-tui.url = "github:qownnotes/qownnotes-tui/release";
+    qownnotes-tui.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -245,6 +247,7 @@
         tokstat = inputs.tokstat.packages.${system}.default;
         zfsguard = inputs.zfsguard.packages.${system}.default;
         kanboard-cli = inputs.kanboard-cli.packages.${system}.default;
+        qownnotes-tui = inputs.qownnotes-tui.packages.${system}.default;
         inherit (pkgs) lan-orangutan sonar ziggity;
       }
       // {
