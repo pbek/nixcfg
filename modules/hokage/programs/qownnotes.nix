@@ -8,6 +8,28 @@
 let
   inherit (config) hokage;
   cfg = hokage.programs.qownnotes;
+  mkCatppuccinTheme =
+    catppuccinCfg:
+    let
+      palette =
+        (lib.importJSON "${catppuccinCfg.sources.palette}/palette.json").${catppuccinCfg.flavor}.colors;
+    in
+    {
+      background = palette.base.hex;
+      foreground = palette.text.hex;
+      muted = palette.overlay1.hex;
+      accent = palette.${catppuccinCfg.accent}.hex;
+      accent_foreground = if catppuccinCfg.flavor == "latte" then palette.text.hex else palette.base.hex;
+      success = palette.green.hex;
+      warning = palette.yellow.hex;
+      error = palette.red.hex;
+      heading = palette.${catppuccinCfg.accent}.hex;
+      quote = palette.subtext0.hex;
+      code = palette.green.hex;
+      link = palette.blue.hex;
+      fence = palette.overlay0.hex;
+      field_background = palette.surface0.hex;
+    };
 
   inherit (lib)
     mkEnableOption
@@ -50,13 +72,27 @@ in
       lib.optional cfg.enableTui
         inputs.qownnotes-tui.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
-    home-manager.users = lib.genAttrs hokage.users (_userName: {
-      home.file.".config/PBE/QOwnNotes.override.conf" = lib.mkIf hokage.useInternalInfrastructure {
-        text = lib.generators.toINI { } cfg.settings;
-      };
-      programs.fish.shellAliases = lib.mkIf cfg.enableTui {
-        qon = "qownnotes-tui";
-      };
-    });
+    home-manager.users = lib.genAttrs hokage.users (
+      _userName:
+      { config, ... }:
+      let
+        catppuccinCfg = config.catppuccin;
+      in
+      {
+        home.file.".config/PBE/QOwnNotes.override.conf" = lib.mkIf hokage.useInternalInfrastructure {
+          text = lib.generators.toINI { } cfg.settings;
+        };
+        xdg.configFile."qownnotes-tui/theme.toml" =
+          lib.mkIf (cfg.enableTui && catppuccinCfg.enable && catppuccinCfg.autoEnable)
+            {
+              source = (pkgs.formats.toml { }).generate "qownnotes-tui-theme.toml" (
+                mkCatppuccinTheme catppuccinCfg
+              );
+            };
+        programs.fish.shellAliases = lib.mkIf cfg.enableTui {
+          qon = "qownnotes-tui";
+        };
+      }
+    );
   };
 }
