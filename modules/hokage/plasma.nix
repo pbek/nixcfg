@@ -110,6 +110,13 @@ in
       programs.plasma = {
         enable = true;
 
+        configFile = lib.mkIf hokage.useInternalInfrastructure {
+          "katerc"."General"."Show welcome view for new window" = false;
+          "katerc"."Kate Plugins".bookmarksplugin = true;
+          "katerc"."Kate Plugins".kategitblameplugin = true;
+          "katerc"."Kate Plugins".openlinkplugin = true;
+        };
+
         shortcuts = {
           # ~/.config/kglobalshortcutsrc
           kwin = {
