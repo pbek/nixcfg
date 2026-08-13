@@ -11,6 +11,8 @@ on:
       - "pkgs/ziggity/**"
       - "overlays/devenv-commit.nix"
       - "overlays/sonar.nix"
+      - "overlays/syntax-highlighting.nix"
+      - "overlays/patches/0001-Add-Just-syntax-highlighting.patch"
       - "flake.nix"
       - "flake.lock"
       - ".github/workflows/build.yml"
@@ -89,4 +91,12 @@ jobs:
       - name: Build devenv package
         run: |
           nix build .#devenv && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build syntax-highlighting package
+        run: |
+          nix build .#syntax-highlighting && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build plasma-workspace package
+        run: |
+          nix build .#plasma-workspace && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"

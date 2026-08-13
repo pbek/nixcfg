@@ -247,6 +247,8 @@ upgrade-push-all: upgrade push-all push
 
 [group('cache')]
 push:
+    -attic push qownnotes `nix build .#plasma-workspace --no-link --print-out-paths` --no-closure
+    -attic push qownnotes `nix build .#syntax-highlighting --no-link --print-out-paths` --no-closure
     -attic push main `which atuin` --no-closure
     -attic push main `which espanso` --no-closure
     -attic push main `which cura` --no-closure

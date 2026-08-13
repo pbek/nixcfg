@@ -241,6 +241,8 @@
 
       packages.x86_64-linux = {
         inherit (pkgs) devenv qownnotes;
+        plasma-workspace = pkgs.kdePackages.plasma-workspace;
+        syntax-highlighting = pkgs.kdePackages.syntax-highlighting;
         qownnotes-stable = pkgs.stable.qownnotes;
         nixbit = inputs.nixbit.packages.${system}.default;
         uncrash = inputs.uncrash.packages.${system}.default;
