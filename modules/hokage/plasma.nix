@@ -115,6 +115,8 @@ in
           "katerc"."Kate Plugins".bookmarksplugin = true;
           "katerc"."Kate Plugins".kategitblameplugin = true;
           "katerc"."Kate Plugins".openlinkplugin = true;
+          "konsolerc"."Shortcuts".next-tab = "Alt+PgDown";
+          "konsolerc"."Shortcuts".previous-tab = "Alt+PgUp";
         };
 
         shortcuts = {
