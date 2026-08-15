@@ -241,6 +241,7 @@
 
       packages.x86_64-linux = {
         inherit (pkgs) devenv qownnotes;
+        qc = pkgs.callPackage ./pkgs/qc/default.nix { };
         qownnotes-stable = pkgs.stable.qownnotes;
         nixbit = inputs.nixbit.packages.${system}.default;
         uncrash = inputs.uncrash.packages.${system}.default;

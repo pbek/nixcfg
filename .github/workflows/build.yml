@@ -43,11 +43,10 @@ jobs:
         run: nix-shell -p attic-client --run "attic login server https://nix-cache.qownnotes.org $ATTIC_SECRET_KEY"
         env:
           ATTIC_SECRET_KEY: ${{ secrets.ATTIC_SECRET_KEY }}
-      #      - name: Build qc package
-      #        run: |
-      #          cd pkgs/qc && \
-      #          nix-build -E '((import <nixpkgs> {}).callPackage (import ./default.nix) { })' && \
-      #          nix-shell https://github.com/zhaofengli/attic/tarball/main -A demo --run "attic push qownnotes ./result"
+      - name: Build qc flake package
+        run: |
+          nix build .#qc && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
       - name: Build qownnotes package
         run: |
           cd pkgs/qownnotes && \
@@ -94,3 +93,11 @@ jobs:
         run: |
           export PATH="$(readlink -f ./result)/bin:$PATH"
           nix-shell -p attic-client --run "attic push qownnotes \$(nix-store --query --requisites \$(readlink -f \$(which devenv)) | grep -- '-nix-.*-2\.34\$') --no-closure"
+      - name: Build kanboard-cli flake package
+        run: |
+          nix build .#kanboard-cli && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build lan-orangutan flake package
+        run: |
+          nix build .#lan-orangutan && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
