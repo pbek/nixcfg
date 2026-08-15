@@ -90,3 +90,7 @@ jobs:
         run: |
           nix build .#devenv && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Push devenv nix-store closure to attic
+        run: |
+          export PATH="$(readlink -f ./result)/bin:$PATH"
+          nix-shell -p attic-client --run "attic push qownnotes \$(nix-store --query --requisites \$(readlink -f \$(which devenv)) | grep -- '-nix-.*-2\.34\$') --no-closure"
