@@ -60,7 +60,7 @@ stdenv.mkDerivation {
 
   postInstall =
     # Create a lowercase symlink for Linux
-    lib.optionalString stdenv.isLinux ''
+    lib.optionalString stdenv.hostPlatform.isLinux ''
       ln -s $out/bin/${appname} $out/bin/${pname}
     '';
 

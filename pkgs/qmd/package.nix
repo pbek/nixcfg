@@ -72,7 +72,7 @@ stdenv.mkDerivation (finalAttrs: {
       --set LD_LIBRARY_PATH "${
         lib.makeLibraryPath (
           [ sqlite ]
-          ++ lib.optionals stdenv.isLinux [
+          ++ lib.optionals stdenv.hostPlatform.isLinux [
             stdenv.cc.libc
             stdenv.cc.cc.lib
           ]

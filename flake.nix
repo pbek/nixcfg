@@ -73,7 +73,7 @@
       # Only include user-defined overlays here (exclude the meta overlays-nixpkgs to avoid recursion)
       validOverlays = builtins.filter (x: builtins.isFunction x) overlaysFromDir;
       # Provide stable and unstable package sets as attributes of pkgs while ensuring our local overlays are also applied there.
-      overlays-nixpkgs = _final: _prev: {
+      overlays-nixpkgs = final: _prev: {
         stable = import nixpkgs-stable {
           inherit system;
           config.allowUnfree = true;
@@ -85,7 +85,14 @@
           overlays = validOverlays;
         };
         tokstat = inputs.tokstat.packages.${system}.default;
-        kanboard-cli = inputs.kanboard-cli.packages.${system}.default;
+        kanboard-cli = inputs.kanboard-cli.packages.${system}.default.overrideAttrs (_: {
+          buildInputs = final.lib.optionals final.stdenv.hostPlatform.isLinux [ final.libsecret ];
+          nativeBuildInputs = [
+            final.go
+            final.installShellFiles
+          ]
+          ++ final.lib.optionals final.stdenv.hostPlatform.isLinux [ final.pkg-config ];
+        });
       };
       allOverlays = validOverlays ++ [ overlays-nixpkgs ];
       commonModules = [
@@ -247,7 +254,7 @@
         uncrash = inputs.uncrash.packages.${system}.default;
         tokstat = inputs.tokstat.packages.${system}.default;
         zfsguard = inputs.zfsguard.packages.${system}.default;
-        kanboard-cli = inputs.kanboard-cli.packages.${system}.default;
+        inherit (pkgs) kanboard-cli;
         qownnotes-tui = inputs.qownnotes-tui.packages.${system}.default;
         inherit (pkgs) lan-orangutan sonar ziggity;
       }
