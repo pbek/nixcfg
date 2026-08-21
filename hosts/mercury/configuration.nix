@@ -1,4 +1,4 @@
-# Astra Beta TUG VM
+# Mercury Home01 VM
 
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
@@ -21,8 +21,6 @@
 
   hokage = {
     hostName = "mercury";
-    # waylandSupport = false; # Disable Wayland support for clipboard sharing from guest to host
-    waylandSupport = true;
     termFontSize = 16.0;
     zfs = {
       enable = true;
