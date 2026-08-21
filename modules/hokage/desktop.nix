@@ -110,7 +110,7 @@ in
 
           # codexbar-cli # AI provider usage stats CLI
 
-          handy # TTS system tray app
+          # handy # TTS system tray app
           glab # GitLab CLI tool
         ];
       in
