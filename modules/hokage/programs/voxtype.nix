@@ -12,6 +12,17 @@ in
   options.hokage.programs.voxtype = {
     enable = lib.mkEnableOption "Voxtype speech-to-text daemon";
     gpuSupport = lib.mkEnableOption "Vulkan GPU acceleration for Voxtype";
+    loadModelOnDemand = lib.mkEnableOption "loading the Voxtype model on demand";
+    model = lib.mkOption {
+      type = lib.types.str;
+      default = "large-v3-turbo";
+      example = "base";
+      description = ''
+        Whisper model to use. The base model uses about 142 MiB, while the
+        default large-v3-turbo model uses about 1.6 GiB and provides
+        substantially better German and English transcription accuracy.
+      '';
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -20,7 +31,7 @@ in
         enable = true;
         package = if cfg.gpuSupport then pkgs.voxtype-vulkan else pkgs.voxtype;
         wayland.display = lib.mkIf hokage.waylandSupport "wayland-0";
-        loadModels = [ "base" ];
+        loadModels = [ cfg.model ];
         settings = {
           hotkey = {
             enabled = true;
@@ -28,7 +39,8 @@ in
             mode = "push_to_talk";
           };
           whisper = {
-            model = "base";
+            inherit (cfg) model;
+            on_demand_loading = cfg.loadModelOnDemand;
             language = [
               "de"
               "en"

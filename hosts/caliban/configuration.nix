@@ -99,6 +99,7 @@ in
     programs.voxtype = {
       enable = true;
       gpuSupport = true;
+      loadModelOnDemand = true;
     };
     zfs = {
       enable = true;
