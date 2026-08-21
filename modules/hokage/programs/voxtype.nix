@@ -34,6 +34,7 @@ in
               "en"
             ];
           };
+          output.dotool_xkb_layout = "de";
           output.notification = {
             on_recording_start = true;
             on_recording_stop = true;
