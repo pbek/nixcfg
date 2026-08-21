@@ -6,10 +6,10 @@
 }:
 let
   inherit (config) hokage;
-  cfg = hokage.services.voxtype;
+  cfg = hokage.programs.voxtype;
 in
 {
-  options.hokage.services.voxtype = {
+  options.hokage.programs.voxtype = {
     enable = lib.mkEnableOption "Voxtype speech-to-text daemon";
     gpuSupport = lib.mkEnableOption "Vulkan GPU acceleration for Voxtype";
   };

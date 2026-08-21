@@ -214,7 +214,7 @@
       datasetRootName = "root";
     };
     cache.sources = [ "home" ];
-    services.voxtype = {
+    programs.voxtype = {
       enable = true;
       gpuSupport = true;
     };
