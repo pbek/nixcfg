@@ -124,6 +124,10 @@ in
     synth.enable = true;
     cache.sources = [ "home" ];
     programs.platformio.enable = true;
+    services.voxtype = {
+      enable = true;
+      gpuSupport = true;
+    };
 
     nvidia = {
       enable = true;
