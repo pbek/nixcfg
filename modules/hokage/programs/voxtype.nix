@@ -29,7 +29,10 @@ in
           };
           whisper = {
             model = "base";
-            language = "auto";
+            language = [
+              "de"
+              "en"
+            ];
           };
           output.notification = {
             on_recording_start = true;
