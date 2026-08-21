@@ -25,7 +25,6 @@
 
   hokage = {
     hostName = "astra";
-    programs.espanso.enable = true; # Host will already use espanso, but it didn't work great with qemu
     # waylandSupport = false; # Disable Wayland support for clipboard sharing from guest to host
     waylandSupport = true; # Disable Wayland support for clipboard sharing from guest to host
     termFontSize = 16.0;

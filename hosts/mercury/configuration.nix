@@ -21,7 +21,6 @@
 
   hokage = {
     hostName = "mercury";
-    programs.espanso.enable = false; # Host will already use espanso
     # waylandSupport = false; # Disable Wayland support for clipboard sharing from guest to host
     waylandSupport = true;
     termFontSize = 16.0;
