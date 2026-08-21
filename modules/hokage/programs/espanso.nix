@@ -48,7 +48,7 @@ in
       # https://mynixos.com/home-manager/options/services.espanso
       services.espanso = {
         enable = true;
-        package = if waylandSupport then pkgs.espanso-wayland else pkgs.espanso;
+        inherit waylandSupport;
         #      package = (pkgs.callPackage ../../pkgs/espanso/espanso.nix { }).override {
         #        inherit waylandSupport;
         #      };
