@@ -13,6 +13,8 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  # System can't boot otherwise; needs reinstall with ZFS.
+  boot.kernelParams = [ "fsck.mode=skip" ];
 
   # https://wiki.nixos.org/wiki/steam
   #  programs.steam = {
