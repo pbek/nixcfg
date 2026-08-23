@@ -248,6 +248,7 @@
 
       packages.x86_64-linux = {
         inherit (pkgs) devenv qownnotes;
+        kate = pkgs.kdePackages.kate;
         qc = pkgs.callPackage ./pkgs/qc/default.nix { };
         qownnotes-stable = pkgs.stable.qownnotes;
         nixbit = inputs.nixbit.packages.${system}.default;

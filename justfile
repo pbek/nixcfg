@@ -267,6 +267,7 @@ push:
     -attic push qownnotes `which kanboard-cli` --no-closure
     -attic push qownnotes `which codebar` --no-closure
     -attic push qownnotes `which proton-authenticator` --no-closure
+    -attic push qownnotes `which kate` --no-closure
 
 [group('cache')]
 push-all:

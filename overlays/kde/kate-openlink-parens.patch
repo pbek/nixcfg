@@ -1,0 +1,52 @@
+--- a/addons/openlink/linkmatchtest.cpp
++++ b/addons/openlink/linkmatchtest.cpp
+@@ -106,6 +106,19 @@
+         QTest::addRow("22") << QStringLiteral("<https://cullmann.dev> xxx <https://hello.dev>")
+                             << R{OpenLinkRange{.start = 1, .end = 21, .link = QStringLiteral("https://cullmann.dev"), .type = HttpLink},
+                                  OpenLinkRange{.start = 28, .end = 45, .link = QStringLiteral("https://hello.dev"), .type = HttpLink}};
++
++        QTest::addRow("23") << QStringLiteral("(for [#3695](https://github.com/pbek/QOwnNotes/issues/3695))")
++                            << R{OpenLinkRange{.start = 13,
++                                               .end = 58,
++                                               .link = QStringLiteral("https://github.com/pbek/QOwnNotes/issues/3695"),
++                                               .type = HttpLink}};
++
++        // balanced parens in the url are kept
++        QTest::addRow("24") << QStringLiteral("see https://en.wikipedia.org/wiki/Link_(film)")
++                            << R{OpenLinkRange{.start = 4,
++                                               .end = 45,
++                                               .link = QStringLiteral("https://en.wikipedia.org/wiki/Link_(film)"),
++                                               .type = HttpLink}};
+     }
+ 
+     void test()
+--- a/addons/openlink/matchers.h
++++ b/addons/openlink/matchers.h
+@@ -37,8 +37,25 @@
+     // Visit "https://cullmann.dev"
+     // The web site https://cullmann.dev.
+     // <https://cullmann.dev>
+-    static const QRegularExpression skipSpecial(QStringLiteral("[)'\".>]$"));
+-    link.replace(skipSpecial, QString());
++    // (for [#3695](https://github.com/pbek/QOwnNotes/issues/3695))
++    while (!link.isEmpty()) {
++        const QChar last = link.back();
++        if (last == u')') {
++            // Only strip ')' if the parentheses are unbalanced so that
++            // links with balanced parens like
++            // https://en.wikipedia.org/wiki/Link_(film) stay intact
++            if (link.count(u')') > link.count(u'(')) {
++                link.chop(1);
++                continue;
++            }
++            break;
++        }
++        if (last == u'\'' || last == u'"' || last == u'.' || last == u'>') {
++            link.chop(1);
++            continue;
++        }
++        break;
++    }
+ }
+ 
+ static KTextEditor::Cursor parseLineCol(QStringView &link)

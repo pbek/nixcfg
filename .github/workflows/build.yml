@@ -11,6 +11,7 @@ on:
       - "pkgs/ziggity/**"
       - "overlays/devenv-commit.nix"
       - "overlays/sonar.nix"
+      - "overlays/kate-openlink-fix.nix"
       - "flake.nix"
       - "flake.lock"
       - ".github/workflows/build.yml"
@@ -100,4 +101,8 @@ jobs:
       - name: Build lan-orangutan flake package
         run: |
           nix build .#lan-orangutan && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build kate package
+        run: |
+          nix build .#kate && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
