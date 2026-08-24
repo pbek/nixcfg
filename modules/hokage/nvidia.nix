@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  nixpkgs-zfs,
+  pkgs,
   ...
 }:
 let
@@ -49,7 +49,7 @@ in
     maxKernelVersion = lib.mkOption {
       type = lib.types.package;
       # Set the currently maximum allowed kernel package for NVIDIA here
-      default = nixpkgs-zfs.linuxPackages_7_0.kernel;
+      default = pkgs.linuxKernel.packages.linux_7_2.kernel;
       description = "Maximum allowed kernel package for NVIDIA";
       readOnly = true;
     };

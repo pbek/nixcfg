@@ -5,21 +5,12 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 {
-  inputs,
   pkgs,
-  system,
   ...
 }:
 
 let
-  broadcomSta = "broadcom-sta-6.30.223.271-59-7.0.14";
-  zfsPkgs = import inputs.nixpkgs-zfs {
-    inherit system;
-    config = {
-      allowUnfree = true;
-      permittedInsecurePackages = [ broadcomSta ];
-    };
-  };
+  broadcomSta = "broadcom-sta-6.30.223.271-63-7.2";
 in
 
 {
@@ -39,9 +30,7 @@ in
     broadcomSta
   ];
 
-  # Keep the pinned ZFS kernel host-local so Broadcom STA uses the same
-  # insecure-package exception as this host.
-  boot.kernelPackages = zfsPkgs.linuxKernel.packages.linux_7_0;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_7_2;
 
   environment.systemPackages = with pkgs; [
     powertop
