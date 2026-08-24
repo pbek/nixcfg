@@ -609,7 +609,7 @@ in
                 replace = "😂🤣";
               }
               {
-                triggers = [ ":rock" ];
+                triggers = [ ":rocket" ];
                 replace = "🚀";
               }
               {
