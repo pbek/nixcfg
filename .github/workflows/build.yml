@@ -11,7 +11,7 @@ on:
       - "pkgs/ziggity/**"
       - "overlays/devenv-commit.nix"
       - "overlays/sonar.nix"
-      - "overlays/kate-openlink-fix.nix"
+      - "overlays/kate-fixes.nix"
       - "flake.nix"
       - "flake.lock"
       - ".github/workflows/build.yml"
