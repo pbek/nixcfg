@@ -7,11 +7,30 @@
 let
   inherit (config) hokage;
   cfg = hokage.programs.voxtype;
+  voxtype-hip = pkgs.voxtype.overrideAttrs (oldAttrs: {
+    pname = "voxtype-hip";
+    buildFeatures = [ "gpu-hipblas" ];
+    cargoBuildFeatures = [ "gpu-hipblas" ];
+    cargoCheckFeatures = [ "gpu-hipblas" ];
+    nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ pkgs.rocmPackages.clr ];
+    buildInputs =
+      oldAttrs.buildInputs
+      ++ (with pkgs.rocmPackages; [
+        clr
+        hipblas
+        rocblas
+      ]);
+    env = oldAttrs.env // {
+      HIP_PATH = "${pkgs.rocmPackages.clr}";
+      AMDGPU_TARGETS = "gfx1100";
+    };
+  });
 in
 {
   options.hokage.programs.voxtype = {
     enable = lib.mkEnableOption "Voxtype speech-to-text daemon";
     gpuSupport = lib.mkEnableOption "Vulkan GPU acceleration for Voxtype";
+    hipSupport = lib.mkEnableOption "AMD ROCm/HIP acceleration for Voxtype (gfx1100)";
     loadModelOnDemand = lib.mkEnableOption "loading the Voxtype model on demand";
     contextWindowOptimization = lib.mkEnableOption "context window optimization for short recordings";
     model = lib.mkOption {
@@ -27,10 +46,23 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = !(cfg.gpuSupport && cfg.hipSupport);
+        message = "hokage.programs.voxtype.gpuSupport and hipSupport are mutually exclusive";
+      }
+    ];
+
     home-manager.users = lib.genAttrs hokage.users (_userName: {
       services.voxtype = {
         enable = true;
-        package = if cfg.gpuSupport then pkgs.voxtype-vulkan else pkgs.voxtype;
+        package =
+          if cfg.hipSupport then
+            voxtype-hip
+          else if cfg.gpuSupport then
+            pkgs.voxtype-vulkan
+          else
+            pkgs.voxtype;
         wayland.display = lib.mkIf hokage.waylandSupport "wayland-0";
         loadModels = [ cfg.model ];
         settings = {

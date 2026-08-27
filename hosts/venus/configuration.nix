@@ -216,7 +216,7 @@
     cache.sources = [ "home" ];
     programs.voxtype = {
       enable = true;
-      gpuSupport = true;
+      hipSupport = true;
       contextWindowOptimization = true;
     };
   };
