@@ -217,6 +217,7 @@
     programs.voxtype = {
       enable = true;
       gpuSupport = true;
+      contextWindowOptimization = true;
     };
   };
 }

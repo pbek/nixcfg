@@ -13,6 +13,7 @@ in
     enable = lib.mkEnableOption "Voxtype speech-to-text daemon";
     gpuSupport = lib.mkEnableOption "Vulkan GPU acceleration for Voxtype";
     loadModelOnDemand = lib.mkEnableOption "loading the Voxtype model on demand";
+    contextWindowOptimization = lib.mkEnableOption "context window optimization for short recordings";
     model = lib.mkOption {
       type = lib.types.str;
       default = "large-v3-turbo";
@@ -41,6 +42,7 @@ in
           whisper = {
             inherit (cfg) model;
             on_demand_loading = cfg.loadModelOnDemand;
+            context_window_optimization = cfg.contextWindowOptimization;
             language = [
               "de"
               "en"
