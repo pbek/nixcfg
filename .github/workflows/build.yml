@@ -9,6 +9,7 @@ on:
       - "pkgs/nixbit/**"
       - "pkgs/sonar/**"
       - "pkgs/ziggity/**"
+      - "pkgs/zerobyte/**"
       - "overlays/devenv-commit.nix"
       - "overlays/sonar.nix"
       - "overlays/kate-fixes.nix"
@@ -105,4 +106,9 @@ jobs:
       - name: Build kate package
         run: |
           nix build .#kate && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build zerobyte package
+        run: |
+          cd pkgs/zerobyte && \
+          nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })' && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
