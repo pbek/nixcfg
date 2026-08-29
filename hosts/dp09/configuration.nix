@@ -41,7 +41,7 @@
     nvidia = {
       enable = true;
       open = false;
-      packageType = "production";
+      packageType = "latest";
       modesetting.enable = true;
     };
 

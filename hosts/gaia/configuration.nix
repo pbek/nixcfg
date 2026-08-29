@@ -134,7 +134,7 @@ in
       # Preserve NVIDIA VRAM across suspend/resume to avoid KWin/Plasma
       # and Electron clients crashing with Xid 13 after wake.
       powerManagement.enable = true;
-      packageType = "beta";
+      packageType = "latest";
       # With kernel 6.17.2 there were no resolutions detected without modesetting
       modesetting.enable = true;
     };

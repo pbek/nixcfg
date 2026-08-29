@@ -43,7 +43,7 @@
 
     nvidia = {
       enable = true;
-      packageType = "beta";
+      packageType = "latest";
       # https://github.com/NVIDIA/open-gpu-kernel-modules?tab=readme-ov-file#compatible-gpus
       # NVIDIA Quadro P620 didn't work properly with open = true
       open = false;
