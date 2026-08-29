@@ -548,6 +548,11 @@ tokstat-update-flake:
 zfsguard-update-flake:
     nix flake update zfsguard
 
+# Update the zerobyte package
+[group('zerobyte')]
+zerobyte-update-release:
+    ./scripts/update-zerobyte-release.sh
+
 # Evaluate a config for a hostname (default current host)
 eval-config configPath host=hostname *args:
     nix eval .#nixosConfigurations.{{ host }}.config.{{ configPath }} {{ args }}
