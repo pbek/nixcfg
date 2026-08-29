@@ -95,4 +95,7 @@ in
 
   # agenix -e qc-config.age
   "qc-config.age".publicKeys = systems;
+
+  # agenix -e zerobyte-secret.age
+  "zerobyte-secret.age".publicKeys = systems;
 }

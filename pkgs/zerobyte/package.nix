@@ -19,12 +19,12 @@
 }:
 
 let
-  version = "0.22.0";
+  version = "0.42.0";
   src = fetchFromGitHub {
     owner = "nicotsx";
     repo = "zerobyte";
     tag = "v${version}";
-    hash = "sha256-Ws0u4/H3LQeF4j0ROpkGyTzDrunvodq5cNGmsjPBJAc=";
+    hash = "sha256-gueZUwoEetsEuAG5QXvLgUUrib79sk2azcmD0XZMhQo=";
   };
 
   node_modules = stdenv.mkDerivation {
@@ -49,6 +49,10 @@ let
     installPhase = ''
       mkdir -p $out
       cp -R ./node_modules $out/node_modules
+      # Include workspace packages so bun workspace symlinks in node_modules resolve
+      if [ -d ./packages ]; then
+        cp -R ./packages $out/packages
+      fi
     '';
 
     # Disable references to make this a proper FOD
@@ -56,7 +60,7 @@ let
     dontPatchELF = true;
     dontStrip = true;
 
-    outputHash = "sha256-Qg6DR8tZRyb0STO/6p8y/cDRhu5/UqQj0e7VIESkGzg=";
+    outputHash = "sha256-erd255OAc9q31iLbN+wD7HkpLFewtn2Vq7YAInVRilg=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
@@ -87,6 +91,12 @@ let
       cp -r ${node_modules}/node_modules ./node_modules
       chmod -R +w ./node_modules
 
+      # Copy workspace packages so bun workspace symlinks in node_modules resolve
+      if [ -d ${node_modules}/packages ]; then
+        cp -r ${node_modules}/packages ./packages
+        chmod -R +w ./packages
+      fi
+
       # Patch shebangs - this will use nodejs from nativeBuildInputs for node scripts
       patchShebangs --build ./node_modules
 
@@ -97,8 +107,8 @@ let
     installPhase = ''
       mkdir -p $out
 
-      # Copy built application
-      cp -r dist $out/
+      # Copy built application (Nitro output)
+      cp -r .output $out/dist
       cp -r app/drizzle $out/drizzle
       cp package.json $out/
     '';
@@ -133,8 +143,8 @@ stdenv.mkDerivation {
 
     mkdir -p $out/{bin,lib/zerobyte,share/zerobyte}
 
-    # Install the built application
-    cp -r ${built_app}/dist/* $out/lib/zerobyte/
+    # Install the built application (Nitro output)
+    cp -r ${built_app}/dist $out/lib/zerobyte/.output
     cp ${built_app}/package.json $out/lib/zerobyte/
 
     # Copy migrations to the assets directory where the app expects them
@@ -143,9 +153,6 @@ stdenv.mkDerivation {
 
     # Also copy to share for reference
     cp -r ${built_app}/drizzle $out/share/zerobyte/migrations
-
-    # Link node_modules for runtime
-    ln -s ${node_modules}/node_modules $out/lib/zerobyte/node_modules
 
     # Create wrapper script using makeBinaryWrapper
     makeBinaryWrapper ${bun}/bin/bun $out/bin/zerobyte \
@@ -165,10 +172,11 @@ stdenv.mkDerivation {
           util-linux
         ]
       } \
+      --chdir "$out/lib/zerobyte" \
       --set NODE_ENV "production" \
       --set APP_VERSION "${version}" \
-      --set MIGRATIONS_FOLDER "$out/lib/zerobyte/assets/migrations" \
-      --add-flags "$out/lib/zerobyte/server/index.js"
+      --set MIGRATIONS_PATH "$out/lib/zerobyte/assets/migrations" \
+      --add-flags "$out/lib/zerobyte/.output/server/index.mjs"
 
     # Copy licenses and notices
     if [ -f LICENSE ]; then cp LICENSE $out/share/zerobyte/; fi

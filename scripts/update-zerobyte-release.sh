@@ -18,21 +18,17 @@ fi
 
 echo "Using version $version..."
 
-# Set the URL
-url="https://github.com/nicotsx/zerobyte/archive/refs/tags/v${version}.tar.gz"
-
-# Get the hash
-hash=$(nix-prefetch-url "$url" | xargs nix hash convert --hash-algo sha256)
-
-echo "Using hash $hash..."
-
-# Update the package.nix file
+# Update the version and reset hashes in package.nix
 sed -i "s|version = \"[0-9.]*\";|version = \"$version\";|" pkgs/zerobyte/package.nix
-sed -i "s|hash = \"sha256-[A-Za-z0-9+/]*=*\";|hash = \"$hash\";|" pkgs/zerobyte/package.nix
-
-# Reset the node_modules FOD hash so the build computes the new one
+sed -i "s|hash = \"sha256-[A-Za-z0-9+/]*=*\";|hash = \"sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=\";|" pkgs/zerobyte/package.nix
 sed -i "s|outputHash = \"sha256-[A-Za-z0-9+/]*=*\";|outputHash = \"sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=\";|" pkgs/zerobyte/package.nix
 
-echo "Updated pkgs/zerobyte/package.nix with version $version and hash $hash"
-echo "The node_modules outputHash was reset; run a build to get the new hash:"
+# Update the Docker image tag (major.minor) in the hokage module
+image_tag="v$(echo "$version" | cut -d. -f1,2)"
+sed -i "s|ghcr.io/nicotsx/zerobyte:v[0-9.]*|ghcr.io/nicotsx/zerobyte:${image_tag}|" modules/hokage/programs/zerobyte.nix
+
+echo "Updated pkgs/zerobyte/package.nix to version $version"
+echo "Updated modules/hokage/programs/zerobyte.nix to Docker image tag $image_tag"
+echo ""
+echo "Hashes were reset; run a build to get the real hashes from the errors:"
 echo "  cd pkgs/zerobyte && just build"
