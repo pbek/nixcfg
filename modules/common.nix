@@ -105,6 +105,7 @@ in
       "networkmanager"
       "wheel"
       "docker"
+      "kvm"
       "dialout"
       "input"
     ];
