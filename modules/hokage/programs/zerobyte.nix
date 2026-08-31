@@ -17,7 +17,7 @@ in
 {
   options.hokage.programs.zerobyte = {
     enable = mkEnableOption "Zerobyte backup service" // {
-      default = hokage.role == "desktop";
+      default = hokage.role == "desktop" && hokage.useInternalInfrastructure;
     };
 
     image = mkOption {
