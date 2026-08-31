@@ -252,6 +252,7 @@
         inherit (pkgs) kanboard-cli;
         qownnotes-tui = inputs.qownnotes-tui.packages.${system}.default;
         inherit (pkgs) lan-orangutan sonar ziggity;
+        inherit (pkgs) gh-stack;
       }
       // {
         # Generate Markdown docs for hokage module options

@@ -269,6 +269,7 @@ push:
     -attic push qownnotes `which proton-authenticator` --no-closure
     -attic push qownnotes `which kate` --no-closure
     -attic push qownnotes `which zerobyte` --no-closure
+    nix build .#gh-stack && attic push qownnotes ./result
 
 [group('cache')]
 push-all:

@@ -78,7 +78,6 @@ in
           #    pinentry-curses
           pinentry-qt # For some reason this wasn't installed by the gpg settings
           onlyoffice-desktopeditors
-          gh
           github-copilot-cli
           smartmontools
           lazydocker
@@ -164,6 +163,11 @@ in
     # https://nix-community.github.io/home-manager/options.html#opt-home.file
     home-manager.users = lib.genAttrs hokage.users (_userName: {
       programs = {
+        gh = {
+          enable = true;
+          extensions = [ pkgs.gh-stack ];
+        };
+
         # Terminal with OSC 52 support
         kitty = {
           enable = true;
