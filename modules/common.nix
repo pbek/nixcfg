@@ -284,65 +284,69 @@ in
 
   # https://rycee.gitlab.io/home-manager/options.html
   # https://nix-community.github.io/home-manager/options.html#opt-home.file
-  home-manager.users = lib.genAttrs hokage.usersWithRoot (_userName: {
-    home.enableNixpkgsReleaseCheck = false;
+  home-manager = {
+    backupFileExtension = "backup";
+    overwriteBackup = true;
+    users = lib.genAttrs hokage.usersWithRoot (_userName: {
+      home.enableNixpkgsReleaseCheck = false;
 
-    # The home.stateVersion option does not have a default and must be set
-    home.stateVersion = mkDefault "24.11";
+      # The home.stateVersion option does not have a default and must be set
+      home.stateVersion = mkDefault "24.11";
 
-    # Enable fish and bash in home-manager to use enableFishIntegration and enableBashIntegration
-    programs = {
-      # Enable https://direnv.net/
-      direnv = {
-        enable = true;
-        nix-direnv.enable = true;
+      # Enable fish and bash in home-manager to use enableFishIntegration and enableBashIntegration
+      programs = {
+        # Enable https://direnv.net/
+        direnv = {
+          enable = true;
+          nix-direnv.enable = true;
+        };
+
+        devenv = {
+          enable = true;
+          package = pkgs.devenv;
+          enableFishIntegration = true;
+        };
+
+        fish = {
+          enable = true;
+        };
+        bash.enable = true;
+
+        # Run nix-shell, etc. in the fish shell instead of bash
+        nix-your-shell = {
+          enable = true;
+          enableFishIntegration = true;
+        };
+
+        # Tiling terminal multiplexer
+        zellij = {
+          enable = true;
+          # Shell integrations are disabled, because they would open zellij as soon as the shells start
+          enableFishIntegration = false;
+          enableBashIntegration = false;
+        };
+
+        # A smarter cd command
+        # https://github.com/ajeetdsouza/zoxide
+        zoxide = {
+          enable = true;
+          enableFishIntegration = true;
+          enableBashIntegration = true;
+          options = [ "--cmd cd" ];
+        };
+
+        # Post-modern editor (like vim)
+        helix = {
+          enable = true;
+        };
+
+        # Powerful terminal text editor and IDE
+        fresh-editor = {
+          enable = true;
+          defaultEditor = lib.mkDefault useInternalInfrastructure;
+        };
       };
-
-      devenv = {
-        enable = true;
-        package = pkgs.devenv;
-        enableFishIntegration = true;
-      };
-
-      fish = {
-        enable = true;
-      };
-      bash.enable = true;
-
-      # Run nix-shell, etc. in the fish shell instead of bash
-      nix-your-shell = {
-        enable = true;
-        enableFishIntegration = true;
-      };
-
-      # Tiling terminal multiplexer
-      zellij = {
-        enable = true;
-        # Shell integrations are disabled, because they would open zellij as soon as the shells start
-        enableFishIntegration = false;
-        enableBashIntegration = false;
-      };
-
-      # A smarter cd command
-      # https://github.com/ajeetdsouza/zoxide
-      zoxide = {
-        enable = true;
-        enableFishIntegration = true;
-        enableBashIntegration = true;
-        options = [ "--cmd cd" ];
-      };
-
-      # Post-modern editor (like vim)
-      helix = {
-        enable = true;
-      };
-
-      # Powerful terminal text editor and IDE
-      fresh-editor = {
-        enable = true;
-        defaultEditor = lib.mkDefault useInternalInfrastructure;
-      };
-    };
-  });
+    });
+  };
 
 }
