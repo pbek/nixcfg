@@ -26,6 +26,14 @@ in
   config = lib.mkIf cfg.enable {
     # https://home-manager-options.extranix.com
     home-manager.users = lib.genAttrs hokage.users (_userName: {
+      services.gpg-agent = {
+        enable = true;
+        # Cache GPG key passphrases for 24 hours to avoid repeated prompts when signing commits.
+        # Values are in seconds; the default TTL resets on use, while the maximum is absolute.
+        defaultCacheTtl = 86400;
+        maxCacheTtl = 86400;
+      };
+
       # https://searchix.alanpearce.eu/options/home-manager/search?query=git
       programs.git = {
         enable = true;
