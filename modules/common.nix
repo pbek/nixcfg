@@ -222,6 +222,7 @@ in
         bat-extras.batman # man with bat
         tldr # man replacement
         fd # find replacement
+        fzf # fuzzy finder, also used by just
         # television # fuzzy finder TUI
         # (callPackage ../../pkgs/television/package.nix { })
         zellij # terminal multiplexer (like tmux)

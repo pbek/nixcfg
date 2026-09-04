@@ -123,7 +123,6 @@ in
           firefox
           magic-wormhole
           xclip
-          fzf
           fishPlugins.fzf-fish
           usbutils # lsusb
 
