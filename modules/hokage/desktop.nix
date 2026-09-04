@@ -114,7 +114,10 @@ in
         ];
       in
       requiredPackages
-      ++ lib.optionals useInternalInfrastructure [ kanboard-cli ]
+      ++ lib.optionals useInternalInfrastructure [
+        kanboard-cli
+        bitwarden-cli
+      ]
       ++ utils.removePackagesByName optionalPackages hokage.excludePackages;
 
     programs.fish = {
