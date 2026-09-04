@@ -86,6 +86,7 @@ in
 
         window-new-tab-position = end
         font-size = ${toString termFontSize}
+        mouse-scroll-multiplier = 0.5
       '';
     });
   };
