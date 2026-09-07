@@ -52,6 +52,7 @@ in
       kdePackages.dolphin
       kdePackages.dolphin-plugins
       kdePackages.gwenview
+      kdePackages.koko
       kdePackages.okular
       kdePackages.plasma-browser-integration
       kdePackages.plasma-disks

@@ -88,6 +88,7 @@ in
             dolphin
             dolphin-plugins
             gwenview
+            koko
             kaccounts-integration
             kaccounts-providers
             ksshaskpass
