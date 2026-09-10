@@ -9,7 +9,8 @@ on:
       - "pkgs/nixbit/**"
       - "pkgs/sonar/**"
       - "pkgs/ziggity/**"
-      - "pkgs/zerobyte/**"
+      - "overlays/zerobyte.nix"
+      - "modules/hokage/programs/zerobyte.nix"
       - "pkgs/gh-stack/**"
       - "overlays/gh-stack.nix"
       - "modules/hokage/desktop.nix"
@@ -112,8 +113,7 @@ jobs:
           nix-shell -p attic-client --run "attic push qownnotes ./result"
       - name: Build zerobyte package
         run: |
-          cd pkgs/zerobyte && \
-          nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })' && \
+          nix build .#zerobyte && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
       - name: Build gh-stack extension
         run: |

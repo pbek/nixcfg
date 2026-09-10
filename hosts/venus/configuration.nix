@@ -189,7 +189,7 @@
     programs = {
       zerobyte = {
         enable = true;
-        useLocalPath = false;
+        dataDir = "/var/lib/docker/volumes/zerobyte-data/_data";
         backupPaths = [
           "/var/lib/docker/volumes"
           "/home"

@@ -1,96 +1,58 @@
 # Zerobyte Module
 
-The zerobyte module provides a containerized backup service using the zerobyte application in a Docker/Podman container.
+The `hokage.programs.zerobyte` module uses the native package and NixOS service
+from [NixOS/nixpkgs#557765](https://github.com/NixOS/nixpkgs/pull/557765).
+The merged nixpkgs revision is pinned temporarily until it reaches
+`nixos-unstable`.
 
-## Features
-
-- Runs zerobyte in a secure Docker container
-- Only accessible from localhost (127.0.0.1) for security
-- Configurable backup paths
-- Automatic restart unless stopped
-- FUSE support for mounting backup repositories
+The service is enabled by default on desktop hosts using the internal
+infrastructure.
 
 ## Usage
-
-Add to your NixOS configuration:
 
 ```nix
 hokage.programs.zerobyte = {
   enable = true;
-  port = 4096;                    # Default port
-  localhostOnly = true;           # Default: true - bind to localhost only
-  timezone = "Europe/Vienna";     # Your timezone
-  resticHostname = "myserver";    # Hostname for restic backups
+  port = 4096;
+  host = "127.0.0.1";
+  timezone = "Europe/Vienna";
+  resticHostname = "myserver";
   backupPaths = [
-    "/var/lib/docker/volumes"
-    "/home/omega"
+    "/var/lib"
+    "/home"
     "/etc"
-    "/var/lib/libvirt"
+    "/root"
   ];
 };
 ```
 
-## Configuration Options
+The native service runs as root by default to retain the filesystem access of
+the former rootful container. Each `backupPaths` entry is exposed at its former
+container path under `/backup`; for example, `/home` is also available as
+`/backup/home`. This keeps existing Zerobyte volume definitions working.
 
-### `enable`
+Set `readWriteBackupPaths = false` to prevent restores from writing to these
+paths. The service listens only on `127.0.0.1:4096` by default and does not open
+the firewall.
 
-- **Type:** boolean
-- **Default:** false
-- **Description:** Whether to enable the zerobyte backup service
+## Existing State
 
-### `image`
+Hosts that previously used `/var/lib/zerobyte` retain the same state directory.
+For an installation that used the Docker named volume, point the native service
+at its data directory:
 
-- **Type:** string
-- **Default:** "ghcr.io/nicotsx/zerobyte:v0.22"
-- **Description:** Docker image to use for zerobyte
+```nix
+hokage.programs.zerobyte.dataDir = "/var/lib/docker/volumes/zerobyte-data/_data";
+```
 
-### `port`
+## Secret
 
-- **Type:** port (1-65535)
-- **Default:** 4096
-- **Description:** Port to bind zerobyte service
+The module decrypts `secrets/zerobyte-secret.age` and passes it to systemd as an
+environment file. Its contents must use this format:
 
-### `localhostOnly`
+```text
+APP_SECRET=<32-or-more-character-secret>
+```
 
-- **Type:** boolean
-- **Default:** true
-- **Description:** Whether to bind zerobyte service only to localhost (127.0.0.1). When false, binds to all interfaces.
-
-### `timezone`
-
-- **Type:** string
-- **Default:** "Europe/Vienna"
-- **Description:** Timezone for the container
-
-### `resticHostname`
-
-- **Type:** string
-- **Default:** `config.networking.hostName`
-- **Description:** Restic hostname to use for backups
-
-### `backupPaths`
-
-- **Type:** list of strings
-- **Default:** See example above
-- **Description:** List of host paths to backup. Each path will be automatically mounted as `/backup<path>:ro` in the container.
-
-## Security
-
-By default, the service is configured to only listen on localhost (127.0.0.1) via the `localhostOnly = true` setting to prevent external access. Set `localhostOnly = false` if you need to access the service from other machines. The container runs with minimal required capabilities (SYS_ADMIN for FUSE support).
-
-## Dependencies
-
-- Requires Docker to be enabled (`virtualisation.docker.enable = true`)
-- FUSE device access for mounting backup repositories
-
-## Access
-
-Once enabled, the zerobyte web interface will be available at:
-
-- http://127.0.0.1:4096 (or your configured port)
-
-## Troubleshooting
-
-- Check container status: `docker ps | grep zerobyte`
-- View container logs: `docker logs zerobyte`
-- Restart service: `systemctl restart docker-zerobyte.service`
+Inspect the service with `systemctl status zerobyte` and
+`journalctl -u zerobyte`.

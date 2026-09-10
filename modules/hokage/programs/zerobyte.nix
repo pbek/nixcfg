@@ -1,170 +1,170 @@
 {
   config,
+  inputs,
   lib,
+  pkgs,
   ...
 }:
 let
   inherit (config) hokage;
   cfg = hokage.programs.zerobyte;
-
-  inherit (lib)
-    mkEnableOption
-    mkOption
-    mkIf
-    types
-    ;
+  backupMounts = map (path: "${path}:/backup${path}") cfg.backupPaths;
 in
 {
+  # Remove this import once NixOS/nixpkgs#557765 reaches nixos-unstable.
+  imports = [ (inputs.nixpkgs-zerobyte + "/nixos/modules/services/web-apps/zerobyte.nix") ];
+
   options.hokage.programs.zerobyte = {
-    enable = mkEnableOption "Zerobyte backup service" // {
+    enable = lib.mkEnableOption "the native Zerobyte backup service" // {
       default = hokage.role == "desktop" && hokage.useInternalInfrastructure;
     };
 
-    image = mkOption {
-      type = types.str;
-      default = "ghcr.io/nicotsx/zerobyte:v0.42";
-      description = "Docker image to use for zerobyte";
+    package = lib.mkPackageOption pkgs "zerobyte" { };
+
+    host = lib.mkOption {
+      type = lib.types.str;
+      default = "127.0.0.1";
+      description = "Address on which Zerobyte listens.";
     };
 
-    port = mkOption {
-      type = types.port;
+    port = lib.mkOption {
+      type = lib.types.port;
       default = 4096;
-      description = "Port to bind zerobyte service";
+      description = "Port on which Zerobyte listens.";
     };
 
-    baseUrl = mkOption {
-      type = types.str;
+    baseUrl = lib.mkOption {
+      type = lib.types.str;
       default = "http://localhost:4096";
-      description = "Base URL of the zerobyte instance (required since v0.42). Use https:// for secure cookies when exposing the service.";
+      description = "Base URL of the Zerobyte instance.";
     };
 
-    appSecretFile = mkOption {
-      type = types.str;
+    environmentFile = lib.mkOption {
+      type = lib.types.path;
       default = config.age.secrets.zerobyte-secret.path;
       defaultText = "config.age.secrets.zerobyte-secret.path";
-      description = "Path to a file containing the zerobyte APP_SECRET environment variable (32+ chars, generate with 'openssl rand -hex 32'). Required since v0.42. Defaults to the agenix zerobyte-secret.";
+      description = "Environment file containing APP_SECRET and other sensitive settings.";
     };
 
-    trustedOrigins = mkOption {
-      type = types.listOf types.str;
-      default = [ ];
-      description = "Additional trusted origins (TRUSTED_ORIGINS) allowed to call the auth API, e.g. alternate hostnames or IPs. The baseUrl is always trusted automatically.";
+    dataDir = lib.mkOption {
+      type = lib.types.str;
+      default = "/var/lib/zerobyte";
+      description = "State directory used by Zerobyte.";
     };
 
-    localhostOnly = mkOption {
-      type = types.bool;
-      default = true;
-      description = "Whether to bind zerobyte service only to localhost (127.0.0.1). When false, binds to all interfaces.";
+    user = lib.mkOption {
+      type = lib.types.str;
+      default = "root";
+      description = "User under which Zerobyte runs.";
     };
 
-    timezone = mkOption {
-      type = types.str;
+    group = lib.mkOption {
+      type = lib.types.str;
+      default = "root";
+      description = "Group under which Zerobyte runs.";
+    };
+
+    timezone = lib.mkOption {
+      type = lib.types.str;
       default = "Europe/Vienna";
-      description = "Timezone for the container";
+      description = "Timezone used by Zerobyte.";
     };
 
-    resticHostname = mkOption {
-      type = types.str;
+    resticHostname = lib.mkOption {
+      type = lib.types.str;
       default = "";
-      description = "Restic hostname to use for backups. Defaults to the system hostname if not set.";
+      description = "Restic hostname, defaulting to the system hostname when empty.";
     };
 
-    backupPaths = mkOption {
-      type = types.listOf types.str;
+    trustedOrigins = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      description = "Additional origins allowed to call the Zerobyte authentication API.";
+    };
+
+    settings = lib.mkOption {
+      type = lib.types.attrsOf (
+        lib.types.oneOf [
+          lib.types.bool
+          lib.types.int
+          lib.types.str
+        ]
+      );
+      default = { };
+      description = "Additional environment settings passed to Zerobyte.";
+    };
+
+    backupPaths = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
       default = [
         "/var/lib"
         "/home"
         "/etc"
         "/root"
       ];
-      description = "List of paths to backup from the host system";
+      description = "Host paths exposed under /backup for existing Zerobyte volume definitions.";
     };
 
-    useLocalPath = mkOption {
-      type = types.bool;
+    readWriteBackupPaths = lib.mkOption {
+      type = lib.types.bool;
       default = true;
-      description = "Whether to use /var/lib/zerobyte as local path (true) or docker volume zerobyte-data (false) for data storage.";
+      description = "Whether Zerobyte may write to the configured backup paths for restores.";
     };
 
-    autoStart = mkOption {
-      type = types.bool;
-      default = true;
-      description = "Whether to automatically start the zerobyte container on boot. Set to false to allow manual container control.";
+    openFirewall = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Whether to open the Zerobyte port in the firewall.";
     };
 
-    readWriteBackupPaths = mkOption {
-      type = types.bool;
+    autoStart = lib.mkOption {
+      type = lib.types.bool;
       default = true;
-      description = "Whether to mount backup paths as read-write (rw) instead of read-only (ro). Set to false for read-only mounts. Note: You cannot restore files if this option is false.";
+      description = "Whether to start Zerobyte automatically at boot.";
     };
   };
 
-  config = mkIf cfg.enable {
-    # Zerobyte APP_SECRET (required since v0.42), decrypted by agenix
+  config = lib.mkIf cfg.enable {
     age.secrets.zerobyte-secret = {
       file = ../../../secrets/zerobyte-secret.age;
-      # Root-readable is fine; the file is passed to docker via environmentFiles
       mode = "600";
     };
 
-    # Enable docker/podman for OCI containers
-    virtualisation.docker.enable = true;
-
-    # Create the zerobyte service using OCI containers
-    virtualisation.oci-containers = {
-      backend = "docker";
-      containers.zerobyte = {
-        inherit (cfg) image;
-        inherit (cfg) autoStart;
-
-        # Capabilities
-        extraOptions = [
-          "--cap-add=SYS_ADMIN"
-          "--device=/dev/fuse:/dev/fuse"
-        ];
-
-        # Port binding - bind to localhost or all interfaces based on localhostOnly setting
-        ports = [
-          "${if cfg.localhostOnly then "127.0.0.1:" else ""}${toString cfg.port}:4096"
-        ];
-
-        # Environment variables
-        environment = {
-          TZ = cfg.timezone;
-          BASE_URL = cfg.baseUrl;
-          # Trust the loopback counterpart of baseUrl (localhost <-> 127.0.0.1) so the
-          # auth API accepts requests regardless of which loopback name is browsed.
-          TRUSTED_ORIGINS = lib.concatStringsSep "," (
-            cfg.trustedOrigins
-            ++ lib.optional (lib.hasInfix "://localhost" cfg.baseUrl) (
-              lib.replaceStrings [ "://localhost" ] [ "://127.0.0.1" ] cfg.baseUrl
-            )
-            ++ lib.optional (lib.hasInfix "://127.0.0.1" cfg.baseUrl) (
-              lib.replaceStrings [ "://127.0.0.1" ] [ "://localhost" ] cfg.baseUrl
-            )
-          );
-          RESTIC_HOSTNAME =
-            if cfg.resticHostname != "" then cfg.resticHostname else config.networking.hostName;
-        };
-
-        # Environment files (inject APP_SECRET without storing it in the nix store)
-        environmentFiles = [ cfg.appSecretFile ];
-
-        # Volumes
-        volumes = [
-          "/etc/localtime:/etc/localtime:ro"
-          "${if cfg.useLocalPath then "/var/lib/zerobyte" else "zerobyte-data"}:/var/lib/zerobyte"
-        ]
-        ++ (map (
-          path: "${path}:/backup${path}:${if cfg.readWriteBackupPaths then "rw" else "ro"}"
-        ) cfg.backupPaths);
-      };
+    services.zerobyte = {
+      enable = true;
+      inherit (cfg)
+        package
+        environmentFile
+        dataDir
+        user
+        group
+        openFirewall
+        ;
+      settings = {
+        BASE_URL = cfg.baseUrl;
+        HOST = cfg.host;
+        PORT = cfg.port;
+        TZ = cfg.timezone;
+        RESTIC_HOSTNAME =
+          if cfg.resticHostname != "" then cfg.resticHostname else config.networking.hostName;
+        TRUSTED_ORIGINS = lib.concatStringsSep "," (
+          cfg.trustedOrigins
+          ++ lib.optional (lib.hasInfix "://localhost" cfg.baseUrl) (
+            lib.replaceStrings [ "://localhost" ] [ "://127.0.0.1" ] cfg.baseUrl
+          )
+          ++ lib.optional (lib.hasInfix "://127.0.0.1" cfg.baseUrl) (
+            lib.replaceStrings [ "://127.0.0.1" ] [ "://localhost" ] cfg.baseUrl
+          )
+        );
+      }
+      // cfg.settings;
     };
 
-    # Open firewall for localhost only (this is handled by the port binding above)
-    # No need to explicitly open firewall since we're binding to localhost only
-
-    # Add zerobyte to system packages for CLI access if needed
-    environment.systemPackages = [ ];
+    systemd.services.zerobyte = {
+      wantedBy = lib.mkIf (!cfg.autoStart) (lib.mkForce [ ]);
+      serviceConfig = {
+        ${if cfg.readWriteBackupPaths then "BindPaths" else "BindReadOnlyPaths"} = backupMounts;
+      };
+    };
   };
 }

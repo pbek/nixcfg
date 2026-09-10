@@ -1,2 +1,0 @@
-build:
-    nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })'

@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
+    # Temporary source for Zerobyte until NixOS/nixpkgs#557765 reaches nixos-unstable.
+    nixpkgs-zerobyte = {
+      url = "github:NixOS/nixpkgs/4f9781b188617829269c84078b201f6e12bb3a93";
+      flake = false;
+    };
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
@@ -61,7 +66,7 @@
         builtins.attrValues (
           builtins.mapAttrs (
             name: type:
-            if type == "regular" && builtins.match ".*\\.nix$" name != null then
+            if type == "regular" && builtins.match ".*\\.nix$" name != null && name != "zerobyte.nix" then
               import (overlaysDir + "/${name}")
             else
               null
@@ -69,7 +74,9 @@
         )
       );
       # Only include user-defined overlays here (exclude the meta overlays-nixpkgs to avoid recursion)
-      validOverlays = builtins.filter (x: builtins.isFunction x) overlaysFromDir;
+      validOverlays = builtins.filter (x: builtins.isFunction x) overlaysFromDir ++ [
+        (import ./overlays/zerobyte.nix { nixpkgsSource = inputs.nixpkgs-zerobyte; })
+      ];
       # Provide stable and unstable package sets as attributes of pkgs while ensuring our local overlays are also applied there.
       overlays-nixpkgs = final: _prev: {
         stable = import nixpkgs-stable {
@@ -241,7 +248,7 @@
       };
 
       packages.x86_64-linux = {
-        inherit (pkgs) devenv qownnotes;
+        inherit (pkgs) devenv qownnotes zerobyte;
         kate = pkgs.kdePackages.kate;
         qc = pkgs.callPackage ./pkgs/qc/default.nix { };
         qownnotes-stable = pkgs.stable.qownnotes;
