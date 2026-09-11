@@ -24,7 +24,8 @@ in
     };
 
     programs.fish.shellAliases = {
-      oc = "AZURE_RESOURCE_NAME=zid-digitalisation-coding opencode";
+      oc = "opencode";
+      occ = "opencode -c";
     };
 
     home-manager.users = lib.genAttrs hokage.users (_userName: {
