@@ -34,6 +34,7 @@ in
         opencode = {
           enable = true;
           enableMcpIntegration = true;
+          skills.markdown = ../skills/markdown/SKILL.md;
           settings = {
             provider = {
               "azure-anthropic" = {
