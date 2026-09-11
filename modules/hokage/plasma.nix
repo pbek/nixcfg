@@ -141,6 +141,16 @@ in
         };
       };
 
+      xdg.mimeApps = {
+        enable = true;
+        defaultApplications = {
+          "image/jpeg" = "org.kde.koko.desktop";
+          "image/png" = "org.kde.koko.desktop";
+          "image/webp" = "org.kde.koko.desktop";
+          "image/x-webp" = "org.kde.koko.desktop";
+        };
+      };
+
       xdg.desktopEntries = lib.mkIf waylandSupport {
         ferdium-wayland = {
           name = "Ferdium Wayland";
