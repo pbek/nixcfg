@@ -81,6 +81,7 @@ in
             };
           };
         };
+        opencode.skills.tugraz-kanboard = ./skills/tugraz-kanboard/SKILL.md;
       };
     });
 
