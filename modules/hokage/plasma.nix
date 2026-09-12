@@ -148,6 +148,12 @@ in
           "image/png" = "org.kde.koko.desktop";
           "image/webp" = "org.kde.koko.desktop";
           "image/x-webp" = "org.kde.koko.desktop";
+        }
+        // lib.optionalAttrs hokage.useInternalInfrastructure {
+          "text/html" = "firefox.desktop";
+          "application/xhtml+xml" = "firefox.desktop";
+          "x-scheme-handler/http" = "firefox.desktop";
+          "x-scheme-handler/https" = "firefox.desktop";
         };
       };
 
