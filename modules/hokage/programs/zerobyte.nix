@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
   ...
@@ -11,9 +10,6 @@ let
   backupMounts = map (path: "${path}:/backup${path}") cfg.backupPaths;
 in
 {
-  # Remove this import once NixOS/nixpkgs#557765 reaches nixos-unstable.
-  imports = [ (inputs.nixpkgs-zerobyte + "/nixos/modules/services/web-apps/zerobyte.nix") ];
-
   options.hokage.programs.zerobyte = {
     enable = lib.mkEnableOption "the native Zerobyte backup service" // {
       default = hokage.role == "desktop" && hokage.useInternalInfrastructure;

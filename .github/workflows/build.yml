@@ -111,10 +111,10 @@ jobs:
         run: |
           nix build .#kate && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
-      - name: Build zerobyte package
-        run: |
-          nix build .#zerobyte && \
-          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      # - name: Build zerobyte package
+      #   run: |
+      #     nix build .#zerobyte && \
+      #     nix-shell -p attic-client --run "attic push qownnotes ./result"
       - name: Build gh-stack extension
         run: |
           nix build .#gh-stack && \

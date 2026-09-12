@@ -66,7 +66,7 @@
         builtins.attrValues (
           builtins.mapAttrs (
             name: type:
-            if type == "regular" && builtins.match ".*\\.nix$" name != null && name != "zerobyte.nix" then
+            if type == "regular" && builtins.match ".*\\.nix$" name != null then
               import (overlaysDir + "/${name}")
             else
               null
@@ -74,9 +74,7 @@
         )
       );
       # Only include user-defined overlays here (exclude the meta overlays-nixpkgs to avoid recursion)
-      validOverlays = builtins.filter (x: builtins.isFunction x) overlaysFromDir ++ [
-        (import ./overlays/zerobyte.nix { nixpkgsSource = inputs.nixpkgs-zerobyte; })
-      ];
+      validOverlays = builtins.filter (x: builtins.isFunction x) overlaysFromDir;
       # Provide stable and unstable package sets as attributes of pkgs while ensuring our local overlays are also applied there.
       overlays-nixpkgs = final: _prev: {
         stable = import nixpkgs-stable {
