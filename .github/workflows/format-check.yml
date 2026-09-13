@@ -31,4 +31,4 @@ jobs:
       - name: 🔧 Install devenv.sh
         run: nix profile add nixpkgs#devenv
       - name: 🌳 Format code
-        run: devenv shell "just format"
+        run: devenv shell just -- format
