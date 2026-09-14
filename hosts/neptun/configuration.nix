@@ -10,7 +10,7 @@
 }:
 
 let
-  broadcomSta = "broadcom-sta-6.30.223.271-63-7.2.4";
+  broadcomSta = "broadcom-sta-6.30.223.271-63-7.2.5";
 in
 
 {
