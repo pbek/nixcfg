@@ -22,6 +22,7 @@
     userNameLong = "Shiva Pouya";
     userNameShort = "Shiva";
     userEmail = "shiva.pouya@tugraz.at";
+    plasma.defaultBrowserApplication = "google-chrome.desktop";
     tugraz.enableExternal = true;
     zfs.enable = true;
   };

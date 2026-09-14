@@ -22,6 +22,16 @@ in
     enablePlasmaManager = lib.mkEnableOption "plasma-manager" // {
       default = true;
     };
+    defaultImageApplication = lib.mkOption {
+      type = lib.types.str;
+      default = "org.kde.koko.desktop";
+      description = "Desktop entry to use as the default image viewer";
+    };
+    defaultBrowserApplication = lib.mkOption {
+      type = lib.types.str;
+      default = "firefox.desktop";
+      description = "Desktop entry to use as the default web browser";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -144,16 +154,14 @@ in
       xdg.mimeApps = {
         enable = true;
         defaultApplications = {
-          "image/jpeg" = "org.kde.koko.desktop";
-          "image/png" = "org.kde.koko.desktop";
-          "image/webp" = "org.kde.koko.desktop";
-          "image/x-webp" = "org.kde.koko.desktop";
-        }
-        // lib.optionalAttrs hokage.useInternalInfrastructure {
-          "text/html" = "firefox.desktop";
-          "application/xhtml+xml" = "firefox.desktop";
-          "x-scheme-handler/http" = "firefox.desktop";
-          "x-scheme-handler/https" = "firefox.desktop";
+          "image/jpeg" = cfg.defaultImageApplication;
+          "image/png" = cfg.defaultImageApplication;
+          "image/webp" = cfg.defaultImageApplication;
+          "image/x-webp" = cfg.defaultImageApplication;
+          "text/html" = cfg.defaultBrowserApplication;
+          "application/xhtml+xml" = cfg.defaultBrowserApplication;
+          "x-scheme-handler/http" = cfg.defaultBrowserApplication;
+          "x-scheme-handler/https" = cfg.defaultBrowserApplication;
         };
       };
 
