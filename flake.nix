@@ -258,6 +258,7 @@
         qownnotes-tui = inputs.qownnotes-tui.packages.${system}.default;
         inherit (pkgs) lan-orangutan sonar ziggity;
         inherit (pkgs) gh-stack;
+        inherit (pkgs) opencode;
       }
       // {
         # Generate Markdown docs for hokage module options

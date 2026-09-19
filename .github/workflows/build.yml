@@ -6,9 +6,11 @@ on:
       - main
     paths:
       - "pkgs/qownnotes/**"
+      - "pkgs/opencode/**"
       - "pkgs/nixbit/**"
       - "pkgs/sonar/**"
       - "pkgs/ziggity/**"
+      - "overlays/opencode.nix"
       - "overlays/zerobyte.nix"
       - "modules/hokage/programs/zerobyte.nix"
       - "pkgs/gh-stack/**"
@@ -118,4 +120,8 @@ jobs:
       - name: Build gh-stack extension
         run: |
           nix build .#gh-stack && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build opencode package
+        run: |
+          nix build .#opencode && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
