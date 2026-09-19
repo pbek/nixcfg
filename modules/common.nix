@@ -289,6 +289,7 @@ in
   home-manager = {
     backupFileExtension = "backup";
     overwriteBackup = true;
+    useGlobalPkgs = true;
     users = lib.genAttrs hokage.usersWithRoot (_userName: {
       home.enableNixpkgsReleaseCheck = false;
 
