@@ -642,11 +642,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1772115535,
-        "narHash": "sha256-JXjQiPhkkSJh4oWVqTq3lJdVYaknPDCnZ7L+K1vVb/4=",
+        "lastModified": 1789882419,
+        "narHash": "sha256-63NImonaCaRefJ2dSlHq1iG/w9qW38s0OHFkWqgxn/c=",
         "owner": "pbek",
         "repo": "tokstat",
-        "rev": "5cf25033641aaea97b5b1c34f14e38e773b1d53f",
+        "rev": "4cbfd16b6383bbfade28f91ce8de76d28786a187",
         "type": "github"
       },
       "original": {
