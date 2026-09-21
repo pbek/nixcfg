@@ -28,6 +28,7 @@
     termFontSize = 16.0;
     useGhosttyGtkFix = false;
     programs.libvirt.role = "guest";
+    programs.zerobyte.enable = false;
     cache.sources = [ "caliban" ];
     zfs = {
       enable = true;
