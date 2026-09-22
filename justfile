@@ -146,6 +146,21 @@ switch args='':
       just _notify "switch finished on {{ hostname }}, exit code: $exit_code (runtime: ${runtime}s)"
     fi
 
+# Build and switch without using local cache servers
+[group('build')]
+switch-no-local-cache args='':
+    #!/usr/bin/env bash
+    echo "❄️ Running switch for {{ hostname }} without local caches..."
+    sudo true
+    start_time=$(date +%s)
+    nh os switch -H {{ hostname }} . -- --option substituters "https://cache.nixos.org/ https://nix-community.cachix.org https://nix-cache.qownnotes.org/main https://nix-cache.qownnotes.org/qownnotes" {{ args }}
+    exit_code=$?
+    end_time=$(date +%s)
+    runtime=$((end_time - start_time))
+    if [ $runtime -gt 10 ]; then
+      just _notify "switch without local caches finished on {{ hostname }}, exit code: $exit_code (runtime: ${runtime}s)"
+    fi
+
 # Build and activate the new configuration at next boot, you need to do this if "switch inhibitors" are present
 [group('build')]
 boot args='':
@@ -181,6 +196,12 @@ build-host-on buildHost hostname args='':
 # Build the current host with nh
 [group('build')]
 build args='': (build-host hostname args)
+
+# Build the current host without using local cache servers
+[group('build')]
+build-no-local-cache args='':
+    nh os build -H {{ hostname }} . -- --option substituters "https://cache.nixos.org/ https://nix-community.cachix.org https://nix-cache.qownnotes.org/main https://nix-cache.qownnotes.org/qownnotes" {{ args }}
+    just _notify "build of host {{ hostname }} without local caches finished"
 
 # Build the current host on the Caliban host
 [group('build')]
