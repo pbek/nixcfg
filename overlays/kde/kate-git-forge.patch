@@ -1,0 +1,2236 @@
+From 40f056252825dbb566d6304c3e3a0a4b609d2641 Mon Sep 17 00:00:00 2001
+From: Patrizio Bekerle <patrizio@bekerle.com>
+Date: Mon, 21 Sep 2026 11:32:35 +0200
+Subject: [PATCH 1/7] project: expose file tree context menu extension hook
+
+---
+ addons/project/kateprojectpluginview.h            | 6 ++++++
+ addons/project/kateprojecttreeviewcontextmenu.cpp | 4 ++++
+ addons/project/kateprojectviewtree.h              | 1 +
+ 3 files changed, 11 insertions(+)
+
+diff --git a/addons/project/kateprojectpluginview.h b/addons/project/kateprojectpluginview.h
+index 0fa9c5155..d9c55e84c 100755
+--- a/addons/project/kateprojectpluginview.h
++++ b/addons/project/kateprojectpluginview.h
+@@ -17,6 +17,7 @@
+ 
+ class QAction;
+ class QDir;
++class QMenu;
+ class KateProject;
+ class KateProjectPlugin;
+ class KateProjectInfoView;
+@@ -269,6 +270,11 @@ Q_SIGNALS:
+      */
+     void projectMapEdited();
+ 
++    /**
++     * Emitted synchronously before a project tree context menu is shown.
++     */
++    void projectTreeContextMenuAboutToShow(QMenu *menu, const QString &path, const QString &projectBaseDir, int itemType);
++
+ private Q_SLOTS:
+     /**
+      * This slot is called whenever the active view changes in our main window.
+diff --git a/addons/project/kateprojecttreeviewcontextmenu.cpp b/addons/project/kateprojecttreeviewcontextmenu.cpp
+index 825db1b28..3fcfc4cd3 100644
+--- a/addons/project/kateprojecttreeviewcontextmenu.cpp
++++ b/addons/project/kateprojecttreeviewcontextmenu.cpp
+@@ -12,6 +12,7 @@
+ #include "kateproject.h"
+ #include "kateprojectinfoviewterminal.h"
+ #include "kateprojectitem.h"
++#include "kateprojectpluginview.h"
+ #include "kateprojectviewtree.h"
+ 
+ #include <KAuthorized>
+@@ -191,6 +192,9 @@ void KateProjectTreeViewContextMenu::exec(const QString &filename, const QModelI
+         }
+     }
+ 
++    const int itemType = isRootDirectory ? KateProjectItem::Project : index.data(KateProjectItem::TypeRole).toInt();
++    Q_EMIT parent->m_pluginView->projectTreeContextMenuAboutToShow(&menu, QFileInfo(filename).absoluteFilePath(), parent->project()->baseDir(), itemType);
++
+     /**
+      * run menu and handle the triggered action
+      */
+diff --git a/addons/project/kateprojectviewtree.h b/addons/project/kateprojectviewtree.h
+index bf3f947cd..151e2e222 100644
+--- a/addons/project/kateprojectviewtree.h
++++ b/addons/project/kateprojectviewtree.h
+@@ -23,6 +23,7 @@ class MainWindow;
+ class KateProjectViewTree : public QTreeView
+ {
+     friend class KateProjectTreeDelegate;
++    friend class KateProjectTreeViewContextMenu;
+ 
+ public:
+     /**
+-- 
+2.55.0
+
+
+From 95431985fb29918a53c8d647c004206ef799475b Mon Sep 17 00:00:00 2001
+From: Patrizio Bekerle <patrizio@bekerle.com>
+Date: Mon, 21 Sep 2026 11:33:00 +0200
+Subject: [PATCH 2/7] project: add Git Forge support
+
+project: add git hosting support
+
+Signed-off-by: Patrizio Bekerle <patrizio@bekerle.com>
+---
+ addons/project/CMakeLists.txt                 |   7 +
+ addons/project/autotests/CMakeLists.txt       |  11 +
+ addons/project/autotests/gitforgeurltest.cpp  | 203 ++++++++++++++
+ addons/project/git/gitforgeconfigwidget.cpp   | 248 ++++++++++++++++
+ addons/project/git/gitforgeconfigwidget.h     |  49 ++++
+ addons/project/git/gitforgelink.cpp           |  95 +++++++
+ addons/project/git/gitforgelink.h             |  20 ++
+ addons/project/git/gitforgeurl.cpp            | 265 ++++++++++++++++++
+ addons/project/git/gitforgeurl.h              |  58 ++++
+ addons/project/kateprojectconfigpage.cpp      |  20 +-
+ addons/project/kateprojectconfigpage.h        |   2 +
+ addons/project/kateprojectplugin.cpp          |  45 +++
+ addons/project/kateprojectplugin.h            |   5 +
+ addons/project/kateprojectpluginview.cpp      |  76 +++++
+ addons/project/kateprojectpluginview.h        |  15 +-
+ .../kateprojecttreeviewcontextmenu.cpp        |  37 ++-
+ addons/project/kateprojectviewtree.h          |   2 -
+ 17 files changed, 1146 insertions(+), 12 deletions(-)
+ create mode 100644 addons/project/autotests/gitforgeurltest.cpp
+ create mode 100644 addons/project/git/gitforgeconfigwidget.cpp
+ create mode 100644 addons/project/git/gitforgeconfigwidget.h
+ create mode 100644 addons/project/git/gitforgelink.cpp
+ create mode 100644 addons/project/git/gitforgelink.h
+ create mode 100644 addons/project/git/gitforgeurl.cpp
+ create mode 100644 addons/project/git/gitforgeurl.h
+
+diff --git a/addons/project/CMakeLists.txt b/addons/project/CMakeLists.txt
+index 4d2cea8de..700770a22 100644
+--- a/addons/project/CMakeLists.txt
++++ b/addons/project/CMakeLists.txt
+@@ -1,3 +1,5 @@
++find_package(Qt6Network ${QT_MIN_VERSION} CONFIG REQUIRED)
++
+ kate_add_plugin(kateprojectplugin)
+ target_compile_definitions(kateprojectplugin PRIVATE TRANSLATION_DOMAIN="kateproject")
+ 
+@@ -9,6 +11,8 @@ target_link_libraries(
+         KF6::GuiAddons
+         KF6::I18n
+         KF6::TextEditor
++        KF6::WidgetsAddons
++        Qt::Network
+ )
+ 
+ target_sources(
+@@ -48,6 +52,9 @@ target_sources(
+     tools/codeanalysisselector.cpp
+     git/gitutils.cpp
+     git/gitstatus.cpp
++    git/gitforgelink.cpp
++    git/gitforgeurl.cpp
++    git/gitforgeconfigwidget.cpp
+ 
+     plugin.qrc
+ )
+diff --git a/addons/project/autotests/CMakeLists.txt b/addons/project/autotests/CMakeLists.txt
+index 15903fafa..ccf73b6bc 100644
+--- a/addons/project/autotests/CMakeLists.txt
++++ b/addons/project/autotests/CMakeLists.txt
+@@ -27,3 +27,14 @@ endif()
+ 
+ add_test(NAME plugin-project_test COMMAND projectplugin_test ${OFFSCREEN_QPA})
+ ecm_mark_as_test(projectplugin_test)
++
++add_executable(gitforgeurltest gitforgeurltest.cpp ../git/gitforgeurl.cpp)
++target_include_directories(gitforgeurltest PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/..)
++target_link_libraries(gitforgeurltest PRIVATE Qt::Test Qt::Core)
++
++add_test(NAME plugin-gitforgeurltest COMMAND gitforgeurltest)
++ecm_mark_as_test(gitforgeurltest)
++
++if(ENABLE_PCH)
++    target_precompile_headers(gitforgeurltest REUSE_FROM katepch_tests)
++endif()
+diff --git a/addons/project/autotests/gitforgeurltest.cpp b/addons/project/autotests/gitforgeurltest.cpp
+new file mode 100644
+index 000000000..c988cc71e
+--- /dev/null
++++ b/addons/project/autotests/gitforgeurltest.cpp
+@@ -0,0 +1,203 @@
++/*
++    SPDX-FileCopyrightText: 2026 The Kate Developers
++
++    SPDX-License-Identifier: LGPL-2.0-or-later
++*/
++
++#include "git/gitforgeurl.h"
++
++#include <QTest>
++
++Q_DECLARE_METATYPE(GitForge::Provider)
++
++class GitForgeUrlTest : public QObject {
++    Q_OBJECT
++
++private Q_SLOTS:
++    void parseRemote_data();
++    void parseRemote();
++    void rejectRemote_data();
++    void rejectRemote();
++    void resolveRepository();
++    void buildUrl_data();
++    void buildUrl();
++    void lineRange_data();
++    void lineRange();
++    void providerApiUrls();
++    void providerApiResponse();
++};
++
++void GitForgeUrlTest::parseRemote_data()
++{
++    QTest::addColumn<QString>("input");
++    QTest::addColumn<QString>("host");
++    QTest::addColumn<int>("port");
++    QTest::addColumn<QString>("path");
++
++    QTest::newRow("https") << QStringLiteral("https://github.com/owner/repo.git") << QStringLiteral("github.com") << -1 << QStringLiteral("owner/repo");
++    QTest::newRow("http-port") << QStringLiteral("http://git.example.com:8080/group/repo.git") << QStringLiteral("git.example.com") << 8080
++                               << QStringLiteral("group/repo");
++    QTest::newRow("ssh") << QStringLiteral("ssh://git@gitlab.com:2222/group/subgroup/repo.git") << QStringLiteral("gitlab.com") << 2222
++                         << QStringLiteral("group/subgroup/repo");
++    QTest::newRow("git") << QStringLiteral("git://github.com/owner/repo.git") << QStringLiteral("github.com") << -1 << QStringLiteral("owner/repo");
++    QTest::newRow("scp") << QStringLiteral("git@gitlab.com:group/repo.git") << QStringLiteral("gitlab.com") << -1 << QStringLiteral("group/repo");
++    QTest::newRow("scp-ipv6") << QStringLiteral("git@[2001:db8::1]:group/repo.git") << QStringLiteral("2001:db8::1") << -1 << QStringLiteral("group/repo");
++}
++
++void GitForgeUrlTest::parseRemote()
++{
++    QFETCH(QString, input);
++    QFETCH(QString, host);
++    QFETCH(int, port);
++    QFETCH(QString, path);
++    const auto remote = GitForge::parseRemote(input);
++    QVERIFY(remote);
++    QCOMPARE(remote->host, host);
++    QCOMPARE(remote->port, port);
++    QCOMPARE(remote->repositoryPath, path);
++}
++
++void GitForgeUrlTest::rejectRemote_data()
++{
++    QTest::addColumn<QString>("input");
++    QTest::newRow("local") << QStringLiteral("../repo.git");
++    QTest::newRow("file") << QStringLiteral("file:///tmp/repo.git");
++    QTest::newRow("missing-project") << QStringLiteral("https://github.com/repo.git");
++    QTest::newRow("traversal") << QStringLiteral("git@example.com:group/../repo.git");
++    QTest::newRow("query") << QStringLiteral("https://github.com/owner/repo.git?x=1");
++}
++
++void GitForgeUrlTest::rejectRemote()
++{
++    QFETCH(QString, input);
++    QVERIFY(!GitForge::parseRemote(input));
++}
++
++void GitForgeUrlTest::resolveRepository()
++{
++    const auto github = GitForge::resolveRepository(*GitForge::parseRemote(QStringLiteral("git@github.com:owner/repo.git")), GitForge::defaultHostMappings());
++    QVERIFY(github);
++    QCOMPARE(github->provider, GitForge::Provider::GitHub);
++    QVERIFY(!GitForge::resolveRepository(*GitForge::parseRemote(QStringLiteral("git@github.com:owner/repo.git")), {}));
++
++    const auto mapping
++        = GitForge::hostMapping(QStringLiteral("git.example.com:2222"), GitForge::Provider::GitLab, QUrl(QStringLiteral("https://code.example.com/git")));
++    QVERIFY(mapping);
++    const auto custom = GitForge::resolveRepository(*GitForge::parseRemote(QStringLiteral("ssh://git@git.example.com:2222/team/repo.git")), { *mapping });
++    QVERIFY(custom);
++    QCOMPARE(custom->provider, GitForge::Provider::GitLab);
++    QCOMPARE(custom->webBaseUrl, QUrl(QStringLiteral("https://code.example.com/git")));
++
++    QVERIFY(!GitForge::resolveRepository(*GitForge::parseRemote(QStringLiteral("git@unknown.example:team/repo.git")), {}));
++    QVERIFY(!GitForge::resolveRepository(*GitForge::parseRemote(QStringLiteral("git@github.com:owner/group/repo.git")), GitForge::defaultHostMappings()));
++
++    const auto wildcard
++        = GitForge::hostMapping(QStringLiteral("git.example.com"), GitForge::Provider::GitHub, QUrl(QStringLiteral("https://github.example.com")));
++    QVERIFY(wildcard);
++    const auto exact
++        = GitForge::hostMapping(QStringLiteral("git.example.com:2222"), GitForge::Provider::GitLab, QUrl(QStringLiteral("https://gitlab.example.com")));
++    QVERIFY(exact);
++    const auto exactResult
++        = GitForge::resolveRepository(*GitForge::parseRemote(QStringLiteral("ssh://git@git.example.com:2222/team/repo.git")), { *wildcard, *exact });
++    QVERIFY(exactResult);
++    QCOMPARE(exactResult->provider, GitForge::Provider::GitLab);
++
++    const auto relativeBase
++        = GitForge::hostMapping(QStringLiteral("example.com"), GitForge::Provider::GitLab, QUrl(QStringLiteral("https://example.com/gitlab")));
++    QVERIFY(relativeBase);
++    const auto relativeResult
++        = GitForge::resolveRepository(*GitForge::parseRemote(QStringLiteral("https://example.com/gitlab/team/repo.git")), { *relativeBase });
++    QVERIFY(relativeResult);
++    QCOMPARE(relativeResult->path, QStringLiteral("team/repo"));
++}
++
++void GitForgeUrlTest::buildUrl_data()
++{
++    QTest::addColumn<GitForge::Provider>("provider");
++    QTest::addColumn<QString>("base");
++    QTest::addColumn<QString>("ref");
++    QTest::addColumn<QString>("path");
++    QTest::addColumn<int>("first");
++    QTest::addColumn<int>("last");
++    QTest::addColumn<QByteArray>("expected");
++
++    QTest::newRow("github-range") << GitForge::Provider::GitHub << QStringLiteral("https://github.com") << QStringLiteral("main")
++                                  << QStringLiteral("src/file.cpp") << 10 << 18 << QByteArray("https://github.com/owner/repo/blob/main/src/file.cpp#L10-L18");
++    QTest::newRow("gitlab-line") << GitForge::Provider::GitLab << QStringLiteral("https://gitlab.example/git") << QStringLiteral("feature/topic")
++                                 << QStringLiteral("a file.cpp") << 4 << 4
++                                 << QByteArray("https://gitlab.example/git/owner/repo/-/blob/feature/"
++                                               "topic/a%20file.cpp#L4");
++}
++
++void GitForgeUrlTest::buildUrl()
++{
++    QFETCH(GitForge::Provider, provider);
++    QFETCH(QString, base);
++    QFETCH(QString, ref);
++    QFETCH(QString, path);
++    QFETCH(int, first);
++    QFETCH(int, last);
++    QFETCH(QByteArray, expected);
++    const GitForge::Repository repository{ provider, QUrl(base), QStringLiteral("owner/repo") };
++    const auto url = GitForge::blobUrl(repository, ref, path, GitForge::LineRange{ first, last });
++    QVERIFY(url);
++    QCOMPARE(url->toEncoded(), expected);
++}
++
++void GitForgeUrlTest::lineRange_data()
++{
++    QTest::addColumn<int>("startLine");
++    QTest::addColumn<int>("endLine");
++    QTest::addColumn<int>("endColumn");
++    QTest::addColumn<int>("first");
++    QTest::addColumn<int>("last");
++    QTest::newRow("single-line") << 4 << 4 << 8 << 5 << 5;
++    QTest::newRow("multi-line") << 4 << 5 << 3 << 5 << 6;
++    QTest::newRow("end-column-zero") << 4 << 5 << 0 << 5 << 5;
++    QTest::newRow("whole-lines") << 4 << 7 << 0 << 5 << 7;
++}
++
++void GitForgeUrlTest::lineRange()
++{
++    QFETCH(int, startLine);
++    QFETCH(int, endLine);
++    QFETCH(int, endColumn);
++    QFETCH(int, first);
++    QFETCH(int, last);
++    const auto range = GitForge::selectedLineRange(startLine, endLine, endColumn);
++    QCOMPARE(range.first, first);
++    QCOMPARE(range.last, last);
++}
++
++void GitForgeUrlTest::providerApiUrls()
++{
++    const auto urls = GitForge::providerApiUrls(QUrl(QStringLiteral("https://code.example.com/gitlab/")));
++    QCOMPARE(urls.size(), 2);
++    QCOMPARE(urls.at(0).first, GitForge::Provider::GitLab);
++    QCOMPARE(urls.at(0).second,
++        QUrl(QStringLiteral("https://code.example.com/gitlab/api/v4/"
++                            "projects?simple=true&per_page=1")));
++    QCOMPARE(urls.at(1).first, GitForge::Provider::GitHub);
++    QCOMPARE(urls.at(1).second, QUrl(QStringLiteral("https://code.example.com/gitlab/api/v3")));
++
++    QVERIFY(GitForge::providerApiUrls(QUrl(QStringLiteral("file:///tmp/gitlab"))).isEmpty());
++    QVERIFY(GitForge::providerApiUrls(QUrl(QStringLiteral("https://code.example.com/?query=invalid"))).isEmpty());
++}
++
++void GitForgeUrlTest::providerApiResponse()
++{
++    const QByteArray gitLab = R"([{"id":1,"name":"public-project"}])";
++    const QByteArray privateGitLab = R"({"message":"401 Unauthorized"})";
++    const QByteArray gitHub = R"({"current_user_url":"https://api.example/user","repository_url":"https://api.example/repos/{owner}/{repo}"})";
++
++    QVERIFY(GitForge::isProviderApiResponse(GitForge::Provider::GitLab, 200, gitLab));
++    QVERIFY(GitForge::isProviderApiResponse(GitForge::Provider::GitLab, 401, privateGitLab));
++    QVERIFY(GitForge::isProviderApiResponse(GitForge::Provider::GitHub, 200, gitHub));
++    QVERIFY(!GitForge::isProviderApiResponse(GitForge::Provider::GitHub, 200, gitLab));
++    QVERIFY(!GitForge::isProviderApiResponse(GitForge::Provider::GitLab, 401, gitLab));
++    QVERIFY(!GitForge::isProviderApiResponse(GitForge::Provider::GitLab, 200, QByteArrayLiteral("not json")));
++}
++
++QTEST_GUILESS_MAIN(GitForgeUrlTest)
++
++#include "gitforgeurltest.moc"
+diff --git a/addons/project/git/gitforgeconfigwidget.cpp b/addons/project/git/gitforgeconfigwidget.cpp
+new file mode 100644
+index 000000000..11fde4687
+--- /dev/null
++++ b/addons/project/git/gitforgeconfigwidget.cpp
+@@ -0,0 +1,248 @@
++/*
++    SPDX-FileCopyrightText: 2026 The Kate Developers
++
++    SPDX-License-Identifier: LGPL-2.0-or-later
++*/
++
++#include "gitforgeconfigwidget.h"
++
++#include <KLocalizedString>
++#include <KMessageBox>
++
++#include <QComboBox>
++#include <QHBoxLayout>
++#include <QHeaderView>
++#include <QIcon>
++#include <QItemSelectionModel>
++#include <QLabel>
++#include <QLineEdit>
++#include <QNetworkAccessManager>
++#include <QNetworkReply>
++#include <QNetworkRequest>
++#include <QPushButton>
++#include <QSignalBlocker>
++#include <QTableWidget>
++#include <QTimer>
++#include <QVBoxLayout>
++
++GitForgeConfigWidget::GitForgeConfigWidget(QWidget *parent)
++    : QWidget(parent)
++    , m_table(new QTableWidget(this))
++    , m_networkManager(new QNetworkAccessManager(this))
++    , m_detectButton(new QPushButton(QIcon::fromTheme(QStringLiteral("tools-wizard")), i18n("Detect Service"), this))
++    , m_detectionStatus(new QLabel(this))
++{
++    auto *layout = new QVBoxLayout(this);
++
++    auto *description = new QLabel(i18n("Map Git remote hosts to their GitHub or GitLab website. The remote "
++                                        "host is taken from the clone URL; the website URL is used to open "
++                                        "repository links in a browser."),
++        this);
++    description->setWordWrap(true);
++    layout->addWidget(description);
++
++    m_table->setColumnCount(3);
++    m_table->setHorizontalHeaderLabels({ i18n("Git Remote Host"), i18n("Hosting Service"), i18n("Website URL") });
++    m_table->horizontalHeaderItem(0)->setToolTip(i18n("Host from the Git clone URL, optionally followed by its SSH port"));
++    m_table->horizontalHeaderItem(1)->setToolTip(i18n("GitHub or GitLab software running on the server"));
++    m_table->horizontalHeaderItem(2)->setToolTip(i18n("HTTP or HTTPS address used to open repository links in a web browser"));
++    m_table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
++    m_table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
++    m_table->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
++    m_table->setSelectionBehavior(QAbstractItemView::SelectRows);
++    layout->addWidget(m_table);
++
++    auto *buttons = new QHBoxLayout;
++    auto *addButton = new QPushButton(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Add Mapping"), this);
++    auto *removeButton = new QPushButton(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove Selected Mapping"), this);
++    removeButton->setEnabled(false);
++    m_detectButton->setEnabled(false);
++    m_detectButton->setToolTip(i18n("Try to identify GitHub or GitLab from the "
++                                    "selected mapping's website URL"));
++    buttons->addWidget(addButton);
++    buttons->addWidget(removeButton);
++    buttons->addWidget(m_detectButton);
++    buttons->addStretch();
++    m_detectionStatus->hide();
++    buttons->addWidget(m_detectionStatus);
++    layout->addLayout(buttons);
++
++    connect(addButton, &QPushButton::clicked, this, [this]() {
++        addRow();
++        m_table->selectRow(m_table->rowCount() - 1);
++        Q_EMIT hostMappingsChanged();
++    });
++    connect(removeButton, &QPushButton::clicked, this, [this]() {
++        const auto rows = m_table->selectionModel()->selectedRows();
++        for (auto it = rows.crbegin(); it != rows.crend(); ++it) {
++            m_table->removeRow(it->row());
++        }
++        if (!rows.isEmpty()) {
++            Q_EMIT hostMappingsChanged();
++        }
++    });
++    connect(m_detectButton, &QPushButton::clicked, this, &GitForgeConfigWidget::detectService);
++    connect(m_table->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this, removeButton]() {
++        const bool hasSelection = !m_table->selectionModel()->selectedRows().isEmpty();
++        removeButton->setEnabled(hasSelection);
++        m_detectButton->setEnabled(hasSelection && !m_detecting);
++        if (!m_detecting) {
++            m_detectionStatus->hide();
++        }
++    });
++}
++
++std::optional<QList<GitForge::HostMapping>> GitForgeConfigWidget::hostMappings()
++{
++    QList<GitForge::HostMapping> mappings;
++    for (int row = 0; row < m_table->rowCount(); ++row) {
++        auto *providerBox = qobject_cast<QComboBox *>(m_table->cellWidget(row, 1));
++        auto *hostEdit = qobject_cast<QLineEdit *>(m_table->cellWidget(row, 0));
++        auto *webBaseUrlEdit = qobject_cast<QLineEdit *>(m_table->cellWidget(row, 2));
++        const auto provider = providerBox ? GitForge::providerFromName(providerBox->currentText()) : std::nullopt;
++        const QString host = hostEdit ? hostEdit->text().trimmed() : QString();
++        const QUrl webBaseUrl(webBaseUrlEdit ? webBaseUrlEdit->text().trimmed() : QString(), QUrl::StrictMode);
++        if (!provider) {
++            KMessageBox::error(this, i18nc("Git hosting service, such as GitHub or GitLab", "The hosting service in row %1 is invalid.", row + 1));
++            return std::nullopt;
++        }
++        const auto mapping = GitForge::hostMapping(host, *provider, webBaseUrl);
++        if (!mapping) {
++            KMessageBox::error(this, i18n("The Git remote host or website URL in row %1 is invalid.", row + 1));
++            return std::nullopt;
++        }
++        mappings.push_back(*mapping);
++    }
++    return mappings;
++}
++
++void GitForgeConfigWidget::setHostMappings(const QList<GitForge::HostMapping> &mappings)
++{
++    const QSignalBlocker blocker(m_table);
++    m_table->setRowCount(0);
++    for (const GitForge::HostMapping &mapping : mappings) {
++        QString host = mapping.host.contains(u':') ? QStringLiteral("[%1]").arg(mapping.host) : mapping.host;
++        if (mapping.port != -1) {
++            host += QStringLiteral(":%1").arg(mapping.port);
++        }
++        addRow(host, GitForge::providerName(mapping.provider), mapping.webBaseUrl.toString(QUrl::FullyEncoded));
++    }
++}
++
++void GitForgeConfigWidget::addRow(const QString &host, const QString &provider, const QString &webBaseUrl)
++{
++    const int row = m_table->rowCount();
++    m_table->insertRow(row);
++
++    auto *hostEdit = new QLineEdit(host, m_table);
++    hostEdit->setPlaceholderText(i18n("git.example.com or git.example.com:2222"));
++    hostEdit->setFrame(false);
++    connect(hostEdit, &QLineEdit::textChanged, this, &GitForgeConfigWidget::hostMappingsChanged);
++    m_table->setCellWidget(row, 0, hostEdit);
++
++    auto *providerBox = new QComboBox(m_table);
++    providerBox->addItems({ QStringLiteral("GitHub"), QStringLiteral("GitLab") });
++    providerBox->setCurrentText(provider);
++    connect(providerBox, &QComboBox::currentTextChanged, this, &GitForgeConfigWidget::hostMappingsChanged);
++    connect(providerBox, &QComboBox::currentTextChanged, this, [this]() {
++        if (!m_detecting) {
++            m_detectionStatus->hide();
++        }
++    });
++    m_table->setCellWidget(row, 1, providerBox);
++
++    auto *webBaseUrlEdit = new QLineEdit(webBaseUrl, m_table);
++    webBaseUrlEdit->setPlaceholderText(i18n("https://git.example.com"));
++    webBaseUrlEdit->setFrame(false);
++    connect(webBaseUrlEdit, &QLineEdit::textChanged, this, &GitForgeConfigWidget::hostMappingsChanged);
++    connect(webBaseUrlEdit, &QLineEdit::textChanged, this, [this]() {
++        if (!m_detecting) {
++            m_detectionStatus->hide();
++        }
++    });
++    m_table->setCellWidget(row, 2, webBaseUrlEdit);
++}
++
++void GitForgeConfigWidget::detectService()
++{
++    const int row = m_table->currentRow();
++    auto *providerBox = row >= 0 ? qobject_cast<QComboBox *>(m_table->cellWidget(row, 1)) : nullptr;
++    auto *webBaseUrlEdit = row >= 0 ? qobject_cast<QLineEdit *>(m_table->cellWidget(row, 2)) : nullptr;
++    if (!providerBox || !webBaseUrlEdit) {
++        KMessageBox::error(this, i18n("Select a mapping to detect its hosting service."));
++        return;
++    }
++
++    m_pendingProbes = GitForge::providerApiUrls(QUrl(webBaseUrlEdit->text().trimmed(), QUrl::StrictMode));
++    if (m_pendingProbes.isEmpty()) {
++        KMessageBox::error(this,
++            i18n("Enter a valid HTTP or HTTPS website URL "
++                 "before detecting the hosting service."));
++        return;
++    }
++
++    m_detectionTarget = providerBox;
++    m_detectionUrlEdit = webBaseUrlEdit;
++    m_detectionUrlText = webBaseUrlEdit->text();
++    m_detectionProviderName = providerBox->currentText();
++    m_detecting = true;
++    m_detectButton->setEnabled(false);
++    m_detectionStatus->setText(i18n("Detecting…"));
++    m_detectionStatus->show();
++    startNextProbe();
++}
++
++void GitForgeConfigWidget::startNextProbe()
++{
++    if (!m_detectionTarget || m_pendingProbes.isEmpty()) {
++        finishDetection(std::nullopt);
++        return;
++    }
++
++    const auto [provider, url] = m_pendingProbes.takeFirst();
++    QNetworkRequest request(url);
++    request.setHeader(QNetworkRequest::UserAgentHeader, QStringLiteral("Kate Git Forge"));
++    request.setRawHeader("Accept", "application/json");
++    request.setTransferTimeout(5000);
++    QNetworkReply *reply = m_networkManager->get(request);
++    constexpr qint64 maxApiResponseSize = 64 * 1024;
++    reply->setReadBufferSize(maxApiResponseSize);
++    QTimer::singleShot(5000, reply, [reply]() {
++        if (reply->isRunning()) {
++            reply->abort();
++        }
++    });
++    connect(reply, &QNetworkReply::finished, this, [this, reply, provider]() {
++        const int statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
++        const QByteArray body = reply->readAll();
++        const bool responseUsable = reply->error() == QNetworkReply::NoError || statusCode == 401;
++        reply->deleteLater();
++        if (responseUsable && GitForge::isProviderApiResponse(provider, statusCode, body)) {
++            finishDetection(provider);
++        } else {
++            startNextProbe();
++        }
++    });
++}
++
++void GitForgeConfigWidget::finishDetection(std::optional<GitForge::Provider> provider)
++{
++    m_pendingProbes.clear();
++    const bool targetUnchanged = m_detectionTarget && m_detectionUrlEdit && m_detectionUrlEdit->text() == m_detectionUrlText
++        && m_detectionTarget->currentText() == m_detectionProviderName;
++    if (provider && targetUnchanged) {
++        const QString name = GitForge::providerName(*provider);
++        m_detectionTarget->setCurrentText(name);
++        m_detectionStatus->setText(i18n("Detected %1.", name));
++    } else if (provider) {
++        m_detectionStatus->setText(i18n("The mapping changed; the detection result was ignored."));
++    } else {
++        m_detectionStatus->setText(i18n("Service could not be detected; select it manually."));
++    }
++    m_detectionTarget.clear();
++    m_detectionUrlEdit.clear();
++    m_detectionUrlText.clear();
++    m_detectionProviderName.clear();
++    m_detecting = false;
++    m_detectButton->setEnabled(!m_table->selectionModel()->selectedRows().isEmpty());
++}
+diff --git a/addons/project/git/gitforgeconfigwidget.h b/addons/project/git/gitforgeconfigwidget.h
+new file mode 100644
+index 000000000..aa2a7cac3
+--- /dev/null
++++ b/addons/project/git/gitforgeconfigwidget.h
+@@ -0,0 +1,49 @@
++/*
++    SPDX-FileCopyrightText: 2026 The Kate Developers
++
++    SPDX-License-Identifier: LGPL-2.0-or-later
++*/
++
++#pragma once
++
++#include "gitforgeurl.h"
++
++#include <QPointer>
++#include <QWidget>
++
++class QComboBox;
++class QLabel;
++class QLineEdit;
++class QNetworkAccessManager;
++class QPushButton;
++class QTableWidget;
++
++class GitForgeConfigWidget final : public QWidget {
++    Q_OBJECT
++
++public:
++    explicit GitForgeConfigWidget(QWidget *parent);
++
++    std::optional<QList<GitForge::HostMapping>> hostMappings();
++    void setHostMappings(const QList<GitForge::HostMapping> &mappings);
++
++Q_SIGNALS:
++    void hostMappingsChanged();
++
++private:
++    void addRow(const QString &host = {}, const QString &provider = QStringLiteral("GitLab"), const QString &webBaseUrl = {});
++    void detectService();
++    void startNextProbe();
++    void finishDetection(std::optional<GitForge::Provider> provider);
++
++    QTableWidget *m_table;
++    QNetworkAccessManager *m_networkManager;
++    QPushButton *m_detectButton;
++    QLabel *m_detectionStatus;
++    QPointer<QComboBox> m_detectionTarget;
++    QPointer<QLineEdit> m_detectionUrlEdit;
++    QList<QPair<GitForge::Provider, QUrl>> m_pendingProbes;
++    QString m_detectionUrlText;
++    QString m_detectionProviderName;
++    bool m_detecting = false;
++};
+diff --git a/addons/project/git/gitforgelink.cpp b/addons/project/git/gitforgelink.cpp
+new file mode 100644
+index 000000000..84198630e
+--- /dev/null
++++ b/addons/project/git/gitforgelink.cpp
+@@ -0,0 +1,95 @@
++/*
++    SPDX-FileCopyrightText: 2026 The Kate Developers
++
++    SPDX-License-Identifier: LGPL-2.0-or-later
++*/
++
++#include "gitforgelink.h"
++
++#include "fileutil.h"
++#include "gitprocess.h"
++#include "hostprocess.h"
++
++#include <QDir>
++#include <QFileInfo>
++#include <QProcess>
++
++namespace {
++QString runGit(const QString &repository, const QStringList &arguments)
++{
++    QProcess process;
++    if (!setupGitProcess(process, repository, arguments)) {
++        return {};
++    }
++    startHostProcess(process, QIODevice::ReadOnly);
++    if (!process.waitForStarted(3000) || !process.waitForFinished(3000)) {
++        process.kill();
++        process.waitForFinished();
++        return {};
++    }
++    if (process.exitStatus() != QProcess::NormalExit || process.exitCode() != 0) {
++        return {};
++    }
++    return QString::fromUtf8(process.readAllStandardOutput().trimmed());
++}
++} // namespace
++
++std::optional<GitForge::Link> GitForge::linkForFile(const QString &filePath, const QList<HostMapping> &hostMappings, std::optional<LineRange> lines)
++{
++    const QFileInfo fileInfo(filePath);
++    if (!fileInfo.exists() || !fileInfo.isFile()) {
++        return std::nullopt;
++    }
++
++    const auto root = getRepoBasePath(fileInfo.absolutePath());
++    if (!root) {
++        return std::nullopt;
++    }
++
++    const QString relativePath = QDir(*root).relativeFilePath(fileInfo.absoluteFilePath());
++    if (relativePath == QLatin1String("..") || relativePath.startsWith(QLatin1String("../"))) {
++        return std::nullopt;
++    }
++    if (runGit(*root, { QStringLiteral("ls-files"), QStringLiteral("--error-unmatch"), QStringLiteral("--"), relativePath }).isEmpty()) {
++        return std::nullopt;
++    }
++
++    const QString branch = runGit(*root, { QStringLiteral("symbolic-ref"), QStringLiteral("--quiet"), QStringLiteral("--short"), QStringLiteral("HEAD") });
++    QString remote;
++    QString ref;
++    if (!branch.isEmpty()) {
++        remote = runGit(*root, { QStringLiteral("config"), QStringLiteral("branch.%1.remote").arg(branch) });
++        const QString merge = runGit(*root, { QStringLiteral("config"), QStringLiteral("branch.%1.merge").arg(branch) });
++        if (!remote.isEmpty() && remote != QLatin1String(".") && merge.startsWith(QLatin1String("refs/heads/"))) {
++            ref = merge.sliced(11);
++        } else {
++            remote.clear();
++            ref = branch;
++        }
++    } else {
++        ref = runGit(*root, { QStringLiteral("rev-parse"), QStringLiteral("HEAD") });
++    }
++
++    if (remote.isEmpty()) {
++        const QStringList remotes = runGit(*root, { QStringLiteral("remote") }).split(u'\n', Qt::SkipEmptyParts);
++        if (remotes.contains(QStringLiteral("origin"))) {
++            remote = QStringLiteral("origin");
++        } else if (remotes.size() == 1) {
++            remote = remotes.constFirst();
++        }
++    }
++    if (remote.isEmpty() || ref.isEmpty()) {
++        return std::nullopt;
++    }
++
++    const auto parsedRemote = parseRemote(runGit(*root, { QStringLiteral("remote"), QStringLiteral("get-url"), remote }));
++    if (!parsedRemote) {
++        return std::nullopt;
++    }
++    const auto repository = resolveRepository(*parsedRemote, hostMappings);
++    if (!repository) {
++        return std::nullopt;
++    }
++    const auto url = blobUrl(*repository, ref, QDir::fromNativeSeparators(relativePath), lines);
++    return url ? std::optional<Link>(Link{ *url, repository->provider }) : std::nullopt;
++}
+diff --git a/addons/project/git/gitforgelink.h b/addons/project/git/gitforgelink.h
+new file mode 100644
+index 000000000..b8b3204d1
+--- /dev/null
++++ b/addons/project/git/gitforgelink.h
+@@ -0,0 +1,20 @@
++/*
++    SPDX-FileCopyrightText: 2026 The Kate Developers
++
++    SPDX-License-Identifier: LGPL-2.0-or-later
++*/
++
++#pragma once
++
++#include "gitforgeurl.h"
++
++#include <optional>
++
++namespace GitForge {
++struct Link {
++    QUrl url;
++    Provider provider;
++};
++
++std::optional<Link> linkForFile(const QString &filePath, const QList<HostMapping> &hostMappings, std::optional<LineRange> lines = std::nullopt);
++} // namespace GitForge
+diff --git a/addons/project/git/gitforgeurl.cpp b/addons/project/git/gitforgeurl.cpp
+new file mode 100644
+index 000000000..24b68ff81
+--- /dev/null
++++ b/addons/project/git/gitforgeurl.cpp
+@@ -0,0 +1,265 @@
++/*
++    SPDX-FileCopyrightText: 2026 The Kate Developers
++
++    SPDX-License-Identifier: LGPL-2.0-or-later
++*/
++
++#include "gitforgeurl.h"
++
++#include <QJsonDocument>
++#include <QJsonObject>
++#include <QRegularExpression>
++#include <QUrlQuery>
++
++namespace {
++std::optional<QString> normalizedPath(QString path)
++{
++    while (path.startsWith(u'/')) {
++        path.remove(0, 1);
++    }
++    while (path.endsWith(u'/')) {
++        path.chop(1);
++    }
++    if (path.endsWith(QLatin1String(".git"))) {
++        path.chop(4);
++    }
++
++    const QStringList parts = path.split(u'/');
++    if (parts.size() < 2) {
++        return std::nullopt;
++    }
++    for (const QString &part : parts) {
++        if (part.isEmpty() || part == QLatin1String(".") || part == QLatin1String("..")) {
++            return std::nullopt;
++        }
++    }
++    return path;
++}
++
++std::optional<QByteArray> encodedPath(const QString &path)
++{
++    if (path.startsWith(u'/') || path.endsWith(u'/')) {
++        return std::nullopt;
++    }
++    QByteArray result;
++    const QStringList parts = path.split(u'/');
++    for (const QString &part : parts) {
++        if (part.isEmpty() || part == QLatin1String(".") || part == QLatin1String("..")) {
++            return std::nullopt;
++        }
++        if (!result.isEmpty()) {
++            result += '/';
++        }
++        result += QUrl::toPercentEncoding(part);
++    }
++    return result;
++}
++
++QString normalizedHost(const QString &host)
++{
++    if (host.contains(u':')) {
++        const QUrl ipv6Url(QStringLiteral("http://[") + host + QStringLiteral("]/"), QUrl::StrictMode);
++        return ipv6Url.isValid() ? ipv6Url.host().toLower() : QString();
++    }
++    return QString::fromLatin1(QUrl::toAce(host)).toLower();
++}
++
++bool validWebBase(const QUrl &url)
++{
++    const QString scheme = url.scheme().toLower();
++    return url.isValid() && (scheme == QLatin1String("http") || scheme == QLatin1String("https")) && !url.host().isEmpty() && url.userInfo().isEmpty()
++        && !url.hasQuery() && !url.hasFragment();
++}
++} // namespace
++
++std::optional<GitForge::Remote> GitForge::parseRemote(const QString &remoteUrl)
++{
++    QString host;
++    QString path;
++    int port = -1;
++
++    if (remoteUrl.contains(QLatin1String("://"))) {
++        const QUrl url(remoteUrl, QUrl::StrictMode);
++        const QString scheme = url.scheme().toLower();
++        if (!url.isValid()
++            || (scheme != QLatin1String("http") && scheme != QLatin1String("https") && scheme != QLatin1String("ssh") && scheme != QLatin1String("git"))
++            || url.host().isEmpty() || url.hasQuery() || url.hasFragment()) {
++            return std::nullopt;
++        }
++        host = url.host();
++        port = url.port(-1);
++        path = url.path(QUrl::FullyDecoded);
++    } else {
++        static const QRegularExpression scpPattern(QStringLiteral(R"(^(?:[^@/:]+@)?(\[[^\]]+\]|[^/:]+):(.+)$)"));
++        const QRegularExpressionMatch match = scpPattern.match(remoteUrl);
++        if (!match.hasMatch()) {
++            return std::nullopt;
++        }
++        host = match.captured(1);
++        if (host.startsWith(u'[') && host.endsWith(u']')) {
++            host = host.sliced(1, host.size() - 2);
++        }
++        path = match.captured(2);
++    }
++
++    const auto repositoryPath = normalizedPath(path);
++    host = normalizedHost(host);
++    if (!repositoryPath || host.isEmpty()) {
++        return std::nullopt;
++    }
++    return Remote{ host, port, *repositoryPath };
++}
++
++std::optional<GitForge::Repository> GitForge::resolveRepository(const Remote &remote, const QList<HostMapping> &customMappings)
++{
++    const QString remoteHost = normalizedHost(remote.host);
++    const HostMapping *wildcardPortMapping = nullptr;
++    for (const HostMapping &mapping : customMappings) {
++        if (normalizedHost(mapping.host) != remoteHost || !validWebBase(mapping.webBaseUrl)) {
++            continue;
++        }
++        if (mapping.port == remote.port && mapping.port != -1) {
++            wildcardPortMapping = &mapping;
++            break;
++        }
++        if (mapping.port == -1 && !wildcardPortMapping) {
++            wildcardPortMapping = &mapping;
++        }
++    }
++
++    if (wildcardPortMapping) {
++        QString repositoryPath = remote.repositoryPath;
++        QString basePath = wildcardPortMapping->webBaseUrl.path(QUrl::FullyDecoded);
++        while (basePath.startsWith(u'/')) {
++            basePath.remove(0, 1);
++        }
++        while (basePath.endsWith(u'/')) {
++            basePath.chop(1);
++        }
++        if (!basePath.isEmpty() && repositoryPath.startsWith(basePath + u'/')) {
++            repositoryPath.remove(0, basePath.size() + 1);
++        }
++        if (wildcardPortMapping->provider == Provider::GitHub && repositoryPath.count(u'/') != 1) {
++            return std::nullopt;
++        }
++        return Repository{ wildcardPortMapping->provider, wildcardPortMapping->webBaseUrl, repositoryPath };
++    }
++
++    return std::nullopt;
++}
++
++std::optional<QUrl> GitForge::blobUrl(const Repository &repository, const QString &ref, const QString &filePath, std::optional<LineRange> lines)
++{
++    const auto repositoryPath = encodedPath(repository.path);
++    const auto encodedFilePath = encodedPath(filePath);
++    if (!repositoryPath || !encodedFilePath || ref.isEmpty() || !validWebBase(repository.webBaseUrl)) {
++        return std::nullopt;
++    }
++    if (lines && (lines->first < 1 || lines->last < lines->first)) {
++        return std::nullopt;
++    }
++
++    QByteArray url = repository.webBaseUrl.toEncoded(QUrl::RemoveQuery | QUrl::RemoveFragment);
++    while (url.endsWith('/')) {
++        url.chop(1);
++    }
++    url += '/';
++    url += *repositoryPath;
++    url += repository.provider == Provider::GitHub ? "/blob/" : "/-/blob/";
++    url += QUrl::toPercentEncoding(ref, "/");
++    url += '/';
++    url += *encodedFilePath;
++
++    if (lines) {
++        url += "#L" + QByteArray::number(lines->first);
++        if (lines->last != lines->first) {
++            url += repository.provider == Provider::GitHub ? "-L" : "-";
++            url += QByteArray::number(lines->last);
++        }
++    }
++
++    const QUrl result = QUrl::fromEncoded(url, QUrl::StrictMode);
++    return result.isValid() ? std::optional<QUrl>(result) : std::nullopt;
++}
++
++GitForge::LineRange GitForge::selectedLineRange(int startLine, int endLine, int endColumn)
++{
++    if (endLine > startLine && endColumn == 0) {
++        --endLine;
++    }
++    return LineRange{ startLine + 1, endLine + 1 };
++}
++
++QString GitForge::providerName(Provider provider) { return provider == Provider::GitHub ? QStringLiteral("GitHub") : QStringLiteral("GitLab"); }
++
++std::optional<GitForge::Provider> GitForge::providerFromName(const QString &name)
++{
++    if (name.compare(QLatin1String("GitHub"), Qt::CaseInsensitive) == 0) {
++        return Provider::GitHub;
++    }
++    if (name.compare(QLatin1String("GitLab"), Qt::CaseInsensitive) == 0) {
++        return Provider::GitLab;
++    }
++    return std::nullopt;
++}
++
++std::optional<GitForge::HostMapping> GitForge::hostMapping(const QString &hostAndPort, Provider provider, const QUrl &webBaseUrl)
++{
++    QUrl authority(QStringLiteral("ssh://") + hostAndPort + u'/', QUrl::StrictMode);
++    if (!authority.isValid() || authority.host().isEmpty() || !authority.userInfo().isEmpty() || authority.path() != QLatin1String("/")) {
++        return std::nullopt;
++    }
++    if (!validWebBase(webBaseUrl)) {
++        return std::nullopt;
++    }
++    const QString host = normalizedHost(authority.host());
++    if (host.isEmpty()) {
++        return std::nullopt;
++    }
++    return HostMapping{ host, authority.port(-1), provider, webBaseUrl };
++}
++
++QList<QPair<GitForge::Provider, QUrl>> GitForge::providerApiUrls(const QUrl &webBaseUrl)
++{
++    if (!validWebBase(webBaseUrl)) {
++        return {};
++    }
++
++    QString basePath = webBaseUrl.path();
++    while (basePath.endsWith(u'/')) {
++        basePath.chop(1);
++    }
++
++    QUrl gitLabUrl = webBaseUrl;
++    gitLabUrl.setPath(basePath + QStringLiteral("/api/v4/projects"));
++    QUrlQuery gitLabQuery;
++    gitLabQuery.addQueryItem(QStringLiteral("simple"), QStringLiteral("true"));
++    gitLabQuery.addQueryItem(QStringLiteral("per_page"), QStringLiteral("1"));
++    gitLabUrl.setQuery(gitLabQuery);
++    QUrl gitHubUrl = webBaseUrl;
++    gitHubUrl.setPath(basePath + QStringLiteral("/api/v3"));
++    return { { Provider::GitLab, gitLabUrl }, { Provider::GitHub, gitHubUrl } };
++}
++
++bool GitForge::isProviderApiResponse(Provider provider, int statusCode, const QByteArray &body)
++{
++    const QJsonDocument document = QJsonDocument::fromJson(body);
++    if (provider == Provider::GitLab) {
++        return (statusCode >= 200 && statusCode < 300 && document.isArray())
++            || (statusCode == 401 && document.object().value(QStringLiteral("message")) == QLatin1String("401 Unauthorized"));
++    }
++    if (statusCode < 200 || statusCode >= 300) {
++        return false;
++    }
++    const QJsonObject object = document.object();
++    return object.value(QStringLiteral("current_user_url")).isString() && object.value(QStringLiteral("repository_url")).isString();
++}
++
++QList<GitForge::HostMapping> GitForge::defaultHostMappings()
++{
++    return {
++        { QStringLiteral("github.com"), -1, Provider::GitHub, QUrl(QStringLiteral("https://github.com")) },
++        { QStringLiteral("gitlab.com"), -1, Provider::GitLab, QUrl(QStringLiteral("https://gitlab.com")) },
++        { QStringLiteral("invent.kde.org"), -1, Provider::GitLab, QUrl(QStringLiteral("https://invent.kde.org")) },
++    };
++}
+diff --git a/addons/project/git/gitforgeurl.h b/addons/project/git/gitforgeurl.h
+new file mode 100644
+index 000000000..c261fabb8
+--- /dev/null
++++ b/addons/project/git/gitforgeurl.h
+@@ -0,0 +1,58 @@
++/*
++    SPDX-FileCopyrightText: 2026 The Kate Developers
++
++    SPDX-License-Identifier: LGPL-2.0-or-later
++*/
++
++#pragma once
++
++#include <QByteArray>
++#include <QList>
++#include <QPair>
++#include <QString>
++#include <QUrl>
++
++#include <optional>
++
++namespace GitForge {
++enum class Provider {
++    GitHub,
++    GitLab,
++};
++
++struct Remote {
++    QString host;
++    int port = -1;
++    QString repositoryPath;
++};
++
++struct HostMapping {
++    QString host;
++    int port = -1;
++    Provider provider = Provider::GitHub;
++    QUrl webBaseUrl;
++};
++
++struct Repository {
++    Provider provider;
++    QUrl webBaseUrl;
++    QString path;
++};
++
++struct LineRange {
++    int first = 0;
++    int last = 0;
++};
++
++std::optional<Remote> parseRemote(const QString &remoteUrl);
++std::optional<Repository> resolveRepository(const Remote &remote, const QList<HostMapping> &customMappings);
++std::optional<QUrl> blobUrl(const Repository &repository, const QString &ref, const QString &filePath, std::optional<LineRange> lines = std::nullopt);
++LineRange selectedLineRange(int startLine, int endLine, int endColumn);
++
++QString providerName(Provider provider);
++std::optional<Provider> providerFromName(const QString &name);
++std::optional<HostMapping> hostMapping(const QString &host, Provider provider, const QUrl &webBaseUrl);
++QList<QPair<Provider, QUrl>> providerApiUrls(const QUrl &webBaseUrl);
++bool isProviderApiResponse(Provider provider, int statusCode, const QByteArray &body);
++QList<HostMapping> defaultHostMappings();
++} // namespace GitForge
+diff --git a/addons/project/kateprojectconfigpage.cpp b/addons/project/kateprojectconfigpage.cpp
+index 6846c12c1..3e43b8e0c 100644
+--- a/addons/project/kateprojectconfigpage.cpp
++++ b/addons/project/kateprojectconfigpage.cpp
+@@ -4,6 +4,7 @@
+ */
+ 
+ #include "kateprojectconfigpage.h"
++#include "git/gitforgeconfigwidget.h"
+ #include "kateprojectplugin.h"
+ 
+ #include <KLocalizedString>
+@@ -132,6 +133,13 @@ KateProjectConfigPage::KateProjectConfigPage(QWidget *parent, KateProjectPlugin
+     group->setLayout(vbox);
+     layout->addWidget(group);
+ 
++    vbox = new QVBoxLayout;
++    group = new QGroupBox(i18nc("Groupbox title", "Git Hosting"), this);
++    m_gitForgeConfig = new GitForgeConfigWidget(group);
++    vbox->addWidget(m_gitForgeConfig);
++    group->setLayout(vbox);
++    layout->addWidget(group);
++
+     layout->insertStretch(-1, 10);
+ 
+     for (auto cb : {m_cbAutoGit,
+@@ -156,6 +164,7 @@ KateProjectConfigPage::KateProjectConfigPage(QWidget *parent, KateProjectPlugin
+     connect(m_indexPath, &KUrlRequester::urlSelected, this, &KateProjectConfigPage::slotMyChanged);
+     connect(m_cmbSingleClick, &QComboBox::activated, this, &KateProjectConfigPage::slotMyChanged);
+     connect(m_cmbDoubleClick, &QComboBox::activated, this, &KateProjectConfigPage::slotMyChanged);
++    connect(m_gitForgeConfig, &GitForgeConfigWidget::hostMappingsChanged, this, &KateProjectConfigPage::slotMyChanged);
+ 
+     reset();
+ }
+@@ -183,6 +192,12 @@ void KateProjectConfigPage::apply()
+ 
+     m_changed = false;
+ 
++    const auto hostMappings = m_gitForgeConfig->hostMappings();
++    if (!hostMappings) {
++        m_changed = true;
++        return;
++    }
++
+     m_plugin->setAutoRepository(m_cbAutoGit->checkState() == Qt::Checked,
+                                 m_cbAutoSubversion->checkState() == Qt::Checked,
+                                 m_cbAutoMercurial->checkState() == Qt::Checked,
+@@ -197,6 +212,7 @@ void KateProjectConfigPage::apply()
+     m_plugin->setRestoreProjectsForSession(m_cbSessionRestoreOpenProjects->isChecked());
+ 
+     m_plugin->setDirectoryListing(m_cbDirectoryListing->isChecked(), m_cbShowHiddenFiles->isChecked());
++    m_plugin->setGitHostMappings(*hostMappings);
+ }
+ 
+ void KateProjectConfigPage::reset()
+@@ -218,13 +234,15 @@ void KateProjectConfigPage::reset()
+ 
+     m_cbDirectoryListing->setCheckState(m_plugin->directoryListing() ? Qt::Checked : Qt::Unchecked);
+     m_cbShowHiddenFiles->setCheckState(m_plugin->showHiddenFiles() ? Qt::Checked : Qt::Unchecked);
++    m_gitForgeConfig->setHostMappings(m_plugin->gitHostMappings());
+ 
+     m_changed = false;
+ }
+ 
+ void KateProjectConfigPage::defaults()
+ {
+-    reset();
++    m_gitForgeConfig->setHostMappings(GitForge::defaultHostMappings());
++    slotMyChanged();
+ }
+ 
+ void KateProjectConfigPage::slotMyChanged()
+diff --git a/addons/project/kateprojectconfigpage.h b/addons/project/kateprojectconfigpage.h
+index 6cbd84926..d7584f5b8 100644
+--- a/addons/project/kateprojectconfigpage.h
++++ b/addons/project/kateprojectconfigpage.h
+@@ -12,6 +12,7 @@ class QWidget;
+ class QCheckBox;
+ class KUrlRequester;
+ class QComboBox;
++class GitForgeConfigWidget;
+ 
+ class KateProjectConfigPage : public KTextEditor::ConfigPage
+ {
+@@ -50,6 +51,7 @@ private:
+     QCheckBox *m_cbShowHiddenFiles;
+     QComboBox *m_cmbSingleClick;
+     QComboBox *m_cmbDoubleClick;
++    GitForgeConfigWidget *m_gitForgeConfig;
+     KateProjectPlugin *m_plugin;
+     bool m_changed = false;
+ };
+diff --git a/addons/project/kateprojectplugin.cpp b/addons/project/kateprojectplugin.cpp
+index 703de838e..07c929d82 100644
+--- a/addons/project/kateprojectplugin.cpp
++++ b/addons/project/kateprojectplugin.cpp
+@@ -81,6 +81,38 @@ const QStringList DefaultConfig()
+ {
+     return QStringList{GitConfig(), SubversionConfig(), MercurialConfig()};
+ }
++
++QStringList serializedHostMappings(const QList<GitForge::HostMapping> &mappings)
++{
++    QStringList entries;
++    entries.reserve(mappings.size());
++    for (const GitForge::HostMapping &mapping : mappings) {
++        QString host = mapping.host.contains(u':') ? QStringLiteral("[%1]").arg(mapping.host) : mapping.host;
++        if (mapping.port != -1) {
++            host += QStringLiteral(":%1").arg(mapping.port);
++        }
++        entries.push_back(host + u'\t' + GitForge::providerName(mapping.provider) + u'\t' + mapping.webBaseUrl.toString(QUrl::FullyEncoded));
++    }
++    return entries;
++}
++
++QList<GitForge::HostMapping> hostMappingsFromConfig(const QStringList &entries)
++{
++    QList<GitForge::HostMapping> mappings;
++    for (const QString &entry : entries) {
++        const QStringList parts = entry.split(u'\t');
++        if (parts.size() != 3) {
++            continue;
++        }
++        const auto provider = GitForge::providerFromName(parts.at(1));
++        if (provider) {
++            if (const auto mapping = GitForge::hostMapping(parts.at(0), *provider, QUrl(parts.at(2), QUrl::StrictMode))) {
++                mappings.push_back(*mapping);
++            }
++        }
++    }
++    return mappings;
++}
+ }
+ 
+ KateProjectPlugin::KateProjectPlugin(QObject *parent)
+@@ -560,6 +592,17 @@ ClickAction KateProjectPlugin::doubleClickAcion()
+     return m_doubleClickAction;
+ }
+ 
++void KateProjectPlugin::setGitHostMappings(const QList<GitForge::HostMapping> &mappings)
++{
++    m_gitHostMappings = mappings;
++    writeConfig();
++}
++
++const QList<GitForge::HostMapping> &KateProjectPlugin::gitHostMappings() const
++{
++    return m_gitHostMappings;
++}
++
+ void KateProjectPlugin::setMultiProject(bool completion, bool gotoSymbol)
+ {
+     m_multiProjectCompletion = completion;
+@@ -627,6 +670,7 @@ void KateProjectPlugin::readConfig()
+ 
+     m_singleClickAction = (ClickAction)config.readEntry("gitStatusSingleClick", (int)ClickAction::NoAction);
+     m_doubleClickAction = (ClickAction)config.readEntry("gitStatusDoubleClick", (int)ClickAction::StageUnstage);
++    m_gitHostMappings = hostMappingsFromConfig(config.readEntry("gitHostMappings", serializedHostMappings(GitForge::defaultHostMappings())));
+ 
+     m_restoreProjectsForSession = config.readEntry("restoreProjectsForSessions", false);
+ 
+@@ -669,6 +713,7 @@ void KateProjectPlugin::writeConfig()
+ 
+     config.writeEntry("gitStatusSingleClick", (int)m_singleClickAction);
+     config.writeEntry("gitStatusDoubleClick", (int)m_doubleClickAction);
++    config.writeEntry("gitHostMappings", serializedHostMappings(m_gitHostMappings));
+ 
+     config.writeEntry("restoreProjectsForSessions", m_restoreProjectsForSession);
+ 
+diff --git a/addons/project/kateprojectplugin.h b/addons/project/kateprojectplugin.h
+index cf7758e6d..f15d089d1 100644
+--- a/addons/project/kateprojectplugin.h
++++ b/addons/project/kateprojectplugin.h
+@@ -18,6 +18,7 @@
+ #include <KTextEditor/SessionConfigInterface>
+ 
+ #include "kateprojectcompletion.h"
++#include "git/gitforgeurl.h"
+ #include "project_commands.h"
+ 
+ class KateProject;
+@@ -150,6 +151,9 @@ public:
+     void setDoubleClickAction(ClickAction cb);
+     ClickAction doubleClickAcion();
+ 
++    void setGitHostMappings(const QList<GitForge::HostMapping> &mappings);
++    const QList<GitForge::HostMapping> &gitHostMappings() const;
++
+     void setRestoreProjectsForSession(bool enabled);
+     bool restoreProjectsForSession() const;
+ 
+@@ -299,6 +303,7 @@ private:
+     // git features
+     ClickAction m_singleClickAction = ClickAction::ShowDiff;
+     ClickAction m_doubleClickAction = ClickAction::StageUnstage;
++    QList<GitForge::HostMapping> m_gitHostMappings;
+ 
+     /**
+      * thread pool for our workers
+diff --git a/addons/project/kateprojectpluginview.cpp b/addons/project/kateprojectpluginview.cpp
+index 360c40609..e6ff33e91 100755
+--- a/addons/project/kateprojectpluginview.cpp
++++ b/addons/project/kateprojectpluginview.cpp
+@@ -36,12 +36,17 @@
+ #include <KXmlGuiWindow>
+ 
+ #include <QAction>
++#include <QApplication>
++#include <QClipboard>
+ #include <QComboBox>
++#include <QDesktopServices>
+ #include <QFileDialog>
++#include <QFutureWatcher>
+ #include <QHBoxLayout>
+ #include <QKeyEvent>
+ #include <QMenu>
+ #include <QStackedWidget>
++#include <QtConcurrentRun>
+ 
+ #define PROJECTCLOSEICON "window-close"
+ 
+@@ -236,7 +241,15 @@ KateProjectPluginView::KateProjectPluginView(KateProjectPlugin *plugin, KTextEdi
+     m_lookupAction = popup->menu()->addAction(i18n("Lookup: %1", QString()), this, &KateProjectPluginView::slotProjectIndex);
+     m_gotoSymbolAction = popup->menu()->addAction(i18n("Goto: %1", QString()), this, &KateProjectPluginView::slotGotoSymbol);
+ 
++    popup->menu()->addSeparator();
++    m_gitHostingMenu = popup->menu()->addMenu(QIcon::fromTheme(QStringLiteral("vcs-branch")), i18n("Git Hosting"));
++    m_openGitHostingAction = m_gitHostingMenu->addAction(QIcon::fromTheme(QStringLiteral("internet-web-browser")), i18n("Open on Git Hosting Service"));
++    m_copyGitHostingAction = m_gitHostingMenu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy Git Hosting Link"));
++
+     connect(popup->menu(), &QMenu::aboutToShow, this, &KateProjectPluginView::slotContextMenuAboutToShow);
++    connect(m_gitHostingMenu, &QMenu::aboutToShow, this, &KateProjectPluginView::updateGitHostingActions);
++    connect(m_openGitHostingAction, &QAction::triggered, this, &KateProjectPluginView::openGitHostingLink);
++    connect(m_copyGitHostingAction, &QAction::triggered, this, &KateProjectPluginView::copyGitHostingLink);
+ 
+     connect(m_mainWindow, &KTextEditor::MainWindow::unhandledShortcutOverride, this, &KateProjectPluginView::handleEsc);
+ 
+@@ -846,6 +859,69 @@ void KateProjectPluginView::slotContextMenuAboutToShow()
+     m_gotoSymbolAction->setText(i18n("Goto: %1", squeezed));
+ }
+ 
++void KateProjectPluginView::updateGitHostingActions()
++{
++    const quint64 generation = ++m_gitHostingRequestGeneration;
++    m_activeGitHostingLink.reset();
++    m_openGitHostingAction->setEnabled(false);
++    m_copyGitHostingAction->setEnabled(false);
++    m_openGitHostingAction->setText(i18n("Detecting Git hosting service…"));
++    m_copyGitHostingAction->setText(i18n("Copy Git Hosting Link"));
++
++    KTextEditor::View *view = m_mainWindow->activeView();
++    if (!view || !view->document()->url().isLocalFile()) {
++        m_openGitHostingAction->setText(i18n("Open on Git Hosting Service"));
++        return;
++    }
++
++    std::optional<GitForge::LineRange> lines;
++    if (!view->selection()) {
++        const int line = view->cursorPosition().line() + 1;
++        lines = GitForge::LineRange{line, line};
++    } else {
++        const KTextEditor::Range selection = view->selectionRange();
++        lines = GitForge::selectedLineRange(selection.start().line(), selection.end().line(), selection.end().column());
++    }
++
++    const QString path = view->document()->url().toLocalFile();
++    const auto mappings = m_plugin->gitHostMappings();
++    auto *watcher = new QFutureWatcher<std::optional<GitForge::Link>>(this);
++    connect(watcher, &QFutureWatcher<std::optional<GitForge::Link>>::finished, this, [this, watcher, generation]() {
++        const auto link = watcher->result();
++        watcher->deleteLater();
++        if (generation != m_gitHostingRequestGeneration) {
++            return;
++        }
++        m_activeGitHostingLink = link;
++        m_openGitHostingAction->setEnabled(link.has_value());
++        m_copyGitHostingAction->setEnabled(link.has_value());
++        if (link) {
++            const QString provider = GitForge::providerName(link->provider);
++            m_openGitHostingAction->setText(i18n("Open on %1", provider));
++            m_copyGitHostingAction->setText(i18n("Copy %1 Link", provider));
++        } else {
++            m_openGitHostingAction->setText(i18n("Open on Git Hosting Service"));
++        }
++    });
++    watcher->setFuture(QtConcurrent::run([path, mappings, lines]() {
++        return GitForge::linkForFile(path, mappings, lines);
++    }));
++}
++
++void KateProjectPluginView::openGitHostingLink()
++{
++    if (m_activeGitHostingLink) {
++        QDesktopServices::openUrl(m_activeGitHostingLink->url);
++    }
++}
++
++void KateProjectPluginView::copyGitHostingLink()
++{
++    if (m_activeGitHostingLink) {
++        QApplication::clipboard()->setText(m_activeGitHostingLink->url.toString(QUrl::FullyEncoded));
++    }
++}
++
+ void KateProjectPluginView::handleEsc(QEvent *e)
+ {
+     if (!m_mainWindow) {
+diff --git a/addons/project/kateprojectpluginview.h b/addons/project/kateprojectpluginview.h
+index d9c55e84c..326b6df10 100755
+--- a/addons/project/kateprojectpluginview.h
++++ b/addons/project/kateprojectpluginview.h
+@@ -13,6 +13,8 @@
+ #include <KTextEditor/View>
+ #include <KXMLGUIClient>
+ 
++#include "git/gitforgelink.h"
++
+ #include <memory>
+ 
+ class QAction;
+@@ -270,11 +272,6 @@ Q_SIGNALS:
+      */
+     void projectMapEdited();
+ 
+-    /**
+-     * Emitted synchronously before a project tree context menu is shown.
+-     */
+-    void projectTreeContextMenuAboutToShow(QMenu *menu, const QString &path, const QString &projectBaseDir, int itemType);
+-
+ private Q_SLOTS:
+     /**
+      * This slot is called whenever the active view changes in our main window.
+@@ -327,6 +324,9 @@ private Q_SLOTS:
+      * Enable/disable project actions
+      */
+     void updateActions();
++    void updateGitHostingActions();
++    void openGitHostingLink();
++    void copyGitHostingLink();
+ 
+ private:
+     /**
+@@ -430,6 +430,11 @@ private:
+     QAction *m_lookupAction;
+     QAction *m_gotoSymbolAction;
+     QAction *m_gotoSymbolActionAppMenu;
++    QMenu *m_gitHostingMenu = nullptr;
++    QAction *m_openGitHostingAction = nullptr;
++    QAction *m_copyGitHostingAction = nullptr;
++    std::optional<GitForge::Link> m_activeGitHostingLink;
++    quint64 m_gitHostingRequestGeneration = 0;
+     QAction *m_projectTodosAction;
+     QAction *m_projectPrevAction;
+     QAction *m_projectNextAction;
+diff --git a/addons/project/kateprojecttreeviewcontextmenu.cpp b/addons/project/kateprojecttreeviewcontextmenu.cpp
+index 3fcfc4cd3..f62b16abd 100644
+--- a/addons/project/kateprojecttreeviewcontextmenu.cpp
++++ b/addons/project/kateprojecttreeviewcontextmenu.cpp
+@@ -7,12 +7,13 @@
+ 
+ #include "kateprojecttreeviewcontextmenu.h"
+ #include "filehistorywidget.h"
++#include "git/gitforgelink.h"
+ #include "git/gitutils.h"
+ #include "katefileactions.h"
+ #include "kateproject.h"
+ #include "kateprojectinfoviewterminal.h"
+ #include "kateprojectitem.h"
+-#include "kateprojectpluginview.h"
++#include "kateprojectplugin.h"
+ #include "kateprojectviewtree.h"
+ 
+ #include <KAuthorized>
+@@ -29,15 +30,18 @@
+ #include <QAction>
+ #include <QApplication>
+ #include <QClipboard>
++#include <QDesktopServices>
+ #include <QDir>
+ #include <QFileInfo>
+ #include <QIcon>
++#include <QFutureWatcher>
+ #include <QInputDialog>
+ #include <QMenu>
+ #include <QMessageBox>
+ #include <QMimeDatabase>
+ #include <QMimeType>
+ #include <QStandardPaths>
++#include <QtConcurrentRun>
+ 
+ #include <ktexteditor/application.h>
+ #include <ktexteditor/editor.h>
+@@ -180,6 +184,34 @@ void KateProjectTreeViewContextMenu::exec(const QString &filename, const QModelI
+         fileHistory->setIcon(QIcon::fromTheme(QStringLiteral("view-history")));
+     }
+ 
++    if (QFileInfo(filename).isFile()) {
++        QMenu *hostingMenu = menu.addMenu(QIcon::fromTheme(QStringLiteral("vcs-branch")), i18n("Git Hosting"));
++        QAction *detectingAction = hostingMenu->addAction(i18n("Detecting Git hosting service…"));
++        detectingAction->setEnabled(false);
++
++        auto *watcher = new QFutureWatcher<std::optional<GitForge::Link>>(hostingMenu);
++        QObject::connect(watcher, &QFutureWatcher<std::optional<GitForge::Link>>::finished, hostingMenu, [hostingMenu, watcher]() {
++            const auto link = watcher->result();
++            watcher->deleteLater();
++            hostingMenu->clear();
++            if (!link) {
++                hostingMenu->menuAction()->setVisible(false);
++                return;
++            }
++            const QString provider = GitForge::providerName(link->provider);
++            hostingMenu->addAction(QIcon::fromTheme(QStringLiteral("internet-web-browser")), i18n("Open on %1", provider), hostingMenu, [url = link->url]() {
++                QDesktopServices::openUrl(url);
++            });
++            hostingMenu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy %1 Link", provider), hostingMenu, [url = link->url]() {
++                QApplication::clipboard()->setText(url.toString(QUrl::FullyEncoded));
++            });
++        });
++        const auto mappings = parent->project()->plugin()->gitHostMappings();
++        watcher->setFuture(QtConcurrent::run([filename, mappings]() {
++            return GitForge::linkForFile(filename, mappings);
++        }));
++    }
++
+     auto externaltoolsplugin = parent->mainWindow()->pluginView(QStringLiteral("externaltoolsplugin"));
+     auto view = parent->mainWindow()->activeView();
+     auto doc = view ? view->document() : nullptr;
+@@ -192,9 +224,6 @@ void KateProjectTreeViewContextMenu::exec(const QString &filename, const QModelI
+         }
+     }
+ 
+-    const int itemType = isRootDirectory ? KateProjectItem::Project : index.data(KateProjectItem::TypeRole).toInt();
+-    Q_EMIT parent->m_pluginView->projectTreeContextMenuAboutToShow(&menu, QFileInfo(filename).absoluteFilePath(), parent->project()->baseDir(), itemType);
+-
+     /**
+      * run menu and handle the triggered action
+      */
+diff --git a/addons/project/kateprojectviewtree.h b/addons/project/kateprojectviewtree.h
+index 151e2e222..94ac6f187 100644
+--- a/addons/project/kateprojectviewtree.h
++++ b/addons/project/kateprojectviewtree.h
+@@ -23,8 +23,6 @@ class MainWindow;
+ class KateProjectViewTree : public QTreeView
+ {
+     friend class KateProjectTreeDelegate;
+-    friend class KateProjectTreeViewContextMenu;
+-
+ public:
+     /**
+      * construct project view for given project
+-- 
+2.55.0
+
+
+From 36ad8f1f9d07e689c5af42a9b9b3365a63c80750 Mon Sep 17 00:00:00 2001
+From: Patrizio Bekerle <patrizio@bekerle.com>
+Date: Wed, 23 Sep 2026 14:55:30 +0200
+Subject: [PATCH 3/7] project: move Git settings to separate tab
+
+---
+ addons/project/kateprojectconfigpage.cpp | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/addons/project/kateprojectconfigpage.cpp b/addons/project/kateprojectconfigpage.cpp
+index 3e43b8e0c..68694ff6f 100644
+--- a/addons/project/kateprojectconfigpage.cpp
++++ b/addons/project/kateprojectconfigpage.cpp
+@@ -13,13 +13,22 @@
+ #include <QComboBox>
+ #include <QGroupBox>
+ #include <QLabel>
++#include <QTabWidget>
+ #include <QVBoxLayout>
+ 
+ KateProjectConfigPage::KateProjectConfigPage(QWidget *parent, KateProjectPlugin *plugin)
+     : KTextEditor::ConfigPage(parent)
+     , m_plugin(plugin)
+ {
+-    auto *layout = new QVBoxLayout(this);
++    auto *rootLayout = new QVBoxLayout(this);
++    auto *tabs = new QTabWidget(this);
++    auto *generalTab = new QWidget(tabs);
++    auto *gitTab = new QWidget(tabs);
++    tabs->addTab(generalTab, i18n("General"));
++    tabs->addTab(gitTab, i18n("Git"));
++    rootLayout->addWidget(tabs);
++
++    auto *layout = new QVBoxLayout(generalTab);
+ 
+     auto *vbox = new QVBoxLayout;
+     auto *group = new QGroupBox(i18nc("Groupbox title", "Autoload Repositories && Build Trees"), this);
+@@ -101,7 +110,10 @@ KateProjectConfigPage::KateProjectConfigPage(QWidget *parent, KateProjectPlugin
+     group->setLayout(vbox);
+     layout->addWidget(group);
+ 
++    layout->addStretch(1);
++
+     /** Git specific **/
++    layout = new QVBoxLayout(gitTab);
+     vbox = new QVBoxLayout;
+     group = new QGroupBox(i18nc("Groupbox title", "Git"), this);
+ 
+-- 
+2.55.0
+
+
+From 9ed62087ae0345db7d7aa5eee711ca8a90419b80 Mon Sep 17 00:00:00 2001
+From: Patrizio Bekerle <patrizio@bekerle.com>
+Date: Thu, 24 Sep 2026 07:44:48 +0200
+Subject: [PATCH 4/7] project: add Forgejo support
+
+---
+ addons/project/autotests/gitforgeurltest.cpp | 26 ++++++++++++---
+ addons/project/git/gitforgeconfigwidget.cpp  | 10 +++---
+ addons/project/git/gitforgeurl.cpp           | 35 +++++++++++++++++---
+ addons/project/git/gitforgeurl.h             |  1 +
+ 4 files changed, 58 insertions(+), 14 deletions(-)
+
+diff --git a/addons/project/autotests/gitforgeurltest.cpp b/addons/project/autotests/gitforgeurltest.cpp
+index c988cc71e..12b34a890 100644
+--- a/addons/project/autotests/gitforgeurltest.cpp
++++ b/addons/project/autotests/gitforgeurltest.cpp
+@@ -78,6 +78,12 @@ void GitForgeUrlTest::resolveRepository()
+     const auto github = GitForge::resolveRepository(*GitForge::parseRemote(QStringLiteral("git@github.com:owner/repo.git")), GitForge::defaultHostMappings());
+     QVERIFY(github);
+     QCOMPARE(github->provider, GitForge::Provider::GitHub);
++    const auto codeberg = GitForge::resolveRepository(*GitForge::parseRemote(QStringLiteral("git@codeberg.org:owner/repo.git")), GitForge::defaultHostMappings());
++    QVERIFY(codeberg);
++    QCOMPARE(codeberg->provider, GitForge::Provider::Forgejo);
++    QVERIFY(!GitForge::resolveRepository(*GitForge::parseRemote(QStringLiteral("git@codeberg.org:owner/group/repo.git")), GitForge::defaultHostMappings()));
++    QCOMPARE(GitForge::providerName(GitForge::Provider::Forgejo), QStringLiteral("Forgejo"));
++    QCOMPARE(GitForge::providerFromName(QStringLiteral("forgejo")), std::optional(GitForge::Provider::Forgejo));
+     QVERIFY(!GitForge::resolveRepository(*GitForge::parseRemote(QStringLiteral("git@github.com:owner/repo.git")), {}));
+ 
+     const auto mapping
+@@ -127,6 +133,12 @@ void GitForgeUrlTest::buildUrl_data()
+                                  << QStringLiteral("a file.cpp") << 4 << 4
+                                  << QByteArray("https://gitlab.example/git/owner/repo/-/blob/feature/"
+                                                "topic/a%20file.cpp#L4");
++    QTest::newRow("forgejo-branch") << GitForge::Provider::Forgejo << QStringLiteral("https://codeberg.org") << QStringLiteral("feature/topic")
++                                    << QStringLiteral("src/file.cpp") << 10 << 18
++                                    << QByteArray("https://codeberg.org/owner/repo/src/branch/feature/topic/src/file.cpp#L10-L18");
++    QTest::newRow("forgejo-commit") << GitForge::Provider::Forgejo << QStringLiteral("https://codeberg.org")
++                                    << QStringLiteral("676fb7e0a74e801cc5e5eedd6af37c16f56aa63f") << QStringLiteral("README.md") << 1 << 1
++                                    << QByteArray("https://codeberg.org/owner/repo/src/commit/676fb7e0a74e801cc5e5eedd6af37c16f56aa63f/README.md#L1");
+ }
+ 
+ void GitForgeUrlTest::buildUrl()
+@@ -172,13 +184,16 @@ void GitForgeUrlTest::lineRange()
+ void GitForgeUrlTest::providerApiUrls()
+ {
+     const auto urls = GitForge::providerApiUrls(QUrl(QStringLiteral("https://code.example.com/gitlab/")));
+-    QCOMPARE(urls.size(), 2);
+-    QCOMPARE(urls.at(0).first, GitForge::Provider::GitLab);
++    QCOMPARE(urls.size(), 3);
++    QCOMPARE(urls.at(0).first, GitForge::Provider::Forgejo);
+     QCOMPARE(urls.at(0).second,
++        QUrl(QStringLiteral("https://code.example.com/gitlab/api/v1/version")));
++    QCOMPARE(urls.at(1).first, GitForge::Provider::GitLab);
++    QCOMPARE(urls.at(1).second,
+         QUrl(QStringLiteral("https://code.example.com/gitlab/api/v4/"
+                             "projects?simple=true&per_page=1")));
+-    QCOMPARE(urls.at(1).first, GitForge::Provider::GitHub);
+-    QCOMPARE(urls.at(1).second, QUrl(QStringLiteral("https://code.example.com/gitlab/api/v3")));
++    QCOMPARE(urls.at(2).first, GitForge::Provider::GitHub);
++    QCOMPARE(urls.at(2).second, QUrl(QStringLiteral("https://code.example.com/gitlab/api/v3")));
+ 
+     QVERIFY(GitForge::providerApiUrls(QUrl(QStringLiteral("file:///tmp/gitlab"))).isEmpty());
+     QVERIFY(GitForge::providerApiUrls(QUrl(QStringLiteral("https://code.example.com/?query=invalid"))).isEmpty());
+@@ -189,11 +204,14 @@ void GitForgeUrlTest::providerApiResponse()
+     const QByteArray gitLab = R"([{"id":1,"name":"public-project"}])";
+     const QByteArray privateGitLab = R"({"message":"401 Unauthorized"})";
+     const QByteArray gitHub = R"({"current_user_url":"https://api.example/user","repository_url":"https://api.example/repos/{owner}/{repo}"})";
++    const QByteArray forgejo = R"({"version":"11.0.0+gitea-1.22.0"})";
+ 
++    QVERIFY(GitForge::isProviderApiResponse(GitForge::Provider::Forgejo, 200, forgejo));
+     QVERIFY(GitForge::isProviderApiResponse(GitForge::Provider::GitLab, 200, gitLab));
+     QVERIFY(GitForge::isProviderApiResponse(GitForge::Provider::GitLab, 401, privateGitLab));
+     QVERIFY(GitForge::isProviderApiResponse(GitForge::Provider::GitHub, 200, gitHub));
+     QVERIFY(!GitForge::isProviderApiResponse(GitForge::Provider::GitHub, 200, gitLab));
++    QVERIFY(!GitForge::isProviderApiResponse(GitForge::Provider::Forgejo, 200, gitHub));
+     QVERIFY(!GitForge::isProviderApiResponse(GitForge::Provider::GitLab, 401, gitLab));
+     QVERIFY(!GitForge::isProviderApiResponse(GitForge::Provider::GitLab, 200, QByteArrayLiteral("not json")));
+ }
+diff --git a/addons/project/git/gitforgeconfigwidget.cpp b/addons/project/git/gitforgeconfigwidget.cpp
+index 11fde4687..1c5b8b881 100644
+--- a/addons/project/git/gitforgeconfigwidget.cpp
++++ b/addons/project/git/gitforgeconfigwidget.cpp
+@@ -34,7 +34,7 @@ GitForgeConfigWidget::GitForgeConfigWidget(QWidget *parent)
+ {
+     auto *layout = new QVBoxLayout(this);
+ 
+-    auto *description = new QLabel(i18n("Map Git remote hosts to their GitHub or GitLab website. The remote "
++    auto *description = new QLabel(i18n("Map Git remote hosts to their Forgejo, GitHub, or GitLab website. The remote "
+                                         "host is taken from the clone URL; the website URL is used to open "
+                                         "repository links in a browser."),
+         this);
+@@ -44,7 +44,7 @@ GitForgeConfigWidget::GitForgeConfigWidget(QWidget *parent)
+     m_table->setColumnCount(3);
+     m_table->setHorizontalHeaderLabels({ i18n("Git Remote Host"), i18n("Hosting Service"), i18n("Website URL") });
+     m_table->horizontalHeaderItem(0)->setToolTip(i18n("Host from the Git clone URL, optionally followed by its SSH port"));
+-    m_table->horizontalHeaderItem(1)->setToolTip(i18n("GitHub or GitLab software running on the server"));
++    m_table->horizontalHeaderItem(1)->setToolTip(i18n("Forgejo, GitHub, or GitLab software running on the server"));
+     m_table->horizontalHeaderItem(2)->setToolTip(i18n("HTTP or HTTPS address used to open repository links in a web browser"));
+     m_table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+     m_table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+@@ -57,7 +57,7 @@ GitForgeConfigWidget::GitForgeConfigWidget(QWidget *parent)
+     auto *removeButton = new QPushButton(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove Selected Mapping"), this);
+     removeButton->setEnabled(false);
+     m_detectButton->setEnabled(false);
+-    m_detectButton->setToolTip(i18n("Try to identify GitHub or GitLab from the "
++    m_detectButton->setToolTip(i18n("Try to identify Forgejo, GitHub, or GitLab from the "
+                                     "selected mapping's website URL"));
+     buttons->addWidget(addButton);
+     buttons->addWidget(removeButton);
+@@ -103,7 +103,7 @@ std::optional<QList<GitForge::HostMapping>> GitForgeConfigWidget::hostMappings()
+         const QString host = hostEdit ? hostEdit->text().trimmed() : QString();
+         const QUrl webBaseUrl(webBaseUrlEdit ? webBaseUrlEdit->text().trimmed() : QString(), QUrl::StrictMode);
+         if (!provider) {
+-            KMessageBox::error(this, i18nc("Git hosting service, such as GitHub or GitLab", "The hosting service in row %1 is invalid.", row + 1));
++            KMessageBox::error(this, i18nc("Git hosting service, such as Forgejo, GitHub, or GitLab", "The hosting service in row %1 is invalid.", row + 1));
+             return std::nullopt;
+         }
+         const auto mapping = GitForge::hostMapping(host, *provider, webBaseUrl);
+@@ -141,7 +141,7 @@ void GitForgeConfigWidget::addRow(const QString &host, const QString &provider,
+     m_table->setCellWidget(row, 0, hostEdit);
+ 
+     auto *providerBox = new QComboBox(m_table);
+-    providerBox->addItems({ QStringLiteral("GitHub"), QStringLiteral("GitLab") });
++    providerBox->addItems({ QStringLiteral("Forgejo"), QStringLiteral("GitHub"), QStringLiteral("GitLab") });
+     providerBox->setCurrentText(provider);
+     connect(providerBox, &QComboBox::currentTextChanged, this, &GitForgeConfigWidget::hostMappingsChanged);
+     connect(providerBox, &QComboBox::currentTextChanged, this, [this]() {
+diff --git a/addons/project/git/gitforgeurl.cpp b/addons/project/git/gitforgeurl.cpp
+index 24b68ff81..cd64b505f 100644
+--- a/addons/project/git/gitforgeurl.cpp
++++ b/addons/project/git/gitforgeurl.cpp
+@@ -139,7 +139,7 @@ std::optional<GitForge::Repository> GitForge::resolveRepository(const Remote &re
+         if (!basePath.isEmpty() && repositoryPath.startsWith(basePath + u'/')) {
+             repositoryPath.remove(0, basePath.size() + 1);
+         }
+-        if (wildcardPortMapping->provider == Provider::GitHub && repositoryPath.count(u'/') != 1) {
++        if (wildcardPortMapping->provider != Provider::GitLab && repositoryPath.count(u'/') != 1) {
+             return std::nullopt;
+         }
+         return Repository{ wildcardPortMapping->provider, wildcardPortMapping->webBaseUrl, repositoryPath };
+@@ -165,7 +165,12 @@ std::optional<QUrl> GitForge::blobUrl(const Repository &repository, const QStrin
+     }
+     url += '/';
+     url += *repositoryPath;
+-    url += repository.provider == Provider::GitHub ? "/blob/" : "/-/blob/";
++    if (repository.provider == Provider::Forgejo) {
++        static const QRegularExpression commitPattern(QStringLiteral("^[0-9a-fA-F]{40,64}$"));
++        url += commitPattern.match(ref).hasMatch() ? "/src/commit/" : "/src/branch/";
++    } else {
++        url += repository.provider == Provider::GitHub ? "/blob/" : "/-/blob/";
++    }
+     url += QUrl::toPercentEncoding(ref, "/");
+     url += '/';
+     url += *encodedFilePath;
+@@ -173,7 +178,7 @@ std::optional<QUrl> GitForge::blobUrl(const Repository &repository, const QStrin
+     if (lines) {
+         url += "#L" + QByteArray::number(lines->first);
+         if (lines->last != lines->first) {
+-            url += repository.provider == Provider::GitHub ? "-L" : "-";
++            url += repository.provider == Provider::GitLab ? "-" : "-L";
+             url += QByteArray::number(lines->last);
+         }
+     }
+@@ -190,10 +195,24 @@ GitForge::LineRange GitForge::selectedLineRange(int startLine, int endLine, int
+     return LineRange{ startLine + 1, endLine + 1 };
+ }
+ 
+-QString GitForge::providerName(Provider provider) { return provider == Provider::GitHub ? QStringLiteral("GitHub") : QStringLiteral("GitLab"); }
++QString GitForge::providerName(Provider provider)
++{
++    switch (provider) {
++    case Provider::Forgejo:
++        return QStringLiteral("Forgejo");
++    case Provider::GitHub:
++        return QStringLiteral("GitHub");
++    case Provider::GitLab:
++        return QStringLiteral("GitLab");
++    }
++    Q_UNREACHABLE();
++}
+ 
+ std::optional<GitForge::Provider> GitForge::providerFromName(const QString &name)
+ {
++    if (name.compare(QLatin1String("Forgejo"), Qt::CaseInsensitive) == 0) {
++        return Provider::Forgejo;
++    }
+     if (name.compare(QLatin1String("GitHub"), Qt::CaseInsensitive) == 0) {
+         return Provider::GitHub;
+     }
+@@ -230,6 +249,8 @@ QList<QPair<GitForge::Provider, QUrl>> GitForge::providerApiUrls(const QUrl &web
+         basePath.chop(1);
+     }
+ 
++    QUrl forgejoUrl = webBaseUrl;
++    forgejoUrl.setPath(basePath + QStringLiteral("/api/v1/version"));
+     QUrl gitLabUrl = webBaseUrl;
+     gitLabUrl.setPath(basePath + QStringLiteral("/api/v4/projects"));
+     QUrlQuery gitLabQuery;
+@@ -238,12 +259,15 @@ QList<QPair<GitForge::Provider, QUrl>> GitForge::providerApiUrls(const QUrl &web
+     gitLabUrl.setQuery(gitLabQuery);
+     QUrl gitHubUrl = webBaseUrl;
+     gitHubUrl.setPath(basePath + QStringLiteral("/api/v3"));
+-    return { { Provider::GitLab, gitLabUrl }, { Provider::GitHub, gitHubUrl } };
++    return { { Provider::Forgejo, forgejoUrl }, { Provider::GitLab, gitLabUrl }, { Provider::GitHub, gitHubUrl } };
+ }
+ 
+ bool GitForge::isProviderApiResponse(Provider provider, int statusCode, const QByteArray &body)
+ {
+     const QJsonDocument document = QJsonDocument::fromJson(body);
++    if (provider == Provider::Forgejo) {
++        return statusCode >= 200 && statusCode < 300 && document.object().value(QStringLiteral("version")).isString();
++    }
+     if (provider == Provider::GitLab) {
+         return (statusCode >= 200 && statusCode < 300 && document.isArray())
+             || (statusCode == 401 && document.object().value(QStringLiteral("message")) == QLatin1String("401 Unauthorized"));
+@@ -258,6 +282,7 @@ bool GitForge::isProviderApiResponse(Provider provider, int statusCode, const QB
+ QList<GitForge::HostMapping> GitForge::defaultHostMappings()
+ {
+     return {
++        { QStringLiteral("codeberg.org"), -1, Provider::Forgejo, QUrl(QStringLiteral("https://codeberg.org")) },
+         { QStringLiteral("github.com"), -1, Provider::GitHub, QUrl(QStringLiteral("https://github.com")) },
+         { QStringLiteral("gitlab.com"), -1, Provider::GitLab, QUrl(QStringLiteral("https://gitlab.com")) },
+         { QStringLiteral("invent.kde.org"), -1, Provider::GitLab, QUrl(QStringLiteral("https://invent.kde.org")) },
+diff --git a/addons/project/git/gitforgeurl.h b/addons/project/git/gitforgeurl.h
+index c261fabb8..d10464e7a 100644
+--- a/addons/project/git/gitforgeurl.h
++++ b/addons/project/git/gitforgeurl.h
+@@ -16,6 +16,7 @@
+ 
+ namespace GitForge {
+ enum class Provider {
++    Forgejo,
+     GitHub,
+     GitLab,
+ };
+-- 
+2.55.0
+
+
+From b4d6d8bc1c486fce6e3f95e7796ad47aaab09311 Mon Sep 17 00:00:00 2001
+From: Patrizio Bekerle <patrizio@bekerle.com>
+Date: Thu, 24 Sep 2026 07:45:14 +0200
+Subject: [PATCH 5/7] project: polish Git settings UI
+
+---
+ addons/project/git/gitforgeconfigwidget.cpp | 1 +
+ addons/project/kateprojectconfigpage.cpp    | 3 +++
+ 2 files changed, 4 insertions(+)
+
+diff --git a/addons/project/git/gitforgeconfigwidget.cpp b/addons/project/git/gitforgeconfigwidget.cpp
+index 1c5b8b881..1c0914715 100644
+--- a/addons/project/git/gitforgeconfigwidget.cpp
++++ b/addons/project/git/gitforgeconfigwidget.cpp
+@@ -143,6 +143,7 @@ void GitForgeConfigWidget::addRow(const QString &host, const QString &provider,
+     auto *providerBox = new QComboBox(m_table);
+     providerBox->addItems({ QStringLiteral("Forgejo"), QStringLiteral("GitHub"), QStringLiteral("GitLab") });
+     providerBox->setCurrentText(provider);
++    providerBox->setFrame(false);
+     connect(providerBox, &QComboBox::currentTextChanged, this, &GitForgeConfigWidget::hostMappingsChanged);
+     connect(providerBox, &QComboBox::currentTextChanged, this, [this]() {
+         if (!m_detecting) {
+diff --git a/addons/project/kateprojectconfigpage.cpp b/addons/project/kateprojectconfigpage.cpp
+index 68694ff6f..1c4011be0 100644
+--- a/addons/project/kateprojectconfigpage.cpp
++++ b/addons/project/kateprojectconfigpage.cpp
+@@ -13,6 +13,7 @@
+ #include <QComboBox>
+ #include <QGroupBox>
+ #include <QLabel>
++#include <QTabBar>
+ #include <QTabWidget>
+ #include <QVBoxLayout>
+ 
+@@ -22,6 +23,8 @@ KateProjectConfigPage::KateProjectConfigPage(QWidget *parent, KateProjectPlugin
+ {
+     auto *rootLayout = new QVBoxLayout(this);
+     auto *tabs = new QTabWidget(this);
++    tabs->setDocumentMode(true);
++    tabs->tabBar()->setExpanding(true);
+     auto *generalTab = new QWidget(tabs);
+     auto *gitTab = new QWidget(tabs);
+     tabs->addTab(generalTab, i18n("General"));
+-- 
+2.55.0
+
+
+From e6bc9a542084ccca0afa5dc451d3bdc0466b80c6 Mon Sep 17 00:00:00 2001
+From: Patrizio Bekerle <patrizio@bekerle.com>
+Date: Thu, 24 Sep 2026 07:53:36 +0200
+Subject: [PATCH 6/7] project: support Git host mappings per project
+
+---
+ addons/project/autotests/gitforgeurltest.cpp  | 36 +++++++++++++++++++
+ addons/project/git/gitforgeurl.cpp            | 29 +++++++++++++++
+ addons/project/git/gitforgeurl.h              |  2 ++
+ addons/project/kateproject.example            | 24 +++++++++++++
+ addons/project/kateprojectpluginview.cpp      |  2 +-
+ .../kateprojecttreeviewcontextmenu.cpp        |  2 +-
+ doc/kate/plugins.docbook                      | 31 ++++++++++++++++
+ 7 files changed, 124 insertions(+), 2 deletions(-)
+
+diff --git a/addons/project/autotests/gitforgeurltest.cpp b/addons/project/autotests/gitforgeurltest.cpp
+index 12b34a890..e5bc8ef63 100644
+--- a/addons/project/autotests/gitforgeurltest.cpp
++++ b/addons/project/autotests/gitforgeurltest.cpp
+@@ -23,6 +23,7 @@ private Q_SLOTS:
+     void buildUrl();
+     void lineRange_data();
+     void lineRange();
++    void projectHostMappings();
+     void providerApiUrls();
+     void providerApiResponse();
+ };
+@@ -181,6 +182,41 @@ void GitForgeUrlTest::lineRange()
+     QCOMPARE(range.last, last);
+ }
+ 
++void GitForgeUrlTest::projectHostMappings()
++{
++    const auto globalMapping
++        = GitForge::hostMapping(QStringLiteral("git.example.com"), GitForge::Provider::GitLab, QUrl(QStringLiteral("https://global.example.com")));
++    QVERIFY(globalMapping);
++    const QVariantMap projectMap{
++        { QStringLiteral("git"),
++            QVariantMap{ { QStringLiteral("hostMappings"),
++                QVariantList{
++                    QVariantMap{
++                        { QStringLiteral("host"), QStringLiteral("git.example.com") },
++                        { QStringLiteral("provider"), QStringLiteral("Forgejo") },
++                        { QStringLiteral("webBaseUrl"), QStringLiteral("https://project.example.com") },
++                    },
++                    QVariantMap{
++                        { QStringLiteral("host"), QStringLiteral("invalid.example.com") },
++                        { QStringLiteral("provider"), QStringLiteral("unknown") },
++                        { QStringLiteral("webBaseUrl"), QStringLiteral("https://invalid.example.com") },
++                    },
++                } } } },
++    };
++
++    const auto mappings = GitForge::effectiveHostMappings({ *globalMapping, GitForge::defaultHostMappings().constFirst() }, projectMap);
++    QCOMPARE(mappings.size(), 2);
++    QCOMPARE(mappings.at(0).provider, GitForge::Provider::Forgejo);
++    QCOMPARE(mappings.at(0).webBaseUrl, QUrl(QStringLiteral("https://project.example.com")));
++    QCOMPARE(mappings.at(1).host, QStringLiteral("codeberg.org"));
++
++    const auto repository
++        = GitForge::resolveRepository(*GitForge::parseRemote(QStringLiteral("git@git.example.com:owner/repo.git")), mappings);
++    QVERIFY(repository);
++    QCOMPARE(repository->provider, GitForge::Provider::Forgejo);
++    QCOMPARE(GitForge::effectiveHostMappings({ *globalMapping }, {}).size(), 1);
++}
++
+ void GitForgeUrlTest::providerApiUrls()
+ {
+     const auto urls = GitForge::providerApiUrls(QUrl(QStringLiteral("https://code.example.com/gitlab/")));
+diff --git a/addons/project/git/gitforgeurl.cpp b/addons/project/git/gitforgeurl.cpp
+index cd64b505f..4f5d42863 100644
+--- a/addons/project/git/gitforgeurl.cpp
++++ b/addons/project/git/gitforgeurl.cpp
+@@ -11,6 +11,8 @@
+ #include <QRegularExpression>
+ #include <QUrlQuery>
+ 
++#include <algorithm>
++
+ namespace {
+ std::optional<QString> normalizedPath(QString path)
+ {
+@@ -238,6 +240,33 @@ std::optional<GitForge::HostMapping> GitForge::hostMapping(const QString &hostAn
+     return HostMapping{ host, authority.port(-1), provider, webBaseUrl };
+ }
+ 
++QList<GitForge::HostMapping> GitForge::effectiveHostMappings(const QList<HostMapping> &globalMappings, const QVariantMap &projectMap)
++{
++    QList<HostMapping> mappings;
++    const QVariantList entries = projectMap.value(QStringLiteral("git")).toMap().value(QStringLiteral("hostMappings")).toList();
++    for (const QVariant &entry : entries) {
++        const QVariantMap values = entry.toMap();
++        const auto provider = providerFromName(values.value(QStringLiteral("provider")).toString());
++        if (provider) {
++            if (const auto mapping = hostMapping(values.value(QStringLiteral("host")).toString(),
++                    *provider,
++                    QUrl(values.value(QStringLiteral("webBaseUrl")).toString(), QUrl::StrictMode))) {
++                mappings.push_back(*mapping);
++            }
++        }
++    }
++
++    for (const HostMapping &globalMapping : globalMappings) {
++        const auto overridden = std::ranges::find_if(mappings, [&globalMapping](const HostMapping &mapping) {
++            return mapping.host == globalMapping.host && mapping.port == globalMapping.port;
++        });
++        if (overridden == mappings.end()) {
++            mappings.push_back(globalMapping);
++        }
++    }
++    return mappings;
++}
++
+ QList<QPair<GitForge::Provider, QUrl>> GitForge::providerApiUrls(const QUrl &webBaseUrl)
+ {
+     if (!validWebBase(webBaseUrl)) {
+diff --git a/addons/project/git/gitforgeurl.h b/addons/project/git/gitforgeurl.h
+index d10464e7a..c94048158 100644
+--- a/addons/project/git/gitforgeurl.h
++++ b/addons/project/git/gitforgeurl.h
+@@ -11,6 +11,7 @@
+ #include <QPair>
+ #include <QString>
+ #include <QUrl>
++#include <QVariantMap>
+ 
+ #include <optional>
+ 
+@@ -53,6 +54,7 @@ LineRange selectedLineRange(int startLine, int endLine, int endColumn);
+ QString providerName(Provider provider);
+ std::optional<Provider> providerFromName(const QString &name);
+ std::optional<HostMapping> hostMapping(const QString &host, Provider provider, const QUrl &webBaseUrl);
++QList<HostMapping> effectiveHostMappings(const QList<HostMapping> &globalMappings, const QVariantMap &projectMap);
+ QList<QPair<Provider, QUrl>> providerApiUrls(const QUrl &webBaseUrl);
+ bool isProviderApiResponse(Provider provider, int statusCode, const QByteArray &body);
+ QList<HostMapping> defaultHostMappings();
+diff --git a/addons/project/kateproject.example b/addons/project/kateproject.example
+index 02f1e7212..1e73102bc 100644
+--- a/addons/project/kateproject.example
++++ b/addons/project/kateproject.example
+@@ -87,6 +87,15 @@ struct
+ 
+    };
+ 
++   /// The "git" structure is optional. Project host mappings override global mappings
++   /// with the same host and port; other global mappings remain available as fallbacks.
++   struct git
++   {
++      /// Maps a Git remote host, optionally followed by its SSH port, to its website.
++      /// "provider" must be "Forgejo", "GitHub", or "GitLab".
++      vector< {string host, string provider, string webBaseUrl} > hostMappings;
++   };
++
+    /// The "ctags" structure is optional.
+    /// If set, it may contain extra options for ctags command used to populate the auto completion popup in Kate.
+    struct ctags
+@@ -139,6 +148,21 @@ A project for a custom language named Swine whose source files have a suffix .sw
+ }
+ 
+ 
++A project with a project-specific Git hosting mapping:
++
++{
++   "name": "MyProject",
++   "files": [ { "git": 1 } ],
++   "git": {
++      "hostMappings": [ {
++         "host": "git.example.com:2222",
++         "provider": "Forgejo",
++         "webBaseUrl": "https://code.example.com"
++      } ]
++   }
++}
++
++
+ A more advanced project file, get the files from svn, set up three commands for the build plugin:
+ 
+ {
+diff --git a/addons/project/kateprojectpluginview.cpp b/addons/project/kateprojectpluginview.cpp
+index e6ff33e91..021cfb3bf 100755
+--- a/addons/project/kateprojectpluginview.cpp
++++ b/addons/project/kateprojectpluginview.cpp
+@@ -884,7 +884,7 @@ void KateProjectPluginView::updateGitHostingActions()
+     }
+ 
+     const QString path = view->document()->url().toLocalFile();
+-    const auto mappings = m_plugin->gitHostMappings();
++    const auto mappings = GitForge::effectiveHostMappings(m_plugin->gitHostMappings(), m_plugin->projectMapForDocument(view->document()));
+     auto *watcher = new QFutureWatcher<std::optional<GitForge::Link>>(this);
+     connect(watcher, &QFutureWatcher<std::optional<GitForge::Link>>::finished, this, [this, watcher, generation]() {
+         const auto link = watcher->result();
+diff --git a/addons/project/kateprojecttreeviewcontextmenu.cpp b/addons/project/kateprojecttreeviewcontextmenu.cpp
+index f62b16abd..cc78c28ea 100644
+--- a/addons/project/kateprojecttreeviewcontextmenu.cpp
++++ b/addons/project/kateprojecttreeviewcontextmenu.cpp
+@@ -206,7 +206,7 @@ void KateProjectTreeViewContextMenu::exec(const QString &filename, const QModelI
+                 QApplication::clipboard()->setText(url.toString(QUrl::FullyEncoded));
+             });
+         });
+-        const auto mappings = parent->project()->plugin()->gitHostMappings();
++        const auto mappings = GitForge::effectiveHostMappings(parent->project()->plugin()->gitHostMappings(), parent->project()->projectMap());
+         watcher->setFuture(QtConcurrent::run([filename, mappings]() {
+             return GitForge::linkForFile(filename, mappings);
+         }));
+diff --git a/doc/kate/plugins.docbook b/doc/kate/plugins.docbook
+index 41d412b7d..9cba21d7f 100644
+--- a/doc/kate/plugins.docbook
++++ b/doc/kate/plugins.docbook
+@@ -2286,6 +2286,37 @@ to exclude folders and files from the project tree. In this example, All files
+ and folders in a directory <filename>build</filename> from the root will be excluded.
+ </para>
+ 
++<para>
++Git hosting mappings can also be configured for a project. A project mapping overrides a global
++mapping with the same host and port, while mappings for other hosts remain available as fallbacks:
++</para>
++
++<screen>
++{
++  "name": "Kate",
++  "files": [
++    {
++      "git": 1
++    }
++  ],
++  "git": {
++    "hostMappings": [
++      {
++        "host": "git.example.com:2222",
++        "provider": "Forgejo",
++        "webBaseUrl": "https://code.example.com"
++      }
++    ]
++  }
++}
++</screen>
++
++<para>
++The <code>"provider"</code> value must be <code>"Forgejo"</code>, <code>"GitHub"</code>, or
++<code>"GitLab"</code>. The <code>"host"</code> may include the SSH port used by the Git remote,
++and <code>"webBaseUrl"</code> is the HTTP or HTTPS address used to open repository links.
++</para>
++
+ <para id="projects-build-support">If you want to add support for the building, you can write a
+ <filename>.kateproject</filename> like this:</para>
+ 
+-- 
+2.55.0
+
+
+From 10dba696d94e94782f0baf0174d6a5f5ff29de1e Mon Sep 17 00:00:00 2001
+From: Patrizio Bekerle <patrizio@bekerle.com>
+Date: Thu, 24 Sep 2026 09:48:58 +0200
+Subject: [PATCH 7/7] project: expose Git Hosting in editor menu
+
+---
+ addons/project/kateprojectpluginview.cpp | 7 +++++--
+ addons/project/ui.rc                     | 3 ++-
+ 2 files changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/addons/project/kateprojectpluginview.cpp b/addons/project/kateprojectpluginview.cpp
+index 021cfb3bf..d9afeac9b 100755
+--- a/addons/project/kateprojectpluginview.cpp
++++ b/addons/project/kateprojectpluginview.cpp
+@@ -241,8 +241,10 @@ KateProjectPluginView::KateProjectPluginView(KateProjectPlugin *plugin, KTextEdi
+     m_lookupAction = popup->menu()->addAction(i18n("Lookup: %1", QString()), this, &KateProjectPluginView::slotProjectIndex);
+     m_gotoSymbolAction = popup->menu()->addAction(i18n("Goto: %1", QString()), this, &KateProjectPluginView::slotGotoSymbol);
+ 
+-    popup->menu()->addSeparator();
+-    m_gitHostingMenu = popup->menu()->addMenu(QIcon::fromTheme(QStringLiteral("vcs-branch")), i18n("Git Hosting"));
++    auto gitHosting = new KActionMenu(i18n("Git Hosting"), this);
++    gitHosting->setIcon(QIcon::fromTheme(QStringLiteral("vcs-branch")));
++    actionCollection()->addAction(QStringLiteral("popup_git_hosting"), gitHosting);
++    m_gitHostingMenu = gitHosting->menu();
+     m_openGitHostingAction = m_gitHostingMenu->addAction(QIcon::fromTheme(QStringLiteral("internet-web-browser")), i18n("Open on Git Hosting Service"));
+     m_copyGitHostingAction = m_gitHostingMenu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy Git Hosting Link"));
+ 
+@@ -1043,6 +1045,7 @@ void KateProjectPluginView::updateActions()
+     m_projectGotoIndexAction->setVisible(hasIndex);
+     m_gotoSymbolActionAppMenu->setVisible(hasIndex);
+     actionCollection()->action(QStringLiteral("popup_project"))->setVisible(hasIndex);
++    actionCollection()->action(QStringLiteral("popup_git_hosting"))->setVisible(projectActive);
+ }
+ 
+ void KateProjectPluginView::slotActivateProject(KateProject *project)
+diff --git a/addons/project/ui.rc b/addons/project/ui.rc
+index 97c205b1d..ba8f6d087 100644
+--- a/addons/project/ui.rc
++++ b/addons/project/ui.rc
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE gui SYSTEM "kpartgui.dtd">
+-<gui name="kateprojectplugin" library="kateprojectplugin" version="15" translationDomain="kateproject">
++<gui name="kateprojectplugin" library="kateprojectplugin" version="16" translationDomain="kateproject">
+   <MenuBar>
+   <Menu name="file">
+     <Action name="projects_open_project" group="open_merge"/>
+@@ -24,6 +24,7 @@
+   </MenuBar>
+   <Menu name="ktexteditor_popup" noMerge="1">
+     <Action name="popup_project"/>
++    <Action name="popup_git_hosting"/>
+   </Menu>
+   <ToolBar name="projectplugin" hidden="true">
+     <text>Project Plugin</text>
+-- 
+2.55.0
+
