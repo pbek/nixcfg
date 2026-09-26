@@ -1,0 +1,2353 @@
+From c8bc00c656c9952f557dd333c8e2b713fe898e39 Mon Sep 17 00:00:00 2001
+From: Patrizio Bekerle <patrizio@bekerle.com>
+Date: Sat, 26 Sep 2026 07:10:46 +0200
+Subject: [PATCH] deployment: add SFTP project deployment plugin
+
+---
+ addons/CMakeLists.txt                         |   1 +
+ addons/deployment/CMakeLists.txt              |  31 +
+ addons/deployment/Messages.sh                 |   2 +
+ addons/deployment/README.md                   | 112 +++
+ addons/deployment/autotests/CMakeLists.txt    |  21 +
+ .../autotests/deploymentconfigtest.cpp        | 212 ++++
+ .../autotests/deploymenttransfertest.cpp      |  68 ++
+ addons/deployment/deploymentconfig.cpp        | 306 ++++++
+ addons/deployment/deploymentconfig.h          |  36 +
+ addons/deployment/deploymentplugin.cpp        | 952 ++++++++++++++++++
+ addons/deployment/deploymentplugin.h          | 119 +++
+ addons/deployment/plugin.json                 |   6 +
+ addons/deployment/plugin.qrc                  |   5 +
+ addons/deployment/ui.rc                       |  20 +
+ addons/project/kateproject.cpp                |   2 +-
+ addons/project/kateproject.example            |  26 +
+ addons/project/kateprojectplugin.cpp          |  10 +
+ addons/project/kateprojectplugin.h            |   4 +
+ addons/project/kateprojectpluginview.cpp      |  13 +
+ addons/project/kateprojectpluginview.h        |  12 +-
+ .../kateprojecttreeviewcontextmenu.cpp        |   5 +
+ addons/project/kateprojectviewtree.h          |   1 +
+ doc/kate/plugins.docbook                      | 115 +++
+ 23 files changed, 2077 insertions(+), 2 deletions(-)
+ create mode 100644 addons/deployment/CMakeLists.txt
+ create mode 100755 addons/deployment/Messages.sh
+ create mode 100644 addons/deployment/README.md
+ create mode 100644 addons/deployment/autotests/CMakeLists.txt
+ create mode 100644 addons/deployment/autotests/deploymentconfigtest.cpp
+ create mode 100644 addons/deployment/autotests/deploymenttransfertest.cpp
+ create mode 100644 addons/deployment/deploymentconfig.cpp
+ create mode 100644 addons/deployment/deploymentconfig.h
+ create mode 100644 addons/deployment/deploymentplugin.cpp
+ create mode 100644 addons/deployment/deploymentplugin.h
+ create mode 100644 addons/deployment/plugin.json
+ create mode 100644 addons/deployment/plugin.qrc
+ create mode 100644 addons/deployment/ui.rc
+
+diff --git a/addons/CMakeLists.txt b/addons/CMakeLists.txt
+index f71fd15ff..9122d462b 100644
+--- a/addons/CMakeLists.txt
++++ b/addons/CMakeLists.txt
+@@ -37,3 +37,4 @@ ecm_optional_add_subdirectory(openlink)
+ ecm_optional_add_subdirectory(rbql)
+ ecm_optional_add_subdirectory(bookmarks)
+ ecm_optional_add_subdirectory(kategpgplugin) # Adds transparent editing of GPG encrypted files.
++ecm_optional_add_subdirectory(deployment) # Upload local project files and browse a remote SFTP host.
+diff --git a/addons/deployment/CMakeLists.txt b/addons/deployment/CMakeLists.txt
+new file mode 100644
+index 000000000..0782d94f0
+--- /dev/null
++++ b/addons/deployment/CMakeLists.txt
+@@ -0,0 +1,31 @@
++kate_add_plugin(katedeploymentplugin)
++target_compile_definitions(katedeploymentplugin PRIVATE TRANSLATION_DOMAIN="katedeployment")
++
++target_link_libraries(
++    katedeploymentplugin
++    PRIVATE
++        kateprivate
++        KF6::I18n
++        KF6::KIOFileWidgets
++        KF6::KIOWidgets
++        KF6::TextEditor
++        KF6::WidgetsAddons
++)
++
++target_sources(
++    katedeploymentplugin
++    PRIVATE
++        deploymentconfig.h
++        deploymentconfig.cpp
++        deploymentplugin.h
++        deploymentplugin.cpp
++        plugin.qrc
++)
++
++if (ENABLE_PCH)
++    target_precompile_headers(katedeploymentplugin REUSE_FROM katepch)
++endif()
++
++if (BUILD_TESTING)
++    add_subdirectory(autotests)
++endif()
+diff --git a/addons/deployment/Messages.sh b/addons/deployment/Messages.sh
+new file mode 100755
+index 000000000..d79c35638
+--- /dev/null
++++ b/addons/deployment/Messages.sh
+@@ -0,0 +1,2 @@
++#! /bin/sh
++$XGETTEXT *.cpp -o $podir/katedeployment.pot
+diff --git a/addons/deployment/README.md b/addons/deployment/README.md
+new file mode 100644
+index 000000000..ee04e00ac
+--- /dev/null
++++ b/addons/deployment/README.md
+@@ -0,0 +1,112 @@
++# Kate Deployment Plugin Plan
++
++## Goal
++
++Add a project-aware deployment plugin that keeps development files local while
++allowing explicit uploads to an SSH server through SFTP. The plugin also
++provides a Remote Host sidebar for browsing and directly editing deployed
++files.
++
++## Initial Scope
++
++- Configure one SFTP target per Kate project.
++- Store non-secret settings in `.kateproject` or `.kateproject.local`.
++- Upload the current file with a configurable shortcut.
++- Upload all files known to the active Kate project.
++- Create missing remote directories.
++- Upload through a temporary remote file and rename it into place.
++- Apply project-relative exclusion patterns.
++- Show transfer progress and errors in a File Transfer toolview.
++- Browse the configured remote root in a Remote Host toolview.
++- Open remote files directly as `sftp://` documents.
++- Open or upload the mapped local file from the remote context menu.
++
++Automatic upload on save, download/synchronization, conflict detection,
++automatic remote deletion, and server groups are intentionally deferred.
++
++## Project Configuration
++
++```json
++{
++    "deployment": {
++        "host": "example.org",
++        "port": 22,
++        "user": "deploy",
++        "localRoot": ".",
++        "remoteRoot": "/var/www/example",
++        "exclude": [
++            ".git",
++            ".kateproject*",
++            "build"
++        ]
++    }
++}
++```
++
++`localRoot` is relative to the project base directory. `remoteRoot` must be an
++absolute path. Passwords and private keys are never persisted by the plugin;
++authentication, host-key verification, and wallet integration are delegated to
++KIO.
++
++The configuration dialog writes a complete personal override to
++`.kateproject.local`, preserving unrelated keys. Teams can move suitable
++non-secret values into `.kateproject` when they should be shared.
++The dialog requires a file-backed `.kateproject`; generated in-memory projects
++can consume an existing deployment map but cannot persist one in this version.
++
++## Architecture
++
++### Configuration and Mapping
++
++The mapping layer parses the project map, validates local and remote roots, and
++performs component-aware forward and reverse mapping. Existing local paths are
++canonicalized so that symlinks cannot escape the configured local root. Remote
++URLs are assembled with `QUrl`, never string concatenation.
++
++### Transfer Engine
++
++Transfers use asynchronous KIO jobs:
++
++1. `KIO::mkpath` creates the destination parent hierarchy.
++2. `KIO::file_copy` uploads to a unique temporary name in that directory.
++3. `KIO::rename` replaces the final destination.
++4. Failures and cancellation trigger best-effort temporary-file cleanup.
++
++Project uploads use a serial queue. Serial operation avoids stale transfers
++overtaking newer ones and keeps authentication/error handling predictable.
++
++### Remote Host Toolview
++
++The left-side Remote Host toolview uses `KUrlNavigator` and `KDirOperator`,
++restricted to SFTP. Navigation and actions are validated against the configured
++remote root rather than relying on the UI restriction as a security boundary.
++This is lexical URL confinement; remote symlinks are interpreted by the server
++and must not be treated as a server-side security boundary.
++
++Double-clicking a remote file opens it directly in Kate. The context menu also
++offers **Open Mapped Local File** and **Upload Mapped Local File** when a valid
++local counterpart exists.
++
++### File Transfer Toolview
++
++The bottom toolview records queued, running, successful, failed, and cancelled
++operations. It provides cancel and clear actions and refreshes the remote view
++after successful uploads.
++
++## Verification
++
++- Unit-test configuration parsing and validation.
++- Test URL encoding, IPv6 hosts, forward/reverse mapping, traversal rejection,
++  symlink escapes, and exclusions.
++- Build the plugin with the repository's supported Qt and KF6 versions.
++- Exercise uploads with KIO's test worker where possible; a live SSH service is
++  not required for the unit-test suite.
++
++## Follow-up Work
++
++- Compare local and remote files in Kate's diff UI.
++- Download selected remote files to their mapped local paths.
++- Preview and apply bidirectional folder synchronization.
++- Detect remote modifications before overwrite.
++- Add optional upload-on-save behavior with save coalescing.
++- Support reusable profiles and deployment groups.
+diff --git a/addons/deployment/autotests/CMakeLists.txt b/addons/deployment/autotests/CMakeLists.txt
+new file mode 100644
+index 000000000..e922979c6
+--- /dev/null
++++ b/addons/deployment/autotests/CMakeLists.txt
+@@ -0,0 +1,21 @@
++include(ECMMarkAsTest)
++
++find_package(Qt6Test ${QT_MIN_VERSION} QUIET REQUIRED)
++
++add_executable(deploymentconfigtest deploymentconfigtest.cpp ../deploymentconfig.cpp)
++target_include_directories(deploymentconfigtest PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/..)
++target_link_libraries(deploymentconfigtest PRIVATE Qt::Core Qt::Test)
++
++add_test(NAME plugin-deploymentconfigtest COMMAND deploymentconfigtest)
++ecm_mark_as_test(deploymentconfigtest)
++
++add_executable(deploymenttransfertest deploymenttransfertest.cpp)
++target_link_libraries(deploymenttransfertest PRIVATE KF6::KIOCore Qt::Core Qt::Test)
++
++add_test(NAME plugin-deploymenttransfertest COMMAND deploymenttransfertest)
++ecm_mark_as_test(deploymenttransfertest)
++
++if (ENABLE_PCH)
++    target_precompile_headers(deploymentconfigtest REUSE_FROM katepch_tests)
++    target_precompile_headers(deploymenttransfertest REUSE_FROM katepch_tests)
++endif()
+diff --git a/addons/deployment/autotests/deploymentconfigtest.cpp b/addons/deployment/autotests/deploymentconfigtest.cpp
+new file mode 100644
+index 000000000..4c2cec101
+--- /dev/null
++++ b/addons/deployment/autotests/deploymentconfigtest.cpp
+@@ -0,0 +1,212 @@
++/*
++    SPDX-FileCopyrightText: 2026 The Kate Developers
++
++    SPDX-License-Identifier: LGPL-2.0-or-later
++*/
++
++#include "deploymentconfig.h"
++
++#include <QDir>
++#include <QFile>
++#include <QTemporaryDir>
++#include <QTest>
++
++class DeploymentConfigTest : public QObject {
++  Q_OBJECT
++
++private Q_SLOTS:
++  void parse();
++  void invalidConfig();
++  void ipv6AndEncoding();
++  void mapping();
++  void rejectOutsideAndTraversal();
++  void symlinkEscape();
++  void excludes();
++};
++
++static QVariantMap projectConfig(const QVariantMap &deployment) {
++  return {{QStringLiteral("deployment"), deployment}};
++}
++
++static Deployment::Config configFor(const QString &base,
++                                    const QVariantMap &extra = {}) {
++  QVariantMap deployment{
++      {QStringLiteral("host"), QStringLiteral("files.example.org")},
++      {QStringLiteral("user"), QStringLiteral("kate")},
++      {QStringLiteral("localRoot"), QStringLiteral("src")},
++      {QStringLiteral("remoteRoot"), QStringLiteral("/srv/project")},
++  };
++  for (auto it = extra.cbegin(); it != extra.cend(); ++it) {
++    deployment.insert(it.key(), it.value());
++  }
++  return Deployment::Config::fromProjectMap(projectConfig(deployment), base);
++}
++
++void DeploymentConfigTest::parse() {
++  QTemporaryDir project;
++  QVERIFY(project.isValid());
++  QVERIFY(QDir(project.path()).mkdir(QStringLiteral("src")));
++
++  const auto disabled = Deployment::Config::fromProjectMap({}, project.path());
++  QVERIFY(!disabled.enabled);
++  QVERIFY(disabled.valid);
++  QVERIFY(disabled.error.isEmpty());
++
++  const auto config = configFor(
++      project.path(),
++      {{QStringLiteral("port"), 2222},
++       {QStringLiteral("exclude"),
++        QStringList{QStringLiteral("*.o"), QStringLiteral("build")}}});
++  QVERIFY2(config.valid, qPrintable(config.error));
++  QVERIFY(config.enabled);
++  QCOMPARE(config.host, QStringLiteral("files.example.org"));
++  QCOMPARE(config.port, 2222);
++  QCOMPARE(config.user, QStringLiteral("kate"));
++  QCOMPARE(config.localRoot,
++           QDir(project.path()).canonicalPath() + QStringLiteral("/src"));
++  QCOMPARE(config.remoteRoot, QStringLiteral("/srv/project"));
++  QCOMPARE(config.excludePatterns.size(), 2);
++  QCOMPARE(config.remoteBaseUrl().toEncoded(),
++           QByteArray("sftp://kate@files.example.org:2222/srv/project"));
++  QVERIFY(config.remoteBaseUrl().password().isEmpty());
++}
++
++void DeploymentConfigTest::invalidConfig() {
++  QTemporaryDir project;
++  QTemporaryDir outside;
++  QVERIFY(project.isValid());
++  QVERIFY(outside.isValid());
++  QVERIFY(QDir(project.path()).mkdir(QStringLiteral("src")));
++
++  QVERIFY(
++      !configFor(project.path(), {{QStringLiteral("host"), QString()}}).valid);
++  QVERIFY(!configFor(project.path(), {{QStringLiteral("port"), 70000}}).valid);
++  QVERIFY(!configFor(project.path(), {{QStringLiteral("remoteRoot"),
++                                       QStringLiteral("relative")}})
++               .valid);
++  QVERIFY(!configFor(project.path(), {{QStringLiteral("remoteRoot"),
++                                       QStringLiteral("/srv/../secret")}})
++               .valid);
++  QVERIFY(!configFor(project.path(), {{QStringLiteral("localRoot"),
++                                       QStringLiteral("../outside")}})
++               .valid);
++  QVERIFY(!configFor(project.path(),
++                     {{QStringLiteral("localRoot"), outside.path()}})
++               .valid);
++  QVERIFY(!configFor(QString()).valid);
++  QVERIFY(!Deployment::Config::fromProjectMap(
++               {{QStringLiteral("deployment"), QStringLiteral("invalid")}},
++               project.path())
++               .valid);
++}
++
++void DeploymentConfigTest::ipv6AndEncoding() {
++  QTemporaryDir project;
++  QVERIFY(project.isValid());
++  QVERIFY(QDir(project.path()).mkdir(QStringLiteral("src")));
++  QFile file(project.filePath(QStringLiteral("src/a #file.txt")));
++  QVERIFY(file.open(QIODevice::WriteOnly));
++  file.close();
++
++  const auto config = configFor(
++      project.path(), {{QStringLiteral("host"), QStringLiteral("2001:db8::1")},
++                       {QStringLiteral("user"), QStringLiteral("a user")}});
++  QVERIFY2(config.valid, qPrintable(config.error));
++  const auto url = config.remoteUrlForLocalPath(file.fileName());
++  QVERIFY(url);
++  QCOMPARE(url->toEncoded(),
++           QByteArray(
++               "sftp://a%20user@[2001:db8::1]:22/srv/project/a%20%23file.txt"));
++  QCOMPARE(config.localPathForRemoteUrl(*url), std::optional(file.fileName()));
++}
++
++void DeploymentConfigTest::mapping() {
++  QTemporaryDir project;
++  QVERIFY(project.isValid());
++  QVERIFY(QDir(project.path()).mkpath(QStringLiteral("src/lib")));
++  QFile file(project.filePath(QStringLiteral("src/lib/main.cpp")));
++  QVERIFY(file.open(QIODevice::WriteOnly));
++  file.close();
++
++  const auto config = configFor(project.path());
++  QVERIFY2(config.valid, qPrintable(config.error));
++  const auto remote = config.remoteUrlForLocalPath(file.fileName());
++  QVERIFY(remote);
++  QCOMPARE(remote->path(), QStringLiteral("/srv/project/lib/main.cpp"));
++  QCOMPARE(config.localPathForRemoteUrl(*remote),
++           std::optional(file.fileName()));
++  QCOMPARE(config.remoteUrlForLocalPath(config.localRoot),
++           std::optional(config.remoteBaseUrl()));
++  QCOMPARE(config.localPathForRemoteUrl(config.remoteBaseUrl()),
++           std::optional(config.localRoot));
++}
++
++void DeploymentConfigTest::rejectOutsideAndTraversal() {
++  QTemporaryDir project;
++  QVERIFY(project.isValid());
++  QVERIFY(QDir(project.path()).mkdir(QStringLiteral("src")));
++  const auto config = configFor(project.path());
++  QVERIFY(config.valid);
++
++  QVERIFY(!config.remoteUrlForLocalPath(
++      project.filePath(QStringLiteral("src2/file.cpp"))));
++  QVERIFY(!config.remoteUrlForLocalPath(
++      project.filePath(QStringLiteral("src/../outside.cpp"))));
++  QVERIFY(!config.localPathForRemoteUrl(QUrl(QStringLiteral(
++      "sftp://kate@files.example.org:22/srv/project2/file.cpp"))));
++  QVERIFY(!config.localPathForRemoteUrl(QUrl(QStringLiteral(
++      "sftp://kate@files.example.org:22/srv/project/%2e%2e/secret"))));
++  QVERIFY(!config.localPathForRemoteUrl(QUrl(QStringLiteral(
++      "sftp://other@files.example.org:22/srv/project/file.cpp"))));
++}
++
++void DeploymentConfigTest::symlinkEscape() {
++  QTemporaryDir project;
++  QTemporaryDir outside;
++  QVERIFY(project.isValid());
++  QVERIFY(outside.isValid());
++  QVERIFY(QDir(project.path()).mkdir(QStringLiteral("src")));
++  const QString link = project.filePath(QStringLiteral("src/link"));
++  if (!QFile::link(outside.path(), link)) {
++    QSKIP("Creating directory symlinks is not supported");
++  }
++  const QFileInfo linkInfo(link);
++  if (!linkInfo.isSymLink() || !linkInfo.isDir()) {
++    QSKIP("QFile::link did not create a directory symlink");
++  }
++
++  const auto config = configFor(project.path());
++  QVERIFY(config.valid);
++  QVERIFY(!config.remoteUrlForLocalPath(link + QStringLiteral("/file.cpp")));
++  QVERIFY(!config.localPathForRemoteUrl(QUrl(QStringLiteral(
++      "sftp://kate@files.example.org:22/srv/project/link/file.cpp"))));
++}
++
++void DeploymentConfigTest::excludes() {
++  QTemporaryDir project;
++  QVERIFY(project.isValid());
++  QVERIFY(QDir(project.path()).mkpath(QStringLiteral("src/lib/build/deep")));
++  QVERIFY(QDir(project.path()).mkpath(QStringLiteral("src/generated/api")));
++  const auto config =
++      configFor(project.path(),
++                {{QStringLiteral("exclude"),
++                  QStringList{QStringLiteral("*.o"), QStringLiteral("build"),
++                              QStringLiteral("generated/api")}}});
++  QVERIFY(config.valid);
++
++  QVERIFY(
++      config.isExcluded(project.filePath(QStringLiteral("src/lib/object.o"))));
++  QVERIFY(config.isExcluded(
++      project.filePath(QStringLiteral("src/lib/build/deep/file.cpp"))));
++  QVERIFY(config.isExcluded(
++      project.filePath(QStringLiteral("src/generated/api/file.cpp"))));
++  QVERIFY(!config.isExcluded(
++      project.filePath(QStringLiteral("src/generated/other.cpp"))));
++  QVERIFY(!config.isExcluded(
++      project.filePath(QStringLiteral("src/lib/object.cpp"))));
++  QVERIFY(!config.isExcluded(project.filePath(QStringLiteral("outside.o"))));
++}
++
++QTEST_GUILESS_MAIN(DeploymentConfigTest)
++
++#include "deploymentconfigtest.moc"
+diff --git a/addons/deployment/autotests/deploymenttransfertest.cpp b/addons/deployment/autotests/deploymenttransfertest.cpp
+new file mode 100644
+index 000000000..6dda7dafe
+--- /dev/null
++++ b/addons/deployment/autotests/deploymenttransfertest.cpp
+@@ -0,0 +1,68 @@
++/*
++    SPDX-FileCopyrightText: 2026 The Kate Developers
++
++    SPDX-License-Identifier: LGPL-2.0-or-later
++*/
++
++#include <KIO/FileCopyJob>
++#include <KIO/MkpathJob>
++#include <KIO/SimpleJob>
++
++#include <QDir>
++#include <QEventLoop>
++#include <QFile>
++#include <QTemporaryDir>
++#include <QTest>
++
++class DeploymentTransferTest : public QObject
++{
++    Q_OBJECT
++
++private Q_SLOTS:
++    void uploadThroughTemporaryFile();
++};
++
++static bool waitForJob(KJob *job)
++{
++    QEventLoop loop;
++    QObject::connect(job, &KJob::result, &loop, &QEventLoop::quit);
++    loop.exec();
++    return job->error() == KJob::NoError;
++}
++
++void DeploymentTransferTest::uploadThroughTemporaryFile()
++{
++    QTemporaryDir sourceDir;
++    QTemporaryDir destinationDir;
++    QVERIFY(sourceDir.isValid());
++    QVERIFY(destinationDir.isValid());
++
++    const QString sourcePath = sourceDir.filePath(QStringLiteral("source.txt"));
++    QFile source(sourcePath);
++    QVERIFY(source.open(QFile::WriteOnly));
++    QCOMPARE(source.write("deployed content"), 16);
++    source.close();
++
++    const QUrl parentUrl = QUrl::fromLocalFile(destinationDir.filePath(QStringLiteral("missing/nested")));
++#ifdef Q_OS_WIN
++    // KIO::mkpath cannot construct local paths with drive letters on Windows.
++    QVERIFY(QDir().mkpath(parentUrl.toLocalFile()));
++#else
++    const QUrl destinationRoot = QUrl::fromLocalFile(destinationDir.path());
++    QVERIFY(waitForJob(KIO::mkpath(parentUrl, destinationRoot, KIO::HideProgressInfo)));
++#endif
++
++    const QUrl temporaryUrl = QUrl::fromLocalFile(destinationDir.filePath(QStringLiteral("missing/nested/.target.txt.kate-upload")));
++    const QUrl finalUrl = QUrl::fromLocalFile(destinationDir.filePath(QStringLiteral("missing/nested/target.txt")));
++    QVERIFY(waitForJob(KIO::file_copy(QUrl::fromLocalFile(sourcePath), temporaryUrl, -1, KIO::Overwrite | KIO::HideProgressInfo)));
++    QVERIFY(waitForJob(KIO::rename(temporaryUrl, finalUrl, KIO::Overwrite | KIO::HideProgressInfo)));
++
++    QFile deployed(finalUrl.toLocalFile());
++    QVERIFY(deployed.open(QFile::ReadOnly));
++    QCOMPARE(deployed.readAll(), QByteArray("deployed content"));
++    QVERIFY(!QFile::exists(temporaryUrl.toLocalFile()));
++}
++
++QTEST_GUILESS_MAIN(DeploymentTransferTest)
++
++#include "deploymenttransfertest.moc"
+diff --git a/addons/deployment/deploymentconfig.cpp b/addons/deployment/deploymentconfig.cpp
+new file mode 100644
+index 000000000..6030bd76f
+--- /dev/null
++++ b/addons/deployment/deploymentconfig.cpp
+@@ -0,0 +1,306 @@
++/*
++    SPDX-FileCopyrightText: 2026 The Kate Developers
++
++    SPDX-License-Identifier: LGPL-2.0-or-later
++*/
++
++#include "deploymentconfig.h"
++
++#include <QDir>
++#include <QFileInfo>
++#include <QMetaType>
++#include <QRegularExpression>
++
++namespace {
++QString slashPath(QString path) { return QDir::fromNativeSeparators(path); }
++
++bool hasTraversal(const QString &path) {
++  const QStringList parts = slashPath(path).split(u'/', Qt::SkipEmptyParts);
++  return parts.contains(QLatin1String(".."));
++}
++
++bool isWithin(const QString &path, const QString &root) {
++  if (path == root) {
++    return true;
++  }
++  const QString prefix = root.endsWith(u'/') ? root : root + u'/';
++  return path.startsWith(prefix);
++}
++
++std::optional<QString> resolvedLocalPath(const QString &path) {
++  QString absolute = slashPath(path);
++  if (!QDir::isAbsolutePath(absolute) || hasTraversal(absolute)) {
++    return std::nullopt;
++  }
++  absolute = QDir::cleanPath(absolute);
++
++  QFileInfo info(absolute);
++  if (info.exists() || info.isSymLink()) {
++    const QString canonical = slashPath(info.canonicalFilePath());
++    return canonical.isEmpty() ? std::nullopt
++                               : std::optional<QString>(canonical);
++  }
++
++  QStringList suffix;
++  QString ancestor = absolute;
++  while (!QFileInfo::exists(ancestor)) {
++    const QFileInfo ancestorInfo(ancestor);
++    const QString name = ancestorInfo.fileName();
++    const QString parent = slashPath(ancestorInfo.dir().absolutePath());
++    if (name.isEmpty() || parent == ancestor) {
++      return std::nullopt;
++    }
++    suffix.prepend(name);
++    ancestor = parent;
++  }
++
++  const QString canonicalAncestor =
++      slashPath(QFileInfo(ancestor).canonicalFilePath());
++  if (canonicalAncestor.isEmpty()) {
++    return std::nullopt;
++  }
++  return QDir::cleanPath(canonicalAncestor + u'/' + suffix.join(u'/'));
++}
++
++QString relativeTo(const QString &path, const QString &root) {
++  if (path == root) {
++    return QString();
++  }
++  const int offset = root.endsWith(u'/') ? root.size() : root.size() + 1;
++  return path.sliced(offset);
++}
++
++bool validRemotePath(const QString &path) {
++  return path.startsWith(u'/') && !hasTraversal(path);
++}
++
++std::optional<QString> decodedUrlPath(const QUrl &url) {
++  const QString encodedPath = url.path(QUrl::FullyEncoded);
++  QStringList decodedParts;
++  const QStringList parts = encodedPath.split(u'/', Qt::KeepEmptyParts);
++  for (const QString &part : parts) {
++    const QString decoded = QUrl::fromPercentEncoding(part.toUtf8());
++    if (decoded == QLatin1String(".") || decoded == QLatin1String("..") ||
++        decoded.contains(u'/') || decoded.contains(u'\\')) {
++      return std::nullopt;
++    }
++    decodedParts.push_back(decoded);
++  }
++  const QString path = decodedParts.join(u'/');
++  return validRemotePath(path) ? std::optional<QString>(QDir::cleanPath(path))
++                               : std::nullopt;
++}
++} // namespace
++
++Deployment::Config
++Deployment::Config::fromProjectMap(const QVariantMap &projectMap,
++                                   const QString &projectBase) {
++  Config config;
++  if (!projectMap.contains(QStringLiteral("deployment"))) {
++    config.valid = true;
++    return config;
++  }
++
++  config.enabled = true;
++  const QVariant deploymentValue =
++      projectMap.value(QStringLiteral("deployment"));
++  if (deploymentValue.metaType().id() != QMetaType::QVariantMap) {
++    config.error = QStringLiteral("deployment must be an object");
++    return config;
++  }
++  const QVariantMap values = deploymentValue.toMap();
++  config.host = values.value(QStringLiteral("host")).toString().trimmed();
++  config.user = values.value(QStringLiteral("user")).toString();
++  config.remoteRoot =
++      slashPath(values.value(QStringLiteral("remoteRoot")).toString());
++
++  auto fail = [&config](const QString &message) {
++    config.error = message;
++    return config;
++  };
++
++  if (config.host.isEmpty()) {
++    return fail(QStringLiteral("deployment host must not be empty"));
++  }
++  if (config.host.contains(u'/') || config.host.contains(u'@') ||
++      config.host.contains(QRegularExpression(QStringLiteral("\\s")))) {
++    return fail(QStringLiteral("deployment host is invalid"));
++  }
++  if (config.host.startsWith(u'[') && config.host.endsWith(u']')) {
++    if (!config.host.contains(u':')) {
++      return fail(QStringLiteral("deployment host is invalid"));
++    }
++    config.host = config.host.sliced(1, config.host.size() - 2);
++  }
++
++  if (values.contains(QStringLiteral("port"))) {
++    bool ok = false;
++    const int parsedPort = values.value(QStringLiteral("port")).toInt(&ok);
++    if (!ok || parsedPort < 1 || parsedPort > 65535) {
++      return fail(
++          QStringLiteral("deployment port must be between 1 and 65535"));
++    }
++    config.port = parsedPort;
++  }
++
++  if (projectBase.trimmed().isEmpty()) {
++    return fail(QStringLiteral("project base must not be empty"));
++  }
++  const QFileInfo projectInfo(projectBase);
++  const QString canonicalProjectBase =
++      slashPath(projectInfo.canonicalFilePath());
++  if (!projectInfo.isDir() || canonicalProjectBase.isEmpty()) {
++    return fail(QStringLiteral("project base must be an existing directory"));
++  }
++
++  QString configuredLocalRoot =
++      values.value(QStringLiteral("localRoot")).toString();
++  if (configuredLocalRoot.isEmpty()) {
++    configuredLocalRoot = canonicalProjectBase;
++  } else if (hasTraversal(configuredLocalRoot)) {
++    return fail(
++        QStringLiteral("deployment localRoot must not contain traversal"));
++  } else if (QDir::isRelativePath(configuredLocalRoot)) {
++    configuredLocalRoot = canonicalProjectBase + u'/' + configuredLocalRoot;
++  }
++  const QFileInfo localInfo(configuredLocalRoot);
++  config.localRoot = slashPath(localInfo.canonicalFilePath());
++  if (!localInfo.isDir() || config.localRoot.isEmpty() ||
++      !isWithin(config.localRoot, canonicalProjectBase)) {
++    return fail(QStringLiteral("deployment localRoot must be an existing "
++                               "directory inside the project base"));
++  }
++
++  if (!validRemotePath(config.remoteRoot)) {
++    return fail(QStringLiteral(
++        "deployment remoteRoot must be an absolute path without traversal"));
++  }
++  config.remoteRoot = QDir::cleanPath(config.remoteRoot);
++
++  const QVariant excludeValue = values.value(QStringLiteral("exclude"));
++  if (excludeValue.isValid()) {
++    if (excludeValue.metaType().id() == QMetaType::QStringList) {
++      config.excludePatterns = excludeValue.toStringList();
++    } else if (excludeValue.metaType().id() == QMetaType::QVariantList) {
++      for (const QVariant &pattern : excludeValue.toList()) {
++        if (pattern.metaType().id() != QMetaType::QString) {
++          return fail(
++              QStringLiteral("deployment exclude entries must be strings"));
++        }
++        config.excludePatterns.push_back(pattern.toString());
++      }
++    } else {
++      return fail(
++          QStringLiteral("deployment exclude must be a list of strings"));
++    }
++  }
++
++  const QUrl baseUrl = config.remoteBaseUrl();
++  if (!baseUrl.isValid() || baseUrl.host().isEmpty()) {
++    return fail(QStringLiteral("deployment host is invalid"));
++  }
++  config.host = baseUrl.host();
++
++  config.valid = true;
++  return config;
++}
++
++QUrl Deployment::Config::remoteBaseUrl() const {
++  QUrl url;
++  url.setScheme(QStringLiteral("sftp"));
++  url.setHost(host);
++  url.setPort(port);
++  url.setUserName(user);
++  url.setPath(remoteRoot);
++  return url;
++}
++
++std::optional<QUrl>
++Deployment::Config::remoteUrlForLocalPath(const QString &localPath) const {
++  if (!enabled || !valid) {
++    return std::nullopt;
++  }
++  const auto resolved = resolvedLocalPath(localPath);
++  if (!resolved || !isWithin(*resolved, localRoot)) {
++    return std::nullopt;
++  }
++
++  QUrl url = remoteBaseUrl();
++  const QString relative = relativeTo(*resolved, localRoot);
++  QString remotePath = remoteRoot;
++  if (!relative.isEmpty()) {
++    if (remoteRoot != QLatin1String("/")) {
++      remotePath += u'/';
++    }
++    remotePath += relative;
++  }
++  url.setPath(remotePath);
++  return url.isValid() ? std::optional<QUrl>(url) : std::nullopt;
++}
++
++std::optional<QString>
++Deployment::Config::localPathForRemoteUrl(const QUrl &url) const {
++  if (!enabled || !valid || !url.isValid() ||
++      url.scheme().compare(QLatin1String("sftp"), Qt::CaseInsensitive) != 0 ||
++      url.host().compare(host, Qt::CaseInsensitive) != 0 ||
++      url.port(22) != port || url.userName() != user ||
++      !url.password().isEmpty() || url.hasQuery() || url.hasFragment()) {
++    return std::nullopt;
++  }
++  const auto remotePath = decodedUrlPath(url);
++  if (!remotePath || !isWithin(*remotePath, remoteRoot)) {
++    return std::nullopt;
++  }
++
++  const QString relative = relativeTo(*remotePath, remoteRoot);
++  const QString candidate =
++      relative.isEmpty() ? localRoot : localRoot + u'/' + relative;
++  const auto resolved = resolvedLocalPath(candidate);
++  if (!resolved || !isWithin(*resolved, localRoot)) {
++    return std::nullopt;
++  }
++  return *resolved;
++}
++
++bool Deployment::Config::isExcluded(const QString &localPath) const {
++  if (!enabled || !valid) {
++    return false;
++  }
++  const auto resolved = resolvedLocalPath(localPath);
++  if (!resolved || !isWithin(*resolved, localRoot)) {
++    return false;
++  }
++  const QString relative = relativeTo(*resolved, localRoot);
++  if (relative.isEmpty()) {
++    return false;
++  }
++  const QStringList components = relative.split(u'/', Qt::SkipEmptyParts);
++  for (QString pattern : excludePatterns) {
++    pattern = slashPath(pattern.trimmed());
++    if (pattern.isEmpty() || hasTraversal(pattern) ||
++        pattern.startsWith(u'/')) {
++      continue;
++    }
++    const QRegularExpression expression(
++        QRegularExpression::wildcardToRegularExpression(pattern));
++    if (!expression.isValid()) {
++      continue;
++    }
++    if (!pattern.contains(u'/')) {
++      for (const QString &component : components) {
++        if (expression.match(component).hasMatch()) {
++          return true;
++        }
++      }
++    } else {
++      QString prefix;
++      for (const QString &component : components) {
++        prefix += prefix.isEmpty() ? component : u'/' + component;
++        if (expression.match(prefix).hasMatch()) {
++          return true;
++        }
++      }
++    }
++  }
++  return false;
++}
+diff --git a/addons/deployment/deploymentconfig.h b/addons/deployment/deploymentconfig.h
+new file mode 100644
+index 000000000..5813cc448
+--- /dev/null
++++ b/addons/deployment/deploymentconfig.h
+@@ -0,0 +1,36 @@
++/*
++    SPDX-FileCopyrightText: 2026 The Kate Developers
++
++    SPDX-License-Identifier: LGPL-2.0-or-later
++*/
++
++#pragma once
++
++#include <QString>
++#include <QStringList>
++#include <QUrl>
++#include <QVariantMap>
++
++#include <optional>
++
++namespace Deployment {
++struct Config {
++  QString host;
++  int port = 22;
++  QString user;
++  QString localRoot;
++  QString remoteRoot;
++  QStringList excludePatterns;
++  bool enabled = false;
++  bool valid = false;
++  QString error;
++
++  static Config fromProjectMap(const QVariantMap &projectMap,
++                               const QString &projectBase);
++
++  QUrl remoteBaseUrl() const;
++  std::optional<QUrl> remoteUrlForLocalPath(const QString &localPath) const;
++  std::optional<QString> localPathForRemoteUrl(const QUrl &url) const;
++  bool isExcluded(const QString &localPath) const;
++};
++} // namespace Deployment
+diff --git a/addons/deployment/deploymentplugin.cpp b/addons/deployment/deploymentplugin.cpp
+new file mode 100644
+index 000000000..667c6be79
+--- /dev/null
++++ b/addons/deployment/deploymentplugin.cpp
+@@ -0,0 +1,952 @@
++/*
++    SPDX-FileCopyrightText: 2026 The Kate Developers
++
++    SPDX-License-Identifier: LGPL-2.0-or-later
++*/
++
++#include "deploymentplugin.h"
++
++#include "ktexteditor_utils.h"
++
++#include <KActionCollection>
++#include <KDirOperator>
++#include <KDirLister>
++#include <KFileItem>
++#include <KIO/DeleteJob>
++#include <KIO/FileCopyJob>
++#include <KIO/JobUiDelegateFactory>
++#include <KIO/ListJob>
++#include <KIO/MkpathJob>
++#include <KIO/SimpleJob>
++#include <KJobUiDelegate>
++#include <KJobWidgets>
++#include <KLocalizedString>
++#include <KMessageBox>
++#include <KPluginFactory>
++#include <KProtocolInfo>
++#include <KProtocolManager>
++#include <KTextEditor/Application>
++#include <KTextEditor/Document>
++#include <KTextEditor/Editor>
++#include <KTextEditor/MainWindow>
++#include <KTextEditor/View>
++#include <KUrlNavigator>
++#include <KXMLGUIFactory>
++
++#include <QAction>
++#include <QClipboard>
++#include <QDateTime>
++#include <QDialog>
++#include <QDialogButtonBox>
++#include <QDir>
++#include <QDirIterator>
++#include <QFile>
++#include <QFileInfo>
++#include <QFormLayout>
++#include <QGuiApplication>
++#include <QHBoxLayout>
++#include <QJsonDocument>
++#include <QJsonObject>
++#include <QLabel>
++#include <QLineEdit>
++#include <QMenu>
++#include <QPlainTextEdit>
++#include <QPushButton>
++#include <QSaveFile>
++#include <QSet>
++#include <QSignalBlocker>
++#include <QSizePolicy>
++#include <QSpinBox>
++#include <QToolBar>
++#include <QUuid>
++#include <QVBoxLayout>
++
++#include <algorithm>
++
++K_PLUGIN_FACTORY_WITH_JSON(DeploymentPluginFactory, "plugin.json",
++                           registerPlugin<DeploymentPlugin>();)
++
++namespace {
++struct ConfigFields {
++  QString host;
++  int port = 22;
++  QString user;
++  QString localRoot = QStringLiteral(".");
++  QString remoteRoot;
++  QStringList exclude;
++};
++
++ConfigFields fieldsFromMap(const QVariantMap &projectMap) {
++  const QVariantMap deployment =
++      projectMap.value(QStringLiteral("deployment")).toMap();
++  ConfigFields fields;
++  fields.host = deployment.value(QStringLiteral("host")).toString();
++  fields.port = deployment.value(QStringLiteral("port"), 22).toInt();
++  fields.user = deployment.value(QStringLiteral("user")).toString();
++  fields.localRoot =
++      deployment.value(QStringLiteral("localRoot"), QStringLiteral("."))
++          .toString();
++  fields.remoteRoot = deployment.value(QStringLiteral("remoteRoot")).toString();
++  const QVariant exclude = deployment.value(QStringLiteral("exclude"));
++  if (exclude.metaType().id() == QMetaType::QStringList) {
++    fields.exclude = exclude.toStringList();
++  } else {
++    for (const QVariant &pattern : exclude.toList()) {
++      fields.exclude.push_back(pattern.toString());
++    }
++  }
++  return fields;
++}
++
++QVariantMap deploymentMap(const ConfigFields &fields) {
++  return {
++      {QStringLiteral("host"), fields.host.trimmed()},
++      {QStringLiteral("port"), fields.port},
++      {QStringLiteral("user"), fields.user},
++      {QStringLiteral("localRoot"), fields.localRoot.trimmed()},
++      {QStringLiteral("remoteRoot"), fields.remoteRoot.trimmed()},
++      {QStringLiteral("exclude"), fields.exclude},
++  };
++}
++
++bool editConfig(QWidget *parent, const QString &projectBase,
++                const QVariantMap &projectMap, ConfigFields &fields) {
++  QDialog dialog(parent);
++  dialog.setWindowTitle(i18nc("@title:window", "Configure Deployment"));
++  dialog.resize(520, 360);
++
++  auto *layout = new QVBoxLayout(&dialog);
++  auto *intro = new QLabel(
++      i18n("Configure the SFTP destination for <filename>%1</filename>. "
++           "Authentication is handled by KIO.",
++           projectBase),
++      &dialog);
++  intro->setWordWrap(true);
++  layout->addWidget(intro);
++
++  auto *form = new QFormLayout;
++  auto *host = new QLineEdit(fields.host, &dialog);
++  auto *port = new QSpinBox(&dialog);
++  port->setRange(1, 65535);
++  port->setValue(fields.port);
++  auto *user = new QLineEdit(fields.user, &dialog);
++  auto *localRoot = new QLineEdit(fields.localRoot, &dialog);
++  auto *remoteRoot = new QLineEdit(fields.remoteRoot, &dialog);
++  auto *exclude = new QPlainTextEdit(&dialog);
++  exclude->setPlainText(fields.exclude.join(u'\n'));
++  exclude->setPlaceholderText(i18n("One project-relative glob per line"));
++
++  form->addRow(i18nc("@label:textbox", "Host:"), host);
++  form->addRow(i18nc("@label:spinbox", "Port:"), port);
++  form->addRow(i18nc("@label:textbox", "User:"), user);
++  form->addRow(i18nc("@label:textbox", "Local root:"), localRoot);
++  form->addRow(i18nc("@label:textbox", "Remote root:"), remoteRoot);
++  form->addRow(i18nc("@label:textbox", "Exclude:"), exclude);
++  layout->addLayout(form);
++
++  auto *buttons = new QDialogButtonBox(
++      QDialogButtonBox::Save | QDialogButtonBox::Cancel, &dialog);
++  QObject::connect(buttons, &QDialogButtonBox::accepted, &dialog,
++                   &QDialog::accept);
++  QObject::connect(buttons, &QDialogButtonBox::rejected, &dialog,
++                   &QDialog::reject);
++  layout->addWidget(buttons);
++
++  while (dialog.exec() == QDialog::Accepted) {
++    ConfigFields candidate;
++    candidate.host = host->text();
++    candidate.port = port->value();
++    candidate.user = user->text();
++    candidate.localRoot = localRoot->text();
++    candidate.remoteRoot = remoteRoot->text();
++    candidate.exclude = exclude->toPlainText().split(u'\n', Qt::SkipEmptyParts);
++    for (QString &pattern : candidate.exclude) {
++      pattern = pattern.trimmed();
++    }
++
++    QVariantMap candidateProject = projectMap;
++    candidateProject.insert(QStringLiteral("deployment"),
++                            deploymentMap(candidate));
++    const auto config =
++        Deployment::Config::fromProjectMap(candidateProject, projectBase);
++    if (config.valid && config.enabled) {
++      fields = std::move(candidate);
++      return true;
++    }
++    KMessageBox::error(
++        &dialog, config.error,
++        i18nc("@title:window", "Invalid Deployment Configuration"));
++  }
++  return false;
++}
++
++QString displayUrl(const QUrl &url) {
++  return url.toDisplayString(QUrl::RemovePassword);
++}
++
++bool sameRemoteFile(const QUrl &left, const QUrl &right) {
++  return left.scheme().compare(right.scheme(), Qt::CaseInsensitive) == 0 &&
++         left.host().compare(right.host(), Qt::CaseInsensitive) == 0 &&
++         left.port(22) == right.port(22) && left.userName() == right.userName() &&
++         QDir::cleanPath(left.path()) == QDir::cleanPath(right.path());
++}
++
++bool hasOpenRemoteDocument(const QUrl &url) {
++  const auto documents =
++      KTextEditor::Editor::instance()->application()->documents();
++  return std::any_of(documents.cbegin(), documents.cend(), [&url](const auto *doc) {
++    return !doc->url().isLocalFile() && sameRemoteFile(doc->url(), url);
++  });
++}
++} // namespace
++
++DeploymentPlugin::DeploymentPlugin(QObject *parent)
++    : KTextEditor::Plugin(parent) {}
++
++QObject *DeploymentPlugin::createView(KTextEditor::MainWindow *mainWindow) {
++  return new DeploymentView(this, mainWindow);
++}
++
++DeploymentView::DeploymentView(DeploymentPlugin *plugin,
++                               KTextEditor::MainWindow *mainWindow)
++    : QObject(mainWindow), m_plugin(plugin), m_mainWindow(mainWindow) {
++  setComponentName(QStringLiteral("katedeployment"), i18n("Deployment"));
++  setXMLFile(QStringLiteral("ui.rc"));
++
++  m_uploadCurrentAction =
++      actionCollection()->addAction(QStringLiteral("deployment_upload_current"),
++                                    this, &DeploymentView::uploadCurrentFile);
++  m_uploadCurrentAction->setText(i18nc("@action", "Upload Current File"));
++  m_uploadCurrentAction->setIcon(
++      QIcon::fromTheme(QStringLiteral("document-send")));
++  KActionCollection::setDefaultShortcut(
++      m_uploadCurrentAction, QKeySequence(QStringLiteral("Ctrl+Alt+S"),
++                                          QKeySequence::PortableText));
++
++  m_uploadProjectAction =
++      actionCollection()->addAction(QStringLiteral("deployment_upload_project"),
++                                    this, &DeploymentView::uploadProject);
++  m_uploadProjectAction->setText(i18nc("@action", "Upload Project"));
++  m_uploadProjectAction->setIcon(
++      QIcon::fromTheme(QStringLiteral("folder-upload")));
++
++  m_cancelAction =
++      actionCollection()->addAction(QStringLiteral("deployment_cancel"), this,
++                                    &DeploymentView::cancelTransfers);
++  m_cancelAction->setText(i18nc("@action", "Cancel Deployment Transfers"));
++  m_cancelAction->setIcon(QIcon::fromTheme(QStringLiteral("process-stop")));
++
++  m_configureAction = actionCollection()->addAction(
++      QStringLiteral("deployment_configure"), this, &DeploymentView::configure);
++  m_configureAction->setText(i18nc("@action", "Configure Deployment..."));
++  m_configureAction->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
++
++  auto *browseRemoteAction = actionCollection()->addAction(
++      QStringLiteral("deployment_browse_remote"));
++  browseRemoteAction->setText(i18nc("@action", "Browse Remote Host"));
++  browseRemoteAction->setIcon(
++      QIcon::fromTheme(QStringLiteral("folder-remote")));
++
++  m_remoteToolView = mainWindow->createToolView(
++      plugin, QStringLiteral("katedeploymentremotehost"),
++      KTextEditor::MainWindow::Left,
++      QIcon::fromTheme(QStringLiteral("folder-remote")), i18n("Remote Host"));
++  auto *remoteContainer = new QWidget(m_remoteToolView);
++  m_remoteToolView->layout()->addWidget(remoteContainer);
++  auto *remoteLayout = new QVBoxLayout(remoteContainer);
++  remoteLayout->setContentsMargins(0, 0, 0, 0);
++  remoteLayout->setSpacing(0);
++  auto *remoteToolbar = new QToolBar(m_remoteToolView);
++  remoteToolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
++  remoteLayout->addWidget(remoteToolbar);
++  m_remoteNavigator = new KUrlNavigator(nullptr, QUrl(), m_remoteToolView);
++  m_remoteNavigator->setSupportedSchemes({QStringLiteral("sftp")});
++  remoteLayout->addWidget(m_remoteNavigator);
++  m_remoteOperator = new KDirOperator(QUrl(), m_remoteToolView);
++  m_remoteOperator->dirLister()->setMainWindow(m_mainWindow->window());
++  m_remoteOperator->setSupportedSchemes({QStringLiteral("sftp")});
++  m_remoteOperator->setViewMode(KFile::Tree);
++  m_remoteOperator->setSizePolicy(QSizePolicy::Expanding,
++                                  QSizePolicy::Expanding);
++  m_remoteStatus = new QLabel(m_remoteToolView);
++  m_remoteStatus->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
++  m_remoteStatus->setMargin(6);
++  remoteLayout->addWidget(m_remoteStatus);
++  remoteLayout->addWidget(m_remoteOperator, 1);
++
++  auto *homeAction =
++      remoteToolbar->addAction(QIcon::fromTheme(QStringLiteral("go-home")),
++                               i18nc("@action", "Deployment Root"));
++  connect(homeAction, &QAction::triggered, this,
++          [this] { navigateRemote(m_config.remoteBaseUrl()); });
++  remoteToolbar->addAction(m_remoteOperator->action(KDirOperator::Back));
++  remoteToolbar->addAction(m_remoteOperator->action(KDirOperator::Forward));
++  remoteToolbar->addAction(m_remoteOperator->action(KDirOperator::Up));
++  remoteToolbar->addAction(m_remoteOperator->action(KDirOperator::Reload));
++  remoteToolbar->addAction(
++      m_remoteOperator->action(KDirOperator::ShowHiddenFiles));
++
++  m_transferToolView = mainWindow->createToolView(
++      plugin, QStringLiteral("katedeploymenttransfers"),
++      KTextEditor::MainWindow::Bottom,
++      QIcon::fromTheme(QStringLiteral("document-send")), i18n("File Transfer"));
++  auto *transferContainer = new QWidget(m_transferToolView);
++  m_transferToolView->layout()->addWidget(transferContainer);
++  auto *transferLayout = new QVBoxLayout(transferContainer);
++  transferLayout->setContentsMargins(0, 0, 0, 0);
++  auto *transferButtons = new QHBoxLayout;
++  auto *cancelButton =
++      new QPushButton(QIcon::fromTheme(QStringLiteral("process-stop")),
++                      i18nc("@action:button", "Cancel"), m_transferToolView);
++  auto *clearButton =
++      new QPushButton(QIcon::fromTheme(QStringLiteral("edit-clear-all")),
++                      i18nc("@action:button", "Clear"), m_transferToolView);
++  transferButtons->addWidget(cancelButton);
++  transferButtons->addWidget(clearButton);
++  transferButtons->addStretch();
++  transferLayout->addLayout(transferButtons);
++  m_transferLog = new QPlainTextEdit(m_transferToolView);
++  m_transferLog->setReadOnly(true);
++  transferLayout->addWidget(m_transferLog);
++  connect(cancelButton, &QPushButton::clicked, this,
++          &DeploymentView::cancelTransfers);
++  connect(clearButton, &QPushButton::clicked, m_transferLog,
++          &QPlainTextEdit::clear);
++  connect(browseRemoteAction, &QAction::triggered, this,
++          [this] {
++            m_mainWindow->showToolView(m_remoteToolView);
++            if (m_config.enabled && m_config.valid) {
++              navigateRemote(m_config.remoteBaseUrl());
++              m_remoteOperator->rereadDir();
++            }
++          });
++
++  connect(mainWindow, &KTextEditor::MainWindow::viewChanged, this,
++          &DeploymentView::updateContext);
++  connect(mainWindow, &KTextEditor::MainWindow::pluginViewCreated, this,
++          [this](const QString &name, QObject *projectView) {
++            if (name == QLatin1String("kateprojectplugin")) {
++              connect(projectView, SIGNAL(projectMapChanged()), this,
++                      SLOT(updateContext()), Qt::UniqueConnection);
++              connect(projectView, SIGNAL(projectMapEdited()), this,
++                      SLOT(updateContext()), Qt::UniqueConnection);
++              connect(projectView, SIGNAL(projectFilesChanged()), this,
++                      SLOT(updateContext()), Qt::UniqueConnection);
++              connect(projectView,
++                      SIGNAL(projectTreeContextMenuAboutToShow(
++                          QMenu *, QString, QString, int)),
++                      this,
++                      SLOT(projectTreeContextMenuAboutToShow(
++                          QMenu *, QString, QString, int)),
++                      Qt::UniqueConnection);
++              updateContext();
++            }
++          });
++  connect(m_remoteNavigator, &KUrlNavigator::urlChanged, this,
++          &DeploymentView::navigateRemote);
++  connect(m_remoteOperator, &KDirOperator::urlEntered, this,
++          &DeploymentView::navigateRemote);
++  connect(m_remoteOperator, &KDirOperator::fileSelected, this,
++          [this](const KFileItem &item) {
++            if (!item.isDir() && isRemoteUrlAllowed(item.url())) {
++              m_mainWindow->openUrl(item.url());
++            }
++          });
++  connect(m_remoteOperator, &KDirOperator::contextMenuAboutToShow, this,
++          &DeploymentView::remoteContextMenu);
++  connect(m_remoteOperator->dirLister(), &KCoreDirLister::started, this,
++          [this](const QUrl &url) {
++            const QString message =
++                i18n("Loading %1...", displayUrl(url));
++            setRemoteStatus(message);
++            appendLog(message);
++          });
++  connect(m_remoteOperator->dirLister(),
++          &KCoreDirLister::listingDirCompleted, this,
++          [this](const QUrl &url) {
++            setRemoteStatus(i18n("Connected to %1", displayUrl(url)));
++          });
++  connect(m_remoteOperator->dirLister(), &KCoreDirLister::jobError, this,
++          [this](KIO::Job *job) {
++            QUrl failedUrl;
++            if (auto *listJob = qobject_cast<KIO::ListJob *>(job)) {
++              failedUrl = listJob->url();
++            }
++            const QString message = i18n(
++                "Failed to list %1 (KIO error %2): %3",
++                failedUrl.isEmpty() ? displayUrl(m_remoteOperator->url())
++                                    : displayUrl(failedUrl),
++                job->error(), job->errorString());
++            setRemoteStatus(message, true);
++            appendLog(message);
++            m_mainWindow->showToolView(m_transferToolView);
++          });
++
++  if (QObject *projectView =
++          m_mainWindow->pluginView(QStringLiteral("kateprojectplugin"))) {
++    connect(projectView, SIGNAL(projectMapChanged()), this,
++            SLOT(updateContext()), Qt::UniqueConnection);
++    connect(projectView, SIGNAL(projectMapEdited()), this,
++            SLOT(updateContext()), Qt::UniqueConnection);
++    connect(projectView, SIGNAL(projectFilesChanged()), this,
++            SLOT(updateContext()), Qt::UniqueConnection);
++    connect(projectView,
++            SIGNAL(projectTreeContextMenuAboutToShow(QMenu *, QString, QString,
++                                                     int)),
++            this,
++            SLOT(projectTreeContextMenuAboutToShow(QMenu *, QString, QString,
++                                                   int)),
++            Qt::UniqueConnection);
++  }
++
++  m_mainWindow->guiFactory()->addClient(this);
++  updateContext();
++}
++
++DeploymentView::~DeploymentView() {
++  m_cancelled = true;
++  m_pendingFiles.clear();
++  if (!m_activeJob || m_activeJob->kill(KJob::Quietly)) {
++    cleanupTemporaryFile();
++  }
++  m_mainWindow->guiFactory()->removeClient(this);
++  delete m_remoteToolView;
++  delete m_transferToolView;
++}
++
++DeploymentView::ProjectContext DeploymentView::currentProjectContext() const {
++  ProjectContext context;
++  KTextEditor::View *view = m_mainWindow->activeView();
++  if (view && view->document()->url().isLocalFile()) {
++    context.baseDir = Utils::projectBaseDirForDocument(view->document());
++    context.projectMap = Utils::projectMapForDocument(view->document());
++  }
++
++  if (QObject *projectView =
++          m_mainWindow->pluginView(QStringLiteral("kateprojectplugin"))) {
++    const QString selectedBase =
++        projectView->property("projectBaseDir").toString();
++    if (context.baseDir.isEmpty()) {
++      context.baseDir = selectedBase;
++      context.projectMap = projectView->property("projectMap").toMap();
++    }
++    if (selectedBase == context.baseDir) {
++      context.projectFileName =
++          projectView->property("projectFileName").toString();
++      context.projectLocalConfigFileName =
++          projectView->property("projectLocalConfigFileName").toString();
++      context.files = projectView->property("projectFiles").toStringList();
++    }
++  }
++  return context;
++}
++
++void DeploymentView::updateContext() {
++  applyContext(currentProjectContext());
++}
++
++void DeploymentView::projectTreeContextMenuAboutToShow(
++    QMenu *menu, const QString &path, const QString &projectBaseDir,
++    int itemType) {
++  Q_UNUSED(itemType)
++  const QFileInfo info(path);
++  if (!menu || (!info.isFile() && !info.isDir())) {
++    return;
++  }
++
++  QObject *projectView =
++      m_mainWindow->pluginView(QStringLiteral("kateprojectplugin"));
++  if (!projectView ||
++      projectView->property("projectBaseDir").toString() != projectBaseDir) {
++    return;
++  }
++
++  ProjectContext context;
++  context.baseDir = projectBaseDir;
++  context.projectFileName =
++      projectView->property("projectFileName").toString();
++  context.projectLocalConfigFileName =
++      projectView->property("projectLocalConfigFileName").toString();
++  context.projectMap = projectView->property("projectMap").toMap();
++  context.files = projectView->property("projectFiles").toStringList();
++
++  const auto config =
++      Deployment::Config::fromProjectMap(context.projectMap, context.baseDir);
++  if (!config.enabled || !config.valid || config.isExcluded(path) ||
++      !config.remoteUrlForLocalPath(path)) {
++    return;
++  }
++
++  menu->addSeparator();
++  auto *upload = menu->addAction(
++      QIcon::fromTheme(QStringLiteral("document-send")),
++      info.isDir()
++          ? i18nc("@action:inmenu", "Upload Folder to Remote Host")
++          : i18nc("@action:inmenu", "Upload to Remote Host"));
++  upload->setEnabled(!m_activeJob && m_pendingFiles.isEmpty());
++  connect(upload, &QAction::triggered, this,
++          [this, context = std::move(context), path,
++           isDirectory = info.isDir()]() mutable {
++            applyContext(std::move(context));
++            if (isDirectory) {
++              uploadLocalFolder(path);
++            } else {
++              uploadLocalFile(path);
++            }
++          });
++}
++
++void DeploymentView::applyContext(ProjectContext context) {
++  const bool changed = context.baseDir != m_context.baseDir ||
++                       context.projectMap != m_context.projectMap;
++  m_context = std::move(context);
++  m_config = Deployment::Config::fromProjectMap(m_context.projectMap,
++                                                m_context.baseDir);
++  if (changed) {
++    configureRemoteBrowser();
++  }
++  updateActions();
++}
++
++void DeploymentView::updateActions() {
++  const bool configured = m_config.enabled && m_config.valid;
++  const auto *view = m_mainWindow->activeView();
++  const bool localDocument =
++      view && view->document()->url().isLocalFile() &&
++      m_config.remoteUrlForLocalPath(view->document()->url().toLocalFile())
++          .has_value();
++  m_uploadCurrentAction->setEnabled(configured && localDocument &&
++                                    m_pendingFiles.isEmpty() && !m_activeJob);
++  m_uploadProjectAction->setEnabled(configured && !m_context.files.isEmpty() &&
++                                    m_pendingFiles.isEmpty() && !m_activeJob);
++  m_cancelAction->setEnabled(!m_pendingFiles.isEmpty() || m_activeJob);
++  const bool fileBackedProject = QFileInfo(m_context.projectFileName).isFile();
++  m_configureAction->setEnabled(fileBackedProject && m_pendingFiles.isEmpty() &&
++                                !m_activeJob);
++}
++
++void DeploymentView::configure() {
++  ProjectContext context = currentProjectContext();
++  if (context.baseDir.isEmpty()) {
++    showError(
++        i18n("Open or select a Kate project before configuring deployment."));
++    return;
++  }
++  if (!QFileInfo(context.projectFileName).isFile()) {
++    showError(i18n("Deployment configuration requires a file-backed "
++                   "<filename>.kateproject</filename>."));
++    return;
++  }
++
++  ConfigFields fields = fieldsFromMap(context.projectMap);
++  if (!editConfig(m_remoteToolView, context.baseDir, context.projectMap,
++                  fields)) {
++    return;
++  }
++
++  const QString localFileName = context.projectLocalConfigFileName;
++  QJsonObject root;
++  QFile input(localFileName);
++  if (input.exists()) {
++    if (!input.open(QFile::ReadOnly)) {
++      showError(i18n("Could not read <filename>%1</filename>.", localFileName));
++      return;
++    }
++    QJsonParseError error;
++    const QJsonDocument document =
++        QJsonDocument::fromJson(input.readAll(), &error);
++    if (error.error != QJsonParseError::NoError || !document.isObject()) {
++      showError(
++          i18n("Could not update malformed JSON in <filename>%1</filename>: %2",
++               localFileName, error.errorString()));
++      return;
++    }
++    root = document.object();
++  }
++  root.insert(QStringLiteral("deployment"),
++              QJsonObject::fromVariantMap(deploymentMap(fields)));
++
++  QSaveFile output(localFileName);
++  if (!output.open(QFile::WriteOnly) ||
++      output.write(QJsonDocument(root).toJson(QJsonDocument::Indented)) < 0 ||
++      !output.commit()) {
++    showError(i18n("Could not write <filename>%1</filename>.", localFileName));
++    return;
++  }
++
++  context.projectMap.insert(QStringLiteral("deployment"),
++                            deploymentMap(fields));
++  applyContext(std::move(context));
++  appendLog(i18n("Saved deployment configuration to %1", localFileName));
++
++  if (QObject *projectPlugin =
++          KTextEditor::Editor::instance()->application()->plugin(
++              QStringLiteral("kateprojectplugin"))) {
++    QMetaObject::invokeMethod(projectPlugin, "reloadProjectForBaseDir",
++                              Q_ARG(QString, m_context.baseDir));
++  }
++}
++
++void DeploymentView::uploadCurrentFile() {
++  updateContext();
++  KTextEditor::View *view = m_mainWindow->activeView();
++  if (!view || !view->document()->url().isLocalFile()) {
++    showError(i18n("The current document is not a local file."));
++    return;
++  }
++  uploadLocalFile(view->document()->url().toLocalFile());
++}
++
++void DeploymentView::uploadLocalFile(const QString &path) {
++  uploadLocalFiles({path});
++}
++
++void DeploymentView::uploadLocalFolder(const QString &path) {
++  QStringList files;
++  QDirIterator iterator(path, QDir::Files | QDir::Hidden | QDir::NoDotAndDotDot,
++                        QDirIterator::Subdirectories);
++  while (iterator.hasNext()) {
++    files.push_back(iterator.next());
++  }
++  uploadLocalFiles(files);
++}
++
++void DeploymentView::uploadLocalFiles(const QStringList &paths) {
++  QSet<QString> canonicalPaths;
++  for (const QString &path : paths) {
++    const QString canonicalPath = QFileInfo(path).canonicalFilePath();
++    if (!canonicalPath.isEmpty()) {
++      canonicalPaths.insert(canonicalPath);
++    }
++  }
++
++  const auto documents =
++      KTextEditor::Editor::instance()->application()->documents();
++  for (KTextEditor::Document *document : documents) {
++    if (document->url().isLocalFile() && document->isModified() &&
++        canonicalPaths.contains(
++            QFileInfo(document->url().toLocalFile()).canonicalFilePath()) &&
++        !document->save()) {
++      showError(i18n("The file could not be saved before upload."));
++      return;
++    }
++  }
++  queueFiles(paths);
++}
++
++void DeploymentView::uploadProject() {
++  updateContext();
++  uploadLocalFiles(m_context.files);
++}
++
++void DeploymentView::queueFiles(const QStringList &files) {
++  if (!m_config.enabled || !m_config.valid) {
++    showError(m_config.error.isEmpty()
++                  ? i18n("Deployment is not configured for this project.")
++                  : m_config.error);
++    return;
++  }
++  if (m_activeJob || !m_pendingFiles.isEmpty()) {
++    showError(i18n("A deployment transfer is already running."));
++    return;
++  }
++
++  QQueue<PendingUpload> pendingFiles;
++  for (const QString &path : files) {
++    const QFileInfo info(path);
++    const auto remoteUrl = m_config.remoteUrlForLocalPath(path);
++    if (info.isFile() && !m_config.isExcluded(path) && remoteUrl) {
++      if (hasOpenRemoteDocument(*remoteUrl)) {
++        showError(i18n("Cannot upload %1 because its remote version is open "
++                       "in Kate.",
++                       info.absoluteFilePath()));
++        return;
++      }
++      pendingFiles.enqueue(PendingUpload{info.absoluteFilePath(), *remoteUrl,
++                                         m_config.remoteBaseUrl()});
++    }
++  }
++  m_pendingFiles = std::move(pendingFiles);
++  if (m_pendingFiles.isEmpty()) {
++    showError(i18n("No deployable files were selected."));
++    return;
++  }
++
++  m_cancelled = false;
++  m_mainWindow->showToolView(m_transferToolView);
++  appendLog(i18np("Queued one file for upload.", "Queued %1 files for upload.",
++                  m_pendingFiles.size()));
++  updateActions();
++  startNextUpload();
++}
++
++void DeploymentView::startNextUpload() {
++  if (m_cancelled || m_pendingFiles.isEmpty()) {
++    m_activeJob = nullptr;
++    m_activeLocalPath.clear();
++    m_activeRemoteUrl.clear();
++    updateActions();
++    return;
++  }
++
++  const PendingUpload upload = m_pendingFiles.dequeue();
++  m_activeLocalPath = upload.localPath;
++  if (hasOpenRemoteDocument(upload.remoteUrl)) {
++    finishUpload(i18n("The remote file is open in Kate."));
++    return;
++  }
++  startUpload(upload.localPath, upload.remoteUrl, upload.remoteBaseUrl);
++}
++
++void DeploymentView::startUpload(const QString &localPath,
++                                  const QUrl &remoteUrl,
++                                  const QUrl &remoteBaseUrl) {
++  m_activeRemoteUrl = remoteUrl;
++  appendLog(i18n("Uploading %1 to %2", localPath, displayUrl(remoteUrl)));
++
++  const QUrl parentUrl =
++      remoteUrl.adjusted(QUrl::RemoveFilename | QUrl::StripTrailingSlash);
++  auto *mkdirJob =
++      KIO::mkpath(parentUrl, remoteBaseUrl, KIO::HideProgressInfo);
++  setActiveJob(mkdirJob);
++  connect(
++      mkdirJob, &KJob::result, this,
++      [this, localPath, remoteUrl, parentUrl](KJob *job) {
++        m_activeJob = nullptr;
++        if (job->error()) {
++          finishUpload(job->errorString());
++          return;
++        }
++        if (m_cancelled) {
++          finishUpload();
++          return;
++        }
++
++        m_temporaryRemoteUrl = remoteUrl;
++        const QString temporaryName =
++            QStringLiteral(".%1.kate-upload-%2")
++                .arg(QFileInfo(remoteUrl.path()).fileName(),
++                     QUuid::createUuid().toString(QUuid::WithoutBraces));
++        QString temporaryPath = parentUrl.path();
++        if (!temporaryPath.endsWith(u'/')) {
++          temporaryPath += u'/';
++        }
++        m_temporaryRemoteUrl.setPath(temporaryPath + temporaryName);
++
++        auto *copyJob =
++            KIO::file_copy(QUrl::fromLocalFile(localPath), m_temporaryRemoteUrl,
++                           -1, KIO::Overwrite | KIO::HideProgressInfo);
++        setActiveJob(copyJob);
++        connect(copyJob, &KJob::percentChanged, this,
++                [this](KJob *, unsigned long percent) {
++                  m_cancelAction->setText(i18nc(
++                      "@action", "Cancel Deployment Transfers (%1%)", percent));
++                });
++        connect(copyJob, &KJob::result, this, [this](KJob *copyResult) {
++          m_activeJob = nullptr;
++          m_cancelAction->setText(
++              i18nc("@action", "Cancel Deployment Transfers"));
++          if (copyResult->error()) {
++            cleanupTemporaryFile();
++            finishUpload(copyResult->errorString());
++            return;
++          }
++          if (m_cancelled) {
++            cleanupTemporaryFile();
++            finishUpload();
++            return;
++          }
++          if (hasOpenRemoteDocument(m_activeRemoteUrl)) {
++            cleanupTemporaryFile();
++            finishUpload(i18n("The remote file is open in Kate."));
++            return;
++          }
++
++          auto *renameJob = KIO::rename(m_temporaryRemoteUrl, m_activeRemoteUrl,
++                                        KIO::Overwrite | KIO::HideProgressInfo);
++          setActiveJob(renameJob);
++          connect(renameJob, &KJob::result, this, [this](KJob *renameResult) {
++            m_activeJob = nullptr;
++            if (renameResult->error()) {
++              cleanupTemporaryFile();
++              finishUpload(renameResult->errorString());
++              return;
++            }
++            m_temporaryRemoteUrl.clear();
++            finishUpload();
++          });
++        });
++      });
++}
++
++void DeploymentView::finishUpload(const QString &error) {
++  if (!error.isEmpty()) {
++    appendLog(i18n("Failed to upload %1: %2", m_activeLocalPath, error));
++  } else if (!m_cancelled && !m_activeLocalPath.isEmpty()) {
++    appendLog(i18n("Uploaded %1", m_activeLocalPath));
++    if (m_remoteOperator && isRemoteUrlAllowed(m_activeRemoteUrl)) {
++      m_remoteOperator->updateDir();
++    }
++  }
++  m_activeLocalPath.clear();
++  m_activeRemoteUrl.clear();
++  m_activeJob = nullptr;
++  startNextUpload();
++}
++
++void DeploymentView::cancelTransfers() {
++  if (!m_activeJob && m_pendingFiles.isEmpty()) {
++    return;
++  }
++  m_cancelled = true;
++  m_pendingFiles.clear();
++  if (m_activeJob && m_activeJob->capabilities().testFlag(KJob::Killable)) {
++    m_activeJob->kill(KJob::EmitResult);
++  }
++  appendLog(i18n("Cancelled deployment transfers."));
++  updateActions();
++}
++
++void DeploymentView::setActiveJob(KJob *job) {
++  m_activeJob = job;
++  QWidget *window = m_mainWindow->window();
++  if (!window) {
++    window = m_transferToolView->window();
++  }
++  if (!job->uiDelegate()) {
++    job->setUiDelegate(KIO::createDefaultJobUiDelegate(
++        KJobUiDelegate::AutoHandlingDisabled, window));
++  }
++  KJobWidgets::setWindow(job, window);
++  updateActions();
++}
++
++void DeploymentView::cleanupTemporaryFile() {
++  if (m_temporaryRemoteUrl.isEmpty()) {
++    return;
++  }
++  KIO::del(m_temporaryRemoteUrl, KIO::HideProgressInfo);
++  m_temporaryRemoteUrl.clear();
++}
++
++void DeploymentView::configureRemoteBrowser() {
++  const bool configured = m_config.enabled && m_config.valid;
++  m_remoteNavigator->setVisible(configured);
++  m_remoteOperator->setVisible(configured);
++  m_remoteStatus->setVisible(configured);
++  if (configured) {
++    setRemoteStatus(i18n("Not connected"));
++    navigateRemote(m_config.remoteBaseUrl());
++  }
++}
++
++bool DeploymentView::isRemoteUrlAllowed(const QUrl &url) const {
++  return m_config.localPathForRemoteUrl(url).has_value();
++}
++
++void DeploymentView::navigateRemote(const QUrl &url) {
++  if (!m_config.enabled || !m_config.valid) {
++    return;
++  }
++  const QUrl target = isRemoteUrlAllowed(url) ? url : m_config.remoteBaseUrl();
++  if (!KProtocolInfo::isKnownProtocol(QStringLiteral("sftp")) ||
++      !KProtocolManager::supportsListing(target)) {
++    const QString message = i18n(
++        "The SFTP KIO worker is not installed or does not support directory "
++        "listing.");
++    setRemoteStatus(message, true);
++    appendLog(message);
++    return;
++  }
++  if (m_remoteNavigator->locationUrl() != target) {
++    const QSignalBlocker blocker(m_remoteNavigator);
++    m_remoteNavigator->setLocationUrl(target);
++  }
++  if (m_remoteOperator->url() != target) {
++    m_remoteOperator->setUrl(target, true);
++  }
++}
++
++void DeploymentView::setRemoteStatus(const QString &message, bool error) {
++  m_remoteStatus->setText(message);
++  m_remoteStatus->setToolTip(message);
++  m_remoteStatus->setStyleSheet(
++      error ? QStringLiteral("QLabel { color: palette(link-visited); }")
++            : QString());
++}
++
++void DeploymentView::remoteContextMenu(const KFileItem &item, QMenu *menu) {
++  if (item.isNull() || !isRemoteUrlAllowed(item.url())) {
++    return;
++  }
++  menu->addSeparator();
++  if (!item.isDir()) {
++    auto *openRemote = menu->addAction(
++        QIcon::fromTheme(QStringLiteral("document-open-remote")),
++        i18nc("@action:inmenu", "Open Remote File"));
++    connect(openRemote, &QAction::triggered, this,
++            [this, url = item.url()] {
++              if (isRemoteUrlAllowed(url)) {
++                m_mainWindow->openUrl(url);
++              }
++            });
++
++    const auto localPath = m_config.localPathForRemoteUrl(item.url());
++    auto *openLocal =
++        menu->addAction(QIcon::fromTheme(QStringLiteral("document-open")),
++                        i18nc("@action:inmenu", "Open Mapped Local File"));
++    openLocal->setEnabled(localPath && QFileInfo::exists(*localPath));
++    connect(openLocal, &QAction::triggered, this,
++            [this, url = item.url()] { openMappedLocalFile(url); });
++
++    auto *uploadLocal =
++        menu->addAction(QIcon::fromTheme(QStringLiteral("document-send")),
++                        i18nc("@action:inmenu", "Upload Mapped Local File"));
++    uploadLocal->setEnabled(localPath && QFileInfo(*localPath).isFile() &&
++                            !m_config.isExcluded(*localPath));
++    connect(uploadLocal, &QAction::triggered, this, [this, localPath] {
++      if (localPath && m_config.remoteUrlForLocalPath(*localPath)) {
++        queueFiles({*localPath});
++      }
++    });
++  }
++  auto *copyUrl = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")),
++                                  i18nc("@action:inmenu", "Copy Remote URL"));
++  connect(copyUrl, &QAction::triggered, this, [url = item.url()] {
++    QGuiApplication::clipboard()->setText(
++        url.toDisplayString(QUrl::RemovePassword));
++  });
++  auto *copyPath = menu->addAction(
++      QIcon::fromTheme(QStringLiteral("edit-copy")),
++      i18nc("@action:inmenu", "Copy Remote Path"));
++  connect(copyPath, &QAction::triggered, this, [url = item.url()] {
++    QGuiApplication::clipboard()->setText(url.path());
++  });
++}
++
++void DeploymentView::openMappedLocalFile(const QUrl &remoteUrl) {
++  const auto localPath = m_config.localPathForRemoteUrl(remoteUrl);
++  if (!localPath || !QFileInfo::exists(*localPath)) {
++    showError(
++        i18n("No mapped local file exists for %1.", displayUrl(remoteUrl)));
++    return;
++  }
++  m_mainWindow->openUrl(QUrl::fromLocalFile(*localPath));
++}
++
++void DeploymentView::appendLog(const QString &message) {
++  const QString timestamp =
++      QDateTime::currentDateTime().toString(QStringLiteral("HH:mm:ss"));
++  m_transferLog->appendPlainText(
++      QStringLiteral("[%1] %2").arg(timestamp, message));
++}
++
++void DeploymentView::showError(const QString &message) {
++  appendLog(message);
++  m_mainWindow->showToolView(m_transferToolView);
++  Utils::showMessage(message, QIcon::fromTheme(QStringLiteral("document-send")),
++                     i18n("Deployment"), MessageType::Error, m_mainWindow);
++}
++
++#include "deploymentplugin.moc"
++#include "moc_deploymentplugin.cpp"
+diff --git a/addons/deployment/deploymentplugin.h b/addons/deployment/deploymentplugin.h
+new file mode 100644
+index 000000000..487b2be52
+--- /dev/null
++++ b/addons/deployment/deploymentplugin.h
+@@ -0,0 +1,119 @@
++/*
++    SPDX-FileCopyrightText: 2026 The Kate Developers
++
++    SPDX-License-Identifier: LGPL-2.0-or-later
++*/
++
++#pragma once
++
++#include "deploymentconfig.h"
++
++#include <KXMLGUIClient>
++#include <ktexteditor/plugin.h>
++
++#include <QPointer>
++#include <QQueue>
++
++class QAction;
++class KDirOperator;
++class KFileItem;
++class KJob;
++class KUrlNavigator;
++class QLabel;
++class QMenu;
++class QPlainTextEdit;
++class QWidget;
++
++namespace KTextEditor {
++class MainWindow;
++}
++
++class DeploymentPlugin : public KTextEditor::Plugin {
++  Q_OBJECT
++
++public:
++  explicit DeploymentPlugin(QObject *parent);
++  QObject *createView(KTextEditor::MainWindow *mainWindow) override;
++};
++
++class DeploymentView : public QObject, public KXMLGUIClient {
++  Q_OBJECT
++
++public:
++  DeploymentView(DeploymentPlugin *plugin, KTextEditor::MainWindow *mainWindow);
++  ~DeploymentView() override;
++
++private Q_SLOTS:
++  void updateContext();
++  void projectTreeContextMenuAboutToShow(QMenu *menu, const QString &path,
++                                         const QString &projectBaseDir,
++                                         int itemType);
++
++private:
++  struct PendingUpload {
++    QString localPath;
++    QUrl remoteUrl;
++    QUrl remoteBaseUrl;
++  };
++
++  struct ProjectContext {
++    QString baseDir;
++    QString projectFileName;
++    QString projectLocalConfigFileName;
++    QVariantMap projectMap;
++    QStringList files;
++  };
++
++  ProjectContext currentProjectContext() const;
++  void applyContext(ProjectContext context);
++  void updateActions();
++
++  void configure();
++  void uploadCurrentFile();
++  void uploadLocalFile(const QString &path);
++  void uploadLocalFolder(const QString &path);
++  void uploadLocalFiles(const QStringList &paths);
++  void uploadProject();
++  void queueFiles(const QStringList &files);
++  void startNextUpload();
++  void startUpload(const QString &localPath, const QUrl &remoteUrl,
++                   const QUrl &remoteBaseUrl);
++  void finishUpload(const QString &error = {});
++  void cancelTransfers();
++  void setActiveJob(KJob *job);
++  void cleanupTemporaryFile();
++
++  void configureRemoteBrowser();
++  void navigateRemote(const QUrl &url);
++  bool isRemoteUrlAllowed(const QUrl &url) const;
++  void remoteContextMenu(const KFileItem &item, QMenu *menu);
++  void openMappedLocalFile(const QUrl &remoteUrl);
++  void setRemoteStatus(const QString &message, bool error = false);
++
++  void appendLog(const QString &message);
++  void showError(const QString &message);
++
++  DeploymentPlugin *m_plugin;
++  KTextEditor::MainWindow *m_mainWindow;
++  ProjectContext m_context;
++  Deployment::Config m_config;
++
++  QAction *m_uploadCurrentAction = nullptr;
++  QAction *m_uploadProjectAction = nullptr;
++  QAction *m_cancelAction = nullptr;
++  QAction *m_configureAction = nullptr;
++
++  QWidget *m_remoteToolView = nullptr;
++  KUrlNavigator *m_remoteNavigator = nullptr;
++  KDirOperator *m_remoteOperator = nullptr;
++  QLabel *m_remoteStatus = nullptr;
++  QWidget *m_transferToolView = nullptr;
++  QPlainTextEdit *m_transferLog = nullptr;
++
++  QQueue<PendingUpload> m_pendingFiles;
++  QPointer<KJob> m_activeJob;
++  QString m_activeLocalPath;
++  QUrl m_activeRemoteUrl;
++  QUrl m_temporaryRemoteUrl;
++  bool m_cancelled = false;
++};
+diff --git a/addons/deployment/plugin.json b/addons/deployment/plugin.json
+new file mode 100644
+index 000000000..1b861a26e
+--- /dev/null
++++ b/addons/deployment/plugin.json
+@@ -0,0 +1,6 @@
++{
++    "KPlugin": {
++        "Description": "Upload project files over SFTP and browse the remote host",
++        "Name": "Deployment"
++    }
++}
+diff --git a/addons/deployment/plugin.qrc b/addons/deployment/plugin.qrc
+new file mode 100644
+index 000000000..ba47718c5
+--- /dev/null
++++ b/addons/deployment/plugin.qrc
+@@ -0,0 +1,5 @@
++<RCC>
++    <qresource prefix="/kxmlgui5/katedeployment">
++        <file>ui.rc</file>
++    </qresource>
++</RCC>
+diff --git a/addons/deployment/ui.rc b/addons/deployment/ui.rc
+new file mode 100644
+index 000000000..191414935
+--- /dev/null
++++ b/addons/deployment/ui.rc
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!DOCTYPE gui SYSTEM "kpartgui.dtd">
++<gui name="katedeployment" library="katedeploymentplugin" version="1" translationDomain="katedeployment">
++    <MenuBar>
++        <Menu name="tools">
++            <Menu name="deployment">
++                <text>&amp;Deployment</text>
++                <Action name="deployment_upload_current"/>
++                <Action name="deployment_upload_project"/>
++                <Action name="deployment_cancel"/>
++                <Separator/>
++                <Action name="deployment_browse_remote"/>
++                <Action name="deployment_configure"/>
++            </Menu>
++        </Menu>
++    </MenuBar>
++    <Menu name="ktexteditor_popup" noMerge="1">
++        <Action name="deployment_upload_current"/>
++    </Menu>
++</gui>
+diff --git a/addons/project/kateproject.cpp b/addons/project/kateproject.cpp
+index 798d27d53..7c3ffa9ad 100644
+--- a/addons/project/kateproject.cpp
++++ b/addons/project/kateproject.cpp
+@@ -385,7 +385,7 @@ QVariantMap KateProject::readProjectFile() const
+ 
+         // if there are local settings (.kateproject.local), override values
+         {
+-            const auto localSettings = readJSONFile(projectLocalFileName(QStringLiteral("local")));
++            const auto localSettings = readJSONFile(QFileInfo(m_fileName).dir().filePath(QStringLiteral(".kateproject.local")));
+             if (!localSettings.isNull() && localSettings.isObject()) {
+                 object = json::merge(object, localSettings.object());
+             }
+diff --git a/addons/project/kateproject.example b/addons/project/kateproject.example
+index 1e73102bc..bf7f86341 100644
+--- a/addons/project/kateproject.example
++++ b/addons/project/kateproject.example
+@@ -87,6 +87,32 @@ struct
+ 
+    };
+ 
++   /// The "deployment" structure is optional. It maps local project files to an
++   /// SFTP destination. Authentication is handled by KIO and is not stored here.
++   struct deployment
++   {
++      /// Required server hostname or IP address, without a URL scheme.
++      string host;
++
++      /// Optional SSH port. Defaults to 22.
++      int port = 22;
++
++      /// Optional SSH user. If omitted, KIO uses its normal default.
++      string user;
++
++      /// Optional local directory. Relative paths are resolved from the project
++      /// base directory. Defaults to the project base directory and must remain
++      /// inside it.
++      string localRoot;
++
++      /// Required absolute destination directory on the server.
++      string remoteRoot;
++
++      /// Optional project-relative wildcard patterns. Patterns without a slash
++      /// match any path component, for example "build" or "*.tmp".
++      vector< string > exclude;
++   };
++
+    /// The "git" structure is optional. Project host mappings override global mappings
+    /// with the same host and port; other global mappings remain available as fallbacks.
+    struct git
+diff --git a/addons/project/kateprojectplugin.cpp b/addons/project/kateprojectplugin.cpp
+index 07c929d82..57ce67f39 100644
+--- a/addons/project/kateprojectplugin.cpp
++++ b/addons/project/kateprojectplugin.cpp
+@@ -166,6 +166,16 @@ QObject *KateProjectPlugin::createView(KTextEditor::MainWindow *mainWindow)
+     return new KateProjectPluginView(this, mainWindow);
+ }
+ 
++void KateProjectPlugin::reloadProjectForBaseDir(const QString &baseDir)
++{
++    for (KateProject *project : std::as_const(m_projects)) {
++        if (project->baseDir() == baseDir) {
++            project->reload(true);
++            return;
++        }
++    }
++}
++
+ int KateProjectPlugin::configPages() const
+ {
+     return 1;
+diff --git a/addons/project/kateprojectplugin.h b/addons/project/kateprojectplugin.h
+index f15d089d1..677c1c4ac 100644
+--- a/addons/project/kateprojectplugin.h
++++ b/addons/project/kateprojectplugin.h
+@@ -94,6 +94,10 @@ public:
+      */
+     QList<QObject *> projectsObjects() const;
+ 
++    /** Reload the project with the given base directory after an external
++     *  project-local configuration change. */
++    Q_INVOKABLE void reloadProjectForBaseDir(const QString &baseDir);
++
+     /**
+      * Has the given project open documents?
+      * @param project project to check open document for
+diff --git a/addons/project/kateprojectpluginview.cpp b/addons/project/kateprojectpluginview.cpp
+index d9afeac9b..6ab2d96c6 100755
+--- a/addons/project/kateprojectpluginview.cpp
++++ b/addons/project/kateprojectpluginview.cpp
+@@ -399,6 +399,12 @@ void KateProjectPluginView::viewForProject(KateProject *project)
+             }
+         }
+     });
++    connect(project, &KateProject::modelChanged, this, [this, project] {
++        auto *widget = static_cast<KateProjectView *>(m_stackedProjectViews->currentWidget());
++        if (widget && widget->project() == project) {
++            Q_EMIT projectFilesChanged();
++        }
++    });
+ 
+     /*
+      * inform onward
+@@ -421,6 +427,12 @@ QString KateProjectPluginView::projectFileName() const
+     return static_cast<KateProjectView *>(active)->project()->fileName();
+ }
+ 
++QString KateProjectPluginView::projectLocalConfigFileName() const
++{
++    const QString fileName = projectFileName();
++    return fileName.isEmpty() ? QString() : QFileInfo(fileName).dir().filePath(QStringLiteral(".kateproject.local"));
++}
++
+ QString KateProjectPluginView::projectName() const
+ {
+     QWidget *active = m_stackedProjectViews->currentWidget();
+@@ -604,6 +616,7 @@ void KateProjectPluginView::slotCurrentChanged(int index)
+     // project file name might have changed
+     Q_EMIT projectFileNameChanged();
+     Q_EMIT projectMapChanged();
++    Q_EMIT projectFilesChanged();
+ 
+     if (auto widget = gitWidget()) {
+         widget->updateGitProjectFolder();
+diff --git a/addons/project/kateprojectpluginview.h b/addons/project/kateprojectpluginview.h
+index 326b6df10..166b0a344 100755
+--- a/addons/project/kateprojectpluginview.h
++++ b/addons/project/kateprojectpluginview.h
+@@ -33,10 +33,11 @@ class KateProjectPluginView : public QObject, public KXMLGUIClient
+     Q_OBJECT
+ 
+     Q_PROPERTY(QString projectFileName READ projectFileName NOTIFY projectFileNameChanged)
++    Q_PROPERTY(QString projectLocalConfigFileName READ projectLocalConfigFileName NOTIFY projectFileNameChanged)
+     Q_PROPERTY(QString projectName READ projectName)
+     Q_PROPERTY(QString projectBaseDir READ projectBaseDir)
+     Q_PROPERTY(QVariantMap projectMap READ projectMap NOTIFY projectMapChanged)
+-    Q_PROPERTY(QStringList projectFiles READ projectFiles)
++    Q_PROPERTY(QStringList projectFiles READ projectFiles NOTIFY projectFilesChanged)
+ 
+     Q_PROPERTY(QString allProjectsCommonBaseDir READ allProjectsCommonBaseDir)
+     Q_PROPERTY(QStringList allProjectsFiles READ allProjectsFiles)
+@@ -58,6 +59,9 @@ public:
+      */
+     QString projectFileName() const;
+ 
++    /** Returns the per-user project configuration path. */
++    QString projectLocalConfigFileName() const;
++
+     /**
+      * Returns the name of the project
+      */
+@@ -255,6 +259,12 @@ Q_SIGNALS:
+      */
+     void projectMapChanged();
+ 
++    /** Emitted when the current project's file list changed. */
++    void projectFilesChanged();
++
++    /** Emitted synchronously before a project tree context menu is shown. */
++    void projectTreeContextMenuAboutToShow(QMenu *menu, const QString &path, const QString &projectBaseDir, int itemType);
++
+     /**
+      * Emitted when a ctags lookup in requested
+      * @param word lookup word
+diff --git a/addons/project/kateprojecttreeviewcontextmenu.cpp b/addons/project/kateprojecttreeviewcontextmenu.cpp
+index cc78c28ea..620aef884 100644
+--- a/addons/project/kateprojecttreeviewcontextmenu.cpp
++++ b/addons/project/kateprojecttreeviewcontextmenu.cpp
+@@ -14,6 +14,7 @@
+ #include "kateprojectinfoviewterminal.h"
+ #include "kateprojectitem.h"
+ #include "kateprojectplugin.h"
++#include "kateprojectpluginview.h"
+ #include "kateprojectviewtree.h"
+ 
+ #include <KAuthorized>
+@@ -224,6 +225,10 @@ void KateProjectTreeViewContextMenu::exec(const QString &filename, const QModelI
+         }
+     }
+ 
++    const int itemType = isRootDirectory ? KateProjectItem::Project : index.data(KateProjectItem::TypeRole).toInt();
++    Q_EMIT parent->m_pluginView->projectTreeContextMenuAboutToShow(
++        &menu, QFileInfo(filename).absoluteFilePath(), parent->project()->baseDir(), itemType);
++
+     /**
+      * run menu and handle the triggered action
+      */
+diff --git a/addons/project/kateprojectviewtree.h b/addons/project/kateprojectviewtree.h
+index 94ac6f187..bc3546b58 100644
+--- a/addons/project/kateprojectviewtree.h
++++ b/addons/project/kateprojectviewtree.h
+@@ -23,6 +23,7 @@ class MainWindow;
+ class KateProjectViewTree : public QTreeView
+ {
+     friend class KateProjectTreeDelegate;
++    friend class KateProjectTreeViewContextMenu;
+ public:
+     /**
+      * construct project view for given project
+diff --git a/doc/kate/plugins.docbook b/doc/kate/plugins.docbook
+index 9cba21d7f..6c5fa4b73 100644
+--- a/doc/kate/plugins.docbook
++++ b/doc/kate/plugins.docbook
+@@ -82,6 +82,9 @@ simple &gdb; frontend</para>
+ <para><link linkend="kate-application-plugin-projects">Project Plugin</link> - Integration with &git; and other source control systems</para>
+ </listitem>
+ <listitem>
++<para><link linkend="kate-application-plugin-deployment">Deployment Plugin</link> - Upload project files and browse a remote SFTP host</para>
++</listitem>
++<listitem>
+ <para>Replicode - Constructivist AI language and runtime</para>
+ </listitem>
+ <listitem>
+@@ -2486,6 +2489,118 @@ context menu Project->Lookup:xxx
+ 
+ </sect1>
+ 
++<sect1 id="kate-application-plugin-deployment">
++<title>Deployment Plugin</title>
++
++<para>The Deployment plugin uploads files from the active project to an SFTP
++server. It also provides a <guilabel>Remote Host</guilabel> tool view for
++browsing the configured destination and opening remote files directly in
++&kate;. The <link linkend="kate-application-plugin-projects">Project
++plugin</link> must be enabled.</para>
++
++<sect2 id="deployment-configuration">
++<title>Project Configuration</title>
++
++<para>Add a <literal>deployment</literal> object to the project's
++<filename>.kateproject</filename> file:</para>
++
++<screen>
++{
++  "name": "Example",
++  "files": [ { "git": 1 } ],
++  "deployment": {
++    "host": "example.org",
++    "port": 22,
++    "user": "deploy",
++    "localRoot": ".",
++    "remoteRoot": "/var/www/example",
++    "exclude": [
++      ".git",
++      ".kateproject*",
++      "build",
++      "*.tmp"
++    ]
++  }
++}
++</screen>
++
++<variablelist>
++<varlistentry>
++<term><literal>host</literal></term>
++<listitem><para>The required server hostname or IP address. Do not include an
++<literal>sftp://</literal> scheme or user name.</para></listitem>
++</varlistentry>
++
++<varlistentry>
++<term><literal>port</literal></term>
++<listitem><para>The SSH port, from 1 through 65535. If omitted, it defaults to
++22.</para></listitem>
++</varlistentry>
++
++<varlistentry>
++<term><literal>user</literal></term>
++<listitem><para>The SSH user name. If omitted, KIO uses its normal default for
++the host.</para></listitem>
++</varlistentry>
++
++<varlistentry>
++<term><literal>localRoot</literal></term>
++<listitem><para>The local directory whose contents are mapped to
++<literal>remoteRoot</literal>. A relative path is resolved from the project
++base directory. The default is the project base directory. The directory must
++exist and must be inside the project.</para></listitem>
++</varlistentry>
++
++<varlistentry>
++<term><literal>remoteRoot</literal></term>
++<listitem><para>The required absolute destination directory on the server.
++Parent-directory traversal components are not allowed.</para></listitem>
++</varlistentry>
++
++<varlistentry>
++<term><literal>exclude</literal></term>
++<listitem><para>An optional array of project-relative wildcard patterns. A
++pattern without a slash matches any path component, so
++<literal>build</literal> excludes directories or files with that name at any
++depth. Patterns containing a slash match paths relative to
++<literal>localRoot</literal>.</para></listitem>
++</varlistentry>
++</variablelist>
++
++<para>Passwords and private keys are not stored in the project configuration.
++Authentication, host-key verification, and wallet integration are handled by
++KIO.</para>
++
++<para>Shared settings can be committed in
++<filename>.kateproject</filename>. To keep machine-specific server paths or
++accounts out of version control, put a complete <literal>deployment</literal>
++object in <filename>.kateproject.local</filename>. The local object takes
++precedence over the one in <filename>.kateproject</filename>. The
++<guimenuitem>Configure Deployment...</guimenuitem> action writes this local
++override while preserving unrelated project settings.</para>
++</sect2>
++
++<sect2 id="deployment-usage">
++<title>Uploading and Browsing</title>
++
++<para><guimenuitem>Upload Current File</guimenuitem> uploads the active local
++file and has the default shortcut
++<keycombo action="simul">&Ctrl;&Alt;<keycap>S</keycap></keycombo>.
++<guimenuitem>Upload Project</guimenuitem> uploads all non-excluded files known
++to the active project. A project file's context menu provides
++<guimenuitem>Upload to Remote Host</guimenuitem>, while a folder's context menu
++provides <guimenuitem>Upload Folder to Remote Host</guimenuitem> to upload its
++contents recursively. Missing remote directories are created automatically.</para>
++
++<para>The <guilabel>Remote Host</guilabel> tool view browses the configured
++remote root. Opening a remote file edits its <literal>sftp://</literal> URL
++directly. Its context menu can open or upload the corresponding local file when
++one exists. Transfer progress and errors are shown in the
++<guilabel>File Transfer</guilabel> tool view.</para>
++</sect2>
++
++</sect1>
++
+ <!--FIXME Replicode
+ Projects Replicode run / stop-->
+ 
