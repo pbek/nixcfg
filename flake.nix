@@ -232,12 +232,6 @@
         dp09 = mkDesktopHost "dp09" [ disko.nixosModules.disko ];
         # Home PC Shiva
         dp10 = mkDesktopHost "dp10" [ disko.nixosModules.disko ];
-        # MBA Miniserver24
-        miniserver24 = mkServerHost "miniserver24" [ disko.nixosModules.disko ];
-        # MBA Gaming PC
-        mba-gaming-pc = mkDesktopHost "mba-gaming-pc" [ disko.nixosModules.disko ];
-        # MBA Miniserver ww87
-        mba-msww87 = mkServerHost "mba-msww87" [ disko.nixosModules.disko ];
       };
 
       checks.x86_64-linux = {
@@ -256,8 +250,7 @@
         zfsguard = inputs.zfsguard.packages.${system}.default;
         inherit (pkgs) kanboard-cli;
         qownnotes-tui = inputs.qownnotes-tui.packages.${system}.default;
-        inherit (pkgs) lan-orangutan sonar ziggity;
-        inherit (pkgs) gh-stack;
+        inherit (pkgs) lan-orangutan ziggity;
         inherit (pkgs) opencode;
       }
       // {

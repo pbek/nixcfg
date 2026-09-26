@@ -279,7 +279,6 @@ push:
     -attic push qownnotes `which nixbit` --no-closure
     -attic push qownnotes `which uncrash` --no-closure
     -attic push qownnotes `which tokstat` --no-closure
-    -attic push qownnotes `which sonar` --no-closure
     -attic push qownnotes `which orangutan` --no-closure
     -attic push qownnotes `which ziggity` --no-closure
     -attic push qownnotes `which zfsguard` --no-closure
@@ -291,7 +290,6 @@ push:
     -attic push qownnotes `which kate` --no-closure
     -attic push qownnotes `which opencode` --no-closure
     # -attic push qownnotes `which zerobyte` --no-closure
-    nix build .#gh-stack && attic push qownnotes ./result
     nix build .#opencode && attic push qownnotes ./result
 
 [group('cache')]

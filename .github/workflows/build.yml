@@ -8,16 +8,12 @@ on:
       - "pkgs/qownnotes/**"
       - "pkgs/opencode/**"
       - "pkgs/nixbit/**"
-      - "pkgs/sonar/**"
       - "pkgs/ziggity/**"
       - "overlays/opencode.nix"
       - "overlays/zerobyte.nix"
       - "modules/hokage/programs/zerobyte.nix"
-      - "pkgs/gh-stack/**"
-      - "overlays/gh-stack.nix"
       - "modules/hokage/desktop.nix"
       - "overlays/devenv-commit.nix"
-      - "overlays/sonar.nix"
       - "overlays/kate-fixes.nix"
       - "flake.nix"
       - "flake.lock"
@@ -81,10 +77,6 @@ jobs:
         run: |
           nix build .#tokstat && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
-      - name: Build sonar flake package
-        run: |
-          nix build .#sonar && \
-          nix-shell -p attic-client --run "attic push qownnotes ./result"
       - name: Build zfsguard flake package
         run: |
           nix build .#zfsguard && \
@@ -117,10 +109,6 @@ jobs:
       #   run: |
       #     nix build .#zerobyte && \
       #     nix-shell -p attic-client --run "attic push qownnotes ./result"
-      - name: Build gh-stack extension
-        run: |
-          nix build .#gh-stack && \
-          nix-shell -p attic-client --run "attic push qownnotes ./result"
       - name: Build opencode package
         run: |
           nix build .#opencode && \
