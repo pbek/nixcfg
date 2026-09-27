@@ -7,24 +7,7 @@
 let
   inherit (config) hokage;
   cfg = hokage.programs.voxtype;
-  voxtype-hip = pkgs.voxtype.overrideAttrs (oldAttrs: {
-    pname = "voxtype-hip";
-    buildFeatures = [ "gpu-hipblas" ];
-    cargoBuildFeatures = [ "gpu-hipblas" ];
-    cargoCheckFeatures = [ "gpu-hipblas" ];
-    nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [ pkgs.rocmPackages.clr ];
-    buildInputs =
-      oldAttrs.buildInputs
-      ++ (with pkgs.rocmPackages; [
-        clr
-        hipblas
-        rocblas
-      ]);
-    env = oldAttrs.env // {
-      HIP_PATH = "${pkgs.rocmPackages.clr}";
-      AMDGPU_TARGETS = "gfx1100";
-    };
-  });
+  voxtype-hip = pkgs.voxtype-hip.override { rocmGpuTargets = "gfx1100"; };
 in
 {
   options.hokage.programs.voxtype = {
