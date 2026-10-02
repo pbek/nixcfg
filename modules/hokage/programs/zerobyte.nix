@@ -11,9 +11,7 @@ let
 in
 {
   options.hokage.programs.zerobyte = {
-    enable = lib.mkEnableOption "the native Zerobyte backup service" // {
-      default = hokage.role == "desktop" && hokage.useInternalInfrastructure;
-    };
+    enable = lib.mkEnableOption "the native Zerobyte backup service";
 
     package = lib.mkPackageOption pkgs "zerobyte" { };
 
