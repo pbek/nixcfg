@@ -54,6 +54,7 @@ in
     cura-appimage
     lact
     rustdesk-flutter
+    httm # CLI Time Machine (normally only installed via hokage.zfs)
   ];
 
   # Handle keyboard leds - using systemd service instead of deprecated powerUpCommands
