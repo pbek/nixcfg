@@ -1,0 +1,11 @@
+build:
+    nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })'
+
+build-force:
+    nix-build -E '((import <nixpkgs> {}).callPackage (import ./package.nix) { })' --check
+
+run:
+    ./result/bin/rhun --version
+
+open-browser:
+    xdg-open https://github.com/vshvedov/rhun
