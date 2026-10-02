@@ -536,6 +536,11 @@ nixbit-hash:
     url="https://github.com/pbek/nixbit/archive/refs/tags/v${version}.tar.gz"
     nix-prefetch-url "$url" | xargs nix hash convert --hash-algo sha256
 
+# Add a KWin window rule that places all windows on all activities (if missing)
+[group('config')]
+kwin-rule-all-activities:
+    ./scripts/kwin-rule-all-activities.sh
+
 # Update the Nixbit release in the app
 [group('nixbit')]
 nixbit-update-release:
