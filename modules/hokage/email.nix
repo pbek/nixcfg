@@ -97,6 +97,7 @@ in
             host = "mail.bekerle.com";
             port = 143;
             tls.useStartTls = true;
+            authentication = "plain";
           };
 
           smtp = {
@@ -126,6 +127,7 @@ in
             host = "exchange.tugraz.at";
             port = 993;
             tls.enable = true;
+            authentication = "plain";
           };
 
           smtp = {
