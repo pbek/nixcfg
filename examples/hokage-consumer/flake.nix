@@ -30,7 +30,10 @@
           inherit system;
           modules = [
             {
-              nixpkgs.overlays = [ (import (nixcfg + "/overlays/ziggity.nix")) ];
+              nixpkgs.overlays = [
+                (import (nixcfg + "/overlays/ziggity.nix"))
+                (import (nixcfg + "/overlays/lan-orangutan.nix"))
+              ];
             }
 
             # Import catppuccin module (required by hokage)
