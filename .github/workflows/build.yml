@@ -9,7 +9,11 @@ on:
       - "pkgs/opencode/**"
       - "pkgs/nixbit/**"
       - "pkgs/ziggity/**"
+      - "pkgs/opencode2/**"
+      - "pkgs/openchamber/**"
       - "overlays/opencode.nix"
+      - "overlays/opencode2.nix"
+      - "overlays/openchamber.nix"
       - "overlays/zerobyte.nix"
       - "modules/hokage/programs/zerobyte.nix"
       - "modules/hokage/desktop.nix"
@@ -112,4 +116,12 @@ jobs:
       - name: Build opencode package
         run: |
           nix build .#opencode && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build opencode2 package
+        run: |
+          nix build .#opencode2 && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build openchamber package
+        run: |
+          nix build .#openchamber && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
