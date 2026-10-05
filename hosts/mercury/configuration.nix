@@ -14,6 +14,10 @@
     ./disk-config.zfs.nix
   ];
 
+  networking.firewall.allowedTCPPorts = [
+    3000 # OpenChamber
+  ];
+
   environment.systemPackages = with pkgs; [
   ];
 
