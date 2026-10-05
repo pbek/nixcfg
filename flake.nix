@@ -251,7 +251,7 @@
         inherit (pkgs) kanboard-cli;
         qownnotes-tui = inputs.qownnotes-tui.packages.${system}.default;
         inherit (pkgs) lan-orangutan rhun ziggity;
-        inherit (pkgs) opencode;
+        inherit (pkgs) opencode opencode2 openchamber;
       }
       // {
         # Generate Markdown docs for hokage module options
