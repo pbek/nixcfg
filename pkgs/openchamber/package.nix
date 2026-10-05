@@ -15,6 +15,7 @@
   git,
   opencode2,
   makeBinaryWrapper,
+  installShellFiles,
   autoPatchelfHook,
   writableTmpDirAsHomeHook,
   versionCheckHook,
@@ -114,6 +115,7 @@ stdenv.mkDerivation (finalAttrs: {
     bun
     nodejs # for patchShebangs node_modules
     makeBinaryWrapper
+    installShellFiles
     writableTmpDirAsHomeHook
   ]
   ++ lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook ];
@@ -182,6 +184,13 @@ stdenv.mkDerivation (finalAttrs: {
       }
 
     runHook postInstall
+  '';
+
+  postInstall = lib.optionalString (stdenv.buildPlatform.canExecute stdenv.hostPlatform) ''
+    installShellCompletion --cmd openchamber \
+      --bash <($out/bin/openchamber tunnel completion bash) \
+      --zsh <($out/bin/openchamber tunnel completion zsh) \
+      --fish <($out/bin/openchamber tunnel completion fish)
   '';
 
   dontStrip = true;
