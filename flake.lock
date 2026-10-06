@@ -192,11 +192,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790852611,
-        "narHash": "sha256-xoSMvZgv5aly80Wf+93EL8JxyuKUZolAhdswTJO6rnQ=",
+        "lastModified": 1791270808,
+        "narHash": "sha256-HK2h8cB4Yxiy7Oe3dS1yn5mc9fsmnAZsqinXK7GJE+M=",
         "owner": "digital-blueprint",
         "repo": "kanboard-cli",
-        "rev": "9db21d2078f54543ea6c352e47cee9b2ebae2311",
+        "rev": "1d633401391e49982d92f78195bd5400602698f9",
         "type": "github"
       },
       "original": {
