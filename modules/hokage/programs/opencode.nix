@@ -81,6 +81,15 @@ in
                 };
               };
             };
+            # OpenCode 2 auto-discovers vLLM by polling http://127.0.0.1:8000/health every 30 seconds,
+            # which collides with local dev servers on port 8000; point it at an unused port instead
+            providers = {
+              vllm = {
+                settings = {
+                  baseURL = "http://127.0.0.1:1/v1";
+                };
+              };
+            };
           };
         };
       };
