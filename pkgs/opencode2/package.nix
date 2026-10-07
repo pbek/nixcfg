@@ -77,7 +77,7 @@ let
 
       outputHash =
         {
-          x86_64-linux = "sha256-vFRFIY9tlUNN33KXWMcZXa/seUbptPyslmph37jNPjs=";
+          x86_64-linux = "sha256-DMZGWGOFSh20ynS34DqqXQWXaCIeYWP93nmFFiedWoA=";
         }
         .${platform.system} or lib.fakeHash;
       outputHashAlgo = "sha256";
@@ -86,13 +86,13 @@ let
 in
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "opencode2";
-  version = "2.0.23";
+  version = "2.0.24";
 
   src = fetchFromGitHub {
     owner = "anomalyco";
     repo = "opencode";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-HW/uDfTRqrZRBBUTQR9ANtXVm0nYcOGl2vdTLjTj4c4=";
+    hash = "sha256-xrHI6e4Wq32QNX+xmpb/Psf3kBFT7Z5grmCnxMFEK5E=";
   };
 
   nativeBuildInputs = [
