@@ -98,4 +98,7 @@ in
 
   # agenix -e zerobyte-secret.age
   "zerobyte-secret.age".publicKeys = systems;
+
+  # agenix -e openchamber-ui-password.age
+  "openchamber-ui-password.age".publicKeys = agenix ++ mercury;
 }

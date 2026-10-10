@@ -14,10 +14,6 @@
     ./disk-config.zfs.nix
   ];
 
-  networking.firewall.allowedTCPPorts = [
-    3000 # OpenChamber
-  ];
-
   environment.systemPackages = with pkgs; [
   ];
 
@@ -34,6 +30,13 @@
       useSystemdInitrd = true;
     };
     programs.libvirt.role = "guest";
+    programs.openchamber = {
+      enable = true;
+      user = "omega";
+      host = "0.0.0.0";
+      port = 3000;
+      openFirewall = true;
+    };
     cache.sources = [ "home" ];
   };
 }
