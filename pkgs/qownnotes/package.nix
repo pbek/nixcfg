@@ -19,11 +19,11 @@
 stdenv.mkDerivation (finalAttrs: {
   pname = "qownnotes";
   appname = "QOwnNotes";
-  version = "26.10.4";
+  version = "26.10.5";
 
   src = fetchurl {
     url = "https://github.com/pbek/QOwnNotes/releases/download/v${finalAttrs.version}/qownnotes-${finalAttrs.version}.tar.xz";
-    hash = "sha256-rqIjY1bPXKZPxz6QjjcV5IqDV7yFpboxk7qRppRAEJ8=";
+    hash = "sha256-wSFIYiVK6WYcjAsSClpbNwrY8QMOwrVPzinlVokmUqI=";
   };
 
   nativeBuildInputs = [
