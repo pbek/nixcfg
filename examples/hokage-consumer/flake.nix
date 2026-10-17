@@ -31,6 +31,8 @@
           modules = [
             {
               nixpkgs.overlays = [
+                (import (nixcfg + "/overlays/opencode2.nix"))
+                (import (nixcfg + "/overlays/openchamber.nix"))
                 (import (nixcfg + "/overlays/ziggity.nix"))
                 (import (nixcfg + "/overlays/lan-orangutan.nix"))
               ];
