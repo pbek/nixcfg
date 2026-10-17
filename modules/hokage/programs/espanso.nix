@@ -35,14 +35,14 @@ in
       ]
     );
 
-    # Get around permission denied error on /dev/uinput
-    services.udev.extraRules =
-      if waylandSupport then
-        ''
-          KERNEL=="uinput", SUBSYSTEM=="misc", TAG+="uaccess", OPTIONS+="static_node=uinput", GROUP="input", MODE="0660"
-        ''
-      else
-        "";
+    # Grant the active desktop session access before 73-seat-late.rules applies
+    # uaccess ACLs. extraRules runs too late (99-local.rules), and its input
+    # group is overridden by hardware.uinput's rule in the same file.
+    services.udev.packages = lib.mkIf waylandSupport [
+      (pkgs.writeTextDir "lib/udev/rules.d/70-espanso.rules" ''
+        KERNEL=="uinput", SUBSYSTEM=="misc", TAG+="uaccess", OPTIONS+="static_node=uinput"
+      '')
+    ];
 
     home-manager.users = lib.genAttrs hokage.users (_userName: {
       # https://mynixos.com/home-manager/options/services.espanso
