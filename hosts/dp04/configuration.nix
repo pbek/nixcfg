@@ -33,7 +33,7 @@
     userEmail = "andrea.ortner@tugraz.at";
 
     tugraz.enableExternal = true;
-    waylandSupport = false;
+    waylandSupport = true;
 
     zfs = {
       enable = true;
