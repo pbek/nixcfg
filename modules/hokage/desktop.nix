@@ -101,6 +101,7 @@ in
           # (pkgs.callPackage ../../pkgs/qmd/package.nix { })
 
           signal-desktop
+          kdePackages.neochat
           # telegram-desktop
           # whatsapp-electron
 

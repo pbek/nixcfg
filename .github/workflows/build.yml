@@ -11,6 +11,7 @@ on:
       - "pkgs/ziggity/**"
       - "pkgs/opencode2/**"
       - "pkgs/openchamber/**"
+      - "pkgs/libquotient-rust-crypto/**"
       - "overlays/opencode.nix"
       - "overlays/opencode2.nix"
       - "overlays/openchamber.nix"
@@ -19,6 +20,7 @@ on:
       - "modules/hokage/desktop.nix"
       - "overlays/devenv-commit.nix"
       - "overlays/kate-fixes.nix"
+      - "overlays/neochat.nix"
       - "flake.nix"
       - "flake.lock"
       - ".github/workflows/build.yml"
@@ -108,6 +110,10 @@ jobs:
       - name: Build kate package
         run: |
           nix build .#kate && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build and cache neochat package
+        run: |
+          nix build .#neochat && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
       # - name: Build zerobyte package
       #   run: |
