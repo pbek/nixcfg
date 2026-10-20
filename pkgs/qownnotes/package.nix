@@ -14,8 +14,17 @@
   versionCheckHook,
   nix-update-script,
   aspell,
+  kdePackages,
+  useKdeIntegration ? stdenv.hostPlatform.isLinux,
 }:
 
+let
+  # Keep Qt and KDE Frameworks on the same Qt package set.
+  qtPackages = if useKdeIntegration then kdePackages else qt6Packages;
+in
+assert lib.assertMsg (
+  !useKdeIntegration || stdenv.hostPlatform.isLinux
+) "KDE integration is currently supported only on Linux";
 stdenv.mkDerivation (finalAttrs: {
   pname = "qownnotes";
   appname = "QOwnNotes";
@@ -28,25 +37,36 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [
     cmake
-    qt6Packages.qttools
-    qt6Packages.wrapQtAppsHook
+    qtPackages.qttools
+    qtPackages.wrapQtAppsHook
     pkg-config
     installShellFiles
   ]
+  ++ lib.optionals useKdeIntegration [ kdePackages.extra-cmake-modules ]
   ++ lib.optionals stdenv.hostPlatform.isDarwin [ makeWrapper ];
 
   buildInputs = [
-    qt6Packages.qtbase
-    qt6Packages.qtdeclarative
-    qt6Packages.qtsvg
-    qt6Packages.qtwebsockets
+    qtPackages.qtbase
+    qtPackages.qtdeclarative
+    qtPackages.qtsvg
+    qtPackages.qtwebsockets
     botan3
     libgit2
     aspell
   ]
+  ++ lib.optionals useKdeIntegration [
+    kdePackages.kcolorscheme
+    kdePackages.kcoreaddons
+    kdePackages.kcrash
+    kdePackages.kglobalaccel
+    kdePackages.knotifications
+    kdePackages.plasma-activities
+    kdePackages.kwindowsystem
+    kdePackages.purpose
+  ]
   ++ lib.optionals stdenv.hostPlatform.isLinux [
     libsecret
-    qt6Packages.qtwayland
+    qtPackages.qtwayland
   ];
 
   cmakeFlags = [
@@ -54,6 +74,7 @@ stdenv.mkDerivation (finalAttrs: {
     "-DBUILD_WITH_SYSTEM_BOTAN=ON"
     "-DBUILD_WITH_LIBGIT2=ON"
     "-DBUILD_WITH_ASPELL=ON"
+    (lib.cmakeBool "QON_KDE_INTEGRATION" useKdeIntegration)
     "-DUSE_QLITEHTML=ON"
     "-DQLITEHTML_LIBRARY_TYPE=STATIC"
   ];
