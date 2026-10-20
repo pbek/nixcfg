@@ -1,0 +1,259 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrizio Bekerle <patrizio@bekerle.com>
+Date: Tue, 20 Oct 2026 13:23:49 +0200
+Subject: [PATCH] Support searching messages in encrypted rooms
+
+The server can't search the contents of encrypted messages, so search the
+locally decrypted timeline instead and load older history as needed.
+---
+ src/roominfo/RoomSearchPage.qml     |   6 --
+ src/timeline/models/searchmodel.cpp | 132 +++++++++++++++++++++++++++-
+ src/timeline/models/searchmodel.h   |  17 ++++
+ 3 files changed, 147 insertions(+), 8 deletions(-)
+
+diff --git a/src/roominfo/RoomSearchPage.qml b/src/roominfo/RoomSearchPage.qml
+index 17954ba..99b961a 100644
+--- a/src/roominfo/RoomSearchPage.qml
++++ b/src/roominfo/RoomSearchPage.qml
+@@ -34,9 +34,6 @@ SearchPage {
+      */
+     property string senderId
+ 
+-    // This requires client-side search we don't implement yet
+-    readonly property bool canSearch: !room.usesEncryption
+-
+     title: i18nc("@action:title", "Search Messages")
+ 
+     model: SearchModel {
+@@ -58,9 +55,6 @@ SearchPage {
+     searchFieldPlaceholder: i18n("Find messages…")
+     noSearchPlaceholderMessage: senderId.length > 0 ? i18nc("@info:placeholder", "Enter text to start searching %1's messages", root.senderId) : i18nc("@info:placeholder", "Enter text to start searching")
+     noResultPlaceholderMessage: i18n("No messages found")
+-    customPlaceholderIcon: "lock-symbolic"
+-    customPlaceholderText: !canSearch ? i18n("Cannot search in encrypted rooms") : ""
+-    enableSearch: canSearch
+ 
+     listVerticalLayoutDirection: ListView.BottomToTop
+ 
+diff --git a/src/timeline/models/searchmodel.cpp b/src/timeline/models/searchmodel.cpp
+index 4a004c2..8518fda 100644
+--- a/src/timeline/models/searchmodel.cpp
++++ b/src/timeline/models/searchmodel.cpp
+@@ -3,8 +3,21 @@
+ 
+ #include "searchmodel.h"
+ 
++#include <Quotient/events/roommessageevent.h>
++#include <Quotient/qt_connection_util.h>
++
+ using namespace Quotient;
+ 
++namespace
++{
++// Stop loading history for a batch once this many new matches were found.
++constexpr int LocalSearchBatchSize = 20;
++// Number of events requested from the server per history page.
++constexpr int LocalSearchHistoryPageSize = 100;
++// Maximum number of history pages loaded per batch of results.
++constexpr int LocalSearchMaxHistoryPages = 20;
++}
++
+ SearchModel::SearchModel(QObject *parent)
+     : MessageModel(parent)
+ {
+@@ -84,6 +97,8 @@ void SearchModel::search()
+     beginResetModel();
+     m_results.clear();
+     m_nextBatch.clear();
++    m_localResults.clear();
++    m_oldestSearchedIndex.reset();
+     endResetModel();
+ 
+     if (m_job) {
+@@ -91,27 +106,140 @@ void SearchModel::search()
+         m_job = nullptr;
+     }
+ 
++    // The server can't read the contents of encrypted messages, so search the decrypted timeline locally instead.
++    m_localSearch = m_room && m_room->usesEncryption();
++
+     if (m_searchText.isEmpty()) {
++        m_generation++;
++        setSearching(false);
++        return;
++    }
++
++    if (m_localSearch) {
++        m_generation++;
++        m_localSearchTerms = m_searchText.split(QLatin1Char(' '), Qt::SkipEmptyParts);
++        m_localMatchesInBatch = 0;
++        runLocalSearch(LocalSearchMaxHistoryPages);
++    } else {
++        runSearch();
++    }
++}
++
++bool SearchModel::localEventMatches(const RoomEvent &event) const
++{
++    if (event.isRedacted()) {
++        return false;
++    }
++    const auto messageEvent = eventCast<const RoomMessageEvent>(&event);
++    // Edits are skipped as the original event in the timeline already contains the latest content.
++    if (!messageEvent || !messageEvent->replacedEvent().isEmpty()) {
++        return false;
++    }
++    if (!m_senderId.isEmpty() && messageEvent->senderId() != m_senderId) {
++        return false;
++    }
++    const auto body = messageEvent->plainBody();
++    return std::ranges::all_of(m_localSearchTerms, [&body](const QString &term) {
++        return body.contains(term, Qt::CaseInsensitive);
++    });
++}
++
++void SearchModel::runLocalSearch(int historyPagesRemaining)
++{
++    if (!m_room) {
++        setSearching(false);
++        return;
++    }
++
++    const auto &timeline = m_room->messageEvents();
++    auto it = timeline.crbegin();
++    if (m_oldestSearchedIndex) {
++        it = m_room->findInTimeline(*m_oldestSearchedIndex);
++        if (it != m_room->historyEdge()) {
++            ++it;
++        }
++    }
++
++    QStringList matches;
++    for (; it != m_room->historyEdge(); ++it) {
++        if (localEventMatches(*it->event())) {
++            matches += it->event()->id();
++        }
++    }
++    if (!timeline.empty()) {
++        m_oldestSearchedIndex = timeline.front().index();
++    }
++
++    if (!matches.isEmpty()) {
++        beginInsertRows({}, rowCount(), rowCount() + int(matches.size()) - 1);
++        for (const auto &eventId : std::as_const(matches)) {
++            m_localResults += eventId;
++            Q_EMIT newEventAdded(m_room->findInTimeline(eventId)->event());
++        }
++        endInsertRows();
++        m_localMatchesInBatch += matches.size();
++    }
++
++    if (m_localMatchesInBatch >= LocalSearchBatchSize || m_room->allHistoryLoaded() || historyPagesRemaining <= 0) {
++        setSearching(false);
+         return;
+     }
+ 
+-    runSearch();
++    setSearching(true);
++    const auto generation = m_generation;
++    const auto oldestIndex = m_oldestSearchedIndex;
++    m_room->getPreviousContent(LocalSearchHistoryPageSize);
++    connectUntil(m_room.get(), &Room::eventsHistoryJobChanged, this, [this, generation, oldestIndex, historyPagesRemaining] {
++        if (generation != m_generation || !m_room) {
++            return true;
++        }
++        if (m_room->eventsHistoryJob()) {
++            return false;
++        }
++        const auto &timeline = m_room->messageEvents();
++        if (timeline.empty() || (oldestIndex && timeline.front().index() == *oldestIndex)) {
++            // Nothing new was loaded, e.g. because the request failed.
++            setSearching(false);
++            return true;
++        }
++        runLocalSearch(historyPagesRemaining - 1);
++        return true;
++    });
+ }
+ 
+ void SearchModel::fetchMore(const QModelIndex &parent)
+ {
+     Q_UNUSED(parent)
++    if (m_localSearch) {
++        m_localMatchesInBatch = 0;
++        runLocalSearch(LocalSearchMaxHistoryPages);
++        return;
++    }
+     runSearch(m_nextBatch);
+ }
+ 
+ bool SearchModel::canFetchMore(const QModelIndex &parent) const
+ {
+     Q_UNUSED(parent)
++    if (m_localSearch) {
++        return m_room && !m_room->allHistoryLoaded() && m_oldestSearchedIndex && !m_searchText.isEmpty() && !searching();
++    }
+     return !m_nextBatch.isEmpty() && !searching();
+ }
+ 
+ std::optional<std::reference_wrapper<const RoomEvent>> SearchModel::getEventForIndex(QModelIndex index) const
+ {
++    if (m_localSearch) {
++        if (!m_room || index.row() < 0 || index.row() >= m_localResults.size()) {
++            return std::nullopt;
++        }
++        const auto it = m_room->findInTimeline(m_localResults.at(index.row()));
++        if (it == m_room->historyEdge()) {
++            return std::nullopt;
++        }
++        return *it->event();
++    }
++
+     if (m_results.empty()) {
+         return std::nullopt;
+     }
+@@ -122,7 +250,7 @@ std::optional<std::reference_wrapper<const RoomEvent>> SearchModel::getEventForI
+ int SearchModel::rowCount(const QModelIndex &parent) const
+ {
+     Q_UNUSED(parent);
+-    return m_results.size();
++    return m_localSearch ? m_localResults.size() : m_results.size();
+ }
+ 
+ bool SearchModel::searching() const
+diff --git a/src/timeline/models/searchmodel.h b/src/timeline/models/searchmodel.h
+index 94adff4..93567d0 100644
+--- a/src/timeline/models/searchmodel.h
++++ b/src/timeline/models/searchmodel.h
+@@ -78,6 +78,16 @@ private:
+ 
+     void runSearch(const QString &batch = {});
+ 
++    /**
++     * @brief Search the locally available (decrypted) timeline of the room.
++     *
++     * Used for encrypted rooms where the server can't search the message contents.
++     * Historical messages are loaded from the server as needed, up to
++     * \p historyPagesRemaining pages per batch of results.
++     */
++    void runLocalSearch(int historyPagesRemaining);
++    bool localEventMatches(const Quotient::RoomEvent &event) const;
++
+     void setSearching(bool searching);
+ 
+     QString m_searchText;
+@@ -86,4 +96,11 @@ private:
+     bool m_searching = false;
+     QString m_senderId;
+     QString m_nextBatch;
++    quint64 m_generation = 0;
++
++    bool m_localSearch = false;
++    QStringList m_localResults;
++    QStringList m_localSearchTerms;
++    std::optional<Quotient::TimelineItem::index_t> m_oldestSearchedIndex;
++    int m_localMatchesInBatch = 0;
+ };
+-- 
+2.55.0
+
