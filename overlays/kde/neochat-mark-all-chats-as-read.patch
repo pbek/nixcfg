@@ -1,0 +1,145 @@
+From 88e67d3735f17387346997050bed41139cd01c5c Mon Sep 17 00:00:00 2001
+From: Patrizio Bekerle <patrizio@bekerle.com>
+Date: Tue, 20 Oct 2026 09:22:20 +0200
+Subject: [PATCH] Add mark all chats as read to Home and Direct Messages
+
+---
+ src/libneochat/neochatconnection.cpp | 47 ++++++++++++++++++++++++++++
+ src/libneochat/neochatconnection.h   |  8 +++++
+ src/rooms/SpaceDrawer.qml            | 23 ++++++++++++++
+ 3 files changed, 78 insertions(+)
+
+diff --git a/src/libneochat/neochatconnection.cpp b/src/libneochat/neochatconnection.cpp
+index 86a9b5278..33c2929d9 100644
+--- a/src/libneochat/neochatconnection.cpp
++++ b/src/libneochat/neochatconnection.cpp
+@@ -26,6 +26,7 @@
+ #include <Quotient/csapi/registration.h>
+ #include <Quotient/csapi/versions.h>
+ #include <Quotient/e2ee/sssshandler.h>
++#include <Quotient/events/roomcreateevent.h>
+ #include <Quotient/jobs/downloadfilejob.h>
+ #include <Quotient/room.h>
+ #include <Quotient/settings.h>
+@@ -503,6 +504,52 @@ bool NeoChatConnection::homeHaveHighlightNotifications() const
+     return false;
+ }
+ 
++void NeoChatConnection::markAllChatsAsRead(bool directChats, bool sendPublicReceipts, bool includeSpaceRooms)
++{
++    const auto &spaceHierarchyCache = SpaceHierarchyCache::instance();
++    for (const auto &r : rooms(JoinState::Join)) {
++        const auto chat = static_cast<NeoChatRoom *>(r);
++        if (chat->isSpace() || chat->isDirectChat() != directChats) {
++            continue;
++        }
++        if (!directChats) {
++            if (!chat->successorId().isEmpty() && room(chat->successorId())) {
++                continue;
++            }
++            if (chat->creation() && !chat->creation()->contentPart<QString>("type"_L1).isEmpty()) {
++                continue;
++            }
++            if (!includeSpaceRooms && spaceHierarchyCache.isChild(chat->id())) {
++                continue;
++            }
++        }
++
++        // Rooms may not have a loaded timeline yet. Fetch an event to mark as read,
++        // just as when marking a space's children as read.
++        if (chat->messageEvents().crbegin() == chat->historyEdge()) {
++            if (!chat->eventsHistoryJob()) {
++                if (chat->allHistoryLoaded()) {
++                    continue;
++                }
++                chat->getPreviousContent();
++            }
++
++            connect(
++                chat,
++                &NeoChatRoom::addedMessages,
++                chat,
++                [chat, sendPublicReceipts] {
++                    if (chat->messageEvents().crbegin() != chat->historyEdge()) {
++                        chat->markAllMessagesAsRead(sendPublicReceipts);
++                    }
++                },
++                Qt::SingleShotConnection);
++        } else {
++            chat->markAllMessagesAsRead(sendPublicReceipts);
++        }
++    }
++}
++
+ qsizetype NeoChatConnection::directChatInvites() const
+ {
+     const auto inviteRooms = rooms(JoinState::Invite);
+diff --git a/src/libneochat/neochatconnection.h b/src/libneochat/neochatconnection.h
+index cc77bc2fa..38c9cd4e2 100644
+--- a/src/libneochat/neochatconnection.h
++++ b/src/libneochat/neochatconnection.h
+@@ -190,6 +190,14 @@ public:
+     qsizetype homeNotifications() const;
+     bool homeHaveHighlightNotifications() const;
+ 
++    /**
++     * @brief Mark all joined chats in Home or Direct Messages as read.
++     * @param directChats Whether to mark direct chats instead of Home rooms.
++     * @param sendPublicReceipts Whether to send public read receipts.
++     * @param includeSpaceRooms Whether Home includes rooms belonging to spaces.
++     */
++    Q_INVOKABLE void markAllChatsAsRead(bool directChats, bool sendPublicReceipts, bool includeSpaceRooms = false);
++
+     int badgeNotificationCount() const;
+     void refreshBadgeNotificationCount();
+ 
+diff --git a/src/rooms/SpaceDrawer.qml b/src/rooms/SpaceDrawer.qml
+index d9d5b6d79..1aa6d2272 100644
+--- a/src/rooms/SpaceDrawer.qml
++++ b/src/rooms/SpaceDrawer.qml
+@@ -12,6 +12,7 @@ import org.kde.kirigami as Kirigami
+ import org.kde.kirigamiaddons.components as KirigamiComponents
+ 
+ import org.kde.neochat
++import org.kde.neochat.settings
+ 
+ QQC2.Control {
+     id: root
+@@ -93,6 +94,17 @@ QQC2.Control {
+ 
+                     checked: RoomManager.currentSpace.length === 0
+                     onSelected: RoomManager.currentSpace = ""
++                    onContextMenuRequested: homeContextMenu.popup()
++
++                    KirigamiComponents.ConvergentContextMenu {
++                        id: homeContextMenu
++
++                        QQC2.Action {
++                            text: i18nc("@action:inmenu", "Mark All Chats as Read")
++                            icon.name: "checkmark"
++                            onTriggered: root.connection.markAllChatsAsRead(false, NeoChatConfig.publicReadReceipts, NeoChatConfig.allRoomsInHome)
++                        }
++                    }
+                 }
+                 AvatarTabButton {
+                     id: directChatButton
+@@ -148,6 +160,17 @@ QQC2.Control {
+ 
+                     checked: RoomManager.currentSpace === "DM"
+                     onSelected: RoomManager.currentSpace = "DM"
++                    onContextMenuRequested: directChatContextMenu.popup()
++
++                    KirigamiComponents.ConvergentContextMenu {
++                        id: directChatContextMenu
++
++                        QQC2.Action {
++                            text: i18nc("@action:inmenu", "Mark All Chats as Read")
++                            icon.name: "checkmark"
++                            onTriggered: root.connection.markAllChatsAsRead(true, NeoChatConfig.publicReadReceipts)
++                        }
++                    }
+                 }
+ 
+                 Repeater {
+-- 
+2.55.0

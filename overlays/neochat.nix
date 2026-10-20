@@ -14,6 +14,10 @@ in
   kdePackages = prev.kdePackages.overrideScope (
     _kfinal: _kprev: {
       neochat = neochatPackages.neochat.overrideAttrs (old: {
+        # Remove once NeoChat includes https://invent.kde.org/network/neochat/-/merge_requests/3086.
+        patches = (old.patches or [ ]) ++ [
+          ./kde/neochat-mark-all-chats-as-read.patch
+        ];
         # libQuotient 0.10's CMake config locates SQLite using pkg-config.
         nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ prev.pkg-config ];
       });
