@@ -1,0 +1,202 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrizio Bekerle <patrizio@bekerle.com>
+Date: Tue, 20 Oct 2026 10:11:08 +0200
+Subject: [PATCH] Add option to show all chats in the Home space
+
+When enabled, Home lists direct chats and rooms from every space, keeps Home selected while opening chats, and includes direct chat notifications in its badge. The existing "Show all rooms" option is disabled while this option is active.
+---
+ src/app/neochatconfig.kcfg                   |  4 ++++
+ src/app/roommanager.cpp                      | 19 ++++++++++++++++---
+ src/rooms/SpaceDrawer.qml                    |  4 ++--
+ src/rooms/models/sortfilterroomtreemodel.cpp | 12 ++++++++++--
+ src/rooms/models/sortfilterroomtreemodel.h   |  2 ++
+ src/settings/NeoChatGeneralPage.qml          | 18 +++++++++++++++++-
+ 6 files changed, 51 insertions(+), 8 deletions(-)
+
+diff --git a/src/app/neochatconfig.kcfg b/src/app/neochatconfig.kcfg
+index b19a891..4e51f94 100644
+--- a/src/app/neochatconfig.kcfg
++++ b/src/app/neochatconfig.kcfg
+@@ -10,6 +10,10 @@
+       <label>Show all rooms in the home tab</label>
+       <default>false</default>
+     </entry>
++    <entry name="AllChatsInHome" type="Bool">
++      <label>Show all rooms and direct chats in the home tab</label>
++      <default>false</default>
++    </entry>
+     <entry name="CollapsedSections" type="IntList">
+       <label>Collapsed sections in the room list</label>
+     </entry>
+diff --git a/src/app/roommanager.cpp b/src/app/roommanager.cpp
+index 47b36c0..97ad9d5 100644
+--- a/src/app/roommanager.cpp
++++ b/src/app/roommanager.cpp
+@@ -146,6 +146,14 @@ RoomManager::RoomManager(QObject *parent)
+             resetState();
+         }
+     });
++    SortFilterRoomTreeModel::setShowAllChatsInHome(NeoChatConfig::allChatsInHome());
++    connect(NeoChatConfig::self(), &NeoChatConfig::AllChatsInHomeChanged, this, [this]() {
++        SortFilterRoomTreeModel::setShowAllChatsInHome(NeoChatConfig::allChatsInHome());
++        m_sortFilterRoomTreeModel->invalidate();
++        if (NeoChatConfig::allChatsInHome()) {
++            resetState();
++        }
++    });
+     Blocks::CacheItem::richTextActive = NeoChatConfig::richChatBar();
+     connect(NeoChatConfig::self(), &NeoChatConfig::RichChatBarChanged, this, [] {
+         Blocks::CacheItem::richTextActive = NeoChatConfig::richChatBar();
+@@ -381,7 +389,8 @@ void RoomManager::openRoomForActiveConnection()
+     }
+ 
+     auto lastSpace = m_lastRoomConfig.readEntry(u"lastSpace"_s, QString());
+-    if (lastSpace == u"Home"_s) {
++    // "ALL" was used by the removed All Chats section.
++    if (lastSpace == u"Home"_s || lastSpace == u"ALL"_s) {
+         lastSpace.clear();
+     }
+     // We don't want to open a room on startup on mobile
+@@ -594,6 +603,11 @@ QString RoomManager::findSpaceIdForCurrentRoom() const
+     if (!m_currentRoom) {
+         return m_currentSpaceId;
+     }
++    static auto config = NeoChatConfig::self();
++    // Home contains every non-space room, so opening a chat from it must not switch tabs.
++    if (config->allChatsInHome() && m_currentSpaceId.isEmpty() && !m_currentRoom->isSpace()) {
++        return {};
++    }
+     if (m_currentRoom->isDirectChat()) {
+         const auto roomsInSpace = SpaceHierarchyCache::instance().getRoomListForSpace(m_currentSpaceId, false);
+         if (roomsInSpace.contains(m_currentRoom->id())) {
+@@ -605,8 +619,7 @@ QString RoomManager::findSpaceIdForCurrentRoom() const
+     if (parentSpaces.contains(m_currentSpaceId)) {
+         return m_currentSpaceId;
+     }
+-    static auto config = NeoChatConfig::self();
+-    if (config->allRoomsInHome()) {
++    if (config->allRoomsInHome() || config->allChatsInHome()) {
+         return {};
+     }
+     if (const auto &parent = m_connection->room(m_currentRoom->canonicalParent())) {
+diff --git a/src/rooms/SpaceDrawer.qml b/src/rooms/SpaceDrawer.qml
+index a26d388..da7668f 100644
+--- a/src/rooms/SpaceDrawer.qml
++++ b/src/rooms/SpaceDrawer.qml
+@@ -49,7 +49,7 @@ QQC2.Control {
+                 AvatarTabButton {
+                     id: allRoomButton
+ 
+-                    readonly property int countedNotifications: root.connection.homeNotifications + root.connection.roomInvites
++                    readonly property int countedNotifications: root.connection.homeNotifications + root.connection.roomInvites + (NeoChatConfig.allChatsInHome ? root.connection.directChatNotifications + root.connection.directChatInvites : 0)
+                     readonly property bool hasCountableNotifications: countedNotifications > 0
+ 
+                     Layout.fillWidth: true
+@@ -79,7 +79,7 @@ QQC2.Control {
+                                 visible: true
+                                 Kirigami.Theme.colorSet: Kirigami.Theme.Button
+                                 Kirigami.Theme.inherit: false
+-                                color: root.connection.homeHaveHighlightNotifications || root.connection.roomInvites > 0 ? Kirigami.Theme.positiveTextColor : Kirigami.Theme.backgroundColor
++                                color: root.connection.homeHaveHighlightNotifications || root.connection.roomInvites > 0 || (NeoChatConfig.allChatsInHome && (root.connection.directChatsHaveHighlightNotifications || root.connection.directChatInvites > 0)) ? Kirigami.Theme.positiveTextColor : Kirigami.Theme.backgroundColor
+                                 radius: height / 2
+                             }
+ 
+diff --git a/src/rooms/models/sortfilterroomtreemodel.cpp b/src/rooms/models/sortfilterroomtreemodel.cpp
+index d12d9db..ece7bc1 100644
+--- a/src/rooms/models/sortfilterroomtreemodel.cpp
++++ b/src/rooms/models/sortfilterroomtreemodel.cpp
+@@ -13,6 +13,7 @@
+ #include <Quotient/eventstats.h>
+ 
+ bool SortFilterRoomTreeModel::m_showAllRoomsInHome = false;
++bool SortFilterRoomTreeModel::m_showAllChatsInHome = false;
+ 
+ SortFilterRoomTreeModel::SortFilterRoomTreeModel(RoomTreeModel *sourceModel, QObject *parent)
+     : QSortFilterProxyModel(parent)
+@@ -102,8 +103,10 @@ bool SortFilterRoomTreeModel::filterAcceptsRow(int source_row, const QModelIndex
+         return isDirectChat && acceptRoom;
+     }
+ 
++    const bool showAllChats = m_showAllChatsInHome && m_activeSpaceId.isEmpty();
++
+     // When not in `show direct chats` mode, filter them out.
+-    if (isDirectChat && m_mode == Rooms) {
++    if (isDirectChat && m_mode == Rooms && !showAllChats) {
+         return false;
+     }
+ 
+@@ -117,7 +120,7 @@ bool SortFilterRoomTreeModel::filterAcceptsRow(int source_row, const QModelIndex
+         return false;
+     }
+ 
+-    if (m_showAllRoomsInHome && m_activeSpaceId.isEmpty()) {
++    if (showAllChats || (m_showAllRoomsInHome && m_activeSpaceId.isEmpty())) {
+         return acceptRoom;
+     }
+ 
+@@ -181,4 +184,9 @@ void SortFilterRoomTreeModel::setShowAllRoomsInHome(bool enabled)
+     SortFilterRoomTreeModel::m_showAllRoomsInHome = enabled;
+ }
+ 
++void SortFilterRoomTreeModel::setShowAllChatsInHome(bool enabled)
++{
++    SortFilterRoomTreeModel::m_showAllChatsInHome = enabled;
++}
++
+ #include "moc_sortfilterroomtreemodel.cpp"
+diff --git a/src/rooms/models/sortfilterroomtreemodel.h b/src/rooms/models/sortfilterroomtreemodel.h
+index 5834ad8..cc73bef 100644
+--- a/src/rooms/models/sortfilterroomtreemodel.h
++++ b/src/rooms/models/sortfilterroomtreemodel.h
+@@ -84,6 +84,7 @@ public:
+     Q_INVOKABLE [[nodiscard]] QModelIndex currentRoomIndex() const;
+ 
+     static void setShowAllRoomsInHome(bool enabled);
++    static void setShowAllChatsInHome(bool enabled);
+ 
+ protected:
+     /**
+@@ -114,4 +115,5 @@ private:
+     QPointer<NeoChatRoom> m_currentRoom;
+ 
+     static bool m_showAllRoomsInHome;
++    static bool m_showAllChatsInHome;
+ };
+diff --git a/src/settings/NeoChatGeneralPage.qml b/src/settings/NeoChatGeneralPage.qml
+index 600e81a..5f7f308 100644
+--- a/src/settings/NeoChatGeneralPage.qml
++++ b/src/settings/NeoChatGeneralPage.qml
+@@ -79,13 +79,29 @@ FormCard.FormCardPage {
+             id: categorizeDelegate
+             text: i18n("Show all rooms in \"Home\" tab")
+             checked: NeoChatConfig.allRoomsInHome
+-            enabled: !NeoChatConfig.isAllRoomsInHomeImmutable
++            enabled: !NeoChatConfig.isAllRoomsInHomeImmutable && !NeoChatConfig.allChatsInHome
+             onToggled: {
+                 NeoChatConfig.allRoomsInHome = checked;
+                 NeoChatConfig.save();
+             }
+         }
+ 
++        FormCard.FormDelegateSeparator {
++            above: categorizeDelegate
++            below: allChatsDelegate
++        }
++
++        FormCard.FormCheckDelegate {
++            id: allChatsDelegate
++            text: i18nc("@option:check Show all rooms and direct messages in the 'Home' space. Keep this consistent with the same translation you use for that space.", "Show all chats in \"Home\" space")
++            checked: NeoChatConfig.allChatsInHome
++            enabled: !NeoChatConfig.isAllChatsInHomeImmutable
++            onToggled: {
++                NeoChatConfig.allChatsInHome = checked;
++                NeoChatConfig.save();
++            }
++        }
++
+     }
+     FormCard.FormHeader {
+         title: i18nc("@title:group", "Room List Sort Order")
+-- 
+2.55.0
+
