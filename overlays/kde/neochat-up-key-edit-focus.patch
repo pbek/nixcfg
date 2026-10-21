@@ -1,0 +1,179 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrizio Bekerle <patrizio@bekerle.com>
+Date: Wed, 21 Oct 2026 13:49:37 +0200
+Subject: [PATCH 1/2] Focus the edit chat bar when starting to edit a message
+
+When editing a message (e.g. by pressing up in the main chat bar) the inline edit chat bar was shown but focus stayed in the main chat bar. Request focus for the edit chat bar when it is first created and return focus to the previously focused item when the edit chat bar is closed.
+
+Backport of https://invent.kde.org/network/neochat/-/merge_requests/3090 to 26.08.
+---
+ src/libneochat/block.cpp            | 15 ++++++++++
+ src/libneochat/block.h              | 15 ++++++++++
+ src/messagecontent/BlockChooser.qml | 44 ++++++++++++++++++++++++++++-
+ 3 files changed, 73 insertions(+), 1 deletion(-)
+
+diff --git a/src/libneochat/block.cpp b/src/libneochat/block.cpp
+index 931e7a28e..5dfa3054f 100644
+--- a/src/libneochat/block.cpp
++++ b/src/libneochat/block.cpp
+@@ -562,6 +562,7 @@ ChatBarBlock::ChatBarBlock(Type type, bool isEditing, const QString &threadRootI
+     : Block(type, parent)
+     , m_isEditing(isEditing)
+     , m_threadRootId(threadRootId)
++    , m_requestFocus(isEditing)
+ {
+ }
+ 
+@@ -575,4 +576,18 @@ QString ChatBarBlock::threadRootId() const
+     return m_threadRootId;
+ }
+ 
++bool ChatBarBlock::requestFocus() const
++{
++    return m_requestFocus;
++}
++
++void ChatBarBlock::setRequestFocus(bool requestFocus)
++{
++    if (requestFocus == m_requestFocus) {
++        return;
++    }
++    m_requestFocus = requestFocus;
++    Q_EMIT requestFocusChanged();
++}
++
+ #include "moc_block.cpp"
+diff --git a/src/libneochat/block.h b/src/libneochat/block.h
+index 943c06f17..20c3d01f7 100644
+--- a/src/libneochat/block.h
++++ b/src/libneochat/block.h
+@@ -613,15 +613,30 @@ class ChatBarBlock : public Block
+      */
+     Q_PROPERTY(QString threadRootId READ threadRootId CONSTANT)
+ 
++    /**
++     * @brief Whether the chat bar should take focus when it is shown.
++     *
++     * The delegate should reset this to false once it has taken focus so that
++     * recreating the delegate (e.g. when scrolling) doesn't steal focus again.
++     */
++    Q_PROPERTY(bool requestFocus READ requestFocus WRITE setRequestFocus NOTIFY requestFocusChanged)
++
+ public:
+     ChatBarBlock(Type type, bool isEditing, const QString &threadRootId, QObject *parent);
+ 
+     [[nodiscard]] bool isEditing() const;
+     [[nodiscard]] QString threadRootId() const;
+ 
++    [[nodiscard]] bool requestFocus() const;
++    void setRequestFocus(bool requestFocus);
++
++Q_SIGNALS:
++    void requestFocusChanged();
++
+ private:
+     bool m_isEditing = false;
+     QString m_threadRootId = {};
++    bool m_requestFocus = false;
+ };
+ 
+ using BlockPtrs = std::vector<Blocks::Block *>;
+diff --git a/src/messagecontent/BlockChooser.qml b/src/messagecontent/BlockChooser.qml
+index 779cf12ad..d6a64b4be 100644
+--- a/src/messagecontent/BlockChooser.qml
++++ b/src/messagecontent/BlockChooser.qml
+@@ -31,10 +31,52 @@ BaseBlockChooser {
+     DelegateChoice {
+         roleValue: Blocks.ChatBar
+         delegate: ChatBarCore {
++            id: core
++
+             /**
+              * @brief The Blocks::Block for the delegate.
+              */
+-            required property Block block
++            required property ChatBarBlock block
++
++            /**
++             * @brief The item that had focus before this chat bar took it.
++             *
++             * Focus is returned here when the chat bar is closed.
++             */
++            property Item previousFocusItem: null
++
++            property Window focusWindow: null
++
++            function hasFocusWithin(item: Item): bool {
++                for (let it = item; it; it = it.parent) {
++                    if (it === core) {
++                        return true;
++                    }
++                }
++                return false;
++            }
++
++            Component.onCompleted: if (block.requestFocus) {
++                block.requestFocus = false;
++                Qt.callLater(() => {
++                    if (!core) {
++                        return;
++                    }
++                    core.focusWindow = core.Window.window;
++                    core.previousFocusItem = core.Window.activeFocusItem;
++                    core.forceActiveFocus();
++                });
++            }
++
++            Component.onDestruction: {
++                if (!previousFocusItem || !focusWindow) {
++                    return;
++                }
++                const activeItem = focusWindow.activeFocusItem;
++                if (!activeItem || activeItem === focusWindow.contentItem || hasFocusWithin(activeItem)) {
++                    previousFocusItem.forceActiveFocus();
++                }
++            }
+ 
+             Layout.fillWidth: true
+             Layout.maximumWidth: Message.maxContentWidth
+-- 
+2.55.0
+
+
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrizio Bekerle <patrizio@bekerle.com>
+Date: Wed, 21 Oct 2026 14:02:15 +0200
+Subject: [PATCH 2/2] Set the focused component when initializing an edit
+
+initializeEdit cleared and refilled the model without setting the current focus component, so focusedTextItem() was null and the edit chat bar's text item could not be focused programmatically.
+---
+ src/messagecontent/models/chatbarmessagecontentmodel.cpp | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/src/messagecontent/models/chatbarmessagecontentmodel.cpp b/src/messagecontent/models/chatbarmessagecontentmodel.cpp
+index 545f42ec0..0397e6838 100644
+--- a/src/messagecontent/models/chatbarmessagecontentmodel.cpp
++++ b/src/messagecontent/models/chatbarmessagecontentmodel.cpp
+@@ -212,6 +212,9 @@ void ChatBarMessageContentModel::initializeEdit()
+         auto textBlock = new Blocks::TextBlock(Blocks::Text, cursor.selection(), false, this);
+         connectTextItem(textBlock->item());
+         insertComponent(0, std::move(textBlock));
++
++        m_currentFocusComponent = QPersistentModelIndex(index(0));
++        Q_EMIT focusRowChanged();
+         return;
+     }
+ 
+@@ -229,6 +232,9 @@ void ChatBarMessageContentModel::initializeEdit()
+         }
+     });
+     endResetModel();
++
++    m_currentFocusComponent = QPersistentModelIndex(index(rowCount() - 1));
++    Q_EMIT focusRowChanged();
+ }
+ 
+ ChatBarType::Type ChatBarMessageContentModel::type() const
+-- 
+2.55.0
+
