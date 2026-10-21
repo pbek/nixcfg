@@ -1,0 +1,65 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrizio Bekerle <patrizio@bekerle.com>
+Date: Wed, 21 Oct 2026 10:51:32 +0200
+Subject: [PATCH] Fix emoji history not being recorded
+
+Record emoji usage before emitting chosen, since handlers may close and
+destroy the picker, aborting the click handler before emojiUsed() runs.
+Also pass the short name instead of the Emoji object from the tones picker.
+---
+ src/chatbar/EmojiGrid.qml            | 6 +++---
+ src/chatbar/EmojiTonesPicker.qml     | 2 +-
+ src/timeline/DelegateContextMenu.qml | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/src/chatbar/EmojiGrid.qml b/src/chatbar/EmojiGrid.qml
+index 0126d7e00..2f5eb3b97 100644
+--- a/src/chatbar/EmojiGrid.qml
++++ b/src/chatbar/EmojiGrid.qml
+@@ -62,11 +62,11 @@ QQC2.ScrollView {
+             onClicked: {
+                 if (root.stickers) {
+                     root.stickerChosen(model.index);
+-                }
+-                root.chosen(modelData.isCustom ? modelData.shortName : modelData.unicode);
+-                if (!root.stickers) {
++                } else {
++                    // Record before emitting chosen, as handlers may close and destroy this grid
+                     EmojiModel.emojiUsed(modelData.shortName);
+                 }
++                root.chosen(modelData.isCustom ? modelData.shortName : modelData.unicode);
+             }
+             Keys.onSpacePressed: pressAndHold()
+             onPressAndHold: {
+diff --git a/src/chatbar/EmojiTonesPicker.qml b/src/chatbar/EmojiTonesPicker.qml
+index 73784cea9..d92ce3466 100644
+--- a/src/chatbar/EmojiTonesPicker.qml
++++ b/src/chatbar/EmojiTonesPicker.qml
+@@ -63,8 +63,8 @@ QQC2.Popup {
+             Keys.onEnterPressed: clicked()
+             Keys.onReturnPressed: clicked()
+             onClicked: {
++                EmojiModel.emojiUsed(modelData.shortName);
+                 root.chosen(modelData.unicode);
+-                EmojiModel.emojiUsed(modelData);
+                 root.close();
+             }
+         }
+diff --git a/src/timeline/DelegateContextMenu.qml b/src/timeline/DelegateContextMenu.qml
+index 488192985..537179cab 100644
+--- a/src/timeline/DelegateContextMenu.qml
++++ b/src/timeline/DelegateContextMenu.qml
+@@ -142,9 +142,9 @@ KirigamiComponents.ConvergentContextMenu {
+                     }
+ 
+                     onClicked: {
++                        EmojiModel.emojiUsed(shortName);
+                         root.room.toggleReaction(root.eventId, unicode);
+                         root.close();
+-                        EmojiModel.emojiUsed(shortName);
+                     }
+                 }
+             }
+-- 
+2.55.0
+
