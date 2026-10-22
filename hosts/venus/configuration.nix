@@ -42,7 +42,8 @@
   };
 
   environment.systemPackages = with pkgs; [
-    calibre
+    # Use stable until unstable's pyopenjtalk-plus dependency passes its tests.
+    stable.calibre
     zoom-us
     (blender.override { rocmSupport = true; }) # Blender with HIP support for AMD GPUs
     # Temporarily disabled for: sip-4.19.25 not supported for interpreter python3.12

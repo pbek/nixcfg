@@ -64,7 +64,8 @@ in
       onboard # On-screen keyboard
       google-chrome # Touch scrolling in Chrome
       #    heroic-unwrapped # Epic Games Store
-      lutris-unwrapped # Game manager
+      # Use stable until unstable's pyrate-limiter dependency passes its tests.
+      stable.lutris-unwrapped # Game manager
       ferdium
       qc
       #    (pkgs.callPackage ../../pkgs/qc/default.nix { })
