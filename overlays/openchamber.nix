@@ -1,4 +1,4 @@
-# Overlay adding OpenChamber (uses opencode2 from overlays/opencode2.nix)
+# Overlay adding OpenChamber (uses upstream nixpkgs OpenCode 2.x)
 self: super: {
-  openchamber = super.callPackage ../pkgs/openchamber/package.nix { inherit (self) opencode2; };
+  openchamber = super.callPackage ../pkgs/openchamber/package.nix { inherit (self) opencode; };
 }

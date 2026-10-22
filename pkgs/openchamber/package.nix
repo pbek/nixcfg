@@ -2,8 +2,8 @@
 #
 # OpenChamber 2.x talks to the OpenCode 2.x HTTP API (it pins
 # @opencode/client 2.0.x, and its Docker image installs @opencode/cli 2.0.x),
-# so it is wired to `opencode2` instead of the nixpkgs OpenCode 1.x.
-# Use `openchamber.override { opencode2 = ...; }` for a different build, or set
+# so it uses the upstream nixpkgs `opencode` package.
+# Use `openchamber.override { opencode = ...; }` for a different build, or set
 # OPENCODE_BINARY at runtime.
 {
   lib,
@@ -13,7 +13,7 @@
   bun,
   nodejs,
   git,
-  opencode2,
+  opencode,
   makeBinaryWrapper,
   installShellFiles,
   autoPatchelfHook,
@@ -175,7 +175,7 @@ stdenv.mkDerivation (finalAttrs: {
       --set-default BUN_BINARY ${lib.getExe bun} \
       --set-default OPENCHAMBER_BUN_BINARY ${lib.getExe bun} \
       --set-default OPENCHAMBER_NODE_BINARY ${lib.getExe nodejs} \
-      --set-default OPENCODE_BINARY ${lib.getExe opencode2} \
+      --set-default OPENCODE_BINARY ${lib.getExe opencode} \
       --suffix PATH : ${
         lib.makeBinPath [
           git
@@ -205,7 +205,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   passthru = {
     node_modules = node_modules finalAttrs;
-    opencode = opencode2;
+    inherit opencode;
   };
 
   meta = {

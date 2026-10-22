@@ -25,9 +25,8 @@ in
     };
 
     programs.fish.shellAliases = {
-      opencode = "opencode2";
-      oc = "opencode2";
-      occ = "opencode2 -c";
+      oc = "opencode";
+      occ = "opencode -c";
     };
 
     home-manager.users = lib.genAttrs hokage.users (_userName: {
@@ -36,7 +35,7 @@ in
         # Use "/connect" to connect to GitHub Copilot or Azure OpenAI
         opencode = {
           enable = true;
-          package = pkgs.opencode2;
+          package = pkgs.opencode;
           enableMcpIntegration = true;
           skills.markdown = ../skills/markdown/SKILL.md;
           settings = {
