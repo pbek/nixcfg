@@ -1,0 +1,416 @@
+From 23982c3a76d97cb703dd2e41a40a20c500ab207f Mon Sep 17 00:00:00 2001
+From: Patrizio Bekerle <patrizio@bekerle.com>
+Date: Thu, 22 Oct 2026 22:28:24 +0200
+Subject: [PATCH] Add option to prefix window titles with the project name
+
+---
+ addons/project/autotests/test1.cpp       | 46 ++++++++++++++++++++++++
+ addons/project/autotests/test1.h         |  1 +
+ addons/project/kateprojectconfigpage.cpp | 13 +++++++
+ addons/project/kateprojectconfigpage.h   |  1 +
+ addons/project/kateprojectplugin.cpp     | 13 +++++++
+ addons/project/kateprojectplugin.h       |  5 +++
+ addons/project/kateprojectpluginview.cpp | 13 +++++++
+ addons/project/kateprojectpluginview.h   |  2 ++
+ apps/lib/autotests/basic_ui_tests.cpp    | 42 ++++++++++++++++++++++
+ apps/lib/katemainwindow.cpp              | 14 +++++---
+ apps/lib/katemainwindow.h                |  9 +++++
+ 11 files changed, 155 insertions(+), 4 deletions(-)
+
+diff --git a/addons/project/autotests/test1.cpp b/addons/project/autotests/test1.cpp
+index 8354a3bfd2..ed6aa488a4 100644
+--- a/addons/project/autotests/test1.cpp
++++ b/addons/project/autotests/test1.cpp
+@@ -8,8 +8,16 @@
+ #include "test1.h"
+ #include "diagnostics/diagnostic_types.h"
+ #include "fileutil.h"
++#include "kateprojectconfigpage.h"
++#include "kateprojectplugin.h"
+ #include "tools/shellcheck.h"
+ 
++#include <KConfigGroup>
++#include <KSharedConfig>
++#include <QCheckBox>
++#include <QSignalSpy>
++#include <QStandardPaths>
++#include <QTemporaryDir>
+ #include <QTest>
+ 
+ #include <QString>
+@@ -40,6 +48,44 @@ void Test1::testShellCheckParsing()
+     QVERIFY(outList.uri.isValid());
+ }
+ 
++void Test1::testWindowTitleConfig()
++{
++    QStandardPaths::setTestModeEnabled(true);
++    QTemporaryDir dir;
++    QVERIFY(dir.isValid());
++    KConfig::setMainConfigName(dir.filePath(QStringLiteral("katerc")));
++
++    {
++        KateProjectPlugin plugin(nullptr);
++        QVERIFY(!plugin.prefixWindowTitle());
++        KateProjectConfigPage page(nullptr, &plugin);
++        auto checkbox = page.findChild<QCheckBox *>(QStringLiteral("prefixWindowTitle"));
++        QVERIFY(checkbox);
++        QVERIFY(!checkbox->isChecked());
++
++        QSignalSpy changed(&page, &KTextEditor::ConfigPage::changed);
++        checkbox->setChecked(true);
++        QVERIFY(!changed.isEmpty());
++        page.apply();
++        QVERIFY(plugin.prefixWindowTitle());
++        KConfigGroup config(KSharedConfig::openConfig(), QStringLiteral("project"));
++        QVERIFY(config.readEntry("prefixWindowTitle", false));
++
++        checkbox->setChecked(false);
++        page.reset();
++        QVERIFY(checkbox->isChecked());
++        page.defaults();
++        QVERIFY(!checkbox->isChecked());
++        page.apply();
++        QVERIFY(!plugin.prefixWindowTitle());
++        plugin.setPrefixWindowTitle(true);
++    }
++
++    KateProjectPlugin restoredPlugin(nullptr);
++    QVERIFY(restoredPlugin.prefixWindowTitle());
++    restoredPlugin.setPrefixWindowTitle(false);
++}
++
+ #include "moc_test1.cpp"
+ 
+ // kate: space-indent on; indent-width 4; replace-tabs on;
+diff --git a/addons/project/autotests/test1.h b/addons/project/autotests/test1.h
+index b9ef64f0b3..bb87a9c038 100644
+--- a/addons/project/autotests/test1.h
++++ b/addons/project/autotests/test1.h
+@@ -20,6 +20,7 @@ public Q_SLOTS:
+ private Q_SLOTS:
+     void testCommonParent();
+     void testShellCheckParsing();
++    void testWindowTitleConfig();
+ };
+ 
+ // kate: space-indent on; indent-width 4; replace-tabs on;
+diff --git a/addons/project/kateprojectconfigpage.cpp b/addons/project/kateprojectconfigpage.cpp
+index a5f10e551f..e6c23187b0 100644
+--- a/addons/project/kateprojectconfigpage.cpp
++++ b/addons/project/kateprojectconfigpage.cpp
+@@ -114,6 +114,15 @@ KateProjectConfigPage::KateProjectConfigPage(QWidget *parent, KateProjectPlugin
+     group->setLayout(vbox);
+     layout->addWidget(group);
+ 
++    vbox = new QVBoxLayout;
++    group = new QGroupBox(i18nc("Groupbox title", "Window Title"), this);
++    m_cbPrefixWindowTitle = new QCheckBox(i18n("Prefix window title with project name"), this);
++    m_cbPrefixWindowTitle->setObjectName(QStringLiteral("prefixWindowTitle"));
++    m_cbPrefixWindowTitle->setWhatsThis(i18n("Show the current project's name before the existing window title."));
++    vbox->addWidget(m_cbPrefixWindowTitle);
++    group->setLayout(vbox);
++    layout->addWidget(group);
++
+     layout->addStretch(1);
+ 
+     /** Git specific **/
+@@ -164,6 +173,7 @@ KateProjectConfigPage::KateProjectConfigPage(QWidget *parent, KateProjectPlugin
+                     m_cbAutoFossil,
+                     m_cbAutoCMake,
+                     m_cbSessionRestoreOpenProjects,
++                    m_cbPrefixWindowTitle,
+                     m_cbMultiProjectCompletion,
+                     m_cbIndexEnabled,
+                     m_cbMultiProjectGoto,
+@@ -226,6 +236,7 @@ void KateProjectConfigPage::apply()
+     m_plugin->setDoubleClickAction((ClickAction)m_cmbDoubleClick->currentIndex());
+ 
+     m_plugin->setRestoreProjectsForSession(m_cbSessionRestoreOpenProjects->isChecked());
++    m_plugin->setPrefixWindowTitle(m_cbPrefixWindowTitle->isChecked());
+ 
+     m_plugin->setDirectoryListing(m_cbDirectoryListing->isChecked(), m_cbShowHiddenFiles->isChecked());
+     m_plugin->setGitHostMappings(*hostMappings);
+@@ -247,6 +258,7 @@ void KateProjectConfigPage::reset()
+     m_cmbDoubleClick->setCurrentIndex((int)m_plugin->doubleClickAcion());
+ 
+     m_cbSessionRestoreOpenProjects->setCheckState(m_plugin->restoreProjectsForSession() ? Qt::Checked : Qt::Unchecked);
++    m_cbPrefixWindowTitle->setChecked(m_plugin->prefixWindowTitle());
+ 
+     m_cbDirectoryListing->setCheckState(m_plugin->directoryListing() ? Qt::Checked : Qt::Unchecked);
+     m_cbShowHiddenFiles->setCheckState(m_plugin->showHiddenFiles() ? Qt::Checked : Qt::Unchecked);
+@@ -257,6 +269,7 @@ void KateProjectConfigPage::reset()
+ 
+ void KateProjectConfigPage::defaults()
+ {
++    m_cbPrefixWindowTitle->setChecked(false);
+     m_gitForgeConfig->setHostMappings(GitForge::defaultHostMappings());
+     slotMyChanged();
+ }
+diff --git a/addons/project/kateprojectconfigpage.h b/addons/project/kateprojectconfigpage.h
+index d7584f5b87..22d312be1e 100644
+--- a/addons/project/kateprojectconfigpage.h
++++ b/addons/project/kateprojectconfigpage.h
+@@ -38,6 +38,7 @@ private:
+     void setupGitConfigUI();
+ 
+     QCheckBox *m_cbSessionRestoreOpenProjects;
++    QCheckBox *m_cbPrefixWindowTitle;
+     QCheckBox *m_cbAutoGit;
+     QCheckBox *m_cbAutoSubversion;
+     QCheckBox *m_cbAutoMercurial;
+diff --git a/addons/project/kateprojectplugin.cpp b/addons/project/kateprojectplugin.cpp
+index f46963988b..545b246c70 100644
+--- a/addons/project/kateprojectplugin.cpp
++++ b/addons/project/kateprojectplugin.cpp
+@@ -631,6 +631,17 @@ bool KateProjectPlugin::restoreProjectsForSession() const
+     return m_restoreProjectsForSession;
+ }
+ 
++void KateProjectPlugin::setPrefixWindowTitle(bool enabled)
++{
++    m_prefixWindowTitle = enabled;
++    writeConfig();
++}
++
++bool KateProjectPlugin::prefixWindowTitle() const
++{
++    return m_prefixWindowTitle;
++}
++
+ void KateProjectPlugin::setDirectoryListing(bool directoryListing, bool showHiddenFiles)
+ {
+     const bool changed = (m_directoryListing != directoryListing) || (m_showHiddenFiles != showHiddenFiles);
+@@ -683,6 +694,7 @@ void KateProjectPlugin::readConfig()
+     m_gitHostMappings = hostMappingsFromConfig(config.readEntry("gitHostMappings", serializedHostMappings(GitForge::defaultHostMappings())));
+ 
+     m_restoreProjectsForSession = config.readEntry("restoreProjectsForSessions", false);
++    m_prefixWindowTitle = config.readEntry("prefixWindowTitle", false);
+ 
+     m_directoryListing = config.readEntry("directoryListing", false);
+     m_showHiddenFiles = config.readEntry("showHiddenFiles", false);
+@@ -726,6 +738,7 @@ void KateProjectPlugin::writeConfig()
+     config.writeEntry("gitHostMappings", serializedHostMappings(m_gitHostMappings));
+ 
+     config.writeEntry("restoreProjectsForSessions", m_restoreProjectsForSession);
++    config.writeEntry("prefixWindowTitle", m_prefixWindowTitle);
+ 
+     config.writeEntry("directoryListing", m_directoryListing);
+     config.writeEntry("showHiddenFiles", m_showHiddenFiles);
+diff --git a/addons/project/kateprojectplugin.h b/addons/project/kateprojectplugin.h
+index 2d57a0476f..922e7843d2 100644
+--- a/addons/project/kateprojectplugin.h
++++ b/addons/project/kateprojectplugin.h
+@@ -161,6 +161,9 @@ public:
+     void setRestoreProjectsForSession(bool enabled);
+     bool restoreProjectsForSession() const;
+ 
++    void setPrefixWindowTitle(bool enabled);
++    bool prefixWindowTitle() const;
++
+     void setDirectoryListing(bool directoryListing, bool showHiddenFiles);
+     bool directoryListing() const;
+     bool showHiddenFiles() const;
+@@ -300,6 +303,8 @@ private:
+     // restore projects on session loading?
+     bool m_restoreProjectsForSession = true;
+ 
++    bool m_prefixWindowTitle = false;
++
+     // indexing is expensive, default off
+     bool m_indexEnabled = false;
+     QUrl m_indexDirectory;
+diff --git a/addons/project/kateprojectpluginview.cpp b/addons/project/kateprojectpluginview.cpp
+index d7f3793946..5529c8cd10 100755
+--- a/addons/project/kateprojectpluginview.cpp
++++ b/addons/project/kateprojectpluginview.cpp
+@@ -277,11 +277,16 @@ KateProjectPluginView::KateProjectPluginView(KateProjectPlugin *plugin, KTextEdi
+      * ensure proper action update, to enable/disable stuff
+      */
+     connect(this, &KateProjectPluginView::projectMapChanged, this, &KateProjectPluginView::updateActions);
++    connect(this, &KateProjectPluginView::projectMapChanged, this, &KateProjectPluginView::updateWindowTitle);
++    connect(this, &KateProjectPluginView::projectMapEdited, this, &KateProjectPluginView::updateWindowTitle);
+     updateActions();
++    updateWindowTitle();
+ }
+ 
+ KateProjectPluginView::~KateProjectPluginView()
+ {
++    m_mainWindow->window()->setProperty("windowTitlePrefix", QString());
++
+     // avoid that we trigger any view change or similar during destruction
+     // might lead to crashes, in any case, it is unwanted
+     disconnect(m_projectSelectAction, &KSelectAction::indexTriggered, this, &KateProjectPluginView::slotCurrentChanged);
+@@ -335,6 +340,13 @@ void KateProjectPluginView::slotConfigUpdated()
+ 
+     // update action state
+     updateActions();
++    updateWindowTitle();
++}
++
++void KateProjectPluginView::updateWindowTitle()
++{
++    const QString name = m_plugin->prefixWindowTitle() ? projectName() : QString();
++    m_mainWindow->window()->setProperty("windowTitlePrefix", name.isEmpty() ? QString() : name + QStringLiteral(": "));
+ }
+ 
+ int KateProjectPluginView::findProjectActionIndex(const QString &filename) const
+@@ -819,6 +831,7 @@ void KateProjectPluginView::slotHandleProjectClosing(KateProject *project)
+ 
+     // update actions, e.g. the close all stuff needs this
+     updateActions();
++    updateWindowTitle();
+ }
+ 
+ QString KateProjectPluginView::currentWord() const
+diff --git a/addons/project/kateprojectpluginview.h b/addons/project/kateprojectpluginview.h
+index 166b0a344d..608b843734 100755
+--- a/addons/project/kateprojectpluginview.h
++++ b/addons/project/kateprojectpluginview.h
+@@ -355,6 +355,8 @@ private:
+      */
+     void setCurrentProject(int index);
+ 
++    void updateWindowTitle();
++
+ private:
+     /**
+      * Watches for changes to .git/index
+diff --git a/apps/lib/autotests/basic_ui_tests.cpp b/apps/lib/autotests/basic_ui_tests.cpp
+index 436fc4ba7f..81672e7665 100644
+--- a/apps/lib/autotests/basic_ui_tests.cpp
++++ b/apps/lib/autotests/basic_ui_tests.cpp
+@@ -7,6 +7,8 @@
+ #include <KFontRequester>
+ #include <KLocalizedString>
+ #include <KSharedConfig>
++#include <KTextEditor/Document>
++#include <KTextEditor/View>
+ #include <QCommandLineParser>
+ #include <QDialog>
+ #include <QDir>
+@@ -37,6 +39,7 @@ public:
+ 
+ private Q_SLOTS:
+     void test_windowOpenClose();
++    void test_windowTitlePrefix();
+     void test_windowGeometrySaveRestore();
+     void test_sessionGeometrySaveRestore();
+     void test_openFontDialog();
+@@ -82,6 +85,45 @@ void BasicUiTests::test_windowOpenClose()
+     QCOMPARE(app->mainWindows().size(), 1);
+ }
+ 
++void BasicUiTests::test_windowTitlePrefix()
++{
++    app->sessionManager()->sessionNew();
++    auto mainWindow = app->activeKateMainWindow();
++    auto view = mainWindow->wrapper()->openUrl(QUrl());
++    QVERIFY(view);
++    auto doc = view->document();
++
++    const QString originalTitle = mainWindow->windowTitle();
++    QVERIFY(mainWindow->setProperty("windowTitlePrefix", QStringLiteral("Project: ")));
++    QCOMPARE(mainWindow->windowTitle(), QStringLiteral("Project: ") + originalTitle);
++
++    // Caption updates must retain the prefix and the document state.
++    doc->setReadWrite(false);
++    QVERIFY(mainWindow->windowTitle().startsWith(QStringLiteral("Project: ")));
++    QVERIFY(mainWindow->windowTitle().contains(i18n(" [read only]")));
++    doc->setReadWrite(true);
++    doc->setModified(true);
++    QVERIFY(mainWindow->isWindowModified());
++    QVERIFY(mainWindow->windowTitle().startsWith(QStringLiteral("Project: ")));
++    doc->setModified(false);
++
++    QVERIFY(mainWindow->setProperty("windowTitlePrefix", QStringLiteral("Other Project: ")));
++    QCOMPARE(mainWindow->windowTitle(), QStringLiteral("Other Project: ") + originalTitle);
++    QVERIFY(mainWindow->setProperty("windowTitlePrefix", QString()));
++    QCOMPARE(mainWindow->windowTitle(), originalTitle);
++
++    // Non-document tabs also use the prefix, and clearing it updates immediately.
++    auto widget = new QWidget;
++    widget->setWindowTitle(QStringLiteral("Tool"));
++    QVERIFY(mainWindow->wrapper()->addWidget(widget));
++    const QString widgetTitle = mainWindow->windowTitle();
++    mainWindow->setProperty("windowTitlePrefix", QStringLiteral("Project: "));
++    QCOMPARE(mainWindow->windowTitle(), QStringLiteral("Project: ") + widgetTitle);
++    mainWindow->setProperty("windowTitlePrefix", QString());
++    QCOMPARE(mainWindow->windowTitle(), widgetTitle);
++    QVERIFY(mainWindow->wrapper()->removeWidget(widget));
++}
++
+ void BasicUiTests::test_windowGeometrySaveRestore()
+ {
+     // Ensure we start clean
+diff --git a/apps/lib/katemainwindow.cpp b/apps/lib/katemainwindow.cpp
+index fab952b255..60504f0752 100644
+--- a/apps/lib/katemainwindow.cpp
++++ b/apps/lib/katemainwindow.cpp
+@@ -1352,8 +1352,14 @@ void KateMainWindow::slotDocumentCreated(KTextEditor::Document *doc)
+ 
+ void KateMainWindow::updateCaption()
+ {
+-    if (m_viewManager->activeView()) {
+-        updateCaption(m_viewManager->activeView()->document());
++    updateCaption(m_viewManager->activeView() ? m_viewManager->activeView()->document() : nullptr);
++}
++
++void KateMainWindow::setWindowTitlePrefix(const QString &prefix)
++{
++    if (m_windowTitlePrefix != prefix) {
++        m_windowTitlePrefix = prefix;
++        updateCaption();
+     }
+ }
+ 
+@@ -1362,7 +1368,7 @@ void KateMainWindow::updateCaption(KTextEditor::Document *doc)
+     if (!m_viewManager->activeView()) {
+         QWidget *w = activeWidget();
+         QString title = w ? w->windowTitle() : QString();
+-        setCaption(title, false);
++        setCaption(m_windowTitlePrefix + title, false);
+         setWindowFilePath(QString());
+         return;
+     }
+@@ -1393,7 +1399,7 @@ void KateMainWindow::updateCaption(KTextEditor::Document *doc)
+         readOnlyCaption = i18n(" [read only]");
+     }
+ 
+-    setCaption(sessName + c + readOnlyCaption + QStringLiteral(" [*]"), m_viewManager->activeView()->document()->isModified());
++    setCaption(m_windowTitlePrefix + sessName + c + readOnlyCaption + QStringLiteral(" [*]"), m_viewManager->activeView()->document()->isModified());
+ }
+ 
+ void KateMainWindow::saveProperties(KConfigGroup &config, bool includeViewConfig)
+diff --git a/apps/lib/katemainwindow.h b/apps/lib/katemainwindow.h
+index 21c6ac0366..3274c355c6 100644
+--- a/apps/lib/katemainwindow.h
++++ b/apps/lib/katemainwindow.h
+@@ -45,8 +45,16 @@ class KateContainerStackedLayout;
+ class KATE_PRIVATE_EXPORT KateMainWindow : public KateMDI::MainWindow, virtual public KParts::PartBase
+ {
+     Q_OBJECT
++    Q_PROPERTY(QString windowTitlePrefix READ windowTitlePrefix WRITE setWindowTitlePrefix)
+ 
+ public:
++    /** Optional prefix supplied by plugins, preserved across caption updates. */
++    QString windowTitlePrefix() const
++    {
++        return m_windowTitlePrefix;
++    }
++    void setWindowTitlePrefix(const QString &prefix);
++
+     /**
+      * Construct the window and restore its state from given config if any
+      * @param sconfig session config for this window, 0 if none
+@@ -569,6 +577,7 @@ private:
+      * keeps track of views
+      */
+     KateViewManager *m_viewManager = nullptr;
++    QString m_windowTitlePrefix;
+ 
+     KRecentFilesAction *m_fileOpenRecent = nullptr;
+ 
+-- 
+2.56.0
+
