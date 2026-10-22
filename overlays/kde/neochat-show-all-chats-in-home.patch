@@ -3,16 +3,126 @@ From: Patrizio Bekerle <patrizio@bekerle.com>
 Date: Tue, 20 Oct 2026 10:11:08 +0200
 Subject: [PATCH] Add option to show all chats in the Home space
 
-When enabled, Home lists direct chats and rooms from every space, keeps Home selected while opening chats, and includes direct chat notifications in its badge. The existing "Show all rooms" option is disabled while this option is active.
+When enabled, Home lists direct chats and rooms from every space, keeps Home
+selected while opening chats, and includes direct chat notifications in its
+badge. Use three mutually exclusive radio options for the Home space settings,
+preserving the existing settings.
+
+Backport of commits 91132e1b6fd8628ebc4035f8588d888dcc2c9fc2 and
+c9611dcffb3f8d8a60049a59460d568225560858 from
+https://invent.kde.org/network/neochat/-/merge_requests/3087 to 26.08.
 ---
+ autotests/roommanagertest.cpp                | 78 ++++++++++++++++++++
  src/app/neochatconfig.kcfg                   |  4 ++++
  src/app/roommanager.cpp                      | 19 ++++++++++++++++---
  src/rooms/SpaceDrawer.qml                    |  4 ++--
  src/rooms/models/sortfilterroomtreemodel.cpp | 12 ++++++++++--
  src/rooms/models/sortfilterroomtreemodel.h   |  2 ++
- src/settings/NeoChatGeneralPage.qml          | 18 +++++++++++++++++-
- 6 files changed, 51 insertions(+), 8 deletions(-)
+ src/settings/NeoChatGeneralPage.qml          | 40 +++++++++--
+ 7 files changed, 144 insertions(+), 15 deletions(-)
 
+diff --git a/autotests/roommanagertest.cpp b/autotests/roommanagertest.cpp
+--- a/autotests/roommanagertest.cpp
++++ b/autotests/roommanagertest.cpp
+@@ -8,7 +8,9 @@
+ 
+ #include "accountmanager.h"
+ #include "models/actionsmodel.h"
++#include "neochatconfig.h"
+ #include "roommanager.h"
++#include "spacehierarchycache.h"
+ 
+ #include "server.h"
+ #include "testutils.h"
+@@ -29,6 +31,7 @@ private Q_SLOTS:
+     void initTestCase();
+     void testMaximizeMedia();
+     void testResolveMatrixLinks();
++    void testAllChatsInHome();
+ };
+ 
+ void RoomManagerTest::initTestCase()
+@@ -137,5 +140,80 @@ void RoomManagerTest::testResolveMatrixLinks()
+     QTRY_COMPARE(askToJoinSpy.size(), 1);
+ }
+ 
++void RoomManagerTest::testAllChatsInHome()
++{
++    const auto directRoomId = server.createRoom(u"@user:localhost:1234"_s);
++    QSignalSpy syncSpy(connection, &Connection::syncDone);
++    QVERIFY(syncSpy.wait());
++    QVERIFY(syncSpy.wait());
++    auto directRoom = dynamic_cast<NeoChatRoom *>(connection->room(directRoomId));
++    QVERIFY(directRoom);
++    connection->addToDirectChats(directRoom, u"@friend:localhost:1234"_s);
++    QVERIFY(directRoom->isDirectChat());
++
++    // Seed the hierarchy cache to make the normal room a child of a space.
++    const auto spaceId = u"!all-chats-space:localhost:1234"_s;
++    SpaceHierarchyCache::instance().getRoomListForSpace(spaceId, false).append(room->id());
++
++    RoomTreeModel sourceModel;
++    sourceModel.setConnection(connection);
++    SortFilterRoomTreeModel model(&sourceModel);
++    model.setMode(SortFilterRoomTreeModel::Rooms);
++    model.setActiveSpaceId({});
++
++    const auto normalRoomIndex = sourceModel.indexForRoom(room);
++    const auto directRoomIndex = sourceModel.indexForRoom(directRoom);
++    QVERIFY(normalRoomIndex.isValid());
++    QVERIFY(directRoomIndex.isValid());
++
++    // By default, Home hides direct chats and rooms belonging to spaces.
++    // The config changes are not saved, so they only affect this test process.
++    NeoChatConfig::setAllRoomsInHome(false);
++    NeoChatConfig::setAllChatsInHome(false);
++    model.invalidate();
++    QVERIFY(!model.mapFromSource(normalRoomIndex).isValid());
++    QVERIFY(!model.mapFromSource(directRoomIndex).isValid());
++
++    NeoChatConfig::setAllChatsInHome(true);
++    model.invalidate();
++    QVERIFY(model.mapFromSource(normalRoomIndex).isValid());
++    QVERIFY(model.mapFromSource(directRoomIndex).isValid());
++
++    model.setFilterText(u"no matching chat name"_s);
++    QVERIFY(!model.mapFromSource(normalRoomIndex).isValid());
++    QVERIFY(!model.mapFromSource(directRoomIndex).isValid());
++    model.setFilterText({});
++
++    // The space and direct-message views retain their filters.
++    model.setMode(SortFilterRoomTreeModel::All);
++    model.setActiveSpaceId(spaceId);
++    QVERIFY(model.mapFromSource(normalRoomIndex).isValid());
++    QVERIFY(!model.mapFromSource(directRoomIndex).isValid());
++    model.setMode(SortFilterRoomTreeModel::DirectChats);
++    model.setActiveSpaceId(u"DM"_s);
++    QVERIFY(!model.mapFromSource(normalRoomIndex).isValid());
++    QVERIFY(model.mapFromSource(directRoomIndex).isValid());
++
++    // Opening chats from Home keeps Home selected.
++    auto &manager = RoomManager::instance();
++    manager.setProperty("currentSpace", QString());
++    manager.resolveResource(room->id());
++    QCOMPARE(manager.currentRoom(), room);
++    QCOMPARE(manager.currentSpace(), QString());
++    manager.resolveResource(directRoom->id());
++    QCOMPARE(manager.currentRoom(), directRoom);
++    QCOMPARE(manager.currentSpace(), QString());
++
++    // Returning to Home restores its last chat.
++    manager.setProperty("currentSpace", u"DM"_s);
++    manager.setProperty("currentSpace", QString());
++    QCOMPARE(manager.currentRoom(), directRoom);
++    QCOMPARE(manager.currentSpace(), QString());
++
++    NeoChatConfig::setAllChatsInHome(false);
++    SpaceHierarchyCache::instance().getRoomListForSpace(spaceId, false).clear();
++    manager.resetState();
++}
++
+ QTEST_MAIN(RoomManagerTest)
+ #include "roommanagertest.moc"
 diff --git a/src/app/neochatconfig.kcfg b/src/app/neochatconfig.kcfg
 index b19a891..4e51f94 100644
 --- a/src/app/neochatconfig.kcfg
@@ -163,40 +273,59 @@ index 5834ad8..cc73bef 100644
 +    static bool m_showAllChatsInHome;
  };
 diff --git a/src/settings/NeoChatGeneralPage.qml b/src/settings/NeoChatGeneralPage.qml
-index 600e81a..5f7f308 100644
 --- a/src/settings/NeoChatGeneralPage.qml
 +++ b/src/settings/NeoChatGeneralPage.qml
-@@ -79,13 +79,29 @@ FormCard.FormCardPage {
-             id: categorizeDelegate
-             text: i18n("Show all rooms in \"Home\" tab")
-             checked: NeoChatConfig.allRoomsInHome
+@@ -73,19 +73,43 @@ FormCard.FormCardPage {
+ 
+         FormCard.FormDelegateSeparator {
+             above: automaticallyDelegate
+-            below: categorizeDelegate
++            below: homeSpaceLabel
+         }
+-        FormCard.FormCheckDelegate {
+-            id: categorizeDelegate
+-            text: i18n("Show all rooms in \"Home\" tab")
+-            checked: NeoChatConfig.allRoomsInHome
 -            enabled: !NeoChatConfig.isAllRoomsInHomeImmutable
-+            enabled: !NeoChatConfig.isAllRoomsInHomeImmutable && !NeoChatConfig.allChatsInHome
++        FormCard.FormTextDelegate {
++            id: homeSpaceLabel
++            text: i18nc("@info:label Keep this consistent with the same translation you use for the 'Home' space.", "In the \"Home\" space:")
++        }
++
++        FormCard.FormRadioDelegate {
++            text: i18nc("@option:radio In the 'Home' space", "Show rooms that are not in any space")
++            checked: !NeoChatConfig.allRoomsInHome && !NeoChatConfig.allChatsInHome
++            enabled: !NeoChatConfig.isAllRoomsInHomeImmutable && !NeoChatConfig.isAllChatsInHomeImmutable
              onToggled: {
-                 NeoChatConfig.allRoomsInHome = checked;
+-                NeoChatConfig.allRoomsInHome = checked;
++                NeoChatConfig.allRoomsInHome = false;
++                NeoChatConfig.allChatsInHome = false;
                  NeoChatConfig.save();
              }
          }
- 
-+        FormCard.FormDelegateSeparator {
-+            above: categorizeDelegate
-+            below: allChatsDelegate
-+        }
-+
-+        FormCard.FormCheckDelegate {
-+            id: allChatsDelegate
-+            text: i18nc("@option:check Show all rooms and direct messages in the 'Home' space. Keep this consistent with the same translation you use for that space.", "Show all chats in \"Home\" space")
-+            checked: NeoChatConfig.allChatsInHome
-+            enabled: !NeoChatConfig.isAllChatsInHomeImmutable
+-
++        FormCard.FormRadioDelegate {
++            text: i18nc("@option:radio In the 'Home' space", "Show all rooms")
++            checked: NeoChatConfig.allRoomsInHome && !NeoChatConfig.allChatsInHome
++            enabled: !NeoChatConfig.isAllRoomsInHomeImmutable && !NeoChatConfig.isAllChatsInHomeImmutable
 +            onToggled: {
-+                NeoChatConfig.allChatsInHome = checked;
++                NeoChatConfig.allRoomsInHome = true;
++                NeoChatConfig.allChatsInHome = false;
 +                NeoChatConfig.save();
 +            }
 +        }
-+
++        FormCard.FormRadioDelegate {
++            text: i18nc("@option:radio In the 'Home' space", "Show all rooms and direct messages")
++            checked: NeoChatConfig.allChatsInHome
++            enabled: !NeoChatConfig.isAllRoomsInHomeImmutable && !NeoChatConfig.isAllChatsInHomeImmutable
++            onToggled: {
++                NeoChatConfig.allRoomsInHome = false;
++                NeoChatConfig.allChatsInHome = true;
++                NeoChatConfig.save();
++            }
++        }
      }
      FormCard.FormHeader {
          title: i18nc("@title:group", "Room List Sort Order")
 -- 
 2.55.0
-
