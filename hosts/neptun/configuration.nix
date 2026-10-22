@@ -31,7 +31,18 @@ in
     broadcomSta
   ];
 
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_7_2;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_7_2.extend (
+    _final: prev: {
+      broadcom_sta = prev.broadcom_sta.overrideAttrs (old: {
+        # The module aggregator requires certificates for external modules.
+        # Sign after fixup so stripping cannot invalidate the signature.
+        postFixup = (old.postFixup or "") + ''
+          ${pkgs.buildPackages.kmodigest}/bin/kmodigest \
+            "$out/lib/modules/${config.boot.kernelPackages.kernel.modDirVersion}/kernel/net/wireless/wl.ko"
+        '';
+      });
+    }
+  );
 
   environment.systemPackages = with pkgs; [
     powertop
