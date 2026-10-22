@@ -8,9 +8,13 @@
   gnugrep,
   makeWrapper,
   nix-update-script,
-  zig,
+  zig_0_16,
 }:
 
+let
+  # ziggity 0.3.0 and its dependencies use build APIs removed in Zig 0.17.
+  zig = zig_0_16;
+in
 stdenv.mkDerivation (finalAttrs: {
   pname = "ziggity";
   version = "0.3.0";
