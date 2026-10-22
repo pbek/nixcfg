@@ -30,6 +30,7 @@
       useSystemdInitrd = true;
     };
     programs.libvirt.role = "guest";
+    programs.jetbrains.enable = false;
     programs.openchamber = {
       enable = true;
       user = "omega";
