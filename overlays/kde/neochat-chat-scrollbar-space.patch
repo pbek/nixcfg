@@ -1,0 +1,39 @@
+From 1eb58c6984831acb811394d1fe7764777d0068e7 Mon Sep 17 00:00:00 2001
+From: Patrizio Bekerle <patrizio@bekerle.com>
+Date: Sun, 25 Oct 2026 19:00:00 +0100
+Subject: [PATCH] Fix chat editor text overlapping the scrollbar
+
+Reserve the effective vertical scrollbar width for the entire message
+content layout so text wraps before the scrollbar when composing or
+editing long messages. Remove the per-delegate margin to avoid reserving
+the space twice for attachments.
+
+Backport of https://invent.kde.org/network/neochat/-/merge_requests/3093 to 26.08.
+---
+ src/chatbar/ChatBarCore.qml | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/src/chatbar/ChatBarCore.qml b/src/chatbar/ChatBarCore.qml
+--- a/src/chatbar/ChatBarCore.qml
++++ b/src/chatbar/ChatBarCore.qml
+@@ -148,7 +148,8 @@ QQC2.Control {
+                         }
+                     }
+ 
+-                    width: chatScrollView.width
++                    // Reserve scrollbar space for every block, including editable text.
++                    width: chatScrollView.availableWidth - chatScrollView.effectiveScrollBarWidth
+                     spacing: Kirigami.Units.smallSpacing
+ 
+                     Repeater {
+@@ -157,9 +158,7 @@ QQC2.Control {
+ 
+                         model: root.model
+ 
+-                        delegate: BaseBlockChooser {
+-                            rightAnchorMargin: chatScrollView.QQC2.ScrollBar.vertical.visible ? chatScrollView.QQC2.ScrollBar.vertical.width : 0
+-                        }
++                        delegate: BaseBlockChooser {}
+                     }
+                 }
+             }

@@ -25,6 +25,8 @@ in
           ./kde/neochat-emoji-history.patch
           # Remove once NeoChat includes https://invent.kde.org/network/neochat/-/merge_requests/3090.
           ./kde/neochat-up-key-edit-focus.patch
+          # Remove once NeoChat includes https://invent.kde.org/network/neochat/-/merge_requests/3093.
+          ./kde/neochat-chat-scrollbar-space.patch
         ];
         # libQuotient 0.10's CMake config locates SQLite using pkg-config.
         nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ prev.pkg-config ];
