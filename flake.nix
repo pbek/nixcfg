@@ -251,7 +251,12 @@
         zfsguard = inputs.zfsguard.packages.${system}.default;
         inherit (pkgs) kanboard-cli;
         qownnotes-tui = inputs.qownnotes-tui.packages.${system}.default;
-        inherit (pkgs) lan-orangutan rhun ziggity;
+        inherit (pkgs)
+          corgi
+          lan-orangutan
+          rhun
+          ziggity
+          ;
         inherit (pkgs) opencode openchamber;
       }
       // {
