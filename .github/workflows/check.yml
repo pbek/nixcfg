@@ -81,8 +81,10 @@ jobs:
 
       - name: Run nix eval for examples/${{ matrix.host }}
         working-directory: examples/hokage-consumer
-        # Test this checkout and its nixpkgs pin, not the example's older locked inputs.
+        # Test this checkout and its nixpkgs/Home Manager pins, not the example's older locked inputs.
         run: |
           nixpkgs=$(nix flake metadata --json ../.. | jq -r '.locks as $locks | $locks.nodes[$locks.nodes[$locks.root].inputs.nixpkgs].locked | "github:\(.owner)/\(.repo)/\(.rev)"')
-          nix eval --override-input nixcfg path:../.. --override-input nixpkgs "$nixpkgs" --no-write-lock-file \
+          home_manager=$(nix flake metadata --json ../.. | jq -r '.locks as $locks | $locks.nodes[$locks.nodes[$locks.root].inputs["home-manager"]].locked | "github:\(.owner)/\(.repo)/\(.rev)"')
+          nix eval --override-input nixcfg path:../.. --override-input nixpkgs "$nixpkgs" \
+            --override-input nixcfg/home-manager "$home_manager" --no-write-lock-file \
             .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel.drvPath
