@@ -19,6 +19,7 @@ jobs:
     permissions:
       contents: read
     strategy:
+      fail-fast: false
       matrix:
         host:
           - gaia
@@ -37,6 +38,8 @@ jobs:
           - jupiter
           - ally
           - pluto
+          - neptun
+          - eris
           - dp01
           - dp02
           - dp03
@@ -45,6 +48,8 @@ jobs:
           - dp06
           - dp07
           - dp08
+          - dp09
+          - dp10
     steps:
       - uses: actions/checkout@v4
 

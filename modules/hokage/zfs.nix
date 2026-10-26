@@ -74,15 +74,6 @@ in
         the ZFS default.
       '';
     };
-    useSystemdInitrd = mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Enable the systemd-based stage-1 initrd (boot.initrd.systemd.enable).
-        Required on some VMs so the ZFS encryption passphrase prompt appears
-        early enough in the boot sequence.
-      '';
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -103,7 +94,6 @@ in
       zfs.devNodes = lib.mkIf (cfg.devNodes != "") cfg.devNodes;
       # Silence warning https://github.com/nix-community/disko/issues/1255
       zfs.forceImportRoot = true;
-      initrd.systemd.enable = lib.mkIf cfg.useSystemdInitrd true;
       loader.grub = {
         enable = true;
         zfsSupport = true;

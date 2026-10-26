@@ -27,7 +27,6 @@
       hostId = "29a6f1f7";
       encrypted = true;
       devNodes = "/dev/disk/by-path";
-      useSystemdInitrd = true;
     };
     programs.libvirt.role = "guest";
     programs.jetbrains.enable = false;

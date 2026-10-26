@@ -35,7 +35,6 @@
       hostId = "4ea35514";
       encrypted = true;
       devNodes = "/dev/disk/by-path";
-      useSystemdInitrd = true;
     };
   };
 }

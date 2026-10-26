@@ -3211,25 +3211,6 @@ _Declared by:_
 
 - [/nix/store/j6f4856dayqr822a44df2ykaxa46y18k-source/modules/hokage](file:///nix/store/j6f4856dayqr822a44df2ykaxa46y18k-source/modules/hokage)
 
-## hokage\.zfs\.useSystemdInitrd
-
-Enable the systemd-based stage-1 initrd (boot\.initrd\.systemd\.enable)\.
-Required on some VMs so the ZFS encryption passphrase prompt appears
-early enough in the boot sequence\.
-
-_Type:_
-boolean
-
-_Default:_
-
-```nix
-false
-```
-
-_Declared by:_
-
-- [/nix/store/j6f4856dayqr822a44df2ykaxa46y18k-source/modules/hokage](file:///nix/store/j6f4856dayqr822a44df2ykaxa46y18k-source/modules/hokage)
-
 ## hokage\.zfs\.useUnstable
 
 Use pkgs\.zfs_unstable for zfs\.package when true (otherwise use pkgs\.zfs)\.

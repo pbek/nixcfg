@@ -37,7 +37,6 @@
     zfs = {
       hostId = "dacdad01";
       devNodes = "/dev/disk/by-path";
-      useSystemdInitrd = true;
     };
   };
 }

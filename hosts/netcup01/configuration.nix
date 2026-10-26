@@ -65,7 +65,6 @@ in
     zfs = {
       hostId = "dafdad01";
       devNodes = "/dev/disk/by-path";
-      useSystemdInitrd = true;
     };
   };
 }
