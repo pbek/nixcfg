@@ -24,6 +24,7 @@ in
         # https://www.nushell.sh/book/
         nushell = {
           enable = true;
+          loadSessionVariables = true;
           inherit (config.programs.fish) shellAliases;
         };
 
