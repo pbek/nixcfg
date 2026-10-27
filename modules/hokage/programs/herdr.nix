@@ -46,9 +46,15 @@ in
       _userName: { lib, ... }: {
         home.activation.herdrIntegrations = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
           ${lib.concatMapStringsSep "\n" (integration: ''
-            ${lib.getExe pkgs.herdr} integration install ${lib.escapeShellArg integration}
+            run ${lib.getExe pkgs.herdr} integration install ${lib.escapeShellArg integration}
           '') cfg.integrations}
         '';
+
+        # Herdr registers its terminal plugin by updating OpenCode's cli.json.
+        # Keep that file writable and load declarative settings separately.
+        programs.opencode.mutableSettings = lib.mkIf (lib.elem "opencode" cfg.integrations) (
+          lib.mkDefault true
+        );
 
         programs.herdr = {
           enable = true;
