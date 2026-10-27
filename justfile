@@ -145,6 +145,7 @@ switch args='':
     if [ $runtime -gt 10 ]; then
       just _notify "switch finished on {{ hostname }}, exit code: $exit_code (runtime: ${runtime}s)"
     fi
+    exit "$exit_code"
 
 # Build and switch without using local cache servers
 [group('build')]
@@ -160,6 +161,7 @@ switch-no-local-cache args='':
     if [ $runtime -gt 10 ]; then
       just _notify "switch without local caches finished on {{ hostname }}, exit code: $exit_code (runtime: ${runtime}s)"
     fi
+    exit "$exit_code"
 
 # Build and activate the new configuration at next boot, you need to do this if "switch inhibitors" are present
 [group('build')]
@@ -175,6 +177,7 @@ boot args='':
     if [ $runtime -gt 10 ]; then
       just _notify "boot finished on {{ hostname }}, exit code: $exit_code (runtime: ${runtime}s)"
     fi
+    exit "$exit_code"
 
 # Build the current host with nix-rebuild
 [group('build')]

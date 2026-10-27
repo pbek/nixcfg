@@ -43,8 +43,31 @@ in
 
   config = lib.mkIf cfg.enable {
     home-manager.users = lib.genAttrs hokage.users (
-      _userName: { lib, ... }: {
+      _userName: { config, lib, ... }: {
         home.activation.herdrIntegrations = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+          ${lib.optionalString
+            (lib.elem "opencode" cfg.integrations && config.programs.opencode.mutableSettings)
+            ''
+              # A failed activation can leave cli.json linked to an older HM
+              # generation even after mutableSettings has been enabled.
+              run ${pkgs.writeShellScript "herdr-migrate-opencode-cli" ''
+                set -euo pipefail
+                cli=${lib.escapeShellArg "${config.xdg.configHome}/opencode/cli.json"}
+                if [[ -L "$cli" ]]; then
+                  case "$(readlink -- "$cli")" in
+                    /nix/store/*-home-manager-files/*/opencode/cli.json)
+                      # Preserve the contents, leave user-owned files/links alone,
+                      # and replace the store link atomically with a writable file.
+                      temporary=$(mktemp "$(dirname -- "$cli")/.cli.json.XXXXXX")
+                      trap 'rm -f -- "$temporary"' EXIT
+                      cat -- "$cli" > "$temporary"
+                      mv -T -- "$temporary" "$cli"
+                      ;;
+                  esac
+                fi
+              ''}
+            ''
+          }
           ${lib.concatMapStringsSep "\n" (integration: ''
             run ${lib.getExe pkgs.herdr} integration install ${lib.escapeShellArg integration}
           '') cfg.integrations}
