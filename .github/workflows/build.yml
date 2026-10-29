@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths:
+      - "pkgs/qc/**"
       - "pkgs/qownnotes/**"
       - "pkgs/opencode/**"
       - "pkgs/nixbit/**"

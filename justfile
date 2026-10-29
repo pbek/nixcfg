@@ -527,6 +527,12 @@ qownnotes-hash:
 qownnotes-update-release:
     ./scripts/update-qownnotes-release.sh
 
+# Update the QC release, build it, and push it to the cache
+[group('qc')]
+qc-update-release:
+    ./scripts/update-qc-release.sh
+    nix build .#qc && attic push qownnotes ./result
+
 # Update the QOwnNotes TUI flake
 [group('qownnotes')]
 qownnotes-tui-update-flake:
