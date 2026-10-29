@@ -1,0 +1,62 @@
+From 98e22bd93a87dbcfcb048272f7068de2f40b3cd1 Mon Sep 17 00:00:00 2001
+From: Patrizio Bekerle <patrizio@bekerle.com>
+Date: Thu, 29 Oct 2026 10:18:58 +0100
+Subject: [PATCH] Add edit button to message quick actions
+
+Show an edit button after the react and reply buttons in the toolbar
+that appears when hovering over a message. It is only visible for
+editable messages of the local user that are not pending.
+
+Backport of https://invent.kde.org/network/neochat/-/merge_requests/3096 to 26.08.
+---
+ src/timeline/MessageDelegate.qml |  1 +
+ src/timeline/QuickActions.qml    | 17 +++++++++++++++++
+ 2 files changed, 18 insertions(+)
+
+diff --git a/src/timeline/MessageDelegate.qml b/src/timeline/MessageDelegate.qml
+index 435d722..3d22267 100644
+--- a/src/timeline/MessageDelegate.qml
++++ b/src/timeline/MessageDelegate.qml
+@@ -253,6 +253,7 @@ MessageDelegateBase {
+         room: root.room
+         eventId: root.eventId
+         author: root.author
++        isEditable: root.isEditable && !root.isPending
+     }
+ 
+     selectionComponent: RowLayout {
+diff --git a/src/timeline/QuickActions.qml b/src/timeline/QuickActions.qml
+index 14daca8..0ef62e1 100644
+--- a/src/timeline/QuickActions.qml
++++ b/src/timeline/QuickActions.qml
+@@ -31,6 +31,11 @@ RowLayout {
+      */
+     required property var author
+ 
++    /**
++     * @brief Whether the event can be edited by the local user.
++     */
++    property bool isEditable: false
++
+     property real availableWidth: 0.0
+ 
+     property bool reacting: false
+@@ -82,6 +87,18 @@ RowLayout {
+         QQC2.ToolTip.visible: hovered
+         QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
+     }
++    QQC2.Button {
++        id: editButton
++        visible: root.isEditable && root.availableWidth > overflowButton.implicitWidth + reactButton.implicitWidth + replyButton.implicitWidth + editButton.implicitWidth + root.spacing * 3
++        text: i18n("Edit")
++        icon.name: "document-edit"
++        display: QQC2.Button.IconOnly
++        onClicked: root.room.editCache.editId = root.eventId
++
++        QQC2.ToolTip.text: text
++        QQC2.ToolTip.visible: hovered
++        QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
++    }
+     QQC2.Button {
+         id: overflowButton
+         text: i18n("Message menu")
