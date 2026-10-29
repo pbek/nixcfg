@@ -120,7 +120,6 @@ in
         optionalPackages = [
           attic-client
           inputs.agenix.packages.x86_64-linux.default
-          firefox
           magic-wormhole
           xclip
           fishPlugins.fzf-fish
@@ -133,6 +132,8 @@ in
         ];
       in
       requiredPackages ++ utils.removePackagesByName optionalPackages hokage.excludePackages;
+
+    programs.firefox.enable = !builtins.elem "firefox" hokage.excludePackages;
 
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
