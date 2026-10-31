@@ -28,11 +28,11 @@ assert lib.assertMsg (
 stdenv.mkDerivation (finalAttrs: {
   pname = "qownnotes";
   appname = "QOwnNotes";
-  version = "26.10.15";
+  version = "26.11.1";
 
   src = fetchurl {
     url = "https://github.com/pbek/QOwnNotes/releases/download/v${finalAttrs.version}/qownnotes-${finalAttrs.version}.tar.xz";
-    hash = "sha256-pzygTCHrGdPK/cgu0vOexzc9NCAnbVYLaR9EqdOTWYo=";
+    hash = "sha256-KyEJ6N7ltO6m6SZajhpJoxTA48ohZeiNllUxLWvQdjE=";
   };
 
   nativeBuildInputs = [
