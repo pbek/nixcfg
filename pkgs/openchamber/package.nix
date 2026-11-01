@@ -1,7 +1,7 @@
 # OpenChamber web/CLI server (https://github.com/openchamber/openchamber).
 #
 # OpenChamber 2.x talks to the OpenCode 2.x HTTP API (it pins
-# @opencode/client 2.0.x, and its Docker image installs @opencode/cli 2.0.x),
+# @opencode/client 2.x, and requires OpenCode >= 2.2.0),
 # so it uses the upstream nixpkgs `opencode` package.
 # Use `openchamber.override { opencode = ...; }` for a different build, or set
 # OPENCODE_BINARY at runtime.
@@ -93,7 +93,7 @@ let
 
       outputHash =
         {
-          x86_64-linux = "sha256-pOUbADxvox2Z3cw3pYOj34YcqRvcvNW5d+ozaK8xkzE=";
+          x86_64-linux = "sha256-fbO7hrh7sFK0d4RAAirwiWT5cjOyuoW1uVtIBgm1U4I=";
         }
         .${platform.system} or lib.fakeHash;
       outputHashAlgo = "sha256";
@@ -102,13 +102,13 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "openchamber";
-  version = "2.5.0";
+  version = "2.5.3";
 
   src = fetchFromGitHub {
     owner = "openchamber";
     repo = "openchamber";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-XBWaVb/OOAApl+llhDHw+lU6r7pMEJY+C25EYBymoPU=";
+    hash = "sha256-oGhyNCMEvSxIvgzIcBzkan5BmldAhRJmrusnd/uVmbI=";
   };
 
   nativeBuildInputs = [
