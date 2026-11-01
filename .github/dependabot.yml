@@ -4,10 +4,27 @@ updates:
   - package-ecosystem: "nix"
     directories:
       - "/"
-      - "/examples/hokage-consumer"
     schedule:
       interval: "weekly"
       day: "sunday"
+      time: "04:00"
+      timezone: "UTC"
+    allow:
+      - dependency-type: "all"
+    open-pull-requests-limit: 1
+    groups:
+      nix-dependencies:
+        patterns:
+          - "*"
+    labels:
+      - dependencies
+      - automated
+
+  - package-ecosystem: "nix"
+    directories:
+      - "/examples/hokage-consumer"
+    schedule:
+      interval: "monthly"
       time: "04:00"
       timezone: "UTC"
     allow:
