@@ -108,6 +108,7 @@ in
     fonts.packages = with pkgs; [
       fira-code
       fira-code-symbols
+      fira-sans
       nerd-fonts.fira-code
       nerd-fonts.droid-sans-mono
     ];
