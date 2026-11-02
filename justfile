@@ -294,6 +294,7 @@ push:
     -attic push qownnotes `which opencode` --no-closure
     # -attic push qownnotes `which zerobyte` --no-closure
     nix build .#neochat && attic push qownnotes ./result
+    nix build .#kwi && attic push qownnotes ./result
     nix build .#opencode && attic push qownnotes ./result
     nix build .#openchamber && attic push qownnotes ./result
 

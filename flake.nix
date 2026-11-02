@@ -242,7 +242,12 @@
       };
 
       packages.x86_64-linux = {
-        inherit (pkgs) devenv qownnotes zerobyte;
+        inherit (pkgs)
+          devenv
+          kwi
+          qownnotes
+          zerobyte
+          ;
         kate = pkgs.kdePackages.kate;
         neochat = pkgs.kdePackages.neochat;
         qc = pkgs.callPackage ./pkgs/qc/default.nix { };

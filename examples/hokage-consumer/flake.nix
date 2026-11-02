@@ -35,6 +35,7 @@
                 (import (nixcfg + "/overlays/neochat.nix"))
                 (import (nixcfg + "/overlays/ziggity.nix"))
                 (import (nixcfg + "/overlays/lan-orangutan.nix"))
+                (import (nixcfg + "/overlays/kwi.nix"))
               ];
             }
 

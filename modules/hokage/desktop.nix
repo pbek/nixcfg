@@ -54,6 +54,7 @@ in
           gcc
           gdb
           cmake
+          kwi # GPU-accelerated KDE terminal
           chromium
           google-chrome
           vscode
