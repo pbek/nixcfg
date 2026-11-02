@@ -232,6 +232,8 @@
         dp09 = mkDesktopHost "dp09" [ disko.nixosModules.disko ];
         # Home PC Shiva
         dp10 = mkDesktopHost "dp10" [ disko.nixosModules.disko ];
+        # TU Laptop Vici - Lenovo ThinkBook
+        dp11 = mkDesktopHost "dp11" [ disko.nixosModules.disko ];
       };
 
       checks.x86_64-linux = {

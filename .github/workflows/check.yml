@@ -49,6 +49,7 @@ jobs:
           - dp08
           - dp09
           - dp10
+          - dp11
     steps:
       - uses: actions/checkout@v4
 
