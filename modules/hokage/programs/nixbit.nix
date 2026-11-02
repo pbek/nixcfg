@@ -1,7 +1,9 @@
 {
   config,
+  inputs,
   lib,
   options,
+  pkgs,
   ...
 }:
 
@@ -38,9 +40,14 @@ in
     lib.optionalAttrs (builtins.hasAttr "nixbit" options) {
       nixbit = {
         enable = true;
-        # package = pkgs.callPackage ../../../pkgs/nixbit/package.nix { };
+        # Build Nixbit with our Kwi package, so commands run in an embedded Kwi terminal
+        package = pkgs.callPackage "${inputs.nixbit}/package.nix" { kwi = pkgs.kwi or null; };
         inherit (cfg) repository;
         inherit (cfg) forceAutostart;
+      }
+      # Rebuild with nh in Nixbit's embedded Kwi terminal
+      // lib.optionalAttrs (builtins.hasAttr "useNh" options.nixbit) {
+        useNh = config.programs.nh.enable;
       }
       //
         lib.optionalAttrs

@@ -252,7 +252,7 @@
         neochat = pkgs.kdePackages.neochat;
         qc = pkgs.callPackage ./pkgs/qc/default.nix { };
         qownnotes-stable = pkgs.stable.qownnotes;
-        nixbit = inputs.nixbit.packages.${system}.default;
+        nixbit = pkgs.callPackage "${inputs.nixbit}/package.nix" { inherit (pkgs) kwi; };
         uncrash = inputs.uncrash.packages.${system}.default;
         tokstat = inputs.tokstat.packages.${system}.default;
         zfsguard = inputs.zfsguard.packages.${system}.default;
