@@ -13,26 +13,24 @@ in
 {
   kdePackages = prev.kdePackages.overrideScope (
     _kfinal: _kprev: {
-      neochat = neochatPackages.neochat.overrideAttrs (old: {
-        patches = (old.patches or [ ]) ++ [
-          # Remove once NeoChat includes https://invent.kde.org/network/neochat/-/merge_requests/3086.
-          ./kde/neochat-mark-all-chats-as-read.patch
-          # Remove once NeoChat includes https://invent.kde.org/network/neochat/-/merge_requests/3087.
-          ./kde/neochat-show-all-chats-in-home.patch
-          # Remove once NeoChat includes https://invent.kde.org/network/neochat/-/merge_requests/3088.
-          ./kde/neochat-search-encrypted-rooms.patch
-          # Remove once NeoChat includes https://invent.kde.org/network/neochat/-/merge_requests/3089.
-          ./kde/neochat-emoji-history.patch
-          # Remove once NeoChat includes https://invent.kde.org/network/neochat/-/merge_requests/3090.
-          ./kde/neochat-up-key-edit-focus.patch
-          # Remove once NeoChat includes https://invent.kde.org/network/neochat/-/merge_requests/3093.
-          ./kde/neochat-chat-scrollbar-space.patch
-          # Remove once NeoChat includes https://invent.kde.org/network/neochat/-/merge_requests/3096.
-          ./kde/neochat-quick-action-edit-button.patch
-        ];
-        # libQuotient 0.10's CMake config locates SQLite using pkg-config.
-        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ prev.pkg-config ];
-      });
+      neochat = neochatPackages.neochat.overrideAttrs (
+        finalAttrs: old: {
+          version = "unstable-${builtins.substring 0 7 finalAttrs.src.rev}";
+          # personal/master includes our changes without local backport patches.
+          # Refresh this immutable pin with `just neochat-update`.
+          src = prev.fetchFromGitLab {
+            domain = "invent.kde.org";
+            owner = "pbek";
+            repo = "neochat";
+            rev = "6be177d98598e51fc947f0ea1d7bc2198e928776";
+            hash = "sha256-QZfQyAF7fhVUN4B437ZWmFTVaN3VU3uRh3nyoR0uVao=";
+          };
+          # master requires this library; the packaged release does not yet use it.
+          buildInputs = (old.buildInputs or [ ]) ++ [ neochatPackages.kirigami-app-components ];
+          # libQuotient 0.10's CMake config locates SQLite using pkg-config.
+          nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ prev.pkg-config ];
+        }
+      );
     }
   );
 }

@@ -534,6 +534,11 @@ qc-update-release:
     ./scripts/update-qc-release.sh
     nix build .#qc && attic push qownnotes ./result
 
+# Update NeoChat's personal/master commit and source hash
+[group('neochat')]
+neochat-update:
+    bash ./scripts/update-neochat.sh
+
 # Update the QOwnNotes TUI flake
 [group('qownnotes')]
 qownnotes-tui-update-flake:

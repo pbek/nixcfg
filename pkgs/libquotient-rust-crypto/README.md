@@ -12,6 +12,12 @@ Run from the repository root:
 nix run .#neochat
 ```
 
+NeoChat itself is pinned to the `personal/master` branch of
+<https://invent.kde.org/pbek/neochat>, which includes our custom changes instead
+of applying local backport patches. Update the commit and unpacked source hash
+non-interactively with `just neochat-update`, then build with `nix build .#neochat -L`.
+This does not update libQuotient or its Rust dependencies.
+
 `nix run nixpkgs#kdePackages.neochat` does not use this repository's overlays.
 The Build Apps CI workflow and `just push` build `.#neochat` and upload its full
 runtime closure to the `qownnotes` Attic cache, including the replacement library.
@@ -29,7 +35,7 @@ April 20, 2026; the security tracking issue was closed in July).
 Nixpkgs discussion: <https://github.com/NixOS/nixpkgs/issues/501884>. As checked
 on October 19, 2026, nixpkgs master still packages libQuotient 0.9.6.1 with libolm;
 the migration has not yet appeared in a published libQuotient release.
-Remove the overlay and local package when nixpkgs includes this migration.
+Remove the libQuotient override and local package when nixpkgs includes this migration.
 
 ## Rust dependency pinning
 
