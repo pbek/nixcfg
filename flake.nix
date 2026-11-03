@@ -39,6 +39,11 @@
     kanboard-cli.inputs.nixpkgs.follows = "nixpkgs";
     qownnotes-tui.url = "github:qownnotes/qownnotes-tui/release";
     qownnotes-tui.inputs.nixpkgs.follows = "nixpkgs";
+    # Reuse Hex's upstream package definition without importing its flake dependencies.
+    hex = {
+      url = "github:anomalyco/hex/v3.3.0";
+      flake = false;
+    };
   };
 
   outputs =
@@ -88,6 +93,8 @@
           overlays = validOverlays;
         };
         tokstat = inputs.tokstat.packages.${system}.default;
+        # nixpkgs.hex is an unrelated hexdump tool; keep its attribute intact.
+        hex-dictation = final.callPackage "${inputs.hex}/nix/package.nix" { };
         kanboard-cli = inputs.kanboard-cli.packages.${system}.default.overrideAttrs (_: {
           buildInputs = final.lib.optionals final.stdenv.hostPlatform.isLinux [ final.libsecret ];
           nativeBuildInputs = [
@@ -244,6 +251,7 @@
       packages.x86_64-linux = {
         inherit (pkgs)
           devenv
+          hex-dictation
           kwi
           qownnotes
           zerobyte

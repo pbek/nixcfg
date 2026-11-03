@@ -120,6 +120,10 @@ jobs:
         run: |
           nix build .#kwi && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build and cache hex-dictation package
+        run: |
+          nix build .#hex-dictation && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
       # - name: Build zerobyte package
       #   run: |
       #     nix build .#zerobyte && \

@@ -95,11 +95,6 @@ in
     #      "omegah"
     #    ];
     tugraz.enable = true;
-    programs.voxtype = {
-      enable = true;
-      gpuSupport = true;
-      model = "base";
-    };
     zfs = {
       enable = true;
       hostId = "dccada02";

@@ -125,11 +125,6 @@ in
     synth.enable = true;
     cache.sources = [ "home" ];
     programs.platformio.enable = true;
-    programs.voxtype = {
-      enable = true;
-      gpuSupport = true;
-    };
-
     nvidia = {
       enable = true;
       # Preserve NVIDIA VRAM across suspend/resume to avoid KWin/Plasma

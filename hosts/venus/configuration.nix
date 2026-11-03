@@ -211,10 +211,5 @@
       datasetRootName = "root";
     };
     cache.sources = [ "home" ];
-    programs.voxtype = {
-      enable = true;
-      hipSupport = true;
-      contextWindowOptimization = true;
-    };
   };
 }

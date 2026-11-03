@@ -164,6 +164,23 @@
         "type": "github"
       }
     },
+    "hex": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793633131,
+        "narHash": "sha256-LhtYNTzZ2au14c5bG7v+Ps2KUC9r6mBFtp9mg7FmOOQ=",
+        "owner": "anomalyco",
+        "repo": "hex",
+        "rev": "753b078972b2f7912063db182b8b66b7c8d45ffc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anomalyco",
+        "ref": "v3.3.0",
+        "repo": "hex",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -445,6 +462,7 @@
         "agenix": "agenix",
         "catppuccin": "catppuccin",
         "disko": "disko",
+        "hex": "hex",
         "home-manager": "home-manager",
         "kanboard-cli": "kanboard-cli",
         "nix-jetbrains-plugins": "nix-jetbrains-plugins",
