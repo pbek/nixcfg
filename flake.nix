@@ -39,10 +39,11 @@
     kanboard-cli.inputs.nixpkgs.follows = "nixpkgs";
     qownnotes-tui.url = "github:qownnotes/qownnotes-tui/release";
     qownnotes-tui.inputs.nixpkgs.follows = "nixpkgs";
-    # Reuse Hex's upstream package definition without importing its flake dependencies.
+    # Use Hex's upstream Home Manager module with our existing flake inputs.
     hex = {
       url = "github:anomalyco/hex/v3.3.0";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
   };
 

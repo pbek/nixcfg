@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   pkgs,
   lib,
   utils,
@@ -9,8 +8,6 @@
 let
   inherit (config) hokage;
   inherit (hokage) backtickFirst termFontSize useInternalInfrastructure;
-  # Module consumers may not apply the root flake's package overlays.
-  hexDictation = pkgs.hex-dictation or (pkgs.callPackage "${inputs.hex}/nix/package.nix" { });
 in
 {
   config = lib.mkIf (hokage.role == "desktop") {
@@ -115,7 +112,6 @@ in
           # codexbar-cli # AI provider usage stats CLI
 
           # handy # TTS system tray app
-          hexDictation # Local voice dictation
           glab # GitLab CLI tool
         ];
       in
