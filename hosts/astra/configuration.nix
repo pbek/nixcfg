@@ -27,6 +27,7 @@
     hostName = "astra";
     termFontSize = 16.0;
     useGhosttyGtkFix = false;
+    programs.hex.enable = false;
     programs.libvirt.role = "guest";
     programs.zerobyte.enable = false;
     cache.sources = [ "caliban" ];

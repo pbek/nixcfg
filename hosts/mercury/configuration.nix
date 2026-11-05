@@ -29,6 +29,7 @@
       devNodes = "/dev/disk/by-path";
     };
     programs.libvirt.role = "guest";
+    programs.hex.enable = false;
     programs.jetbrains.enable = false;
     programs.openchamber = {
       enable = true;
