@@ -26,6 +26,12 @@ in
       default = hokage.role == "desktop";
       defaultText = lib.literalExpression ''config.hokage.role == "desktop"'';
     };
+    shortcut = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      example = "scrolllock";
+      description = "Hex dictation shortcut. Leave null to preserve Hex's existing shortcut or application default.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -40,7 +46,6 @@ in
           settings = {
             # Equivalent to `hex labs on special-keys`.
             "labs.standalone_special_keys" = lib.mkDefault true;
-            dictation_hotkey = lib.mkDefault "scrolllock";
             "dictation_processing.default_mode" = lib.mkDefault {
               name = "Global";
               replacements = map (matched_phrase: {
@@ -50,6 +55,9 @@ in
               post_processing.enabled = false;
               transformations = [ ];
             };
+          }
+          // lib.optionalAttrs (cfg.shortcut != null) {
+            dictation_hotkey = lib.mkDefault cfg.shortcut;
           };
         };
 

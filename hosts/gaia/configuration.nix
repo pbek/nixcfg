@@ -120,6 +120,7 @@ in
 
   hokage = {
     hostName = "gaia";
+    programs.hex.shortcut = "scrolllock";
     memory-swap.enable = false;
     tugraz.enable = true;
     synth.enable = true;

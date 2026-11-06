@@ -185,6 +185,7 @@
 
   hokage = {
     hostName = "venus";
+    programs.hex.shortcut = "scrolllock";
     memory-swap.enable = false;
     role = "desktop";
     programs = {

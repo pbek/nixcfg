@@ -25,6 +25,7 @@
 
   hokage = {
     hostName = "pluto";
+    programs.hex.shortcut = "scrolllock";
     lowBandwidth = true;
     useGhosttyGtkFix = false;
     cache.sources = [ "home" ];

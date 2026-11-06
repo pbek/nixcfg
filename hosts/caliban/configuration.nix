@@ -89,6 +89,7 @@ in
   };
 
   hokage = {
+    programs.hex.shortcut = "scrolllock";
     memory-swap.enable = false;
     #    users = [
     #      "omega"

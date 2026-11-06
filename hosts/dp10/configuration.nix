@@ -21,6 +21,7 @@
 
   hokage = {
     hostName = "dp10";
+    programs.hex.shortcut = "scrolllock";
     zfs.hostId = "e8fd4331";
     gaming.enable = true;
 

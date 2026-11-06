@@ -22,6 +22,7 @@
 
   hokage = {
     hostName = "dp04";
+    programs.hex.shortcut = "scrolllock";
     userLogin = "dp";
     # userNameLong = "dp";
     # userNameShort = "dp";
