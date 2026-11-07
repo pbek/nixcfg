@@ -15,6 +15,10 @@ in
 {
   imports = [ ];
 
+  # Allow evaluating packages marked broken at eval time (e.g. gtk2, needed by
+  # bitscope, https://github.com/NixOS/nixpkgs/issues/410814)
+  nixpkgs.config.problems.handlers."gtk+".broken = "warn";
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
