@@ -93,7 +93,7 @@ let
 
       outputHash =
         {
-          x86_64-linux = "sha256-fbO7hrh7sFK0d4RAAirwiWT5cjOyuoW1uVtIBgm1U4I=";
+          x86_64-linux = "sha256-jhilXBbrykjgMhLDk86a2SVMe9frn/U4ukYZmkzEP70=";
         }
         .${platform.system} or lib.fakeHash;
       outputHashAlgo = "sha256";
@@ -102,13 +102,13 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "openchamber";
-  version = "2.5.3";
+  version = "2.6.1";
 
   src = fetchFromGitHub {
     owner = "openchamber";
     repo = "openchamber";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-oGhyNCMEvSxIvgzIcBzkan5BmldAhRJmrusnd/uVmbI=";
+    hash = "sha256-oRTO0omVnEAvNRt00GgrbOWnNLHOOx4NsoCg/kiQJUE=";
   };
 
   nativeBuildInputs = [
