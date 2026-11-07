@@ -92,7 +92,9 @@ in
           };
         };
       };
-      home.packages = [ pkgs.openchamber ];
+      # Only add the openchamber package on hosts that explicitly enable the
+      # openchamber module (currently mercury), instead of all desktops.
+      home.packages = lib.optional config.hokage.programs.openchamber.enable pkgs.openchamber;
     });
   };
 }
