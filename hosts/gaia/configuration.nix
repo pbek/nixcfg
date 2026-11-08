@@ -62,21 +62,21 @@ in
     httm # CLI Time Machine (normally only installed via hokage.zfs)
   ];
 
-  # Handle keyboard leds - using systemd service instead of deprecated powerUpCommands
+  # Run each keyboard region command in a shell script, not a multi-line ExecStart.
   systemd.services.g810-led-keyboard = {
     description = "Logitech G213 keyboard LED configuration";
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = ''
-        ${pkgs.g810-led}/bin/g213-led -r 1 ff0000
-        ${pkgs.g810-led}/bin/g213-led -r 2 ff0000
-        ${pkgs.g810-led}/bin/g213-led -r 3 ff0000
-        ${pkgs.g810-led}/bin/g213-led -r 4 7fff00
-        ${pkgs.g810-led}/bin/g213-led -r 5 7fff00
-      '';
     };
+    script = ''
+      ${pkgs.g810-led}/bin/g213-led -r 1 ff0000
+      ${pkgs.g810-led}/bin/g213-led -r 2 ff0000
+      ${pkgs.g810-led}/bin/g213-led -r 3 ff0000
+      ${pkgs.g810-led}/bin/g213-led -r 4 7fff00
+      ${pkgs.g810-led}/bin/g213-led -r 5 7fff00
+    '';
   };
 
   # Extract
