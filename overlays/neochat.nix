@@ -5,7 +5,16 @@
 _final: prev:
 let
   neochatPackages = prev.kdePackages.overrideScope (
-    kfinal: _kprev: {
+    kfinal: kprev: {
+      # Qt 6.12 can crash when an asynchronous action menu outlives its toolbar.
+      # Patch the compiled QML modules, not just Kirigami's propagation wrapper.
+      kirigami =
+        let
+          unwrapped = kprev.kirigami.unwrapped.overrideAttrs (old: {
+            patches = (old.patches or [ ]) ++ [ ../pkgs/neochat/kirigami-synchronous-action-menu.patch ];
+          });
+        in
+        kprev.kirigami.override { mkKdeDerivation = _: unwrapped; };
       libquotient = kfinal.callPackage ../pkgs/libquotient-rust-crypto/package.nix { };
     }
   );
@@ -29,6 +38,19 @@ in
           buildInputs = (old.buildInputs or [ ]) ++ [ neochatPackages.kirigami-app-components ];
           # libQuotient 0.10's CMake config locates SQLite using pkg-config.
           nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ prev.pkg-config ];
+          # Keep desktop-session QML/plugin paths from loading a different Qt
+          # build or unpatched Kirigami before this package's own dependencies.
+          qtWrapperArgs = [
+            "--unset"
+            "QT_PLUGIN_PATH"
+            "--unset"
+            "QML_IMPORT_PATH"
+            "--unset"
+            "QML2_IMPORT_PATH"
+            "--unset"
+            "NIXPKGS_QT6_QML_IMPORT_PATH"
+          ]
+          ++ (old.qtWrapperArgs or [ ]);
         }
       );
     }

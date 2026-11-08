@@ -1,0 +1,38 @@
+From: NeoChat local packaging
+Subject: Create action menus before their owning toolbar can be destroyed
+
+PrivateActionToolButton passes a live QML list property to an asynchronous
+incubator. If the toolbar is destroyed before incubation completes, Qt 6.12
+dereferences the destroyed list owner in QQmlVMEResolvedList. Create the menu
+synchronously so both the initial properties and setup are consumed while
+the button is still alive.
+
+--- a/src/controls/private/PrivateActionToolButton.qml
++++ b/src/controls/private/PrivateActionToolButton.qml
+@@ -42,6 +42,6 @@
+     // We create the menu instance only when there are any actual menu items.
+-    // This also happens in the background, avoiding slowdowns due to menu item
+-    // creation on the main thread.
++    // Create it synchronously: an asynchronous incubator can outlive the
++    // button and the QML list property passed as its initial actions.
+     onMenuActionsChanged: {
+         if (menuComponent && menuActions.length > 0) {
+             if (!menu) {
+@@ -52,16 +52,7 @@
+                     menu.closed.connect(() => control.checked = false)
+                     menu.actions = control.menuActions
+                 }
+-                const incubator = menuComponent.incubateObject(control, { actions: menuActions })
+-                if (incubator.status !== Component.Ready) {
+-                    incubator.onStatusChanged = status => {
+-                        if (status === Component.Ready) {
+-                            setupIncubatedMenu(incubator.object)
+-                        }
+-                    }
+-                } else {
+-                    setupIncubatedMenu(incubator.object);
+-                }
++                setupIncubatedMenu(menuComponent.createObject(control, { actions: menuActions }));
+             } else {
+                 menu.actions = menuActions
+             }
