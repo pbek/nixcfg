@@ -467,11 +467,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1794224038,
-        "narHash": "sha256-0aVQUFx3hai/lTQqmWshsS+in2OnEi+0dBXoXHnA45E=",
+        "lastModified": 1794228184,
+        "narHash": "sha256-87qIvN/LqAfwRAt12FFKgm7PjlGnO7tYX0YdN2yMPrs=",
         "owner": "qownnotes",
         "repo": "qownnotes-tui",
-        "rev": "952b26c5018d9ca5236c819da08ae40889ab2841",
+        "rev": "9b6568d6b1d9e49578730e805e78c04f491942ff",
         "type": "github"
       },
       "original": {
