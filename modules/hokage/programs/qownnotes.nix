@@ -68,14 +68,9 @@ in
     environment.systemPackages = [
       pkgs.qownnotes
     ]
-    ++ lib.optional cfg.enableTui (
-      inputs.qownnotes-tui.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
-        # The Rust hooks require system SQLite even when libsqlite3-sys
-        # enables its bundled feature; remove once upstream adds these.
-        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.pkg-config ];
-        buildInputs = (old.buildInputs or [ ]) ++ [ pkgs.sqlite ];
-      })
-    );
+    ++
+      lib.optional cfg.enableTui
+        inputs.qownnotes-tui.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
     home-manager.users = lib.genAttrs hokage.users (
       _userName:
