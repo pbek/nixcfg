@@ -8,8 +8,7 @@
 let
   inherit (config) hokage;
   cfg = hokage.zfs;
-  # Import only the EOL kernel from the pinned source; modules such as ZFS
-  # are built by the current nixpkgs via the shared kernel selector.
+  # Keep the kernel and its modules from the same cached snapshot.
   kernelPkgs = import inputs.nixpkgs-linux-7-2 {
     inherit (pkgs.stdenv.hostPlatform) system;
     inherit (pkgs) config;
@@ -64,9 +63,9 @@ in
     };
     useUnstable = mkOption {
       type = types.bool;
-      # Currently, stable is zfs 2.4.2
+      # Both packages come from the pinned kernel snapshot.
       default = false;
-      description = "Use pkgs.zfs_unstable for zfs.package when true (otherwise use pkgs.zfs).";
+      description = "Use the pinned zfs_unstable package when true (otherwise use pinned zfs).";
     };
     devNodes = mkOption {
       type = types.str;
@@ -89,13 +88,16 @@ in
     hokage.kernel.requirements = [ cfg.maxKernelVersion ];
 
     boot = {
+      # Prefer the pinned package set over the shared selector's mkDefault,
+      # while allowing hosts to extend it for custom kernel modules.
+      kernelPackages = lib.mkOverride 900 (kernelPkgs.linuxPackagesFor hokage.kernel.selectedKernel);
       # Set maximum ARC size to prevent the Early OOM from killing processes
       # https://wiki.nixos.org/wiki/ZFS#Tuning_Adaptive_Replacement_Cache_size
       kernelParams = [ "zfs.zfs_arc_max=${builtins.toString cfg.arcMax}" ];
 
       supportedFilesystems = [ "zfs" ];
       zfs.requestEncryptionCredentials = lib.mkIf cfg.encrypted true;
-      zfs.package = if cfg.useUnstable then pkgs.zfs_unstable else pkgs.zfs;
+      zfs.package = if cfg.useUnstable then kernelPkgs.zfs_unstable else kernelPkgs.zfs;
       zfs.devNodes = lib.mkIf (cfg.devNodes != "") cfg.devNodes;
       # Silence warning https://github.com/nix-community/disko/issues/1255
       zfs.forceImportRoot = true;

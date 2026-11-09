@@ -6,11 +6,16 @@
 
 {
   config,
+  inputs,
   pkgs,
   ...
 }:
 
 let
+  kernelPkgs = import inputs.nixpkgs-linux-7-2 {
+    inherit (pkgs.stdenv.hostPlatform) system;
+    inherit (pkgs) config;
+  };
   broadcomSta = "broadcom-sta-6.30.223.271-63-${config.boot.kernelPackages.kernel.version}";
 in
 
@@ -31,7 +36,7 @@ in
     broadcomSta
   ];
 
-  boot.kernelPackages = (pkgs.linuxPackagesFor config.hokage.kernel.selectedKernel).extend (
+  boot.kernelPackages = (kernelPkgs.linuxPackagesFor config.hokage.kernel.selectedKernel).extend (
     _final: prev: {
       broadcom_sta = prev.broadcom_sta.overrideAttrs (old: {
         # The module aggregator requires certificates for external modules.
