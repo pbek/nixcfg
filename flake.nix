@@ -5,9 +5,9 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
     # Temporary EOL kernel pin for ZFS until it supports Linux 7.3.
-    # Last revision before linux_7_2 was removed in ed2b227b5c774253b551a80d2d8cce30997ef1c5.
+    # Published nixos-unstable snapshot with cached Linux 7.2.15 and ZFS modules.
     nixpkgs-linux-7-2 = {
-      url = "github:NixOS/nixpkgs/8fd1ec5c2656654bcb19b1e3c1eb6541b19182c8";
+      url = "github:NixOS/nixpkgs/f9a75f41be3a74eab55d3a7679d34ad6cc0da977";
       flake = false;
     };
     # Temporary source for Zerobyte until NixOS/nixpkgs#557765 reaches nixos-unstable.

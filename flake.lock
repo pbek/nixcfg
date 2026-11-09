@@ -327,17 +327,17 @@
     "nixpkgs-linux-7-2": {
       "flake": false,
       "locked": {
-        "lastModified": 1793999695,
-        "narHash": "sha256-cAHcEJHxgCfdY/1WR7JyZqmOPsq6CZjIAPdx0AEeWac=",
+        "lastModified": 1793876309,
+        "narHash": "sha256-Wojg9lIH/hDH91iDVH2/EPw8oDSpxjxhXONbU1yf4Zg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "8fd1ec5c2656654bcb19b1e3c1eb6541b19182c8",
+        "rev": "f9a75f41be3a74eab55d3a7679d34ad6cc0da977",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "8fd1ec5c2656654bcb19b1e3c1eb6541b19182c8",
+        "rev": "f9a75f41be3a74eab55d3a7679d34ad6cc0da977",
         "type": "github"
       }
     },
