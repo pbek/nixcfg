@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   pkgs,
   lib,
   ...
@@ -7,6 +8,12 @@
 let
   inherit (config) hokage;
   cfg = hokage.zfs;
+  # Import only the EOL kernel from the pinned source; modules such as ZFS
+  # are built by the current nixpkgs via the shared kernel selector.
+  kernelPkgs = import inputs.nixpkgs-linux-7-2 {
+    inherit (pkgs.stdenv.hostPlatform) system;
+    inherit (pkgs) config;
+  };
   datasetRootPart =
     if cfg.datasetRootName != "" then
       "/${cfg.datasetRootName}"
@@ -50,11 +57,9 @@ in
     };
     maxKernelVersion = lib.mkOption {
       type = lib.types.package;
-      # Set the currently maximum allowed kernel package for ZFS here
-      # Look for Kernel support on https://github.com/openzfs/zfs/releases
-      # Look for ZFS version in nixpkgs on https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=zfs+linux_7_2
-      default = pkgs.linuxKernel.packages.linux_7_2.kernel;
-      description = "Maximum allowed kernel package vor ZFS";
+      # Temporary Linux 7.2 pin until ZFS supports 7.3; see https://github.com/openzfs/zfs/releases.
+      default = kernelPkgs.linuxKernel.packages.linux_7_2.kernel;
+      description = "Maximum allowed kernel package for ZFS";
       readOnly = true;
     };
     useUnstable = mkOption {

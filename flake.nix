@@ -4,6 +4,12 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
+    # Temporary EOL kernel pin for ZFS until it supports Linux 7.3.
+    # Last revision before linux_7_2 was removed in ed2b227b5c774253b551a80d2d8cce30997ef1c5.
+    nixpkgs-linux-7-2 = {
+      url = "github:NixOS/nixpkgs/8fd1ec5c2656654bcb19b1e3c1eb6541b19182c8";
+      flake = false;
+    };
     # Temporary source for Zerobyte until NixOS/nixpkgs#557765 reaches nixos-unstable.
     nixpkgs-zerobyte = {
       url = "github:NixOS/nixpkgs/4f9781b188617829269c84078b201f6e12bb3a93";

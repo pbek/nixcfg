@@ -324,6 +324,23 @@
         "url": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.zst"
       }
     },
+    "nixpkgs-linux-7-2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793999695,
+        "narHash": "sha256-cAHcEJHxgCfdY/1WR7JyZqmOPsq6CZjIAPdx0AEeWac=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "8fd1ec5c2656654bcb19b1e3c1eb6541b19182c8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "8fd1ec5c2656654bcb19b1e3c1eb6541b19182c8",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1793865203,
@@ -477,6 +494,7 @@
         "nixhostforge": "nixhostforge",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_4",
+        "nixpkgs-linux-7-2": "nixpkgs-linux-7-2",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-zerobyte": "nixpkgs-zerobyte",
         "pia": "pia",

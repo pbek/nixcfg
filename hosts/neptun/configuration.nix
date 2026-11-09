@@ -31,7 +31,7 @@ in
     broadcomSta
   ];
 
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_7_2.extend (
+  boot.kernelPackages = (pkgs.linuxPackagesFor config.hokage.kernel.selectedKernel).extend (
     _final: prev: {
       broadcom_sta = prev.broadcom_sta.overrideAttrs (old: {
         # The module aggregator requires certificates for external modules.
