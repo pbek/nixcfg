@@ -15,7 +15,6 @@ on:
       - "pkgs/libquotient-rust-crypto/**"
       - "overlays/opencode.nix"
       - "overlays/openchamber.nix"
-      - "overlays/wowup-cf.nix"
       - "overlays/zerobyte.nix"
       - "modules/hokage/programs/zerobyte.nix"
       - "modules/hokage/desktop.nix"
@@ -136,8 +135,4 @@ jobs:
       - name: Build openchamber package
         run: |
           nix build .#openchamber && \
-          nix-shell -p attic-client --run "attic push qownnotes ./result"
-      - name: Build and cache wowup-cf package
-        run: |
-          nix build .#nixosConfigurations.venus.pkgs.wowup-cf && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"

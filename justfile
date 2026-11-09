@@ -298,8 +298,6 @@ push:
     nix build .#hex-dictation && attic push qownnotes ./result
     nix build .#opencode && attic push qownnotes ./result
     nix build .#openchamber && attic push qownnotes ./result
-    # Build and cache the temporary wowup-cf override (from nixpkgs master)
-    nix build .#nixosConfigurations.venus.pkgs.wowup-cf && attic push qownnotes ./result
 
 [group('cache')]
 push-all:
