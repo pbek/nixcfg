@@ -33,14 +33,14 @@
 
 stdenv.mkDerivation {
   pname = "kwi";
-  version = "0.1.0-unstable-2026-11-01";
+  version = "0.1.0-unstable-2026-11-08";
 
   src = fetchFromGitLab {
     domain = "invent.kde.org";
     owner = "utilities";
     repo = "kwi";
-    rev = "483d718d779c069a28ec139280d1d6e5e198b94e";
-    hash = "sha256-BA3Rxm7QzSM6SDb35Q7SlKzVAgvYDkHF1IWaZCMHp64=";
+    rev = "1df87417056b4b44085845b7fd273fe95bb0e42f";
+    hash = "sha256-I7DjwSTC7kV3H0XokmC0aeGI6aQQ3vq7cOUkkbgQ+1Q=";
   };
 
   strictDeps = true;
