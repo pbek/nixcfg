@@ -18,13 +18,11 @@ in
   };
 
   config = mkIf cfg.enable {
-    services.pipewire.jack.enable = true;
-
     environment.systemPackages = with pkgs; [
       sysex-controls # Configure Akai, Arturia, Korg MIDI devices via SysEx
       surge-xt # Synthesizer
       jalv-qt # LV2 plugin host with UI support
-      pipewire.jack # PipeWire JACK wrapper such as pw-jack
+      pipewire.jack # Launch JACK applications with pw-jack instead of setting LD_LIBRARY_PATH globally
       jack-example-tools # JACK tools such as jack_lsp and jack_connect
       lmms # Digital audio workstation with MIDI support
       carla # Audio plugin host with MIDI support
