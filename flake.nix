@@ -258,9 +258,14 @@
       packages.x86_64-linux = {
         inherit (pkgs)
           devenv
+          fresh-editor
           hex-dictation
+          himalaya
           kwi
           qownnotes
+          rustdesk-flutter
+          uutils-findutils
+          wstunnel
           zerobyte
           ;
         kate = pkgs.kdePackages.kate;

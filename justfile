@@ -295,6 +295,11 @@ push:
     # -attic push qownnotes `which zerobyte` --no-closure
     nix build .#neochat && attic push qownnotes ./result
     nix build .#kwi && attic push qownnotes ./result
+    nix build .#wstunnel && attic push qownnotes ./result
+    nix build .#rustdesk-flutter && attic push qownnotes ./result
+    nix build .#fresh-editor && attic push qownnotes ./result
+    nix build .#himalaya && attic push qownnotes ./result
+    nix build .#uutils-findutils && attic push qownnotes ./result
     nix build .#hex-dictation && attic push qownnotes ./result
     nix build .#opencode && attic push qownnotes ./result
     nix build .#openchamber && attic push qownnotes ./result

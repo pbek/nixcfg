@@ -22,6 +22,11 @@ on:
       - "overlays/kate-fixes.nix"
       - "overlays/neochat.nix"
       - "overlays/kwi.nix"
+      - "overlays/wstunnel.nix"
+      - "overlays/rustdesk-flutter.nix"
+      - "overlays/fresh-editor.nix"
+      - "overlays/himalaya.nix"
+      - "overlays/uutils-findutils.nix"
       - "flake.nix"
       - "flake.lock"
       - ".github/workflows/build.yml"
@@ -119,6 +124,26 @@ jobs:
       - name: Build and cache kwi package
         run: |
           nix build .#kwi && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build and cache wstunnel package
+        run: |
+          nix build .#wstunnel && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build and cache rustdesk-flutter package
+        run: |
+          nix build .#rustdesk-flutter && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build and cache fresh-editor package
+        run: |
+          nix build .#fresh-editor && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build and cache himalaya package
+        run: |
+          nix build .#himalaya && \
+          nix-shell -p attic-client --run "attic push qownnotes ./result"
+      - name: Build and cache uutils-findutils package
+        run: |
+          nix build .#uutils-findutils && \
           nix-shell -p attic-client --run "attic push qownnotes ./result"
       - name: Build and cache hex-dictation package
         run: |
