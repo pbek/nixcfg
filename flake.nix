@@ -117,6 +117,8 @@
         catppuccin.nixosModules.catppuccin
         (_: {
           nixpkgs.overlays = allOverlays;
+          # Let tools such as Nixbit identify the activated configuration.
+          system.configurationRevision = self.rev or self.dirtyRev or null;
           # Suppress catppuccin autoEnable migration warning; actual theming is
           # handled per-user in modules/hokage/catppuccin.nix.
           catppuccin.autoEnable = false;
