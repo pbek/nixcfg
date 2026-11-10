@@ -10,11 +10,6 @@
       url = "github:NixOS/nixpkgs/f9a75f41be3a74eab55d3a7679d34ad6cc0da977";
       flake = false;
     };
-    # Temporary source for Zerobyte until NixOS/nixpkgs#557765 reaches nixos-unstable.
-    nixpkgs-zerobyte = {
-      url = "github:NixOS/nixpkgs/4f9781b188617829269c84078b201f6e12bb3a93";
-      flake = false;
-    };
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
