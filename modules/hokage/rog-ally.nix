@@ -46,7 +46,12 @@ in
     environment.systemPackages = with pkgs; [
       kdePackages.kwalletmanager
       kdePackages.plasma-systemmonitor
-      kdePackages.spectacle
+      (kdePackages.spectacle.override {
+        tesseractLanguages = [
+          "eng"
+          "deu"
+        ];
+      })
       kdePackages.ark
       kdePackages.bluedevil
       kdePackages.dolphin

@@ -97,7 +97,12 @@ in
             kfind
             kleopatra
             yakuake
-            spectacle
+            (spectacle.override {
+              tesseractLanguages = [
+                "eng"
+                "deu"
+              ];
+            })
             ark
             bluedevil
             dolphin
