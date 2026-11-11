@@ -42,7 +42,7 @@
     qownnotes-tui.inputs.nixpkgs.follows = "nixpkgs";
     # Use Hex's upstream Home Manager module with our existing flake inputs.
     hex = {
-      url = "github:anomalyco/hex/v3.3.0";
+      url = "github:anomalyco/hex/v3.4.0";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
