@@ -31,8 +31,8 @@ in
             domain = "invent.kde.org";
             owner = "pbek";
             repo = "neochat";
-            rev = "8dbeeaad6b175c10d447f3f317cc8c2154cfc94b";
-            hash = "sha256-iUWIob68Z4MUf3pKF9/qVCY0Rayp63MbN8oumfnSpr8=";
+            rev = "998b442629761936f729050d1391c1df6fbe10f1";
+            hash = "sha256-7TDYD2rqwlfXUBtZqt8o0z6QP1ZhRqEYUFiOeAnSAFs=";
           };
           # master requires this library; the packaged release does not yet use it.
           buildInputs = (old.buildInputs or [ ]) ++ [ neochatPackages.kirigami-app-components ];
