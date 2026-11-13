@@ -79,6 +79,11 @@ in
     '';
   };
 
+  # The keyboard loses its LED configuration during sleep.
+  powerManagement.resumeCommands = ''
+    ${pkgs.systemd}/bin/systemctl restart g810-led-keyboard.service
+  '';
+
   # Extract
 
   # https://github.com/NixOS/nixpkgs/issues/215450
