@@ -73,6 +73,22 @@ Prefer `just` recipes over inventing ad-hoc commands when possible.
 - If you add a host to `hosts/`, ensure `flake.nix` includes it in `nixosConfigurations`.
 - If changing shared behavior, consider impact on both desktop and server host constructors.
 
+## Commit messages
+
+Follow the existing history: use a prefixed subject, not an unprefixed sentence.
+
+- Package version updates: `<package>: <old-version> -> <new-version>`
+  (for example, `qownnotes: 26.11.9 -> 26.11.10`).
+- Source pin updates: `<package>: update` or `<package>: update to <version>`.
+- Flake updates: `flake: update` (optionally name the updated input).
+- Other changes: `<type>(<scope>): <summary>` or `<type>: <summary>`, using types
+  such as `fix`, `feat`, `chore`, `docs`, `ci`, or `build` and a relevant scope
+  such as a host, module, or package.
+- Multi-package maintenance: `chore(packages): update local packages and build dependencies`.
+- Keep the summary concise, lowercase at the start, and without a trailing period.
+  Separate any explanatory body from the subject with a blank line.
+- When rewording, preserve existing trailers and the configured commit signing.
+
 ## Pointers
 
 - High-level project usage: `README.md`
