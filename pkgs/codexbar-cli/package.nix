@@ -3,22 +3,24 @@
   stdenv,
   fetchurl,
   autoPatchelfHook,
+  makeWrapper,
+  versionCheckHook,
   curl,
   sqlite,
   gcc-unwrapped,
 }:
 
 let
-  version = "0.32.0";
+  version = "0.84.0";
 
   sources = {
     "x86_64-linux" = {
       url = "https://github.com/steipete/CodexBar/releases/download/v${version}/CodexBarCLI-v${version}-linux-x86_64.tar.gz";
-      hash = "sha256:01vwjnpjrk8k9i6b9hv6ifp5h89qzzziwgcrr0pjabl8x4xlnnmk";
+      hash = "sha256-cksL6w0nac/G/BVY8ngrW4EutzoUBYK5cW+vZirbrqA=";
     };
     "aarch64-linux" = {
       url = "https://github.com/steipete/CodexBar/releases/download/v${version}/CodexBarCLI-v${version}-linux-aarch64.tar.gz";
-      hash = lib.fakeHash;
+      hash = "sha256-dpRuTSbNbmRbBGCZu3ekO2+2IyfHdpf9BkYlv5RV0a8=";
     };
   };
 
@@ -30,7 +32,10 @@ stdenv.mkDerivation {
   pname = "codexbar-cli";
   inherit version src;
 
-  nativeBuildInputs = [ autoPatchelfHook ];
+  nativeBuildInputs = [
+    autoPatchelfHook
+    makeWrapper
+  ];
 
   buildInputs = [
     curl
@@ -42,9 +47,18 @@ stdenv.mkDerivation {
 
   installPhase = ''
     runHook preInstall
-    install -Dm755 codexbar $out/bin/codexbar
+    app=$out/libexec/codexbar
+    install -Dm755 CodexBarCLI $app/CodexBarCLI
+    install -Dm644 VERSION $app/VERSION
+    install -Dm644 THIRD_PARTY_NOTICES $out/share/doc/codexbar-cli/THIRD_PARTY_NOTICES
+    cp -R CodexBar_CodexBarCore.bundle $app/
+    makeWrapper $app/CodexBarCLI $out/bin/codexbar
     runHook postInstall
   '';
+
+  doInstallCheck = true;
+  nativeInstallCheckInputs = [ versionCheckHook ];
+  versionCheckProgramArg = "--version";
 
   meta = {
     description = "CLI to show AI coding provider usage stats (Codex, Claude, Cursor, and more)";

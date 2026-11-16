@@ -10,13 +10,13 @@
 
 buildGoModule rec {
   pname = "lan-orangutan";
-  version = "3.3.8";
+  version = "3.4.2";
 
   src = fetchFromGitHub {
     owner = "291-Group";
     repo = "LAN-Orangutan";
     tag = "v${version}";
-    hash = "sha256-bXhpESrD9XeDYHfymv6M2ERxxFCuqBARZhaNWakd7/U=";
+    hash = "sha256-VCEfKUeFLaQXSm4GTA6I5xh2q3RSdN+Mrs9IDZByw7o=";
   };
 
   vendorHash = "sha256-oa5QHVlhj5Vhkib53IAgq3uCI2bR+kdDKaouHu+6ufg=";

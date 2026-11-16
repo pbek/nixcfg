@@ -1,7 +1,7 @@
 # OpenChamber web/CLI server (https://github.com/openchamber/openchamber).
 #
 # OpenChamber 2.x talks to the OpenCode 2.x HTTP API (it pins
-# @opencode/client 2.x, and requires OpenCode >= 2.2.0),
+# @opencode/client 2.x, and requires OpenCode >= 2.2.4),
 # so it uses the upstream nixpkgs `opencode` package.
 # Use `openchamber.override { opencode = ...; }` for a different build, or set
 # OPENCODE_BINARY at runtime.
@@ -93,7 +93,7 @@ let
 
       outputHash =
         {
-          x86_64-linux = "sha256-jhilXBbrykjgMhLDk86a2SVMe9frn/U4ukYZmkzEP70=";
+          x86_64-linux = "sha256-i0iW+WOiXf/u2cUqPRsOxZic9RHfodoy7W+Jqi+AqN4=";
         }
         .${platform.system} or lib.fakeHash;
       outputHashAlgo = "sha256";
@@ -102,13 +102,13 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "openchamber";
-  version = "2.6.1";
+  version = "2.7.2";
 
   src = fetchFromGitHub {
     owner = "openchamber";
     repo = "openchamber";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-oRTO0omVnEAvNRt00GgrbOWnNLHOOx4NsoCg/kiQJUE=";
+    hash = "sha256-lh63kfn/9HraxmvWohVV41208OJsObsMe/9BE7Br3Zw=";
   };
 
   nativeBuildInputs = [
@@ -167,8 +167,8 @@ stdenv.mkDerivation (finalAttrs: {
     cp -R packages/sdk/{package.json,dist} $app/packages/sdk/
     cp -R ${finalAttrs.passthru.node_modules}/runtime/. $app/
     chmod -R u+w $app
-    # Only links the SDK's dev-time guest bundler script, which we do not ship
-    rm $app/packages/web/node_modules/.bin/openchamber-guest-bundle
+    # These links target SDK development scripts, which we do not ship.
+    rm $app/packages/web/node_modules/.bin/openchamber-guest-{bundle,check}
 
     makeWrapper ${lib.getExe bun} $out/bin/openchamber \
       --add-flags $app/packages/web/bin/cli.js \

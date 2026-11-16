@@ -8,11 +8,11 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "corgi";
-  version = "20261025T010837Z-211f989a9870";
+  version = "20261106T233845Z-03c72b717526";
 
   src = fetchurl {
     url = "https://corgi.computer/releases/${finalAttrs.version}/corgi-linux-x86_64";
-    hash = "sha256-0OHVp0R1XR3BTMm5gFXotuCeK0B2cgsssnCOdHXuwjY=";
+    hash = "sha256-uVQPvGujh7Xp0+utVhR0ahbqln4tHGdrHlKaGVuiHwM=";
   };
 
   nativeBuildInputs = [

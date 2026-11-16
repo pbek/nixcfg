@@ -3,8 +3,10 @@
   fetchFromGitHub,
   installShellFiles,
   kdePackages,
+  kwi ? null,
   lib,
   libgit2,
+  libssh2,
   ninja,
   pkg-config,
   qt6,
@@ -14,13 +16,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "nixbit";
-  version = "0.2.1";
+  version = "1.5.0";
 
   src = fetchFromGitHub {
     owner = "pbek";
     repo = "nixbit";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-L7Ph3sY+Jca9BZjBlxbGV8bjG0HMctClKqXzjMchsNQ=";
+    hash = "sha256-Rf4/Lzc+Nj3wb2e4Xb+4YadbuK8mY1S2H+c7nTDVLUM=";
   };
 
   nativeBuildInputs = [
@@ -39,10 +41,15 @@ stdenv.mkDerivation (finalAttrs: {
     kdePackages.ki18n
     kdePackages.kirigami
     libgit2
+    libssh2
     qt6.qtbase
     qt6.qtdeclarative
     qt6.qtwayland
-  ];
+  ]
+  ++ lib.optionals (kwi != null) [ kwi ];
+
+  # Do not load QML modules from a development shell's different Qt build.
+  qtWrapperArgs = [ "--unset QML_IMPORT_PATH" ];
 
   # Install shell completion on Linux (with xvfb-run)
   postInstall = ''

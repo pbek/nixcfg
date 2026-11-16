@@ -10,7 +10,7 @@
 
 # Match the released VT API used by upstream Kwi, independently of the Ghostty app.
 let
-  version = "1.0.0";
+  version = "1.0.1";
   deps = fetchzip {
     url = "https://release.files.ghostty.org/libghostty-vt/${version}/libghostty-vt-${version}-deps.tar.gz";
     hash = "sha256-bqi6TjqxfMtLYyStfHeqZBPsapfdJHVT3ILxL7u+kEQ=";
@@ -21,7 +21,7 @@ stdenv.mkDerivation {
   inherit version;
   src = fetchurl {
     url = "https://release.files.ghostty.org/libghostty-vt/${version}/libghostty-vt-${version}.tar.gz";
-    sha256 = "4a6ef758be721923e1969e7b81b443dcc92d8dd3fb5a39600c03a8817a753676";
+    hash = "sha256-Mz386XZB75tTa7ngiQethquqraUOj3QXtw2ShK3vN6o=";
   };
 
   strictDeps = true;

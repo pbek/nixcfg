@@ -18,6 +18,6 @@ The Build Apps CI workflow and `just push` build Kwi and push its closure to the
 `qownnotes` Attic cache.
 
 Kwi is pinned to an upstream commit because there is no tagged release yet.
-Its private libghostty-vt build uses the upstream 1.0.0 release and offline
+Its private libghostty-vt build uses the upstream 1.0.1 release and offline
 dependency archive, matching Kwi's required VT API.
 This does not override `pkgs.ghostty` or `pkgs.libghostty-vt`.

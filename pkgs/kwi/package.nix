@@ -14,6 +14,7 @@
   wrapQtAppsHook,
   kcoreaddons,
   kconfig,
+  kcolorscheme,
   kdbusaddons,
   kguiaddons,
   ki18n,
@@ -21,6 +22,7 @@
   kirigami-addons,
   kirigami-app-components,
   kitemmodels,
+  kiconthemes,
   kpty,
   kio,
   knotifications,
@@ -33,14 +35,14 @@
 
 stdenv.mkDerivation {
   pname = "kwi";
-  version = "0.1.0-unstable-2026-11-08";
+  version = "0.1.0-unstable-2026-11-16";
 
   src = fetchFromGitLab {
     domain = "invent.kde.org";
     owner = "utilities";
     repo = "kwi";
-    rev = "1df87417056b4b44085845b7fd273fe95bb0e42f";
-    hash = "sha256-I7DjwSTC7kV3H0XokmC0aeGI6aQQ3vq7cOUkkbgQ+1Q=";
+    rev = "e62b89982e1b785b56e06bad714c3eece949ad9e";
+    hash = "sha256-+hJJogLzsdeSfQMotFe4vP2tG/AleeONHdkydqsLV/E=";
   };
 
   strictDeps = true;
@@ -60,6 +62,7 @@ stdenv.mkDerivation {
     qtsvg
     kcoreaddons
     kconfig
+    kcolorscheme
     kdbusaddons
     kguiaddons
     ki18n
@@ -67,6 +70,7 @@ stdenv.mkDerivation {
     kirigami-addons
     kirigami-app-components
     kitemmodels
+    kiconthemes
     kpty
     kio
     knotifications

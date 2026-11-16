@@ -8,28 +8,28 @@
   gnugrep,
   makeWrapper,
   nix-update-script,
-  zig_0_16,
+  zig_0_17,
 }:
 
 let
-  # ziggity 0.3.0 and its dependencies use build APIs removed in Zig 0.17.
-  zig = zig_0_16;
+  # Match the minimum Zig 0.17.1 toolchain required by ziggity.
+  zig = zig_0_17;
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "ziggity";
-  version = "0.3.0";
+  version = "0.62.0";
 
   src = fetchFromGitHub {
     owner = "simoarpe";
     repo = "ziggity";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-QvPFx8BghCdIWVRb1vvIfD61Ho/rfLo9yOr01LdbH+g=";
+    hash = "sha256-QnG99z3v9Eba3XAfH0+SSsDpp0D2UyQyIGDl00yW5wg=";
   };
 
   zigDeps = zig.fetchDeps {
     inherit (finalAttrs) src pname version;
     fetchAll = true;
-    hash = "sha256-KQg6eGQxN1RALmSpiqs/okgGQI85tv4ap6zP+Dz5b6c=";
+    hash = "sha256-OjvuVDDu5l6pxx0Yew0TxqZQ6OsnPeU7x3ZMfnvhdLU=";
   };
 
   strictDeps = true;
@@ -47,7 +47,7 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   postPatch = ''
-    substituteInPlace src/git.zig \
+    substituteInPlace src/git.zig src/app.zig \
       --replace-fail "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin" \
         "${lib.makeBinPath finalAttrs.nativeCheckInputs}"
   '';
