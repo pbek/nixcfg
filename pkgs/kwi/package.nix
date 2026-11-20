@@ -2,7 +2,7 @@
   lib,
   stdenv,
   callPackage,
-  fetchFromGitLab,
+  fetchurl,
   cmake,
   ninja,
   pkg-config,
@@ -33,16 +33,13 @@
   qqc2-desktop-style,
 }:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   pname = "kwi";
-  version = "0.1.0-unstable-2026-11-16";
+  version = "0.1.0";
 
-  src = fetchFromGitLab {
-    domain = "invent.kde.org";
-    owner = "utilities";
-    repo = "kwi";
-    rev = "e62b89982e1b785b56e06bad714c3eece949ad9e";
-    hash = "sha256-+hJJogLzsdeSfQMotFe4vP2tG/AleeONHdkydqsLV/E=";
+  src = fetchurl {
+    url = "https://download.kde.org/stable/kwi/${finalAttrs.version}/kwi-${finalAttrs.version}.tar.xz";
+    hash = "sha256-ZCluPv87UbHA/c0NJbJEGyBTcqFzMPOt56fmE7SYBqc=";
   };
 
   strictDeps = true;
@@ -105,4 +102,4 @@ stdenv.mkDerivation {
     mainProgram = "kwi";
     platforms = lib.platforms.linux;
   };
-}
+})
