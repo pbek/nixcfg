@@ -7,7 +7,6 @@ on:
     paths:
       - "pkgs/qc/**"
       - "pkgs/qownnotes/**"
-      - "pkgs/opencode/**"
       - "pkgs/nixbit/**"
       - "pkgs/ziggity/**"
       - "pkgs/openchamber/**"
@@ -15,10 +14,8 @@ on:
       - "pkgs/libquotient-rust-crypto/**"
       - "overlays/opencode.nix"
       - "overlays/openchamber.nix"
-      - "overlays/zerobyte.nix"
       - "modules/hokage/programs/zerobyte.nix"
       - "modules/hokage/desktop.nix"
-      - "overlays/devenv-commit.nix"
       - "overlays/kate-fixes.nix"
       - "overlays/neochat.nix"
       - "overlays/kwi.nix"
