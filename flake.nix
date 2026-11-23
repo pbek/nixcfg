@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
-    # Temporary EOL kernel pin for ZFS until it supports Linux 7.3.
+    # Temporary EOL kernel pin for non-server ZFS hosts until ZFS supports Linux 7.3.
     # Published nixos-unstable snapshot with cached Linux 7.2.15 and ZFS modules.
     nixpkgs-linux-7-2 = {
       url = "github:NixOS/nixpkgs/f9a75f41be3a74eab55d3a7679d34ad6cc0da977";

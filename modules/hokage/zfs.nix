@@ -8,11 +8,16 @@
 let
   inherit (config) hokage;
   cfg = hokage.zfs;
-  # Keep the kernel and its modules from the same cached snapshot.
-  kernelPkgs = import inputs.nixpkgs-linux-7-2 {
-    inherit (pkgs.stdenv.hostPlatform) system;
-    inherit (pkgs) config;
-  };
+  isServer = hokage.role == "server-home" || hokage.role == "server-remote";
+  # Keep the kernel and ZFS packages on the same nixpkgs revision.
+  kernelPkgs =
+    if isServer then
+      pkgs
+    else
+      import inputs.nixpkgs-linux-7-2 {
+        inherit (pkgs.stdenv.hostPlatform) system;
+        inherit (pkgs) config;
+      };
   datasetRootPart =
     if cfg.datasetRootName != "" then
       "/${cfg.datasetRootName}"
@@ -56,16 +61,20 @@ in
     };
     maxKernelVersion = lib.mkOption {
       type = lib.types.package;
-      # Temporary Linux 7.2 pin until ZFS supports 7.3; see https://github.com/openzfs/zfs/releases.
-      default = kernelPkgs.linuxKernel.packages.linux_7_2.kernel;
+      # Servers use maintained Linux 6.18 LTS. Keep the temporary 7.2 pin
+      # elsewhere until ZFS supports 7.3; see https://github.com/openzfs/zfs/releases.
+      default =
+        if isServer then
+          kernelPkgs.linuxPackages_6_18.kernel
+        else
+          kernelPkgs.linuxKernel.packages.linux_7_2.kernel;
       description = "Maximum allowed kernel package for ZFS";
       readOnly = true;
     };
     useUnstable = mkOption {
       type = types.bool;
-      # Both packages come from the pinned kernel snapshot.
       default = false;
-      description = "Use the pinned zfs_unstable package when true (otherwise use pinned zfs).";
+      description = "Use zfs_unstable instead of zfs from the kernel's package set.";
     };
     devNodes = mkOption {
       type = types.str;
@@ -88,7 +97,7 @@ in
     hokage.kernel.requirements = [ cfg.maxKernelVersion ];
 
     boot = {
-      # Prefer the pinned package set over the shared selector's mkDefault,
+      # Prefer the ZFS package set over the shared selector's mkDefault,
       # while allowing hosts to extend it for custom kernel modules.
       kernelPackages = lib.mkOverride 900 (kernelPkgs.linuxPackagesFor hokage.kernel.selectedKernel);
       # Set maximum ARC size to prevent the Early OOM from killing processes
