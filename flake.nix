@@ -265,6 +265,17 @@
           wstunnel
           zerobyte
           ;
+        # Cache the exact nh (and its bundled monitor) used by the dev shell.
+        devenv-nh =
+          let
+            lock = builtins.fromJSON (builtins.readFile ./devenv.lock);
+            inputName = lock.nodes.${lock.root}.inputs.nixpkgs-unstable;
+            devNixpkgs = builtins.fetchTree lock.nodes.${inputName}.locked;
+          in
+          (import devNixpkgs {
+            inherit system;
+            overlays = [ (import ./overlays/nix-output-monitor.nix) ];
+          }).nh;
         kate = pkgs.kdePackages.kate;
         neochat = pkgs.kdePackages.neochat;
         qc = pkgs.callPackage ./pkgs/qc/default.nix { };
