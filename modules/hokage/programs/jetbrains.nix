@@ -65,8 +65,66 @@ let
 
   mkJetbrainsIde =
     ideName:
-    # https://github.com/nix-community/nix-jetbrains-plugins?tab=readme-ov-file#example
-    nix-jetbrains-plugins.lib.buildIdeWithPlugins jetbrainsPackages ideName cfg.plugins;
+    let
+      ide = jetbrainsPackages.jetbrains.${ideName};
+      copilotId = "com.github.copilot";
+      plugins = nix-jetbrains-plugins.lib.pluginsForIdeWith {
+        extraOverrides =
+          lib.optionalAttrs
+            (
+              ideName == "phpstorm"
+              && lib.versions.majorMinor ide.version == "2026.3"
+              && jetbrainsPackages.stdenv.hostPlatform.system == "x86_64-linux"
+              && builtins.elem copilotId cfg.plugins
+            )
+            {
+              # The catalog still selects 1.13.1-251, which calls a Jewel API removed in 2026.3.
+              # This platform-specific archive ships only a native language server, so use
+              # the base derivation's autoPatchelf instead of the upstream Node.js wrapper.
+              ${copilotId} =
+                plugin:
+                plugin.overrideAttrs (old: rec {
+                  version = "1.21.1-261-linux-x64";
+                  src = jetbrainsPackages.fetchurl {
+                    url = "https://plugins.jetbrains.com/files/17718/1221874/github-copilot-intellij-${version}.zip";
+                    hash = "sha256-ptLUgY/n9ZYHqUGvz2vlNWBV4sgdtHNWlgBLbZZES2w=";
+                  };
+                  nativeBuildInputs = old.nativeBuildInputs ++ [
+                    jetbrainsPackages.unzip
+                    jetbrainsPackages.python3
+                  ];
+                  dontStrip = true;
+                  postPatch = ''
+                    chmod +x copilot-agent/native/linux-x64/copilot-language-server
+                  '';
+                  preFixup = ''
+                    agent="$out/copilot-agent/native/linux-x64/copilot-language-server"
+                    originalSize=$(stat -c %s "$agent")
+                  '';
+                  postPhases = [ "fixCopilotAgentOffsets" ];
+                  fixCopilotAgentOffsets = ''
+                    # patchelf moves the embedded Node.js payload, but not its stored offsets.
+                    python3 - "$agent" "$originalSize" <<'PY'
+                    import mmap
+                    import sys
+
+                    with open(sys.argv[1], "r+b") as binary, mmap.mmap(binary.fileno(), 0) as data:
+                        shift = len(data) - int(sys.argv[2])
+                        # Payload and prelude offsets in the pinned Marketplace archive.
+                        for offset in (74205712, 165713775):
+                            old = f"{offset:<16}".encode()
+                            pos = data.find(old)
+                            if pos == -1 or data.find(old, pos + 1) != -1:
+                                raise RuntimeError(f"Expected one embedded offset: {offset}")
+                            data[pos:pos + len(old)] = f"{offset + shift:<16}".encode()
+                    PY
+                    HOME="$TMPDIR" XDG_CACHE_HOME="$TMPDIR" "$agent" --version
+                  '';
+                });
+            };
+      } jetbrainsPackages ide cfg.plugins;
+    in
+    jetbrainsPackages.jetbrains.plugins.addPlugins ide (lib.attrValues plugins);
 
 in
 {
