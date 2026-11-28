@@ -19,9 +19,7 @@ in
     enable = mkEnableOption "Go development support" // {
       default = hokage.role == "desktop" && useInternalInfrastructure && !hokage.lowBandwidth;
     };
-    ide.enable = mkEnableOption "Go IDE" // {
-      default = true;
-    };
+    ide.enable = mkEnableOption "Go IDE";
   };
 
   config = lib.mkIf cfg.enable {

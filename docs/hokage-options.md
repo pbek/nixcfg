@@ -473,7 +473,7 @@ boolean
 _Default:_
 
 ```nix
-true
+false
 ```
 
 _Example:_

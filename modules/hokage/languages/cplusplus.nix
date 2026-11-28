@@ -78,10 +78,6 @@ in
           ]
       );
 
-    hokage = mkIf cfg.ide.enable {
-      programs.jetbrains.enable = lib.mkDefault true;
-      programs.jetbrains.clion.enable = true;
-      programs.qtcreator.enable = true;
-    };
+    hokage.programs.qtcreator.enable = mkIf cfg.ide.enable true;
   };
 }
