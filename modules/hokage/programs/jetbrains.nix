@@ -17,7 +17,7 @@ let
     mkIf
     ;
 
-  jetbrainsPackages =
+  defaultJetbrainsPackages =
     if cfg.useStable then
       (import
         (fetchTarball {
@@ -50,6 +50,18 @@ let
       #      );
       pkgs;
 
+  # Drop this pin once our nixpkgs includes https://github.com/NixOS/nixpkgs/pull/593357.
+  clionPrPackages =
+    import
+      (fetchTarball {
+        url = "https://github.com/flaviut/nixpkgs/archive/7de8d3249c11c224c6518875405e953b209926ef.tar.gz";
+        sha256 = "sha256-F2+6ob0ZvOpdXfw/N26/VI6pHNcUhxvmPwWI0SRdz4E=";
+      })
+      {
+        inherit (config.nixpkgs) config;
+        localSystem = pkgs.stdenv.hostPlatform;
+      };
+
   # Unfortunately, we can't have per-application plugin settings
   #  mkJetbrainsPackage =
   #    name: cfgPackage:
@@ -66,13 +78,20 @@ let
   mkJetbrainsIde =
     ideName:
     let
+      useClionPr =
+        ideName == "clion" && !cfg.useStable && lib.versionOlder pkgs.clion.version "2026.3.0.2";
+      jetbrainsPackages = if useClionPr then clionPrPackages else defaultJetbrainsPackages;
       ide = jetbrainsPackages.jetbrains.${ideName};
+      # The pinned plugin catalog lacks 2026.3.0.2. Look up plugins using the
+      # preceding build in the same IDE series, without changing the installed IDE.
+      clionNeedsCatalogFallback = ideName == "clion" && ide.version == "2026.3.0.2";
+      pluginCatalogIde = if clionNeedsCatalogFallback then ide // { version = "2026.3.0.1"; } else ide;
       copilotId = "com.github.copilot";
       plugins = nix-jetbrains-plugins.lib.pluginsForIdeWith {
         extraOverrides =
           lib.optionalAttrs
             (
-              ideName == "phpstorm"
+              (ideName == "phpstorm" || clionNeedsCatalogFallback)
               && lib.versions.majorMinor ide.version == "2026.3"
               && jetbrainsPackages.stdenv.hostPlatform.system == "x86_64-linux"
               && builtins.elem copilotId cfg.plugins
@@ -122,7 +141,7 @@ let
                   '';
                 });
             };
-      } jetbrainsPackages ide cfg.plugins;
+      } jetbrainsPackages pluginCatalogIde cfg.plugins;
     in
     jetbrainsPackages.jetbrains.plugins.addPlugins ide (lib.attrValues plugins);
 
