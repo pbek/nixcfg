@@ -283,7 +283,6 @@ push:
     -attic push qownnotes `which uncrash` --no-closure
     -attic push qownnotes `which tokstat` --no-closure
     -attic push qownnotes `which orangutan` --no-closure
-    -attic push qownnotes `which ziggity` --no-closure
     -attic push qownnotes `which zfsguard` --no-closure
     -attic push qownnotes `which devenv` --no-closure
     -attic push qownnotes `nix-store --query --requisites $(readlink -f $(which devenv)) | grep -- '-nix-.*-2\.34$'` --no-closure

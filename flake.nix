@@ -290,7 +290,6 @@
           corgi
           lan-orangutan
           rhun
-          ziggity
           ;
         inherit (pkgs) opencode openchamber;
       }
